@@ -3,7 +3,7 @@
  *------
  * BGA framework: © Gregory Isabelli <gisabelli@boardgamearena.com> & Emmanuel Colin <ecolin@boardgamearena.com>
  * EmptyGame implementation : © Nicolas Gocel <nicolas.gocel@gmail.com>
- * 
+ *
  * This code has been produced on the BGA studio platform for use on http://boardgamearena.com.
  * See http://en.boardgamearena.com/#!doc/Studio for more information.
  * -----
@@ -13,44 +13,46 @@
  * EmptyGame game material description
  *
  * Here, you can describe the material of your game with PHP variables.
- *   
+ *
  * This file is loaded in your game logic class constructor, ie these variables
  * are available everywhere in your game logic code.
  *
  */
 
+include("modules/php/constants.inc.php");
+
 $this->colors = array(
-    
+
     1 => array( 'name' => clienttranslate('Blue'),
         'nameof' => clienttranslate('Blues'),
         'nametr' => self::_('Blue'),
         'color' => 'blue'
         ),
-    
+
     2 => array( 'name' => clienttranslate('Green'),
         'nameof' => clienttranslate('Greens'),
         'nametr' => self::_('Green'),
         'color' => 'green'
         ),
-    
+
     3 => array( 'name' => clienttranslate('Pink'),
         'nameof' => clienttranslate('Pinks'),
         'nametr' => self::_('Pink'),
         'color' => 'pink'
     ),
-    
+
     4 => array( 'name' => clienttranslate('Yellow'),
         'nameof' => clienttranslate('Yellows'),
         'nametr' => self::_('Yellow'),
         'color' => 'yellow'
         ),
-    
+
     5 => array( 'name' => clienttranslate('Rocket'),
         'nameof' => clienttranslate('Rockets'),
         'nametr' => self::_('Rocket'),
         'color' => 'black'
     ),
-    
+
     6 => array( 'name' => clienttranslate('Communication'),
         'nameof' => clienttranslate('Communication'),
         'nametr' => self::_('Communication'),
@@ -112,5 +114,3 @@ $this->missions = array(
 );
 
 $this->specificCheck = [5,9,13,16,17,26,29,33,34,41,44,46,48,50];
-
-
