@@ -16,11 +16,11 @@ class Globals extends \APP_DbObject
     thecrew::get()->setGameStateValue($name, $value);
   }
 
-  protected static function get($name, $value){
-    return thecrew::get()->getGameStateValue($name, $value);
+  public static function get($name){
+    return thecrew::get()->getGameStateValue($name);
   }
 
-  protected static function inc($name, $value){
+  protected static function inc($name, $value = 1){
     return thecrew::get()->incGameStateValue($name, $value);
   }
 
@@ -29,15 +29,16 @@ class Globals extends \APP_DbObject
    * Declare globas (in the constructor of game.php)
    */
   private static $globals = [
-    'trick_count' => 0,
-    'commander_id' => 0,
-    'last_winner' => 0,
-    'trick_color' => 0,
+    'trickCount' => 0,
+    'commanderId' => 0,
+    'lastWinnerId' => 0,
+    'trickColor' => 0,
+
     'mission_finished' => 0,
     'distress_turn' => 0,
     'special_id' => 0,
     'special_id2' => 0,
-    'check_count' => 0,
+    'checkCount' => 0,
     'end_game' => 0,
     'intro_shown' => 0,
     'premium' => false,
@@ -46,7 +47,7 @@ class Globals extends \APP_DbObject
   public static function declare($game){
     // Game options label
     $labels = [
-      "mission_start" => OPTION_MISSION,
+      "startingMission" => OPTION_MISSION,
       "challenge" => OPTION_CHALLENGE,
     ];
 
@@ -67,6 +68,34 @@ class Globals extends \APP_DbObject
     }
   }
 
+  /*
+   * Getters
+   */
+  public static function isCampaign()
+  {
+    return self::get("startingMission") == CAMPAIGN;
+  }
+
+  public static function isChallenge()
+  {
+    return self::get("challenge") == CHALLENGE_ON;
+  }
+
+  public static function getCommander()
+  {
+    return self::get("commanderId");
+  }
+
+  public static function getTrickCount()
+  {
+    return self::get("trickCount");
+  }
+
+  public static function getTrickColor()
+  {
+    return self::get("trickColor");
+  }
+
 
   /*
    * Setters
@@ -75,10 +104,30 @@ class Globals extends \APP_DbObject
     self::set('premium', $premium);
   }
 
-/*
-  public static function getCurrentTurn()
-  {
-    return (int) welcometo::get()->getGameStateValue('currentTurn');
+  public static function startNewMission(){
+    self::set('trickCount', 0);
+    self::set('checkCount', 0);
+
+    // TODO ???
+    self::set( 'special_id', 0);
+    self::set( 'special_id2', 0);
   }
-*/
+
+  public static function startNewTrick(){
+    self::inc('trickCount');
+    self::set('trickColor', 0);
+
+    // TODO ???
+    self::set( 'special_id', 0);
+    self::set( 'special_id2', 0);
+  }
+
+  public static function setTrickColor($color){
+    self::set('trickColor', $color);
+  }
+
+  public static function setCommander($pId){
+    self::set("commanderId", $pId);
+    self::set('lastWinnerId', $pId);
+  }
 }

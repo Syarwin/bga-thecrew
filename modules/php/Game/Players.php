@@ -73,10 +73,20 @@ class Players extends \CREW\Helpers\DB_Manager
     return self::get(self::getCurrentId());
   }
 
+  public function getCommander()
+  {
+    return self::get(Globals::getCommander());
+  }
+
   public function getNextId($player)
   {
     $table = thecrew::get()->getNextPlayerTable();
     return $table[$player->getId()];
+  }
+
+  public function alreadyCommmunicate()
+  {
+    return self::DB()->where('comm_card_id', '>', 0)->count() > 0;
   }
 
   /*
@@ -91,8 +101,20 @@ class Players extends \CREW\Helpers\DB_Manager
   /*
    * getUiData : get all ui data of all players : id, no, name, team, color, powers list, farmers
    */
-  public function getUiData()
+  public function getUiData($pId)
   {
-    return self::getAll()->assocMap(function($player){ return $player->getUiData(); });
+    return self::getAll()->assocMap(function($player) use ($pId){ return $player->getUiData($pId); });
+  }
+
+
+  public function clearMission()
+  {
+    self::DB()->update([
+      'distress_card_id' => 'NULL',
+      'comm_card_id' => 'NULL',
+      'comm_token' => 'middle',
+      'comm_pending' => 0,
+      'player_trick_number' => 0,
+    ])->run();
   }
 }

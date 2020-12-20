@@ -319,7 +319,7 @@ class Pieces extends DB_Manager {
    *  if "fromLocation" and "fromState" are null: move ALL cards to specific location
    */
   public static function moveAllInLocation($fromLocation, $toLocation, $fromState = null, $toState = 0) {
-    if (!is_null($fromLocation != null))
+    if (!is_null($fromLocation))
       self::checkLocation($fromLocation);
     self::checkLocation($toLocation);
 

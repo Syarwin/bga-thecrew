@@ -3,24 +3,29 @@
 /*
  * State constants
  */
-define('ST_GAME_SETUP', 1);
-define('ST_NEXT_PLAYER', 3);
-define('ST_START_OF_TURN', 4);
-define('ST_PLAY_CARD', 5);
-define('ST_AWAIT_REACTION',6);
-define('ST_AWAIT_MULTIREACTION',7);
-define('ST_REACT', 8);
-define('ST_MULTIREACT', 9);
-define('ST_END_REACT', 10);
-define('ST_END_OF_TURN', 11);
-define('ST_DISCARD_EXCESS', 12);
-define('ST_DRAW_CARDS', 13);
-define('ST_PREPARE_SELECTION', 14);
-define('ST_SELECT_CARD', 15);
-define('ST_ACTIVE_DRAW_CARD', 17);
-define('ST_ELIMINATE', 16);
-define('ST_PRE_GAME_END', 98);
-define('ST_GAME_END', 99);
+define("STATE_SETUP",1);
+define("STATE_PREPARATION",2);
+define("STATE_PLAYERTURN",3);
+define("STATE_NEW_TRICK",4);
+define("STATE_PICK_TASK",5);
+define("STATE_NEXT_PLAYER_PICK_TASK",6);
+define("STATE_NEXTPLAYER",7);
+define("STATE_ENDMISSION",8);
+define("STATE_COMM",9);
+define("STATE_BEFORECOMM",10);
+define("STATE_AFTERCOMM",11);
+define("STATE_COMM_TOKEN",12);
+define("STATE_CHANGE_MISSION",13);
+define("STATE_DISTRESS_SETUP",14);
+define("STATE_DISTRESS",15);
+define("STATE_DISTRESS_EXCHANGE",16);
+define("STATE_QUESTION",17);
+define("STATE_NEXTQUESTION",18);
+define("STATE_PICK_CREW",19);
+define("STATE_MULTI_SELECT",20);
+define("STATE_SAVE",21);
+define("STATE_END_OF_GAME",99);
+
 
 /*
  * Game options

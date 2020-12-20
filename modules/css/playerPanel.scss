@@ -1,0 +1,55 @@
+.panel-container {
+
+  &, .panel-tricks, .panel-cards {
+    display: flex;
+    height: 35px;
+    align-items: center;
+  }
+
+  .panel-tricks, .panel-cards, .panel-commander {
+    justify-content: center;
+    margin:2px 7px;
+    div {
+      height: 30px;
+      background-size: 1100%;
+      @include shadow;
+    }
+
+    span::before {
+      content:'×';
+      margin:0 4px;
+    }
+  }
+
+  .panel-tricks div {
+    width: 30px;
+    background-image: url("img/sprites.png");
+    background-position: 90% 100%;
+  }
+
+  .panel-cards {
+    div {
+      width: 19px;
+      background-image: url("img/cards.png");
+      background-position: 100% 0%;
+    }
+
+    span {
+      margin-left:4px;
+    }
+  }
+
+  .panel-commander {
+    display:none;
+    width: 40px;
+    height: 32px;
+    background-image: url("img/captain.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    @include shadow;
+  }
+}
+
+@for $i from 0 through 5 {
+  #overall-content[data-commander="#{$i}"] .panel-container[data-no="#{$i}"] .panel-commander { display:block; }
+}

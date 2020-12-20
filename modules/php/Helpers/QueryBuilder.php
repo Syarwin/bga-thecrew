@@ -276,6 +276,14 @@ class QueryBuilder extends \APP_DbObject {
 		return $this;
 	}
 
+  public function whereNull($field)
+	{
+    $this->where = is_null($this->where)? " WHERE " : ($this->where. ($this->isOrWhere? " OR " : " AND "));
+		$this->where .= "`$field` IS NULL";
+		return $this;
+	}
+
+
 	public function orWhere()
 	{
 		$this->isOrWhere = true;

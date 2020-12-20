@@ -9,14 +9,34 @@ use CREW\Game\Players;
  */
 class Cards extends Helpers\Pieces
 {
-  protected static $table = "construction_cards";
+  protected static $table = "card";
 	protected static $prefix = "card_";
-  protected static $customFields = ['number', 'action'];
-  protected static $autoreshuffleCustom = ['deck' => 'discard'];
-  protected static $autoreshuffle = true;
+  protected static $customFields = ['value', 'color'];
+  protected static $autoreshuffle = false;
   protected static function cast($card){
-    return $card;
+    if(!isset($card['location']))
+      var_dump($card);
+
+    $locations = explode('_', $card['location']);
+    return [
+      'id' => $card['id'],
+//      'uid' => ($card['color'] - 1)*10+($card['value'] - 1), // Used by stock component
+      'location' => $locations[0],
+      'value' => $card['value'],
+      'color' => $card['color'],
+      'pId' => $locations[1] ?? null,
+    ];
   }
+
+
+  public static function getOfPlayer($pId){
+    return self::getInLocation(['hand', $pId])->toArray();
+  }
+
+  public static function getOnTable($pId = '%'){
+    return self::getInLocation(['table', $pId])->toArray();
+  }
+
 
   //////////////////////////////////
   //////////////////////////////////
@@ -24,42 +44,71 @@ class Cards extends Helpers\Pieces
   //////////////////////////////////
   //////////////////////////////////
 
-  public function setupNewGame($players, $options){
+  public function setupNewGame($players, $options)
+  {
     $challenge = count($players) == 3 && $options[OPTION_CHALLENGE] == CHALLENGE_ON;
-    /*
-    $cards = [];
-    foreach(self::$deck as $number => $nActions){
-      foreach(self::$actions as $index => $action){
+
+    $colors = [
+      CARD_BLUE => 9,
+      CARD_GREEN => $challenge? 0 : 9,
+      CARD_PINK => 9,
+      CARD_YELLOW => 9,
+      CARD_ROCKET => 4
+    ];
+
+
+    foreach($colors as $cId => $maxValue) {
+      for($value = 1; $value <= $maxValue; $value++) {
         $cards[] = [
-          'number' => $number,
-          'action' => $action,
-          'nbr' => $nActions[$index]
-        ];
+          'color' => $cId,
+          'value' => $value
+        ];;
       }
     }
 
-    // Create cards
-    $cards = array();
-    foreach($this->colors as $color_id => $color) {
-        if($color_id<6)
-        {
-            if($color_id == 2 && self::getGameStateValue( 'challenge') == 2) continue;
-
-            for($value=1; $value<=($color_id == 5 ? 4 : 9); $value++) {
-
-                if($color_id == 5 && $value== 1 && self::getGameStateValue( 'challenge') == 2) continue;
-
-                $cards[] = array('type' => $color_id, 'type_arg' => $value, 'nbr' => 1);
-            }
-        }
-    }
-
-    $cards[] = array('type' => COMM, 'type_arg' => 0, 'nbr' => count($players));
-    $this->cards->createCards($cards, 'deck');
-
-
     self::create($cards, 'deck');
     self::shuffle('deck');
-    */
+  }
+
+
+
+  public static function clearMission()
+  {
+    // Take back all cards (from any location => null) to deck and shuffle
+    self::moveAllInLocation(null, "deck");
+    self::shuffle('deck');
+
+/*
+    // Deal communication cards
+    $coms = $this->cards->getCardsOfType(COMM);
+    foreach($coms as $card_id => $card) {
+      $player_id = array_shift($players)['player_id'];
+      $this->cards->moveCard( $card_id, 'comm', $player_id);
+    }
+*/
+  }
+
+
+  public static function startNewMission()
+  {
+    $players = Players::getAll();
+    $nbCards = intdiv(Globals::isChallenge()? 30 : 40 , $players->count() );
+
+    // This guy will have one extra card if 3 players and challenge mode off
+    $luckyGuy = (count($players) == 3 && !Globals::isChallenge())? array_rand($players) : -1;
+
+    foreach($players as $pId => $player){
+      $hand = self::pickForLocation($nbCards + ($pId == $luckyGuy? 1 : 0), 'deck', ["hand", $pId] );
+      Notifications::newHand($pId, $hand->toArray());
+    }
+
+    $card4Rocket = self::getSelectQuery()->where('value',4)->where('color', CARD_ROCKET)->get();
+    return $card4Rocket['pId'];
+  }
+
+
+  public static function play($card)
+  {
+    self::move($card['id'], ['table', $card['pId'] ]);
   }
 }

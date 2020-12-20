@@ -1,0 +1,65 @@
+.player-table {
+  width: 400px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 5px;
+  border: 1px solid black;
+  background-color:rgba(255,255,255,0.6);
+
+  @for $i from 0 through 4 {
+    &[data-no="#{$i}"] { order:$i; }
+  }
+
+  .player-table-name {
+    font-weight: 700;
+    margin-top: 2px;
+    height: 18px;
+    text-align: center;
+  }
+
+  .player-table-wrapper {
+    width: 100%;
+    height:140px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-items: center;
+
+    .communication-card {
+      position: relative;
+      width: 84px;
+      height: 132px;
+    }
+
+
+    .commander, .special, .special2 {
+      display:none;
+      background-size: contain;
+      background-repeat: no-repeat;
+      @include shadow;
+    }
+    .commander {
+      width:75px;
+      height: 60px;
+      background-image: url("img/captain.png");
+    }
+    .special {
+      width:75px;
+      height:87px;
+      background-image: url("img/special.png");
+    }
+    .special2 {
+      width:58px;
+      height:87px;
+      background-image: url("img/special2.png");
+    }
+  }
+}
+
+@for $i from 0 through 5 {
+  #overall-content[data-commander="#{$i}"] .player-table[data-no="#{$i}"] .player-table-wrapper .commander { display:block; }
+  #overall-content[data-special="#{$i}"]   .player-table[data-no="#{$i}"] .player-table-wrapper .special { display:block; }
+  #overall-content[data-special2="#{$i}"]  .player-table[data-no="#{$i}"] .player-table-wrapper .special2 { display:block; }
+}
