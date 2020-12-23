@@ -6,7 +6,10 @@
   justify-content: space-between;
   border-radius: 5px;
   border: 1px solid black;
-  background-color:rgba(255,255,255,0.6);
+  background-color:rgba(255,255,255,0.5);
+  &.active {
+    background-color:rgba(255,255,255,0.8);
+  }
 
   @for $i from 0 through 4 {
     &[data-no="#{$i}"] { order:$i; }
@@ -31,6 +34,142 @@
       position: relative;
       width: 84px;
       height: 132px;
+
+      &.selectable {
+        cursor:pointer;
+        box-shadow: 0 0 20px 3px #4782ff;
+        transition:transform 0.2s;
+
+        &:hover {
+          animation:none;
+          transform:scale(1.2);
+        }
+      }
+
+      background-image:url("img/cards.png");
+      background-size:1100%;
+      @include shadow;
+      border-radius: 5px;
+      &[data-color="6"]{ background-position-y: 33.3%; background-position-x: 100%; }
+
+      @for $i from 1 through 4 {
+        &[data-color="#{$i}"]{ background-position-y: ($i - 1) * 100% / 3; }
+      }
+
+      @for $i from 1 through 9 {
+        &[data-value="#{$i}"]{ background-position-x: ($i - 1) * 100% / 10; }
+      }
+
+      .radio {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        background-image: url("img/sprites.png");
+        background-size: 1100%;
+        background-position: 0 100%;
+        left: 23px;
+        z-index: 3;
+        @include shadow;
+      }
+
+      .pending-icon {
+        width: 50px;
+        height: 50px;
+        background: white;
+        border: 1px solid black;
+        border-radius: 25px;
+        position: absolute;
+        top: 40px;
+        left: 17px;
+        box-shadow: 1px 1px 3px black;
+        justify-content: center;
+        align-items: center;
+        z-index:5;
+        display:none;
+
+        svg {
+          width:70%;
+          height:70%;
+        }
+      }
+
+      &[data-pending="1"]{
+        box-shadow: 0px 0px 20px 3px #00ff00 !important;
+        .pending-icon {
+          display: flex;
+        }
+      }
+
+      &[data-radio="top"] .radio {top: -6px;}
+      &[data-radio="middle"] .radio {top: 44px;}
+      &[data-radio="bottom"] .radio {top: 102px;}
+      &[data-radio="waiting"] .radio { display:none; }
+      &[data-radio="used"] .radio {
+        top: 44px;
+        background-position: 20% 100%;
+      }
+
+      &[data-radio="waiting"] .communication-waiting { display:block; }
+      .communication-waiting {
+        display: none;
+        position:absolute;
+        background:rgba(255,255,255,0.7);
+        width:100%;
+        height:100%;
+
+        .wifi-symbol {
+          $circleColor: #000000;
+          $size: 50px;
+
+          position:absolute;
+          top: 26px;
+          left: 16px;
+          display:inline-block;
+          width:$size;
+          height:$size;
+          transform:rotate(-45deg);
+
+          .wifi-circle {
+            box-sizing:border-box;
+            display:block;
+            width:100%;
+            height:100%;
+            font-size:$size/7;
+            position:absolute;
+            bottom:0;
+            left:0;
+            border-color: $circleColor;
+            border-style:solid;
+            border-width:1em 1em 0 0 ;
+            border-radius:0 100% 0 0;
+            opacity:0;
+            animation:wifianimation 2s infinite;
+
+            &.first {
+              animation-delay:600ms;
+            }
+            &.second {
+              width:5em;
+              height:5em;
+              animation-delay:400ms;
+            }
+            &.third {
+              width: 3em;
+              height: 3em;
+              animation-delay:200ms;
+            }
+            &.fourth {
+              width: 0.5em;
+              height: 0.5em;
+            }
+          }
+        }
+
+        @keyframes wifianimation  {
+          0% { opacity: 0.9; }
+          100% { opacity: 0.1; }
+        }
+      }
     }
 
 

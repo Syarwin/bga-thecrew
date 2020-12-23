@@ -1,6 +1,8 @@
 <?php
 namespace CREW;
 use CREW\Game\Globals;
+use CREW\Game\Players;
+use CREW\Game\Notifications;
 
 /*
  * Tasks: a class that handles tasks
@@ -14,9 +16,9 @@ class Tasks extends \CREW\Helpers\DB_Manager
   {
     return [
       'id' => (int) $row['task_id'],
-      'color' => (int) $row['card_type'],
-      'value' => (int) $row['card_type_arg'],
-      'tile' => $row['token'],
+      'color' => (int) $row['color'],
+      'value' => (int) $row['value'],
+      'tile' => $row['tile'],
       'pId' => $row['player_id'],
       'status' => $row['status'],
 
@@ -37,13 +39,18 @@ class Tasks extends \CREW\Helpers\DB_Manager
     return self::DB()->where($taskId)->get(true);
   }
 
+  public static function count()
+  {
+    return self::DB()->count();
+  }
+
   public static function insert($id, $color, $value, $tile)
   {
     self::DB()->insert([
       'task_id' => $id,
-      'card_type' => $color,
-      'card_type_arg' => $value,
-      'token' => $tile,
+      'color' => $color,
+      'value' => $value,
+      'tile' => $tile,
     ]);
   }
 
@@ -128,5 +135,101 @@ class Tasks extends \CREW\Helpers\DB_Manager
   public static function clearMission()
   {
     self::DB()->delete()->run();
+  }
+
+
+
+  public static function getRemeaning()
+  {
+    return self::DB()->where('status','tbd')->get(false)->toArray();
+  }
+
+
+  /*
+   * checkLastTrick : called at the end of a trick
+   */
+  public static function checkLastTrick()
+  {
+    $tasks = self::getRemeaning();
+    $winner = Globals::getLastWinner();
+    $cards = Cards::getLastTrick();
+
+    //update task individually
+    foreach($tasks as $task){
+      foreach($cards as $card){
+        if($task['color'] == $card['color'] && $task['value'] == $card['value']){
+          $assignedPlayer = Players::get($task['pId']);
+          self::updateStatus([$task], $task['pId'] == $winner->getId());
+        }
+      }
+    }
+
+
+    // Tile 1 -> 5
+    for($i = 1; $i <= 5; $i++){
+      $task = self::DB()->where('tile', $i)->where('status', 'tbd')->get(true);
+      if(is_null($task))
+        continue;
+
+      $nTasksBefore = self::DB()->whereNotIn('tile', range(1,$i-1))->where('status', 'ok')->count();
+      if($nTasksBefore > 0){
+        self::updateStatus([$task]);
+      }
+    }
+
+
+    //Update task according to tile > >> >>> >>>>
+    $tasks = self::DB()->where('tile', 'LIKE', 'i%')->where('status', 'ok')->orderBy('tile')->get(false);
+    foreach($tasks as $task) {
+      $taskMissed = self::DB()->where('tile', 'LIKE', 'i%')->where('tile', '<', $task['tile'])->where('status', 'tbd')->get(false);
+      self::updateStatus($tasksMissed);
+    }
+
+    //Update task according to tile Omega
+    $task = self::DB()->where('tile', 'o')->where('status', 'tbd')->get(true);
+    if(!is_null($task)){
+      $taskMissed = self::DB()->where('status', 'tbd')->get(false);
+      self::updateStatus($tasksMissed);
+    }
+  }
+
+
+  function updateStatus($tasksMissed, $success = false)
+  {
+    foreach($tasksMissed as $task){
+      $assignedPlayer = Players::get($task['pId']);
+      $task['status'] = $success? 'ok' : 'nok';
+
+      // Update status and notify
+      self::DB()->update([
+        'trick' => Globals::getTrickCount(),
+        'status' => $task['status'],
+      ], $task['id']);
+      Notifications::updateTaskStatus($task, $assignedPlayer);
+    }
+  }
+
+
+  /*
+   * getStatus : return
+   *   * 1 if all tasks satisfied
+   *   * -1 if a task failed or a task is still tbd but mission is over
+   *   * 0 otherwise
+   */
+  public static function getStatus()
+  {
+    if(self::count() > 0 && self::DB()->where('status', '<>', 'ok')->count() == 0)
+      return 1;
+
+    if(self::DB()->where('status', '=', 'nok')->count() > 0 || self::isLastTrick() )
+      return -1;
+
+    return 0;
+  }
+
+
+  public static function isLastTrick()
+  {
+    return Cards::countInHand() <= 1;// That was the last trick
   }
 }

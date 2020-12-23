@@ -33,13 +33,13 @@ class Globals extends \APP_DbObject
     'commanderId' => 0,
     'lastWinnerId' => 0,
     'trickColor' => 0,
+    'missionFinished' => 0,
 
-    'mission_finished' => 0,
     'distress_turn' => 0,
     'special_id' => 0,
     'special_id2' => 0,
     'checkCount' => 0,
-    'end_game' => 0,
+    'endOfGame' => 0,
     'intro_shown' => 0,
     'premium' => false,
   ];
@@ -81,6 +81,11 @@ class Globals extends \APP_DbObject
     return self::get("challenge") == CHALLENGE_ON;
   }
 
+  public static function isPremium()
+  {
+    return self::get("premium");
+  }
+
   public static function getCommander()
   {
     return self::get("commanderId");
@@ -96,6 +101,20 @@ class Globals extends \APP_DbObject
     return self::get("trickColor");
   }
 
+  public static function getLastWinner()
+  {
+    return Players::get(self::get("lastWinnerId"));
+  }
+
+  public static function getMissionFinished()
+  {
+    return self::get("missionFinished");
+  }
+
+  public static function isEndOfGame()
+  {
+    return self::get("endOfGame") == 1;
+  }
 
   /*
    * Setters
@@ -129,5 +148,18 @@ class Globals extends \APP_DbObject
   public static function setCommander($pId){
     self::set("commanderId", $pId);
     self::set('lastWinnerId', $pId);
+  }
+
+  public static function setLastWinner($winner){
+    self::set('lastWinnerId', $winner->getId());
+  }
+
+  public static function setMissionFinished($value)
+  {
+    self::set('missionFinished', $value);
+  }
+
+  public static function setEndOfGame(){
+    self::set('endOfGame', 1);
   }
 }

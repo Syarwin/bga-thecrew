@@ -27,9 +27,11 @@
      g_gamethemeurl + "modules/js/CardTrait.js",
      g_gamethemeurl + "modules/js/PlayerTrait.js",
      g_gamethemeurl + "modules/js/TooltipTrait.js",
+     g_gamethemeurl + "modules/js/MissionTrait.js",
 
      g_gamethemeurl + "modules/js/States/PickTaskTrait.js",
      g_gamethemeurl + "modules/js/States/TrickTrait.js",
+     g_gamethemeurl + "modules/js/States/CommunicationTrait.js",
 
  ], function (dojo, declare) {
     return declare("bgagame.thecrew", [
@@ -37,30 +39,16 @@
       thecrew.cardTrait,
       thecrew.playerTrait,
       thecrew.tooltipTrait,
+      thecrew.missionTrait,
       thecrew.pickTaskTrait,
       thecrew.trickTrait,
+      thecrew.communicationTrait,
     ], {
       constructor(){
-
-      /*
-      this.commander_id = null;
-      this.players = null;
-      this.colors = null;
-
-      this.card_width = 100;
-      this.card_height = 157;
-
-      // Number of turns
-      this.mission_counter = null;
-      this.attempts_counter = null;
-      this.total_attempts_counter = null;
-      this.trick_counters = {};
-      this.cards_counters = {};
-      this.multiSelect = null;
-      this.selected = null;
-      this.stateName = null;
-
-      */
+        this._notifications.push(
+          ['nopremium', 10],
+          ['cleanUp', 10]
+        );
       },
 
       /*
@@ -80,6 +68,11 @@
         this.inherited(arguments);
       },
 
+      onUpdateActionButtons(){
+        this.updatePlayersStatus();
+      },
+
+
       // Switch from cardsOnTable / tasks / endPanel
       switchCentralZone(type){
         dojo.attr('table-middle', 'data-display', type);
@@ -94,24 +87,38 @@
         this.inherited(arguments);
       },
 
-      setupMission(){
-        this.missionCounter = new ebg.counter();
-        this.missionCounter.create('mission-counter');
-        this.attemptsCounter = new ebg.counter();
-        this.attemptsCounter.create('try-counter');
-        this.totalAttemptsCounter = new ebg.counter();
-        this.totalAttemptsCounter.create('total-try-counter');
-        this.updateMissionStatus();
+
+
+      notif_nopremium(notif) {
+      	this.myDlg = new ebg.popindialog();
+      	this.myDlg.create( 'myDialogUniqueId' );
+      	this.myDlg.setTitle( _("Premium member required") );
+      	this.myDlg.setMaxWidth( 500 );
+      	var html = _('Congratulations for your success !<br/><br/>The Crew board game is including 50 different missions.<br/>You can access the 10 first missions for free, and you can access the other 40 missions if at least one Premium member is around the table.<br/><br/><a href="https://boardgamearena.com/premium">Go Premium now</a><br/><br/>Good luck for your Quest.');
+      	this.myDlg.setContent( html );
+      	this.myDlg.show();
       },
 
-      updateMissionStatus(){
-        let mId = this.gamedatas.status.mId;
-        $('mission-description').innerHTML = _(this.gamedatas.missions[mId - 1].desc);
-        this.missionCounter.setValue(mId);
-        this.attemptsCounter.setValue(this.gamedatas.status.attempts);
-        this.totalAttemptsCounter.setValue(this.gamedatas.status.total);
 
-        dojo.toggleClass('distress', "activated", this.gamedatas.status.distress);
-      }
+      notif_cleanUp(n) {
+        this.gamedatas.status = n.args.status;
+        this.updateMissionStatus()
+
+        this.gamedatas.players = n.args.players;
+        this.updatePlayersData();
+
+        dojo.query('.task').forEach(dojo.destroy);
+        dojo.query(".card").forEach(dojo.destroy);
+
+        /*
+            for( var player_id in this.players )
+              {
+                  dojo.removeClass('radio_' + player_id);
+                  dojo.addClass('radio_' + player_id, 'radio appears middle');
+              }
+              dojo.query(".card_com .cardontable").connect('onclick', this, 'onStartComm');
+        */
+      },
+
    });
 });

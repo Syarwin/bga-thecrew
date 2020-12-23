@@ -29,6 +29,10 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         // Create tasks
         player.tasks.forEach(task => this.addTask(task, 'tasks-' + player.id) );
 
+        // Place communication card and radio token
+        this.setCommunicationCard(player.id, player.commCard);
+        this.setRadioToken(player.id, player.commToken);
+
         // Create card on table
         if(player.table.length){
           this.addCardOnTable(player.table[0]);
@@ -49,6 +53,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         if(this.player_id == player.id){
           dojo.place('<div id="hand-wrapper"><div id="hand"></div></div>', 'hand-container');
           this.setupHand(player.cards);
+          dojo.connect($('comm-card-' + player.id), 'onclick', () => this.toggleCommunication() );
         }
       });
 
@@ -60,12 +65,28 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this.cardsCounters[pId].incValue(-1);
     },
 
+    incTrickCounter(pId, value = 1){
+      this.trickCounters[pId].incValue(value);
+    },
+
+
     updatePlayersData(){
       Object.values(this.gamedatas.players).forEach( player => {
         this.trickCounters[player.id].setValue(player.nTricks);
         this.cardsCounters[player.id].setValue(player.nCards);
+
+        if(this.player_id == player.id){
+          dojo.attr('comm-card-' + player.id, 'data-pending', player.commPending? 1 : 0);
+          dojo.toggleClass('comm-card-' + player.id, "selectable", player.canCommunicate);
+        }
       });
     },
+
+    updatePlayersStatus(){
+      dojo.query("#thecrew-table .player-table").removeClass("active");
+      this.getActivePlayers().forEach(pId => dojo.addClass("player-table-" + pId, "active"));
+    },
+
 
     updateCommander(){
       dojo.attr('overall-content', 'data-commander', this.gamedatas.players[this.gamedatas.commanderId].no);

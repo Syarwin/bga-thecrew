@@ -19,6 +19,9 @@ class Player extends Helpers\DB_Manager
     $this->eliminated = $row['player_eliminated'] == 1;
     $this->zombie = $row['player_zombie'] == 1;
     $this->nTricks = $row['player_trick_number'];
+    $this->commCard = $row['comm_card_id'];
+    $this->commToken = $row['comm_token'];
+    $this->commPending = (int) $row['comm_pending'];
   }
 
   private $id;
@@ -29,6 +32,9 @@ class Player extends Helpers\DB_Manager
   private $zombie = false;
   private $score;
   private $nTricks;
+  private $commCard;
+  private $commToken;
+  private $commPending;
 
 
   /////////////////////////////////
@@ -57,6 +63,18 @@ class Player extends Helpers\DB_Manager
       'nCards'    => count($this->getCards()),
       'tasks'     => $this->getTasks(),
       'table'     => $this->getOnTable(),
+      'commToken' => $this->commToken,
+      'commCard'  => $this->getCardOnComm(),
+      'commPending' => $this->isCommPending(),
+      'canCommunicate' => $this->canCommunicate(),
+    ];
+  }
+
+  public function getForNotif()
+  {
+    return [
+      'player_name' => $this->name,
+      'player_id' => $this->id,
     ];
   }
 
@@ -74,7 +92,57 @@ class Player extends Helpers\DB_Manager
   {
     return Cards::getOnTable($this->id);
   }
+
+  public function getCardOnComm()
+  {
+    return is_null($this->commCard)? null : Cards::get($this->commCard);
+  }
+
+  public function isCommPending()
+  {
+    return $this->commPending == 1;
+  }
+
+
+  public function canCommunicate()
+  {
+    $mission = Missions::getCurrent();
+    return $this->commToken != 'used' && is_null($this->commCard) && !$mission->isDisrupted();
+  }
+
   // TODO
   //            $sql = "update player set comm_token = 'used' where player_id=".$player_id;
   //            self::DbQuery( $sql );
+
+  public function winTrick()
+  {
+    self::DB()->inc(['player_trick_number' => 1], $this->id);
+  }
+
+  public function toggleComm()
+  {
+    $this->commPending = 1 - $this->commPending;
+    self::DB()->update(['comm_pending' => $this->commPending], $this->id);
+  }
+
+  public function communicate($cardId, $status)
+  {
+    $this->commCard = $cardId;
+    $this->commToken = $status;
+    self::DB()->update([
+      'comm_card_id' => $cardId,
+      'comm_token' => $status,
+    ], $this->id);
+  }
+
+  public function usedComm()
+  {
+    $this->commCard = null;
+    $this->commToken = 'used';
+    self::DB()->update([
+      'comm_card_id' => null,
+      'comm_token' => 'used',
+    ], $this->id);
+  }
+
 }

@@ -132,36 +132,6 @@ class thecrew extends Table
         return $players[$player_id]['player_name'];
     }
 
-    function getPossibleStatus($card) {
-        $ret = array();
-        $player_id = $card['location_arg'];
-        $same = $this->cards->getCardsOfTypeInLocation($card['type'], null, 'hand', $player_id);
-        $min = $card['type_arg'];
-        $max = $card['type_arg'];
-        $nb = 0;
-
-        foreach($same as $cardt) {
-            if($card['id'] != $cardt['id']) $nb++;
-            $val = $cardt['type_arg'];
-            $min = min($min,$val);
-            $max = max($max,$val);
-        }
-
-        if($card['type_arg'] == $min)
-        {
-            $ret[] = "bottom";
-        }
-        if($card['type_arg'] == $max)
-        {
-            $ret[] = "top";
-        }
-        if($nb == 0)
-        {
-            $ret[] = "middle";
-        }
-
-        return $ret;
-    }
 
     function getCommunicationCard($player_id)
     {
@@ -197,28 +167,6 @@ class thecrew extends Table
         self::checkAction( 'actButton' );
         switch($this->gamestate->state()['name'])
         {
-            case 'endMission':
-                if($button == 'yes')
-                {
-                    self::notifyAllPlayers('continue', clienttranslate('${player_name} wants to continue'),array(
-                        'player_name' => self::getPlayerName(self::getCurrentPlayerId()),
-                        'player_id' => self::getCurrentPlayerId()
-                    ));
-
-                    $this->gamestate->setPlayerNonMultiactive($this->getCurrentPlayerId(), "next" );
-                }
-                else
-                {
-
-                    self::setGameStateValue( 'end_game', 1 );
-                    self::notifyAllPlayers('note', clienttranslate('${player_name} wants to stop'),array(
-                        'player_name' => self::getPlayerName(self::getCurrentPlayerId())
-                    ));
-
-                    $this->gamestate->nextState("next");
-                }
-                break;
-
             case "distressSetup":
                 $left = $button == 'left';
                 $text = clienttranslate('Cards will be passed to the <b>left</b>');
@@ -334,25 +282,6 @@ class thecrew extends Table
 
     }
 
-    function actCancel() {
-        self::checkAction("actCancel");
-
-        $player_id = self::getCurrentPlayerId();
-
-        self::notifyAllPlayers('note', clienttranslate('${player_name} cancels communication'),array(
-            'player_name' => self::getPlayerName(self::getCurrentPlayerId())
-        ));
-
-        $sql = "update player set comm_pending = 0 where player_id=".$player_id;
-        self::DbQuery( $sql );
-
-        self::notifyPlayer($player_id, 'commpending', '', array(
-            'pending' => 0,
-            'canCommunicate' => 1
-        ));
-
-        $this->gamestate->nextState('cancel');
-    }
 
     function actDistress() {
        // self::checkAction("actDistress");
@@ -371,79 +300,6 @@ class thecrew extends Table
         }
     }
 
-    function actStartComm()
-    {
-
-        $player_id = self::getCurrentPlayerId();
-        $sql = "SELECT player_id, player_name, comm_pending FROM player where player_id = ".$player_id;
-        $currentPlayer = self::getObjectFromDB( $sql );
-
-        $sql = "update player set comm_pending = 1 - comm_pending where player_id=".$player_id;
-        self::DbQuery( $sql );
-
-        $currentPlayer['comm_pending'] = 1 - $currentPlayer['comm_pending'];
-        self::notifyPlayer($player_id, 'commpending', '', array(
-            'pending' => $currentPlayer['comm_pending'],
-            'canCommunicate' => 1
-        ));
-
-        if($currentPlayer['comm_pending'] == 1 && $this->gamestate->state()['name'] == 'playerTurn' && $this->cards->countCardInLocation('cardsontable')==0)
-        {
-         //   self::checkAction("actStartComm");
-
-            $this->gamestate->nextState('startComm');
-        }
-    }
-
-    function actFinishComm($place)
-    {
-        self::checkAction("actFinishComm");
-
-        $player_id = self::getActivePlayerId();
-        $sql = "SELECT player_id, player_name FROM player where player_id = ".$player_id;
-        $activePlayer = self::getObjectFromDB( $sql );
-
-        $sql = "update player set comm_token = '".$place."', comm_pending = 0 where player_id=".$player_id;
-        self::DbQuery( $sql );
-
-        $card = $this->getCommunicationCard($player_id);
-
-        $text = '';
-
-        switch($place)
-        {
-            case "top":
-                $text = clienttranslate('their highest card of this color');
-                break;
-            case "middle":
-                $text = clienttranslate('their only card of this color');
-                break;
-            case "bottom":
-                $text = clienttranslate('their lowest card of this color');
-                break;
-        }
-
-        self::notifyAllPlayers('endComm', clienttranslate('${player_name} tells ${value_symbol}${color_symbol} is ${comm_place}'),array(
-            'player_name' => self::getPlayerName(self::getActivePlayerId()),
-            'comm_place' => $text,
-            'comm_status' => $place,
-            'card_id' => $card['id'],
-            'card' => $card,
-            'player_id' => self::getActivePlayerId(),
-            'value' => $card['type_arg'],
-            'value_symbol' => $card['type_arg'], // The substitution will be done in JS format_string_recursive function
-            'color' => $card['type'],
-            'color_symbol' => $card['type'] // The substitution will be done in JS format_string_recursive function
-        ));
-
-        self::notifyPlayer($player_id, 'commpending', '', array(
-            'pending' => 0,
-            'canCommunicate' => 0
-        ));
-
-        $this->gamestate->nextState('next');
-
-    }
 
     function actPickCrew($crew_id)
     {
@@ -646,14 +502,6 @@ class thecrew extends Table
         return $result;
     }
 
-    function argEndMission()
-    {
-        $result = array();
-        $result['end'] = self::getGameStateValue('mission_finished');
-        $result['number'] = self::getUniqueValueFromDB( "SELECT max(mission) FROM logbook");
-        return $result;
-    }
-
     function argDistress()
     {
         $result = array();
@@ -708,34 +556,6 @@ class thecrew extends Table
         return $result;
     }
 
-    function argComm()
-    {
-        $result = array();
-        $player_id = self::getActivePlayerId();
-
-        $hand = $this->cards->getCardsInLocation('hand', $player_id);
-        foreach($hand as $card_id => $card) {
-            if($card['type']<5)
-            {
-                if(count($this->getPossibleStatus($card))>0)
-                {
-                    $result[$card_id] = $card_id;
-                }
-            }
-        }
-
-        return $result;
-    }
-
-    function argCommToken()
-    {
-        $result = array();
-        $player_id = self::getActivePlayerId();
-        $card = $this->getCommunicationCard($player_id);
-        $ret['card'] = $card;
-        $ret['possible'] = $this->getPossibleStatus($card);
-        return $ret;
-    }
 
     function argPlayerTurn()
     {
@@ -797,24 +617,6 @@ class thecrew extends Table
         return $result;
     }
 
-    function canCommunicate($player_id)
-    {
-        $mission = $this->getMission();
-        $disruption = array_key_exists('disruption', $mission) && $mission['disruption'] > self::getGameStateValue( 'trick_count');
-        $cards = $this->cards->getCardsInLocation('comm', $player_id);
-        $notUsed = count($cards)==1 && array_shift($cards)['type'] == 6;
-
-        $sql = "SELECT player_id id, comm_token FROM player ";
-        $player = self::getObjectFromDb( $sql );
-
-        if(!$notUsed)
-        {
-            $noComm = false;
-        }
-
-        return $disruption && $player['comm_token'] != 'used';
-
-    }
 
 
 
@@ -836,39 +638,6 @@ class thecrew extends Table
         }
     }
 
-    function stNewTrick() {
-
-        // Reset trick color to 0 (= no color)
-        self::setGameStateValue('trick_color', 0);
-
-        self::setGameStateValue('trick_count', self::getGameStateValue('trick_count')+1);
-
-        $mission = self::getUniqueValueFromDB( "SELECT max(mission) FROM logbook");
-        $distress = self::getUniqueValueFromDB( "SELECT distress FROM logbook where mission=".$mission);// NOI18N;
-
-        if(self::getGameStateValue('trick_count') == 1 && $distress)
-        {
-            $this->gamestate->nextState('distress');
-        }
-        else
-        {
-            $this->gamestate->nextState('next');
-        }
-    }
-
-    function stcheckPickTask() {
-
-        if(self::getUniqueValueFromDB( "SELECT count(*) FROM task where player_id IS NULL") == 0)// NOI18N
-        {
-            $this->gamestate->changeActivePlayer(self::getGameStateValue('commander_id'));
-            $this->gamestate->nextState('turn');
-        }
-        else
-        {
-            $this->activeNextPlayer();
-            $this->gamestate->nextState('task');
-        }
-    }
 
     function stBeforeComm()
     {
@@ -893,11 +662,6 @@ class thecrew extends Table
         }
     }
 
-    function stAfterComm()
-    {
-        $this->gamestate->changeActivePlayer(self::getGameStateValue('last_winner'));
-        $this->gamestate->nextState('next');
-    }
 
     function swapOneCard()
     {
@@ -984,47 +748,6 @@ class thecrew extends Table
 
         $this->gamestate->changeActivePlayer(self::getGameStateValue('commander_id'));
         $this->gamestate->nextState('next');
-    }
-
-    function stChangeMission()
-    {
-        $mission = self::getUniqueValueFromDB( "SELECT max(mission) FROM logbook");
-        if(self::getGameStateValue( 'mission_finished')>0)
-        {
-            $sql = "INSERT INTO logbook (mission) VALUES (".($mission+1).")";
-            self::DbQuery( $sql );
-
-            if($mission == 50)
-            {
-                $this->gamestate->nextState('save');
-                return;
-            }
-        }
-        else
-        {
-            $sql = "update logbook set attempt = attempt + 1 where mission = ".$mission;
-            self::DbQuery( $sql );
-        }
-
-
-        if($mission>=10 && self::getGameStateValue( 'player_is_premium') == 0)
-        {
-            self::notifyAllPlayers('noPremium', clienttranslate('A premium member is required'), array());
-            $this->gamestate->nextState('end');
-        }
-        else
-        {
-
-            self::setGameStateValue( 'mission_finished', 0 );
-            if(self::getGameStateValue( 'end_game')==1)
-            {
-                $this->gamestate->nextState('end');
-            }
-            else
-            {
-                $this->gamestate->nextState('next');
-            }
-        }
     }
 
 

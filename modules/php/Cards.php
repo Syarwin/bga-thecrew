@@ -37,6 +37,22 @@ class Cards extends Helpers\Pieces
     return self::getInLocation(['table', $pId])->toArray();
   }
 
+  public static function countOnTable($pId = '%'){
+    return self::getInLocation(['table', $pId])->count();
+  }
+
+
+  public static function getIds($cards){
+    return array_map(function($card){ return $card['id']; }, $cards);
+  }
+
+  public static function getLastTrick(){
+    return self::getInLocation(['trick'.  Globals::getTrickCount(), '%']);
+  }
+
+  public static function countInHand(){
+    return self::getInLocation(['hand', '%'])->count();
+  }
 
   //////////////////////////////////
   //////////////////////////////////
@@ -111,4 +127,12 @@ class Cards extends Helpers\Pieces
   {
     self::move($card['id'], ['table', $card['pId'] ]);
   }
+
+
+  public static function winTrick($cards, $player)
+  {
+    self::move(self::getIds($cards), ['trick'. Globals::getTrickCount(), $player->getId() ]);
+  }
+
+
 }

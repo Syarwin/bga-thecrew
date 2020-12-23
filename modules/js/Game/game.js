@@ -272,11 +272,27 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
     },
 
 
-
     /*
-     * slideTemporary: a wrapper of slideTemporaryObject using Promise
+     * Sliding animation wrappers with Promises
      */
-    slideTemporary(template, data, container, sourceId, targetId, duration, delay) {
+    slide(sourceId, targetId, duration, delay = 0) {
+      return new Promise((resolve, reject) => {
+        var animation = this.slideToObject(sourceId, targetId, duration, delay);
+        dojo.connect(animation, 'onEnd', resolve);
+        animation.play();
+      });
+    },
+
+    slideAndDestroy(sourceId, targetId, duration, delay = 0) {
+    	return new Promise((resolve, reject) => {
+        this.slideToObjectAndDestroy(sourceId, targetId, duration, delay);
+    		setTimeout(() => {
+    			resolve();
+    		}, duration + delay)
+    	});
+    },
+
+    slideTemporary(template, data, container, sourceId, targetId, duration, delay = 0) {
     	return new Promise((resolve, reject) => {
     		var animation = this.slideTemporaryObject(this.format_block(template, data), container, sourceId, targetId, duration, delay);
     		setTimeout(() => {

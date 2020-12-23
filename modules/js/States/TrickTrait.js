@@ -2,7 +2,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
   return declare("thecrew.trickTrait", null, {
     constructor(){
       this._notifications.push(
-        ['playCard', 1000]
+        ['playCard', 1000],
+        ['trickWin', 2000]
       );
     },
 
@@ -31,5 +32,30 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this.playCardOnTable(n.args.card);
       this.descCardsCounter(n.args.card.pId);
     },
+
+
+    notif_trickWin(n){
+      debug("Winning a trick", n);
+      let winnerId = n.args.player_id;
+      this.incTrickCounter(winnerId); // Increase the trick counter by one
+
+      n.args.oCards.forEach(card => {
+        let isWinningCard = winnerId == card.pId;
+        let cardId = 'card-' + card.id;
+        dojo.style(cardId, 'z-index', 11 + isWinningCard); // Ensure that the winning card stays on top
+
+        // Program the anim: 1. Slide the cart (1 second)
+        this.slide(cardId, 'mat-' + winnerId, 1000)
+        .then(() => {
+          // 2. Delete it : immediately for card under the top card, 1s for the top card
+          setTimeout( () => dojo.destroy(cardId), isWinningCard? 1000 : 10);
+        });
+      });
+    },
+
+    notif_taskUpdate(n) {
+      dojo.attr('task-' + n.args.task.id, 'data-status', n.args.task.status);
+    },
+
   });
 });

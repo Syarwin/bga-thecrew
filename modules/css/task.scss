@@ -27,6 +27,22 @@
       transform:scale(1.2);
     }
   }
+
+  .check-ok {
+    display: none;
+    position:absolute;
+    width: 40px;
+    height: 40px;
+    left: 10px;
+    top: 44px;
+    background-image: url("img/sprites.png");
+    background-size: 1100%;
+    background-position: 80% 100%;
+    @include shadow;
+  }
+  &[data-status="ok"] .check-ok {
+    display:block;
+  }
 }
 
 

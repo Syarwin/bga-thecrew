@@ -2,6 +2,7 @@
 namespace CREW\Missions;
 use CREW\Tasks;
 use CREW\Game\Players;
+use CREW\Game\Globals;
 use thecrew;
 
 abstract class AbstractMission
@@ -11,6 +12,7 @@ abstract class AbstractMission
   protected $tasks = 0;
   protected $tiles = [];
   protected $question = null;
+  protected $disruption = 0;
 
   public function getUiData()
   {
@@ -22,6 +24,9 @@ abstract class AbstractMission
 
   public function getId(){ return $this->id; }
 
+  public function isDisrupted(){
+    return $this->disruption > Globals::getTrickCount();
+  }
 
   public function prepare()
   {
@@ -49,5 +54,26 @@ abstract class AbstractMission
     } else {
       return 'trick';
     }
+  }
+
+
+  public function check()
+  {
+    if(thecrew::getUniqueValueFromDB("select count(*) from task")>0 // NOI18N
+        && thecrew::getUniqueValueFromDB("select count(*) from task where status <> 'ok'") == 0)// NOI18N
+    {
+        $this->missionSuccess();
+    }
+    else if(thecrew::getUniqueValueFromDB("select count(*) from task where status = 'nok'") > 0// NOI18N
+        || $this->isLastTrick())
+    {
+        $this->missionFailed();
+    }
+    else
+    {
+        //otherwise we continue
+        $this->thecrew->setGameStateValue( 'mission_finished', 0 );
+    }
+
   }
 }

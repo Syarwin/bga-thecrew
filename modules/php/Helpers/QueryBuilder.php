@@ -78,7 +78,7 @@ class QueryBuilder extends \APP_DbObject {
 	{
 		$values = [];
 		foreach ($fields as $column => $field) {
-			$values[] = "`$column` = '$field'";
+			$values[] = "`$column` = ". (is_null($field)? "NULL" : "'$field'");
 		}
 
 		$this->sql = "UPDATE `{$this->table}` SET " . implode(',', $values);
@@ -273,6 +273,21 @@ class QueryBuilder extends \APP_DbObject {
 			return $this;
 
 		$this->where .= "`$field` IN ('". implode("','", $values) ."')";
+		return $this;
+	}
+
+  public function whereNotIn()
+	{
+    $this->where = is_null($this->where)? " WHERE " : ($this->where. ($this->isOrWhere? " OR " : " AND "));
+
+		$num_args = func_num_args();
+		$args = func_get_args();
+		$field = ($num_args == 1)? $this->primary : $args[0];
+		$values = ($num_args == 1)? $args[0] : $args[1];
+		if(is_null($values))
+			return $this;
+
+		$this->where .= "`$field` NOT IN ('". implode("','", $values) ."')";
 		return $this;
 	}
 

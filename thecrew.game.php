@@ -36,9 +36,11 @@ require_once(APP_GAMEMODULE_PATH . 'module/table/table.game.php');
 
 class thecrew extends Table
 {
-  use CREW\States\NewMissionTrait;
+  use CREW\States\MissionTrait;
   use CREW\States\PickTaskTrait;
   use CREW\States\TrickTrait;
+  use CREW\States\CommunicationTrait;
+  use CREW\States\DistressTrait;
 
 
   public static $instance = null;

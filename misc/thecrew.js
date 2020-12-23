@@ -90,23 +90,11 @@ function (dojo, declare) {
             }
 
 
-
-    		dojo.query(".commander").addClass("hidden");
-    		dojo.query("#commander_icon_spot_"+gamedatas.commander_id).removeClass("hidden");
-    		dojo.query(".commander_in_panel").addClass("hidden");
-    		dojo.query("#commander_in_panel_"+gamedatas.commander_id).removeClass("hidden");
-    		dojo.query(".special").addClass("hidden");
-    		dojo.query("#special_icon_spot_"+gamedatas.special_id).removeClass("hidden");
-    		dojo.query(".special2").addClass("hidden");
-    		dojo.query("#special2_icon_spot_"+gamedatas.special2_id).removeClass("hidden");
-
-
          // Cards in player's hand
 
 			dojo.query(".card_com").connect('onclick', this, 'onStartComm');
 			dojo.query(".card_com .cardontable").connect('onclick', this, 'onStartComm');
 
-            dojo.query('.finalbutton' ).connect( 'onclick', this, 'onButtonChoose');
 
             if(this.gamedatas.distress == 1)
             {
@@ -183,36 +171,6 @@ function (dojo, declare) {
 
         		}
             	break;
-
-            case 'endMission':
-        		dojo.query("#playertable_central").addClass("hidden");
-        		dojo.query("#endPanel").removeClass("hidden");
-        		if(args.args.end>0)
-        		{
-        			$('endResult').innerHTML = _('Mission ${nb} <span class="success">completed</span>').replace('${nb}',args.args.number);
-        		}
-        		else
-        		{
-        			$('endResult').innerHTML = _('Mission ${nb} <span class="failure">failed</span>').replace('${nb}',args.args.number);
-        		}
-        		if(!this.isCurrentPlayerActive())
-        		{
-        			dojo.query(".finalbutton").addClass("hidden");
-        		}
-        		else
-        		{
-        			dojo.query(".finalbutton").removeClass("hidden");
-        		}
-
-    			dojo.query("#endPanel .check_ok").addClass("check_confirm");
-        		for(var player_id in this.getActivePlayers())
-        		{
-        			var pid = this.getActivePlayers()[player_id];
-        			dojo.query("#continue_ok_"+pid).removeClass("check_confirm");
-        		}
-
-            	break;
-
 
             case 'distress':
 
@@ -302,9 +260,6 @@ function (dojo, declare) {
             		this.addActionButton('cancel_button', _("No move") , 'onCancel');
             		break;
 
-	            case "comm":
-            		this.addActionButton('cancel_button', _("Cancel") , 'onCancel');
-            		break;
 
 		            case "question":
 		            	var i = 0;
@@ -373,20 +328,6 @@ function (dojo, declare) {
             }
         },
 
-        onStartComm:function(event)
-        {
-            dojo.stopEvent( event );
-        	if((event.currentTarget.classList.contains('selectablecomm') || event.currentTarget.parentNode.classList.contains('selectablecomm')) && ((this.stateName != "comm" && this.stateName != "commToken") || !this.isCurrentPlayerActive() ) ) {
-
-        		dojo.query(".selectablecomm").removeClass("selectablecomm");
-
-        		this.ajaxcall('/thecrew/thecrew/actStartComm.html', {
- 	                   lock:true,
- 	                },this, function( result ) {
- 	                }, function( is_error ) { } );
-        	}
-
-        },
 
         onFinishComm:function(event)
         {
@@ -565,38 +506,7 @@ function (dojo, declare) {
 
         },
 
-        notif_giveAllCardsToPlayer: function(notif) {
-            // Move all cards on table to given table, then destroy them
-            var winner_id = notif.args.player_id;
-            this.trick_counters[winner_id].incValue(1); // Increase the trick counter by one
-            for(var card_id in notif.args.cards) {
-            	var card = notif.args.cards[card_id];
-                var b_winning_card = (winner_id == card['location_arg']);
-                dojo.style('card_' + card['id'], 'z-index', 11+b_winning_card); // Ensure that the winning card stays on top
 
-                var anim = this.slideToObject('card_' + card['id'], 'playertablecard_' + this.players[winner_id]['relative'], 1000); // Program the anim: 1. Slide the cart (1 second)
-                if (b_winning_card) {
-                    self = this;
-                    dojo.connect(anim, 'onEnd', function(node) {self.fadeOutAndDestroy(node, 1000);}); // 2. Delete it (1 second for the top card)
-                }
-                else {
-                    dojo.connect(anim, 'onEnd', function(node) {dojo.destroy(node);}); // 2. Delete it (immediately for card under the top card)
-                }
-                anim.play(); // Launch the anim (total 2 seconds => match the setSynchronous value)
-            }
-        },
-
-        notif_nopremium : function(notif)
-        {
-        	this.myDlg = new ebg.popindialog();
-        	this.myDlg.create( 'myDialogUniqueId' );
-        	this.myDlg.setTitle( _("Premium member required") );
-        	this.myDlg.setMaxWidth( 500 ); // Optional
-        	var html = _('Congratulations for your success !<br/><br/>The Crew board game is including 50 different missions.<br/>You can access the 10 first missions for free, and you can access the other 40 missions if at least one Premium member is around the table.<br/><br/><a href="https://boardgamearena.com/premium">Go Premium now</a><br/><br/>Good luck for your Quest.');
-        	this.myDlg.setContent( html );
-        	this.myDlg.show();
-
-        },
 
         startCampaign : function()
         {
@@ -625,18 +535,6 @@ function (dojo, declare) {
 			dojo.query("#continue_ok_"+notif.args.player_id).addClass("check_confirm");
         },
 
-        notif_taskUpdate: function(notif) {
-            dojo.removeClass('status_' + notif.args.task['task_id'], 'tbd');
-            dojo.addClass('status_' + notif.args.task['task_id'], notif.args.task['status']);
-        },
-
-        notif_endComm: function(notif) {
-            dojo.removeClass('radio_' + notif.args.player_id);
-            dojo.addClass('radio_' + notif.args.player_id, 'radio appears');
-            dojo.addClass('radio_' + notif.args.player_id, notif.args.comm_status);
-            this.addTooltipHtml( 'radio_' + notif.args.player_id, this.format_block('jstpl_tooltip_common', {title: _('Radio communication token'), description:  _('Communication token gives information of the communicated color card :<br/>- At the top, if it is your highest card of this color.<br/>- In the middle, if it is your only card of this color.<br/>- At the bottom, if it is your lowest card of this color.<br/>- Red, you cannot communicate.')}));
-
-        },
 
         notif_commander: function(notif) {
         	dojo.query(".commander").addClass("hidden");
@@ -682,13 +580,6 @@ function (dojo, declare) {
 
         notif_resetComm: function(notif)  {
 
-        	var player_id = notif.args.card['location_arg'];
-            if (player_id == this.player_id) {
-            	this.player_hand.removeFromStockById(notif.args.reminder_id);
-            }
-            dojo.removeClass('radio_' + notif.args.player_id);
-            dojo.addClass('radio_' + notif.args.player_id, 'radio appears used');
-            this.playCardOnTable(notif.args.card, true);
         },
 
         notif_commCard: function(notif) {
@@ -703,28 +594,6 @@ function (dojo, declare) {
             this.playCardOnTable(notif.args.card, true);
         },
 
-
-        notif_commpending: function(notif) {
-
-        	if(notif.args.pending == 1)
-        	{
-            	dojo.addClass('comcard_'+this.player_id, 'commpending');
-        	}
-        	else
-        	{
-            	dojo.removeClass('comcard_'+this.player_id, 'commpending');
-        	}
-
-    		if(notif.args.canCommunicate == 1)
-    		{
-    			dojo.query("#comcard_"+this.player_id).addClass("selectablecomm");
-    		}
-    		else
-    		{
-    			dojo.query("#comcard_"+this.player_id).removeClass("selectablecomm");
-    		}
-
-        },
 
 
         notif_distress: function(notif) {
@@ -747,42 +616,6 @@ function (dojo, declare) {
 			dojo.query("#myhand_item_"+card.id).connect('onclick', this, 'onPlayCard');
         },
 
-        notif_cleanUp: function(notif) {
-            dojo.query('.taskontable').forEach(dojo.destroy);
-
-            this.commander_id = null;
-    		dojo.query(".commander_in_panel").addClass("hidden");
-    		dojo.query(".commander").addClass("hidden");
-        	dojo.query(".special").addClass("hidden");
-        	dojo.query(".special2").addClass("hidden");
-
-    	     this.mission_counter.setValue(notif.args.mission);
-             this.attempts_counter.setValue(notif.args.mission_attempts);
-             this.total_attempts_counter.setValue(notif.args.total_attempts);
-             if(notif.args.distress == 1)
-             {
-             	dojo.query("#distress").addClass("activated");
-             }
-             else
-             {
-              	dojo.query("#distress").removeClass("activated");
-             }
-
-             $('mission_description').innerHTML = this.missions[notif.args.mission];
-         	dojo.query(".cardontable").forEach(dojo.destroy);
-
-    		for( var player_id in this.players )
-            {
-                this.trick_counters[player_id].setValue(0);
-                this.cards_counters[player_id].setValue(notif.args.players[player_id]['nbCards']);
-
-                this.playCardOnTable(notif.args.players[player_id]['comCard'], true);
-
-                dojo.removeClass('radio_' + player_id);
-                dojo.addClass('radio_' + player_id, 'radio appears middle');
-            }
-			dojo.query(".card_com .cardontable").connect('onclick', this, 'onStartComm');
-        },
 
         notif_newHand: function(notif) {
 

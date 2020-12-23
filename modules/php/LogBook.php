@@ -1,6 +1,7 @@
 <?php
 namespace CREW;
 use CREW\Game\Globals;
+use CREW\Game\Players;
 use thecrew;
 
 /*
@@ -28,7 +29,7 @@ class LogBook extends \CREW\Helpers\DB_Manager
   public static function getStatus($mId = null)
   {
     $mId = $mId ?? Missions::getCurrentId();
-    $data = self::DB()->get($mId);
+    $data = self::DB()->where($mId)->get(true);
     return [
       'mId' => $mId,
       'attempts' => $data['attempt'],
@@ -41,7 +42,7 @@ class LogBook extends \CREW\Helpers\DB_Manager
   /*
    * Insert a new mission in the logbook
    */
-  public static function insert($mission, $attempt = null, $success = null, $distress = null)
+  public static function insert($mission, $attempt = 1, $success = 0, $distress = 0)
   {
     self::DB()->insert([
       'mission' => $mission,
@@ -60,6 +61,11 @@ class LogBook extends \CREW\Helpers\DB_Manager
     self::insert($mission);
   }
 
+
+  public static function newAttempt($missionId)
+  {
+    self::DB()->inc(['attempt' => 1], $missionId);
+  }
 
 
   /*
@@ -81,5 +87,17 @@ class LogBook extends \CREW\Helpers\DB_Manager
     else {
       self::startMission(1);
     }
+  }
+
+
+  /*
+   * Compute whether the destress signal can be activated
+   */
+  public static function canActivateDistress()
+  {
+    $status = self::getStatus();
+    $cardPlayed = count(Cards::getOnTable());
+    $noCommunicationBefore = !Players::alreadyCommmunicate();
+    return !$status['distress'] && $cardPlayed == 0 && $noCommunicationBefore && Globals::getTrickCount() ==1;
   }
 }

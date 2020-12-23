@@ -6,6 +6,9 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
   return declare("thecrew.cardTrait", null, {
     constructor(){
+      this._notifications.push(
+        ['newHand', 100]
+      );
       this._callbackOnCard = null;
       this._selectableCards = [];
 
@@ -74,6 +77,11 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       dojo.connect($("hand_item_"+card.id), 'onclick', () => this.onPlayCard(card) );
     },
 
+    notif_newHand(n){
+      this._hand.removeAll(); // Remove cards in hand if any
+      n.args.hand.forEach(card => this.addCardInHand(card) );
+    },
+
 
     makeCardsSelectable(cards, callback){
       this._callbackOnCard = callback;
@@ -96,14 +104,14 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
 
     addCardOnTable(card, container = null){
-      this.place('jstpl_card', card, container ?? 'mat-' + this.gamedatas.players[card.pId].no);
+      this.place('jstpl_card', card, container ?? 'mat-' + card.pId);
       this.createCardTooltip(card, "card-" + card.id);
       dojo.connect($("card-" + card.id), 'onclick', () => this.onPlayCard(card) );
     },
 
     playCardOnTable(card, comm = false){
       let preexist = $('card-' + card.id);
-      let target = comm? ('comcard-' + card.pId) : ('mat-' + this.gamedatas.players[card.pId].no);
+      let target = (comm? 'comcard-' : 'mat-') + card.pId;
 
       // Create card if needed, otherwise reattach
       if(preexist){

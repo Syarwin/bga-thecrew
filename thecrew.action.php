@@ -46,6 +46,51 @@ class action_thecrew extends APP_GameAction
   }
 
 
+  public function actContinueMissions()
+  {
+    self::setAjaxMode();
+    $this->game->actContinueMissions();
+    self::ajaxResponse( );
+  }
+
+  public function actStopMissions()
+  {
+    self::setAjaxMode();
+    $this->game->actStopMissions();
+    self::ajaxResponse( );
+  }
+
+
+/***********************
+***** COMMUNICATION ****
+***********************/
+
+  public function actToggleComm()
+  {
+    self::setAjaxMode();
+    $this->game->actToggleComm();
+    self::ajaxResponse( );
+  }
+
+  public function actCancelComm()
+  {
+    self::setAjaxMode();
+    $this->game->actCancelComm();
+    self::ajaxResponse( );
+  }
+
+  public function actConfirmComm()
+  {
+    self::setAjaxMode();
+    $cardId = self::getArg("cardId", AT_posint, true );
+    $status = self::getArg("status", AT_alphanum, true );
+    $this->game->actConfirmComm($cardId, $status);
+    self::ajaxResponse();
+  }
+
+
+
+
 public function actPickCrew()
 {
 self::setAjaxMode();
@@ -57,22 +102,6 @@ self::ajaxResponse( );
 }
 
 
-public function actFinishComm()
-{
-self::setAjaxMode();
-
-$place = self::getArg( "place", AT_alphanum, true );
-$this->game->actFinishComm( $place);
-
-self::ajaxResponse( );
-}
-
-public function actStartComm()
-{
-self::setAjaxMode();
-$this->game->actStartComm();
-self::ajaxResponse( );
-}
 
 public function actCancel()
 {

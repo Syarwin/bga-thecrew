@@ -138,6 +138,51 @@ $machinestates = [
     ]
   ],
 
+
+
+  /****************************
+  ****** COMMUNICATION  *******
+  ****************************/
+  STATE_BEFORECOMM => [
+    "name" => "beforeComm",
+    "description" => "",
+    "type" => "game",
+    "action" => "stBeforeComm",
+    "transitions" => [
+      "turn" => STATE_PLAYERTURN,
+      "comm" => STATE_COMM
+    ]
+  ],
+
+  STATE_COMM => [
+    "name" => "comm",
+    "description" => clienttranslate('${actplayer} must choose a card to communicate'),
+    "descriptionmyturn" => clienttranslate('${you} must choose a card to communicate'),
+    "type" => "activeplayer",
+    "args" => "argComm",
+    "possibleactions" => ["actConfirmComm", "actCancelComm"],
+    "transitions" => [
+      "next" => STATE_BEFORECOMM,
+      "cancel" => STATE_BEFORECOMM,
+      "after" => STATE_BEFORECOMM,
+      "zombiePass" => STATE_CHANGE_MISSION
+    ]
+  ],
+
+/*
+TODO
+    STATE_COMM_TOKEN => [
+        "name" => "commToken",
+        "description" => clienttranslate('${actplayer} must place its communication token'),
+        "descriptionmyturn" => clienttranslate('${you} must place your communication token'),
+        "type" => "activeplayer",
+        "args" => "argCommToken",
+        "possibleactions" => ["actFinishComm"],
+        "transitions" => ["next" => STATE_AFTERCOMM, "zombiePass" => STATE_CHANGE_MISSION]
+    ],
+*/
+
+
   /***********************
   ****** DISTRESS  *******
   ***********************
@@ -171,16 +216,6 @@ $machinestates = [
 
 
 
-  STATE_BEFORECOMM => [
-    "name" => "beforeComm",
-    "description" => "",
-    "type" => "game",
-    "action" => "stBeforeComm",
-    "transitions" => [
-      "turn" => STATE_PLAYERTURN,
-      "comm" => STATE_COMM
-    ]
-  ],
 
   STATE_PLAYERTURN => [
     "name" => "playerTurn",
@@ -211,43 +246,21 @@ $machinestates = [
   ],
 
 
-    STATE_COMM => [
-        "name" => "comm",
-        "description" => clienttranslate('${actplayer} must choose a card to communicate'),
-        "descriptionmyturn" => clienttranslate('${you} must choose a card to communicate'),
-        "type" => "activeplayer",
-        "args" => "argComm",
-        "possibleactions" => ["actPlayCard", "actCancel"],
-        "transitions" => ["next" => STATE_COMM_TOKEN, "cancel" => STATE_AFTERCOMM, "after" => STATE_AFTERCOMM, "zombiePass" => STATE_CHANGE_MISSION]
-    ],
 
-    STATE_COMM_TOKEN => [
-        "name" => "commToken",
-        "description" => clienttranslate('${actplayer} must place its communication token'),
-        "descriptionmyturn" => clienttranslate('${you} must place your communication token'),
-        "type" => "activeplayer",
-        "args" => "argCommToken",
-        "possibleactions" => ["actFinishComm"],
-        "transitions" => ["next" => STATE_AFTERCOMM, "zombiePass" => STATE_CHANGE_MISSION]
-    ],
+  STATE_ENDMISSION => [
+    "name" => "endMission",
+    "args" => "argEndMission",
+    "type" => "multipleactiveplayer",
+    "possibleactions" => ["actButton"],
+    "description" => clienttranslate('All players must continue or stop'),
+    "descriptionmyturn" => clienttranslate('${you} must continue or stop'),
+    "transitions" => [
+      "next" => STATE_CHANGE_MISSION,
+      "end" => STATE_SAVE,
+      "zombiePass" => STATE_CHANGE_MISSION
+    ]
+  ],
 
-    STATE_AFTERCOMM => [
-        "name" => "afterComm",
-        "description" => "",
-        "type" => "game",
-        "action" => "stAfterComm",
-        "transitions" => ["next" => STATE_BEFORECOMM]
-    ],
-
-    STATE_ENDMISSION => [
-        "name" => "endMission",
-        "args" => "argEndMission",
-        "type" => "multipleactiveplayer",
-        "possibleactions"       => ["actButton"],
-        "description" => clienttranslate('All players must continue or stop'),
-        "descriptionmyturn" => clienttranslate('${you} must continue or stop'),
-        "transitions" => ["next" => STATE_CHANGE_MISSION, "end" => STATE_SAVE, "zombiePass" => STATE_CHANGE_MISSION]
-    ],
 
     STATE_CHANGE_MISSION => [
         "name" => "changeMission",
@@ -262,7 +275,7 @@ $machinestates = [
         "description" => "",
         "type" => "game",
         "action" => "stSave",
-        "transitions" => ["next" => 99]
+        "transitions" => ["next" => STATE_END_OF_GAME]
     ],
 
     // Final state.

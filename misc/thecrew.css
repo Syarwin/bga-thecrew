@@ -122,18 +122,6 @@
 }
 
 
-.cardontable {
-	position: relative;
-	top: 0px;
-	left: 0px;
-    width: 84px;
-    height: 132px;
-    background-image: url('img/cards.png');
-	background-size: 1100%;
-	filter: drop-shadow(1px 1px 2px #000);
-	-webkit-filter: drop-shadow(1px 1px 2px #000);
-  	border-radius: 5px;
-}
 
 
 .card_com.selectable .cardontable
@@ -155,22 +143,7 @@
 	z-index: 3;
 }
 
-.radio.top {
-	top: -6px;
-}
 
-.radio.middle {
-	top: 44px;
-}
-
-.radio.bottom {
-	top: 102px;
-}
-
-.radio.used {
-	top: 44px;
-	background-position: 20% 100%;
-}
 
 .check_ok {
 	position: absolute;
@@ -184,16 +157,6 @@
 	top: 44px;
 	filter: drop-shadow(0px 0px 2px #000);
 	-webkit-filter: drop-shadow(0px 0px 2px #000);
-}
-
-#endPanel .check_ok {
-	position: initial;
-	margin: 5px;
-	opacity: 0.4;
-}
-
-#endPanel .check_confirm {
-	opacity: 1;
 }
 
 
@@ -293,19 +256,9 @@
 
 
 
-.col5.val1 {  background-position-y: 0%; background-position-x: 90%; }
-.col5.val2 {  background-position-y: 33.3%; background-position-x: 90%; }
-.col5.val3 { background-position-y: 66.6%;  background-position-x: 90%; }
-.col5.val4 { background-position-y: 100%; background-position-x: 90%; }
 
-.col6 { background-position-y: 33.3%; background-position-x: 100%; }
 .col7 { background-position-y: 0%; background-position-x: 100%; }
 
-.stockitem {
-	filter: drop-shadow(1px 1px 2px #000);
-	-webkit-filter: drop-shadow(1px 1px 2px #000);
-  	border-radius: 5px;
-}
 
 
 .radio_temp {
