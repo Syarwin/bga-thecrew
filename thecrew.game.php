@@ -95,11 +95,13 @@ class thecrew extends Table
   protected function getAllDatas()
   {
     $pId = self::getCurrentPId();
+    $status = CREW\LogBook::getStatus();
     return [
       'players' => CREW\Game\Players::getUiData($pId),
       'missions' => CREW\Missions::getUiData(),
-      'status' => CREW\LogBook::getStatus(),
+      'status' => $status,
       'commanderId' => CREW\Game\Globals::getCommander(),
+      'showIntro' => $status['mId'] == 1 && $status['total'] == 1 && CREW\Game\Globals::isCampaign(),
     ];
   }
 

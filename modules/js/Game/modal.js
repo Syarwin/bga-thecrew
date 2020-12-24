@@ -124,7 +124,7 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "dojox/fx/ext-dojo/complex"], f
         position:'absolute',
         left:'0px',
         top:'0px',
-        width:'100vw',
+        width:'min(100%,100vw)',
         height:'100vh',
         zIndex:950,
         opacity:0,

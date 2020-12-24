@@ -5,25 +5,33 @@
 	<div id="table-top"></div>
 
 	<div id="table-middle">
-    <div id="mission-status">
-      <div id='mission-counter-wrapper'>
-        <span>{MISSION}</span>
-        <span id='mission-counter'></span>
-      </div>
 
-      <div id='mission-description'></div>
 
-     	<div id='try-counter-wrapper'>
-        <span>{TRY}</span>
-        <span id='try-counter'></span>
-      </div>
+    <div id="mission-status" class="book">
+      <section class="open-book">
+        <header></header>
+        <article>
+          <h2 class="chapter-title" id='mission-counter-wrapper'>
+            <span>{MISSION}</span>
+            <span id='mission-counter'></span>
+          </h2>
 
-     	<div id='total-try-counter-wrapper'>
-        <span>{TOTALTRY}</span>
-        <span id='total-try-counter'></span>
-      </div>
+          <div id='mission-description'></div>
 
-      <div id="distress"></div>
+          <div id="distress"></div>
+        </article>
+        <footer>
+          <div id='try-counter-wrapper'>
+            <span>{TRY}</span>
+            <span id='try-counter'></span>
+          </div>
+
+          <div id='total-try-counter-wrapper'>
+            <span>{TOTALTRY}</span>
+            <span id='total-try-counter'></span>
+          </div>
+        </footer>
+      </section>
     </div>
 
 
@@ -121,13 +129,6 @@ var jstpl_task = `
 
 var jstpl_card = `
 <div class="card" data-color="\${color}" data-value="\${value}" id="card-\${id}"></div>`;
-
-
-/*
-
-
-var jstpl_temp_comm = '<div class="radio selectable radio_temp ${status}" id="radio_${player_id}"></div>';
-*/
 </script>
 
 {OVERALL_GAME_FOOTER}

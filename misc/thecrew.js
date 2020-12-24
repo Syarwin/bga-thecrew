@@ -92,9 +92,6 @@ function (dojo, declare) {
 
          // Cards in player's hand
 
-			dojo.query(".card_com").connect('onclick', this, 'onStartComm');
-			dojo.query(".card_com .cardontable").connect('onclick', this, 'onStartComm');
-
 
             if(this.gamedatas.distress == 1)
             {
@@ -105,22 +102,6 @@ function (dojo, declare) {
             dojo.query('#distress' ).connect( 'onclick', this, 'onDistress');
             dojo.query('.playertable' ).connect( 'onclick', this, 'onPickCrew');
 
-            if(gamedatas.players[this.player_id] != undefined)
-            {
-	            if(gamedatas.players[this.player_id]['comm_pending'] == 1)
-	            {
-	            	dojo.addClass('comcard_'+this.player_id, 'commpending');
-	            }
-	            if(gamedatas.players[this.player_id]['canCommunicate'] == 1)
-	            {
-	            	dojo.addClass('comcard_'+this.player_id, 'selectablecomm');
-	            }
-            }
-
-            if(this.gamedatas.show_intro)
-            {
-            	this.startCampaign();
-            }
 
             // Setup game notifications to handle (see "setupNotifications" method below)
             this.setupNotifications();
@@ -507,18 +488,6 @@ function (dojo, declare) {
         },
 
 
-
-        startCampaign : function()
-        {
-        	this.myDlg = new ebg.popindialog();
-        	this.myDlg.create( 'myDialogUniqueId' );
-        	this.myDlg.setTitle( _("LOGBOOK") );
-        	this.myDlg.setMaxWidth( 500 ); // Optional
-        	var html = _('After years of discussion, the International Astronomical Union decided on August 24th, 2006, to withdraw Pluto’s status as the ninth planet in our solar system. From that day on, there were only eight planets in our solar system, Neptune being the eighth and the furthest away from the Sun.<br/><br/> Years later, however, a sensational theory emerged — that a huge, hitherto unknown heavenly body must be positioned at the edge of our solar system. The origin of these theories was the data transmitted by the spacecraft Voyager 2 and then later by New Horizons. Unusual distortions in their measurements and phased interruptions in their transmissions left scientists perplexed. Initially dismissed by their peers as a figment of their imagination, many skeptics eventually became convinced by the evidence over time. However, the data ultimately proved inconclusive. Even though a cadre of scientists had thoroughly examined it, it still had not provided any concrete evidence of the theory.<br/><br/> Out of options, the research team built around Dr. Markow created project NAUTILUS: A manned mission that would be sent to verify the existence of Planet Nine. After years of research and countless setbacks, they had finally developed the technology to carry out the mission. And now the real question is: with what crew? Are you ready to join project NAUTILUS? Volunteers needed!');
-        	this.myDlg.setContent( html );
-        	this.myDlg.show();
-
-        },
 
         notif_speak: function(notif)
         {

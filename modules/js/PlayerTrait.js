@@ -7,6 +7,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
       this.trickCounters = [];
       this.cardsCounters = [];
+      this.positions = [];
     },
 
     /*
@@ -20,6 +21,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
       players.forEach( player => {
         player.no = (player.no + nPlayers - currentPlayerNo) % nPlayers;
+        this.positions[player.id] = player.no;
 
         let row = topRowNo.includes(player.no)? 'top' : 'bottom';
         this.place('jstpl_playerTable', player, 'table-' + row);
@@ -72,8 +74,12 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     updatePlayersData(){
       Object.values(this.gamedatas.players).forEach( player => {
+        player.no = this.positions[player.id]; // Erased in the notif_cleanUp
         this.trickCounters[player.id].setValue(player.nTricks);
         this.cardsCounters[player.id].setValue(player.nCards);
+
+        this.setCommunicationCard(player.id, player.commCard);
+        this.setRadioToken(player.id, player.commToken);
 
         if(this.player_id == player.id){
           dojo.attr('comm-card-' + player.id, 'data-pending', player.commPending? 1 : 0);

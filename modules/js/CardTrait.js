@@ -50,6 +50,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this._hand.setSelectionMode(0);
       this._hand.setSelectionAppearance('class');
       this._hand.centerItems = true;
+      this._hand.item_margin = 10;
 
       // Create one type for each card
       for(var color = 1; color <= 5; color++) {

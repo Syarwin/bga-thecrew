@@ -65,6 +65,10 @@
         this.setupPlayers();
         this.setupMission();
         this.setupTooltips();
+        if(gamedatas.showIntro){
+          this.startCampaign();
+        }
+
         this.inherited(arguments);
       },
 
@@ -109,16 +113,50 @@
 
         dojo.query('.task').forEach(dojo.destroy);
         dojo.query(".card").forEach(dojo.destroy);
-
-        /*
-            for( var player_id in this.players )
-              {
-                  dojo.removeClass('radio_' + player_id);
-                  dojo.addClass('radio_' + player_id, 'radio appears middle');
-              }
-              dojo.query(".card_com .cardontable").connect('onclick', this, 'onStartComm');
-        */
       },
 
+      startCampaign(){
+        debug("Showing intro:");
+
+        let today = new Date();
+        let date = today.toLocaleString();
+        let bookTitle = _("LOGBOOK");
+        let leftPage = 1;
+        let rightPage = 2;
+
+        new customgame.modal("campaignIntro", {
+          autoShow:true,
+          class:"thecrew_popin",
+          closeIcon:'fa-times',
+          verticalAlign:'flex-start',
+          title: _("THE CREW"),
+          contents: _('After years of discussion, the International Astronomical Union decided on August 24th, 2006, to withdraw Pluto’s status as the ninth planet in our solar system. From that day on, there were only eight planets in our solar system, Neptune being the eighth and the furthest away from the Sun.<br/><br/> Years later, however, a sensational theory emerged — that a huge, hitherto unknown heavenly body must be positioned at the edge of our solar system. The origin of these theories was the data transmitted by the spacecraft Voyager 2 and then later by New Horizons. Unusual distortions in their measurements and phased interruptions in their transmissions left scientists perplexed. Initially dismissed by their peers as a figment of their imagination, many skeptics eventually became convinced by the evidence over time. However, the data ultimately proved inconclusive. Even though a cadre of scientists had thoroughly examined it, it still had not provided any concrete evidence of the theory.<br/><br/> Out of options, the research team built around Dr. Markow created project NAUTILUS: A manned mission that would be sent to verify the existence of Planet Nine. After years of research and countless setbacks, they had finally developed the technology to carry out the mission. And now the real question is: with what crew? Are you ready to join project NAUTILUS? Volunteers needed!'),
+          modalTpl: `
+          <div id='popin_\${id}_container' class="\${class}_container">
+            <div id='popin_\${id}_underlay' class="\${class}_underlay"></div>
+            <div id='popin_\${id}_wrapper' class="\${class}_wrapper">
+              <div id="popin_\${id}" class="\${class}">
+                \${closeIconTpl}
+                <section class="open-book">
+                  <header>
+                    <h1>${bookTitle}</h1>
+                    <h6>${date}</h6>
+                  </header>
+                  <article>
+                    \${titleTpl}
+                    \${contentsTpl}
+                  </article>
+                  <footer>
+                    <ol class="page-numbers">
+                      <li>${leftPage}</li>
+                      <li>${rightPage}</li>
+                    </ol>
+                  </footer>
+                </section>
+              </div>
+            </div>
+          </div>`
+        });
+      },
    });
 });
