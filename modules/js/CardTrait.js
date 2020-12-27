@@ -78,6 +78,13 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       dojo.connect($("hand_item_"+card.id), 'onclick', () => this.onPlayCard(card) );
     },
 
+    highlightCard(cardId, exclusive = true){
+      if(exclusive){
+        dojo.query("#hand .stockitem").removeClass("selected");
+      }
+      dojo.addClass("hand_item_" + cardId, "selected");
+    },
+
     notif_newHand(n){
       this._hand.removeAll(); // Remove cards in hand if any
       n.args.hand.forEach(card => this.addCardInHand(card) );

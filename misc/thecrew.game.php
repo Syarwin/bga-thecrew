@@ -61,34 +61,6 @@
         self::checkAction( 'actButton' );
         switch($this->gamestate->state()['name'])
         {
-            case "distressSetup":
-                $left = $button == 'left';
-                $text = clienttranslate('Cards will be passed to the <b>left</b>');
-                if($button == 'right'){
-                    $text = clienttranslate('Cards will be passed to the <b>right</b>');
-                }
-                if($button == 'no'){
-                    $text = clienttranslate('No cards will be passed');
-                }
-
-
-
-                self::notifyAllPlayers('note', $text ,array(
-                'player_name' => self::getPlayerName(self::getCurrentPlayerId())
-                ));
-
-                if($button == 'no')
-                {
-                    $this->gamestate->nextState('turn');
-                }
-                else
-                {
-                    self::setGameStateValue( 'distress_turn', $left?1:0 );
-                    $this->gamestate->setAllPlayersMultiactive();
-                    $this->gamestate->nextState('next');
-                }
-                break;
-
             case "question":
                 $index = intval($button);
                 $mission = $this->getMission();
@@ -174,24 +146,6 @@
                 break;
         }
 
-    }
-
-
-    function actDistress() {
-       // self::checkAction("actDistress");
-        if($this->gamestate->state()['name'] == 'playerTurn' && $this->cards->countCardInLocation('cardsontable')==0)
-        {
-            $mission = self::getUniqueValueFromDB( "SELECT max(mission) FROM logbook");
-
-            $sql = "update logbook set distress = 1, attempt = attempt+1 where mission=".$mission;
-            self::DbQuery( $sql );
-
-            self::notifyAllPlayers('distress', clienttranslate('${player_name} launches a distress signal'),array(
-                'player_name' => self::getPlayerName(self::getCurrentPlayerId())
-            ));
-
-            $this->gamestate->nextState('distress');
-        }
     }
 
 
@@ -396,16 +350,6 @@
         return $result;
     }
 
-    function argDistress()
-    {
-        $result = array();
-
-        $sql = "SELECT card_id id FROM card where card_type <5";
-        $result['cards'] = self::getCollectionFromDb( $sql );
-
-        return $result;
-    }
-
     function argMultiSelect(){
 
         $result = array();
@@ -519,44 +463,6 @@
             ));
         }
     }
-
-    function stDistressExchange()
-    {
-        $sql = "SELECT player_id id, player_no, card_id FROM player ";
-        $result['players'] = self::getCollectionFromDb( $sql );
-
-        foreach($result['players'] as $player_id => $player) {
-
-            $rel = $this->getPlayerRelativePositions($player_id);
-            $next = $this->getPlayerAfter($player_id);
-            if(self::getGameStateValue('distress_turn') == 0)
-            {
-                $next = $this->getPlayerBefore($player_id);
-            }
-
-            $card_id = $player['card_id'];
-            $this->cards->moveCard($card_id, 'hand', $next);
-
-
-            self::notifyPlayer($player_id, 'give', '', array(
-                'card_id' => $card_id,
-            ));
-
-            $card = $this->cards->getCard($card_id);
-            self::notifyPlayer($next, 'receive', clienttranslate('You receive ${value_symbol}${color_symbol}'),array(
-                'card_id' => $card['id'],
-                'card' => $card,
-                'value' => $card['type_arg'],
-                'value_symbol' => $card['type_arg'], // The substitution will be done in JS format_string_recursive function
-                'color' => $card['type'],
-                'color_symbol' => $card['type'] // The substitution will be done in JS format_string_recursive function
-            ));
-        }
-
-        $this->gamestate->changeActivePlayer(self::getGameStateValue('commander_id'));
-        $this->gamestate->nextState('next');
-    }
-
 
 
     function stSave()

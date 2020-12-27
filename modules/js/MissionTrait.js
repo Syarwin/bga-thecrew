@@ -20,6 +20,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     updateMissionStatus(){
       let mId = this.gamedatas.status.mId;
       $('mission-description').innerHTML = _(this.gamedatas.missions[mId - 1].desc);
+      this.createMissionInformations();
       this.missionCounter.setValue(mId);
       this.attemptsCounter.setValue(this.gamedatas.status.attempts);
       this.totalAttemptsCounter.setValue(this.gamedatas.status.total);
@@ -27,6 +28,13 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       dojo.toggleClass('distress', "activated", this.gamedatas.status.distress);
     },
 
+    createMissionInformations(container = 'mission-informations'){
+      dojo.empty(container);
+      let mission = this.gamedatas.missions[this.gamedatas.status.mId - 1];
+      if(mission.tasks > 0){
+        dojo.place(`<div class="mission-informations-tasks">${mission.tasks}</div>`, container);
+      }
+    },
 
     onEnteringStateEndMission(args){
       this.switchCentralZone('end');

@@ -100,4 +100,13 @@ class LogBook extends \CREW\Helpers\DB_Manager
     $noCommunicationBefore = !Players::alreadyCommmunicate();
     return !$status['distress'] && $cardPlayed == 0 && $noCommunicationBefore && Globals::getTrickCount() ==1;
   }
+
+
+  public static function launchDistressSignal()
+  {
+    $mId = Missions::getCurrentId();
+    self::DB()->update([
+      'distress' => 1
+    ], $mId);
+  }
 }

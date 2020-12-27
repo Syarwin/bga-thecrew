@@ -387,4 +387,9 @@ class Collection extends \ArrayObject {
   public function merge($arr){
     return new Collection( array_merge($this->toAssoc(), $arr->toAssoc()) );
   }
+
+  public function reduce($func, $init){
+    return array_reduce($this->toArray(), $func, $init);
+  }
+
 }

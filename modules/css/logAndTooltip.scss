@@ -9,11 +9,11 @@
       background-image: url('img/sprites.png');
     	background-size: 1100%;
 
-      &.blue { background-position: 30% 100%;}
-      &.green { background-position: 40% 100%;}
-      &.pink { background-position: 50% 100%;}
-      &.yellow { background-position: 60% 100%;}
-      &.black { background-position: 100% 100%;}
+      &.blue { background-position: 30% 50%;}
+      &.green { background-position: 40% 50%;}
+      &.pink { background-position: 50% 50%;}
+      &.yellow { background-position: 60% 50%;}
+      &.black { background-position: 100% 50%;}
     }
 
     &.card-value {

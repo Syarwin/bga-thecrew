@@ -27,6 +27,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         this.place('jstpl_playerTable', player, 'table-' + row);
         this.place('jstpl_playerMat', player, 'card-mat-' + row);
         this.place('jstpl_playerCheckMark', player, 'end-panel-' + row);
+        this.place('jstpl_playerDistressChoice', player, 'distress-panel-' + row);
 
         // Create tasks
         player.tasks.forEach(task => this.addTask(task, 'tasks-' + player.id) );
@@ -55,6 +56,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         if(this.player_id == player.id){
           dojo.place('<div id="hand-wrapper"><div id="hand"></div></div>', 'hand-container');
           this.setupHand(player.cards);
+          if(player.distressCard)
+            this.highlightCard(player.distressCard);
           dojo.connect($('comm-card-' + player.id), 'onclick', () => this.toggleCommunication() );
         }
       });

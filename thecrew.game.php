@@ -102,6 +102,7 @@ class thecrew extends Table
       'status' => $status,
       'commanderId' => CREW\Game\Globals::getCommander(),
       'showIntro' => $status['mId'] == 1 && $status['total'] == 1 && CREW\Game\Globals::isCampaign(),
+      'showMission' => CREW\Game\Globals::getTrickCount() == 0,
     ];
   }
 

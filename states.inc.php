@@ -133,17 +133,57 @@ $machinestates = [
     "type" => "game",
     "action" => "stNewTrick",
     "transitions" => [
-      "next" => STATE_BEFORECOMM,
+      "next" => STATE_BEFORE_COMM,
       "distress" => STATE_DISTRESS_SETUP
     ]
   ],
+
+
+  /***********************
+  ****** DISTRESS  *******
+  ***********************/
+  STATE_DISTRESS_SETUP => [
+    "name" => "distressSetup",
+    "description" => clienttranslate('The distress signal might be used'),
+    "descriptionmyturn" => clienttranslate('${you} may use the distress signal'),
+    "type" => "multipleactiveplayer",
+    "action" => "stDistressSetup",
+    "possibleactions" => ["actChooseDirection"],
+    "transitions" => [
+      "next" => STATE_DISTRESS,
+      "turn" => STATE_BEFORE_COMM,
+      "zombiePass" => STATE_CHANGE_MISSION
+    ]
+  ],
+
+  STATE_DISTRESS => [
+    "name" => "distress",
+    "args" => "argDistress",
+    "type" => "multipleactiveplayer",
+    "possibleactions" => ["actChooseCardDistress"],
+    "description" => clienttranslate('Every players must choose a card to pass'),
+    "descriptionmyturn" => clienttranslate('${you} must choose a card to pass'),
+    "transitions" => [
+      "next" => STATE_DISTRESS_EXCHANGE,
+      "zombiePass" => STATE_CHANGE_MISSION
+    ]
+  ],
+
+  STATE_DISTRESS_EXCHANGE => [
+    "name" => "distressExchange",
+    "description" => "",
+    "type" => "game",
+    "action" => "stDistressExchange",
+    "transitions" => ["next" => STATE_BEFORE_COMM],
+  ],
+
 
 
 
   /****************************
   ****** COMMUNICATION  *******
   ****************************/
-  STATE_BEFORECOMM => [
+  STATE_BEFORE_COMM => [
     "name" => "beforeComm",
     "description" => "",
     "type" => "game",
@@ -162,58 +202,12 @@ $machinestates = [
     "args" => "argComm",
     "possibleactions" => ["actConfirmComm", "actCancelComm"],
     "transitions" => [
-      "next" => STATE_BEFORECOMM,
-      "cancel" => STATE_BEFORECOMM,
-      "after" => STATE_BEFORECOMM,
+      "next" => STATE_BEFORE_COMM,
+      "cancel" => STATE_BEFORE_COMM,
+      "after" => STATE_BEFORE_COMM,
       "zombiePass" => STATE_CHANGE_MISSION
     ]
   ],
-
-/*
-TODO
-    STATE_COMM_TOKEN => [
-        "name" => "commToken",
-        "description" => clienttranslate('${actplayer} must place its communication token'),
-        "descriptionmyturn" => clienttranslate('${you} must place your communication token'),
-        "type" => "activeplayer",
-        "args" => "argCommToken",
-        "possibleactions" => ["actFinishComm"],
-        "transitions" => ["next" => STATE_AFTERCOMM, "zombiePass" => STATE_CHANGE_MISSION]
-    ],
-*/
-
-
-  /***********************
-  ****** DISTRESS  *******
-  ***********************
-    STATE_DISTRESS_SETUP => [
-        "name" => "distressSetup",
-        "description" => clienttranslate('Distress signal : ${actplayer} must decide where to pass the cards'),
-        "descriptionmyturn" => clienttranslate('Distress signal : ${you} must decide where to pass the cards'),
-        "type" => "activeplayer",
-        "args" => "argPlayerTurn",
-        "possibleactions" => ["actButton"],
-        "transitions" => ["next" => STATE_DISTRESS, "turn" => STATE_BEFORECOMM, "zombiePass" => STATE_CHANGE_MISSION]
-    ],
-
-    STATE_DISTRESS => [
-        "name" => "distress",
-        "args" => "argDistress",
-        "type" => "multipleactiveplayer",
-        "possibleactions"       => ["actPlayCard"],
-        "description" => clienttranslate('Every players must choose a card to pass'),
-        "descriptionmyturn" => clienttranslate('${you} must choose a card to pass'),
-        "transitions" => ["next" => STATE_DISTRESS_EXCHANGE, "zombiePass" => STATE_CHANGE_MISSION]
-    ],
-
-    STATE_DISTRESS_EXCHANGE => [
-        "name" => "distressExchange",
-        "description" => "",
-        "type" => "game",
-        "action" => "stDistressExchange",
-        "transitions" => ["next" => STATE_BEFORECOMM],
-    ],*/
-
 
 
 
@@ -226,7 +220,7 @@ TODO
     "possibleactions" => ["actPlayCard", "actStartComm", "actDistress"],
     "transitions" => [
       "next" => STATE_NEXTPLAYER,
-      "startComm" => STATE_BEFORECOMM,
+      "startComm" => STATE_BEFORE_COMM,
       "distress" => STATE_DISTRESS_SETUP,
       "zombiePass" => STATE_CHANGE_MISSION
     ]

@@ -111,7 +111,7 @@ class Cards extends Helpers\Pieces
     $nbCards = intdiv(Globals::isChallenge()? 30 : 40 , $players->count() );
 
     // This guy will have one extra card if 3 players and challenge mode off
-    $luckyGuy = (count($players) == 3 && !Globals::isChallenge())? array_rand($players) : -1;
+    $luckyGuy = (count($players) == 3 && !Globals::isChallenge())? array_rand($players->toAssoc()) : -1;
 
     foreach($players as $pId => $player){
       $hand = self::pickForLocation($nbCards + ($pId == $luckyGuy? 1 : 0), 'deck', ["hand", $pId] );

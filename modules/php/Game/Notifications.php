@@ -5,12 +5,15 @@ use thecrew;
 class Notifications
 {
   protected static function notifyAll($name, $msg, $data){
+    self::updateArgs($data);
     thecrew::get()->notifyAllPlayers($name, $msg, $data);
   }
 
   protected static function notify($pId, $name, $msg, $data){
+    self::updateArgs($data);
     thecrew::get()->notifyPlayer($pId, $name, $msg, $data);
   }
+
 
   public static function message($txt, $args = []){
     self::notifyAll('message', $txt, $args);
@@ -20,6 +23,7 @@ class Notifications
     $pId = ($player instanceof \CREW\Player)? $player->getId() : $player;
     self::notify($pId, 'message', $txt, $args);
   }
+
 
   public static function cleanUp(){
     self::notifyAll('cleanUp', '', [
@@ -38,42 +42,29 @@ class Notifications
 
   public static function newCommander($player){
     self::notifyAll('commander', clienttranslate('${player_name} is your new commander'), [
-      'player_id' => $player->getId(),
-      'player_name' => $player->getName(),
+      'player' => $player
     ]);
   }
 
 
   public static function assignTask($task, $player){
     self::notifyAll('takeTask', clienttranslate('${player_name} takes task ${value_symbol}${color_symbol}'), [
-      'player_id' => $player->getId(),
-      'player_name' => $player->getName(),
-      'value' => $task['value'],
-      'value_symbol' => $task['value'], // The substitution will be done in JS format_string_recursive function
-      'color' => $task['color'],
-      'color_symbol' => $task['color'], // The substitution will be done in JS format_string_recursive function
+      'player' => $player,
       'task' => $task,
     ]);
   }
 
   public static function playCard($card, $player){
     self::notifyAll('playCard', clienttranslate('${player_name} plays ${value_symbol}${color_symbol}'), [
-      'player_id' => $player->getId(),
-      'player_name' => $player->getName(),
-      'value' => $card['value'],
-      'value_symbol' => $card['value'], // The substitution will be done in JS format_string_recursive function
-      'color' => $card['color'],
-      'color_symbol' => $card['color'], // The substitution will be done in JS format_string_recursive function
+      'player' => $player,
       'card' => $card,
-      'pId' => $player->getId(),
     ]);
   }
 
 
   public static function winTrick($cards, $player){
     self::notifyAll('trickWin', clienttranslate('${player_name} wins the trick:&nbsp;<br />${cards}'), [
-      'player_id' => $player->getId(),
-      'player_name' => $player->getName(),
+      'player' => $player,
       'cards' => self::listCardsForNotification($cards),
       'oCards' => $cards,
     ]);
@@ -86,25 +77,54 @@ class Notifications
       : clienttranslate('${player_name} failed task ${value_symbol}${color_symbol}');
 
     self::notifyAll('taskUpdate', $msg, [
-      'player_id' => $player->getId(),
-      'player_name' => $player->getName(),
-      'value' => $task['value'],
-      'value_symbol' => $task['value'], // The substitution will be done in JS format_string_recursive function
-      'color' => $task['color'],
-      'color_symbol' => $task['color'], // The substitution will be done in JS format_string_recursive function
+      'player' => $player,
       'task' => $task,
+    ]);
+  }
+
+
+  public static function chooseDirection($player, $dir){
+    self::notifyAll('chooseDistressDirection', '', [
+      'pId' => $player->getId(),
+      'dir' => $dir,
+    ]);
+  }
+
+  public static function chooseDistressDirection($dir){
+    $msg = clienttranslate('No cards will be passed');
+    if($dir == CLOCKWISE) $msg = clienttranslate('Cards will be turned clockwise');
+    if($dir == ANTICLOCKWISE) $msg = clienttranslate('Cards will be turned anticlockwise');
+
+    self::notifyAll('distressActivated', $msg, []);
+  }
+
+  public static function chooseDistressCard($player, $card){
+    self::notify($player->getId(), 'chooseDistressCard', clienttranslate('You chose to give the ${value_symbol}${color_symbol}'), [
+      'card' => $card,
+    ]);
+  }
+
+  public static function distressExchange($from, $to, $card){
+    self::notify($from->getId(), 'giveDistressCard', clienttranslate('You give ${value_symbol}${color_symbol} to ${player_name}'), [
+      'card' => $card,
+      'player' => $to,
+    ]);
+
+    self::notify($to->getId(), 'receiveDistressCard', clienttranslate('You receive ${value_symbol}${color_symbol} from ${player_name}'), [
+      'card' => $card,
+      'player' => $from,
     ]);
   }
 
 
   public static function continueMissions(){
     $player = Players::getCurrent();
-    self::notifyAll('continue', clienttranslate('${player_name} wants to continue'), $player->getForNotif());
+    self::notifyAll('continue', clienttranslate('${player_name} wants to continue'), ['player' => $player]);
   }
 
   public static function stopMissions(){
     $player = Players::getCurrent();
-    self::notifyAll('message', clienttranslate('${player_name} wants to stop'), $player->getForNotif());
+    self::notifyAll('message', clienttranslate('${player_name} wants to stop'), ['player' => $player]);
   }
 
   public static function noPremium(){
@@ -120,11 +140,11 @@ class Notifications
   }
 
   public static function startComm($player){
-    self::notifyAll('startComm', clienttranslate('${player_name} starts communication'), $player->getForNotif());
+    self::notifyAll('startComm', clienttranslate('${player_name} starts communication'), ['player' => $player]);
   }
 
   public static function cancelComm($player){
-    self::notifyAll('cancelComm', clienttranslate('${player_name} cancels communication'), $player->getForNotif());
+    self::notifyAll('cancelComm', clienttranslate('${player_name} cancels communication'), ['player' => $player]);
   }
 
   public static function communicate($player, $card, $status){
@@ -134,14 +154,9 @@ class Notifications
     if($status == 'bottom') $msg = clienttranslate('${player_name} tells ${value_symbol}${color_symbol} is their lowest card of this color');
 
     self::notifyAll('endComm', $msg, [
-      'player_name' => $player->getName(),
-      'player_id' => $player->getId(),
+      'player' => $player,
       'comm_status' => $status,
       'card' => $card,
-      'value' => $card['value'],
-      'value_symbol' => $card['value'], // The substitution will be done in JS format_string_recursive function
-      'color' => $card['color'],
-      'color_symbol' => $card['color'] // The substitution will be done in JS format_string_recursive function
     ]);
   }
 
@@ -152,7 +167,30 @@ class Notifications
   }
 
 
-  // Create the notification arguments
+
+  /*
+   * Automatically adds some standard field about player and/or card/task
+   */
+  public static function updateArgs(&$args){
+    if(isset($args['player'])){
+      $args['player_name'] = $args['player']->getName();
+      $args['player_id'] = $args['player']->getId();
+      unset($args['player']);
+    }
+    if(isset($args['card']) || isset($args['task'])){
+      $c = isset($args['card'])? $args['card'] : $args['task'];
+
+      $args['value'] = $c['value'];
+      $args['value_symbol'] = $c['value'];// The substitution will be done in JS format_string_recursive function
+      $args['color'] = $c['color'];
+      $args['color_symbol'] = $c['color'];// The substitution will be done in JS format_string_recursive function
+    }
+  }
+
+
+  /*
+   * Create the notification arguments for a list of cards
+   */
   protected static function listCardsForNotification($cards) {
     // Grouping values by color
     $groupedValues = [];

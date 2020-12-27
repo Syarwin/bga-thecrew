@@ -34,8 +34,8 @@ class Globals extends \APP_DbObject
     'lastWinnerId' => 0,
     'trickColor' => 0,
     'missionFinished' => 0,
+    'distressDirection' => DONT_USE,
 
-    'distress_turn' => 0,
     'special_id' => 0,
     'special_id2' => 0,
     'checkCount' => 0,
@@ -111,6 +111,11 @@ class Globals extends \APP_DbObject
     return self::get("missionFinished");
   }
 
+  public static function getDistressDirection()
+  {
+    return self::get("distressDirection");
+  }
+
   public static function isEndOfGame()
   {
     return self::get("endOfGame") == 1;
@@ -161,5 +166,9 @@ class Globals extends \APP_DbObject
 
   public static function setEndOfGame(){
     self::set('endOfGame', 1);
+  }
+
+  public static function setDistressDirection($dir){
+    self::set('distressDirection', $dir);
   }
 }

@@ -22,6 +22,8 @@ class Player extends Helpers\DB_Manager
     $this->commCard = $row['comm_card_id'];
     $this->commToken = $row['comm_token'];
     $this->commPending = (int) $row['comm_pending'];
+    $this->distressChoice = $row['distress_choice'];
+    $this->distressCard = $row['distress_card_id'];
   }
 
   private $id;
@@ -35,6 +37,8 @@ class Player extends Helpers\DB_Manager
   private $commCard;
   private $commToken;
   private $commPending;
+  private $distressChoice;
+  private $distressCard;
 
 
   /////////////////////////////////
@@ -49,6 +53,8 @@ class Player extends Helpers\DB_Manager
   public function getColor(){ return $this->color; }
   public function isEliminated(){ return $this->eliminated; }
   public function isZombie(){ return $this->zombie; }
+  public function getDistressChoice(){ return $this->distressChoice; }
+  public function getDistressCard(){ return Cards::get($this->distressCard); }
 
   public function getUiData($pId)
   {
@@ -67,14 +73,8 @@ class Player extends Helpers\DB_Manager
       'commCard'  => $this->getCardOnComm(),
       'commPending' => $this->isCommPending(),
       'canCommunicate' => $this->canCommunicate(),
-    ];
-  }
-
-  public function getForNotif()
-  {
-    return [
-      'player_name' => $this->name,
-      'player_id' => $this->id,
+      'distressChoice' => $this->distressChoice,
+      'distressCard' => $pId == $this->id? $this->distressCard : null,
     ];
   }
 
@@ -145,4 +145,16 @@ class Player extends Helpers\DB_Manager
     ], $this->id);
   }
 
+  // Choose distress signal direction
+  public function chooseDirection($dir)
+  {
+    $this->distressChoice = $dir;
+    self::DB()->update(['distress_choice' => $dir], $this->id);
+  }
+
+  public function setDistressCard($cardId)
+  {
+    $this->distressCard = $cardId;
+    self::DB()->update(['distress_card_id' => $cardId], $this->id);
+  }
 }

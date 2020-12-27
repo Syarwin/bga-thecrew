@@ -12,7 +12,7 @@ define("STATE_NEXT_PLAYER_PICK_TASK",6);
 define("STATE_NEXTPLAYER",7);
 define("STATE_ENDMISSION",8);
 define("STATE_COMM",9);
-define("STATE_BEFORECOMM",10);
+define("STATE_BEFORE_COMM",10);
 define("STATE_AFTERCOMM",11);
 define("STATE_COMM_TOKEN",12);
 define("STATE_CHANGE_MISSION",13);
@@ -38,6 +38,12 @@ define('OPTION_CHALLENGE', 101);
 define('CHALLENGE_OFF', 1);
 define('CHALLENGE_ON', 2);
 
+/*
+ * DISTRESS DIRECTION
+ */
+define('CLOCKWISE', 1);
+define('DONT_USE', 2);
+define('ANTICLOCKWISE', 3);
 
 /*
  * COLORS

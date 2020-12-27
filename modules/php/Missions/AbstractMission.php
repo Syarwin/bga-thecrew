@@ -19,6 +19,8 @@ abstract class AbstractMission
     return [
       'id' => $this->id,
       'desc' => $this->desc,
+      'tasks' => $this->tasks,
+      'tiles' => $this->tiles,
     ];
   }
 

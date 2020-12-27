@@ -125,45 +125,6 @@ function (dojo, declare) {
             switch( stateName )
             {
 
-            	break;
-            case 'comm':
-    			dojo.query(".selectable").removeClass("selectable");
-            	if(this.isCurrentPlayerActive())
-        		{
-	            	for( var card_id in args.args )
-	                {
-	        			dojo.query("#myhand_item_"+card_id).addClass("selectable");
-	                }
-        		}
-            	break;
-
-            case 'commToken':
-            	if(this.isCurrentPlayerActive())
-        		{
-            		for( var status_id in args.args.possible )
-	                {
-                        var status = args.args.possible[status_id];
-                        debugger;
-                    	dojo.place( this.format_block('jstpl_temp_comm', {player_id: this.player_id , status:status}), $('comcard_'+this.player_id), 'first');
-	                }
-
-        			dojo.query(".radio_temp").connect('onclick', this, 'onFinishComm');
-        			this.addTooltipHtmlToClass( "radio_temp", this.format_block('jstpl_tooltip_common', {title: _('Radio communication token'), description:  _('Communication token gives information of the communicated color card :<br/>- At the top, if it is your highest card of this color.<br/>- In the middle, if it is your only card of this color.<br/>- At the bottom, if it is your lowest card of this color.<br/>- Red, you cannot communicate.')}));
-
-        		}
-            	break;
-
-            case 'distress':
-
-            	if(this.isCurrentPlayerActive())
-        		{
-	            	for( var card_id in args.args.cards )
-	                {
-	        			dojo.query("#myhand_item_"+card_id).addClass("selectable");
-	                }
-        		}
-                break;
-
             case 'question':
         		this.showTasks(args.args.tasks);
             	break;
@@ -279,26 +240,6 @@ function (dojo, declare) {
 
 
 
-       onDistress: function (event) {
-    	   dojo.stopEvent( event );
-
-	       	if(event.currentTarget.classList.contains('selectable') ) {
-
-
-	            this.confirmationDialog( _("Are you sure you want to launch a distress signal?"), dojo.hitch( this, function() {
-
-	       		dojo.query(".selectable").removeClass("selectable");
-
-	       		this.ajaxcall('/thecrew/thecrew/actDistress.html', {
-		                   lock:true,
-		                },this, function( result ) {
-		                }, function( is_error ) { } );
-	            } ) );
-                return;
-	       	}
-
-       },
-
         onCancel: function (event) {
             dojo.stopEvent( event );
             if( this.checkAction( "actCancel" ) ) {
@@ -309,25 +250,6 @@ function (dojo, declare) {
             }
         },
 
-
-        onFinishComm:function(event)
-        {
-            dojo.stopEvent( event );
-
-        	if(event.currentTarget.classList.contains('selectable') ) {
-
-        		dojo.query(".selectable").removeClass("selectable");
-
-        		var place = event.currentTarget.classList[event.currentTarget.classList.length-1];
-
-        		this.ajaxcall('/thecrew/thecrew/actFinishComm.html', {
- 	                   lock:true,
- 	                   place:place
- 	                },this, function( result ) {
- 	                }, function( is_error ) { } );
-        	}
-
-        },
 
         onPickCrew:function(event)
         {
@@ -396,68 +318,8 @@ function (dojo, declare) {
         },
 
 
-        onChooseTask:function(event)
-        {
-            dojo.stopEvent( event );
-            if(this.isCurrentPlayerActive())
-            {
-            	if(event.currentTarget.classList.contains('selectable')  && this.checkAction( "actChooseTask" ) ) {
-
-            		var id = event.currentTarget.id.split('_')[1];
-
-                    dojo.query(".selectable").removeClass("selectable");
-
-            		this.ajaxcall('/thecrew/thecrew/actChooseTask.html', {
-	 	                   lock:true,
-	 	                  taskId:id
-	 	                },this, function( result ) {
-	 	                }, function( is_error ) { } );
-            	}
-            }
-        },
 
 
-
-     // Enable to declare an optional parameter and its value
-        setDefault: function(variable, default_value) {
-            return variable === undefined ? default_value : variable;
-        },
-
-        // Gets the image of the symbol from the sprite
-        symbol: function(name) {
-            return dojo.string.substitute("<span class='logicon ${name}'></span>", {'name' : name});
-        },
-
-
-        ///////////////////////////////////////////////////
-        //// Player's action
-
-        /*
-
-            Here, you are defining methods to handle player's action (ex: results of mouse click on
-            game objects).
-
-            Most of the time, these methods:
-            _ check the action is possible at this game state.
-            _ make a call to the game server
-
-        */
-
-
-
-
-        ///////////////////////////////////////////////////
-        //// Reaction to cometD notifications
-
-        /*
-            setupNotifications:
-
-            In this method, you associate each of your game notifications with your local method to handle it.
-
-            Note: game notification names correspond to "notifyAllPlayers" and "notifyPlayer" calls in
-                  your thecrew.game.php file.
-
-        */
         setupNotifications: function()
         {
             dojo.subscribe('cleanUp', this, "notif_cleanUp");
@@ -499,18 +361,6 @@ function (dojo, declare) {
         },
 
 
-        notif_continue: function(notif)
-        {
-			dojo.query("#continue_ok_"+notif.args.player_id).addClass("check_confirm");
-        },
-
-
-        notif_commander: function(notif) {
-        	dojo.query(".commander").addClass("hidden");
-    		dojo.query("#commander_icon_spot_"+notif.args.player_id).removeClass("hidden");
-    		dojo.query(".commander_in_panel").addClass("hidden");
-    		dojo.query("#commander_in_panel_"+notif.args.player_id).removeClass("hidden");
-        },
 
         notif_special: function(notif) {
         	if(notif.args.special2 == true)
@@ -542,28 +392,6 @@ function (dojo, declare) {
 	       	  }).play();
         },
 
-        notif_trickWin: function(notif) {
-            // We do nothing here (just wait in order players can view the cards played before they are gathered
-        },
-
-
-        notif_resetComm: function(notif)  {
-
-        },
-
-        notif_commCard: function(notif) {
-
-        	var player_id = notif.args.card['location_arg'];
-            if (player_id == this.player_id) {
-            	this.player_hand.addToStockWithId(this.getCardUniqueId(6, 0), notif.args.reminder_id);
-            	dojo.query("#myhand_item_"+notif.args.reminder_id).connect('onclick', this, 'onPlayCard');
-            }
-        	dojo.addClass('radio_'+player_id, 'hidden');
-        	dojo.destroy('card_'+notif.args.reminder_id);
-            this.playCardOnTable(notif.args.card, true);
-        },
-
-
 
         notif_distress: function(notif) {
        		dojo.query(".selectable").removeClass("selectable");
@@ -572,33 +400,6 @@ function (dojo, declare) {
         	this.total_attempts_counter.incValue(1);
         },
 
-        notif_give: function(notif) {
-            this.player_hand.removeFromStockById(notif.args.card_id);
-        },
-
-        notif_receive: function(notif) {
-
-            var card = notif.args.card;
-            var color = card.type;
-            var value = card.type_arg;
-            this.player_hand.addToStockWithId(this.getCardUniqueId(color, value), card.id);
-			dojo.query("#myhand_item_"+card.id).connect('onclick', this, 'onPlayCard');
-        },
-
-
-        notif_newHand: function(notif) {
-
-            this.player_hand.removeAll(); // Remove cards in hand if any
-
-            for (var i in notif.args.hand) {
-                var card = notif.args.hand[i];
-                var color = card.type;
-                var value = card.type_arg;
-
-                this.player_hand.addToStockWithId(this.getCardUniqueId(color, value), card.id);
-    			dojo.query("#myhand_item_"+card.id).connect('onclick', this, 'onPlayCard');
-            }
-        },
 
         notif_updatePlayerScore: function(notif) {
             // Update the score

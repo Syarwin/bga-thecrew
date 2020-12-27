@@ -60,6 +60,25 @@ class action_thecrew extends APP_GameAction
     self::ajaxResponse( );
   }
 
+/***********************
+******* DISTRESS *******
+***********************/
+  public function actChooseDirection()
+  {
+    self::setAjaxMode();
+    $dir = self::getArg("dir", AT_posint, true);
+    $this->game->actChooseDirection($dir);
+    self::ajaxResponse();
+  }
+
+  public function actChooseCardDistress()
+  {
+    self::setAjaxMode();
+    $cardId = self::getArg("cardId", AT_posint, true);
+    $this->game->actChooseCardDistress($cardId);
+    self::ajaxResponse( );
+  }
+
 
 /***********************
 ***** COMMUNICATION ****
@@ -107,12 +126,6 @@ public function actCancel()
 {
 self::setAjaxMode();
 $this->game->actCancel();
-self::ajaxResponse( );
-}
-public function actDistress()
-{
-self::setAjaxMode();
-$this->game->actDistress();
 self::ajaxResponse( );
 }
 

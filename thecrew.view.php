@@ -47,6 +47,7 @@ require_once( APP_BASE_PATH."view/common/game.view.php" );
         $this->tpl['CONTINUE'] = self::_("Do you want to continue?");
         $this->tpl['YES'] = self::_("Yes");
         $this->tpl['NO'] = self::_("No");
+        $this->tpl['DISTRESS'] = self::_("Do you want to use the distress signal?");
 
         /*********** Do not change anything below this line  ************/
   	}

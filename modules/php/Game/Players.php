@@ -110,6 +110,7 @@ class Players extends \CREW\Helpers\DB_Manager
   public function clearMission()
   {
     self::DB()->update([
+      'distress_choice' => 0,
       'distress_card_id' => null,
       'comm_card_id' => null,
       'comm_token' => 'middle',

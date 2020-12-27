@@ -20,7 +20,7 @@ trait TrickTrait
   {
     Globals::startNewTrick();
     $status = LogBook::getStatus();
-    $newState = ($status['distress'] && Globals::getTrickCount() == 1)? 'distress' : 'next';
+    $newState = Globals::getTrickCount() == 1? 'distress' : 'next';
     $this->gamestate->nextState($newState);
   }
 
