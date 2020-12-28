@@ -13,6 +13,7 @@
  * The Crew stylesheet
  *
  */
+@import url(https://fonts.googleapis.com/css?family=Permanent+Marker);
 @import url(https://fonts.googleapis.com/css?family=Crimson+Text:400,700,900,400italic,700italic,900italic|Playfair+Display:400,700,900,400italic,700italic,900italic|Rock+Salt:400);
 @import url(https://fonts.googleapis.com/css?family=Crimson+Text:400,700,900,400italic,700italic,900italic|Playfair+Display:400,700,900,400italic,700italic,900italic|Rock+Salt:400);
 #logs span.logicon, .card-description span.logicon {
@@ -214,7 +215,7 @@ html, body {
             height: 40px;
             background-image: url("img/sprites.png");
             background-size: 1100%;
-            background-position: 80% 100%;
+            background-position: 80% 50%;
             filter: drop-shadow(0 0 2px #000);
             -webkit-filter: drop-shadow(0 0 2px #000); }
             #thecrew-table > div#table-middle #end-panel #end-panel-top .check-ok[data-no="0"], #thecrew-table > div#table-middle #end-panel #end-panel-bottom .check-ok[data-no="0"] {
@@ -287,6 +288,13 @@ html, body {
           display: flex;
           flex-flow: column;
           align-items: center; }
+          #thecrew-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-icon {
+            background-image: url("img/sprites.png");
+            background-size: 1100%;
+            background-position: 10% 50%;
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px; }
           #thecrew-table > div#table-middle #distress-panel #distress-panel-middle h2 {
             font-weight: 700;
             margin-top: 2px;
@@ -318,21 +326,16 @@ html, body {
                 height: 30px; }
               #thecrew-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-buttons button#anticlockwise-button div {
                 background-position: 10% 100%; }
-          #thecrew-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-active {
-            display: none; }
-            #thecrew-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-active #distress-panel-icon {
-              background-image: url("img/sprites.png");
-              background-size: 1100%;
-              background-position: 10% 50%;
-              width: 100px;
-              height: 100px; }
-            #thecrew-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-active #distress-panel-direction {
-              background-image: url("img/sprites.png");
-              background-size: 1100%;
-              background-position: 20% 100%;
-              width: 60px;
-              height: 60px;
-              margin: 50px auto 0px; }
+          #thecrew-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-direction {
+            display: none;
+            background-image: url("img/sprites.png");
+            background-size: 1100%;
+            background-position: 20% 100%;
+            width: 60px;
+            height: 60px;
+            margin: 50px auto 0px;
+            filter: drop-shadow(0 0 2px #000);
+            -webkit-filter: drop-shadow(0 0 2px #000); }
         #thecrew-table > div#table-middle #distress-panel[data-dir="1"] #distress-panel-top, #thecrew-table > div#table-middle #distress-panel[data-dir="1"] #distress-panel-bottom, #thecrew-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-top, #thecrew-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-bottom {
           display: none; }
         #thecrew-table > div#table-middle #distress-panel[data-dir="1"] #distress-panel-middle, #thecrew-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-middle {
@@ -340,10 +343,11 @@ html, body {
           justify-content: center; }
           #thecrew-table > div#table-middle #distress-panel[data-dir="1"] #distress-panel-middle h2, #thecrew-table > div#table-middle #distress-panel[data-dir="1"] #distress-panel-middle #distress-panel-buttons, #thecrew-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-middle h2, #thecrew-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-middle #distress-panel-buttons {
             display: none; }
-          #thecrew-table > div#table-middle #distress-panel[data-dir="1"] #distress-panel-middle #distress-panel-active, #thecrew-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-middle #distress-panel-active {
+          #thecrew-table > div#table-middle #distress-panel[data-dir="1"] #distress-panel-middle #distress-panel-direction, #thecrew-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-middle #distress-panel-direction {
             display: block; }
-        #thecrew-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-middle #distress-panel-active #distress-panel-direction {
-          background-position: 10% 100%; }
+        #thecrew-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-middle #distress-panel-direction {
+          background-position: 10% 100%;
+          filter: drop-shadow(0 0 2px #FFF); }
       #thecrew-table > div#table-middle[data-display='cards'] #cards-mat {
         display: flex; }
       #thecrew-table > div#table-middle[data-display='tasks'] #tasks {
@@ -446,6 +450,9 @@ html, body {
   background-color: rgba(255, 255, 255, 0.5); }
   .player-table.active {
     background-color: rgba(255, 255, 255, 0.8); }
+  .player-table.selectable {
+    animation: 0.9s borderBlink infinite;
+    cursor: pointer; }
   .player-table[data-no="0"] {
     order: 0; }
   .player-table[data-no="1"] {
@@ -552,7 +559,10 @@ html, body {
         display: none; }
       .player-table .communication-card-holder .communication-card[data-radio="used"] .radio {
         top: 44px;
-        background-position: 20% 100%; }
+        background-position: 20% 50%; }
+      .player-table .communication-card-holder .communication-card[data-radio="hidden"] .radio {
+        top: 44px;
+        background-position: 0% 100%; }
       .player-table .communication-card-holder .communication-card[data-radio="waiting"] .communication-waiting {
         display: block; }
       .player-table .communication-card-holder .communication-card .communication-waiting {
@@ -614,7 +624,8 @@ html, body {
       background-color: rgba(255, 255, 255, 0.9);
       padding: 5px 0px;
       border-bottom: 1px solid gray;
-      border-top-right-radius: 5px; }
+      border-top-right-radius: 5px;
+      position: relative; }
     .player-table .player-table-wrapper .player-table-mission {
       flex-grow: 1;
       display: flex;
@@ -694,6 +705,50 @@ html, body {
 #overall-content[data-special2="5"] .player-table[data-no="5"] .player-table-wrapper .special2 {
   display: block; }
 
+.bubble {
+  position: absolute;
+  padding: 10px 20px;
+  margin: 10px 10px 0px 0px;
+  border-radius: 10px;
+  border: 3px solid black;
+  background: white;
+  top: 0;
+  font-family: "Permanent Marker";
+  font-size: 30px;
+  color: black;
+  opacity: 0;
+  right: 380px;
+  transition: opacity 0.5s, right 0.5s, left 0.5s; }
+  .bubble.show {
+    opacity: 1;
+    right: 402px; }
+  .bubble::before {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    height: 20px;
+    width: 40px;
+    border-radius: 0 0 0 100%;
+    right: 0;
+    box-shadow: 2px -2px 0 0 #000 inset, 23px 0 0 0 #fff inset, 25px -2px 0 0 #000 inset; }
+
+.player-table[data-no="0"] .bubble,
+.player-table[data-no="1"] .bubble {
+  left: 277px;
+  right: auto;
+  margin: 10px 0px 0px 10px; }
+  .player-table[data-no="0"] .bubble.show,
+  .player-table[data-no="1"] .bubble.show {
+    opacity: 1;
+    left: 297px;
+    right: auto; }
+  .player-table[data-no="0"] .bubble::before,
+  .player-table[data-no="1"] .bubble::before {
+    border-radius: 0 0 100% 0;
+    box-shadow: -2px -2px 0 0 #000 inset, -23px 0 0 0 #fff inset, -25px -2px 0 0 #000 inset;
+    left: 0;
+    right: auto; }
+
 .task {
   position: relative;
   width: 63px;
@@ -742,7 +797,7 @@ html, body {
     position: absolute;
     width: 40px;
     height: 40px;
-    left: 10px;
+    left: 11px;
     top: 44px;
     background-image: url("img/sprites.png");
     background-size: 1100%;
@@ -751,6 +806,43 @@ html, body {
     -webkit-filter: drop-shadow(0 0 2px #000); }
   .task[data-status="ok"] .check-ok {
     display: block; }
+  .task[data-status="nok"] .check-ok {
+    display: block;
+    background-position: 70% 50%; }
+
+.task-tile {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-image: url("img/sprites.png");
+  background-size: 1100%;
+  background-position: 0% 0%;
+  left: 11px;
+  bottom: 4px;
+  filter: drop-shadow(0 0 2px #000);
+  -webkit-filter: drop-shadow(0 0 2px #000); }
+  .task-tile.tile-1 {
+    background-position-x: 0%; }
+  .task-tile.tile-2 {
+    background-position-x: 10%; }
+  .task-tile.tile-3 {
+    background-position-x: 20%; }
+  .task-tile.tile-4 {
+    background-position-x: 30%; }
+  .task-tile.tile-5 {
+    background-position-x: 40%; }
+  .task-tile.tile-o {
+    background-position-x: 50%; }
+  .task-tile.tile-i1 {
+    background-position-x: 60%; }
+  .task-tile.tile-i2 {
+    background-position-x: 70%; }
+  .task-tile.tile-i3 {
+    background-position-x: 80%; }
+  .task-tile.tile-i4 {
+    background-position-x: 90%; }
+  .task-tile.no-tile {
+    display: none; }
 
 @keyframes borderBlink {
   0% {
@@ -989,7 +1081,7 @@ html, body {
   background: #d44b38;
   width: 30px;
   height: 30px;
-  margin: 0 auto;
+  margin: 10px auto;
   position: relative;
   text-align: center;
   color: white;
@@ -1008,5 +1100,33 @@ html, body {
     transform: rotate(30deg); }
   #mission-status .mission-informations .mission-informations-tasks::after {
     transform: rotate(60deg); }
+#mission-status .mission-informations .mission-informations-tiles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 20px; }
+  #mission-status .mission-informations .mission-informations-tiles .task-tile {
+    position: static; }
+#mission-status .mission-informations #mission-informations-deadzone {
+  margin: 10px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  #mission-status .mission-informations #mission-informations-deadzone #deadzone-radio-token {
+    width: 50px;
+    height: 50px;
+    background-image: url("img/sprites.png");
+    background-size: 1100%;
+    background-position: 0 50%;
+    transform: rotate(10deg); }
+  #mission-status .mission-informations #mission-informations-deadzone #deadzone-question {
+    width: 40px;
+    height: 40px;
+    background-image: url("img/sprites.png");
+    background-size: 1100%;
+    background-position: 0 100%;
+    margin-left: -15px;
+    filter: drop-shadow(0 0 2px #000);
+    -webkit-filter: drop-shadow(0 0 2px #000); }
 
 /*# sourceMappingURL=thecrew.css.map */

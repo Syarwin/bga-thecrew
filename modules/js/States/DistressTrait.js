@@ -14,6 +14,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     onEnteringStateDistressSetup(args){
       this.switchCentralZone('distress');
       dojo.attr('distress-panel', 'data-dir', 0);
+      this.addSecondaryActionButton('distressHelp', '?', () => this.showMessage(_('A distress signal can be sent out before the first trick of a mission and before any communication. If the distress signal is activated, each crew member may pass one card to his neighbor. Rockets may not be passed on! Decide together if you will pass the cards to the left or the right. Everyone has to pass in the same direction!'), 'info') );
+      this.addTooltip('distressHelp', _('A distress signal can be sent out before the first trick of a mission and before any communication. If the distress signal is activated, each crew member may pass one card to his neighbor. Rockets may not be passed on! Decide together if you will pass the cards to the left or the right. Everyone has to pass in the same direction!'), '');
 
       this.connect($('clockwise-button'), 'click', () => this.onChooseDistressDirection(CLOCKWISE) );
       this.connect($('dont-use-button'),  'click', () => this.onChooseDistressDirection(DONT_USE) );
@@ -30,8 +32,10 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     },
 
     notif_distressActivated(n){
-      this.gamedatas.status.distress = true;
-      this.updateMissionStatus();
+      if(n.args.dir != DONT_USE){
+        this.gamedatas.status.distress = true;
+        this.updateMissionStatus();
+      }
     },
 
     onEnteringStateDistress(args){

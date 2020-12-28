@@ -8,6 +8,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         ['endComm', 1000],
         ['usedComm', 10]
       );
+      this._selectedComm = null;
     },
 
     toggleCommunication(){
@@ -54,11 +55,13 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       if(comm){
         this.setCommunicationCard(this.player_id, card);
         this.setRadioToken(this.player_id, comm.status);
-        this.addPrimaryActionButton("commConfirm", _("Confirm"), () => this.onConfirmCommunication(comm) );
+        this._selectedComm = comm;
+        this.addPrimaryActionButton("commConfirm", _("Confirm"), () => this.onConfirmCommunication() );
       }
     },
 
-    onConfirmCommunication(comm){
+    onConfirmCommunication(){
+      let comm = this._selectedComm;
       this.takeAction("actConfirmComm", {
         cardId: comm.card.id,
         status: comm.status

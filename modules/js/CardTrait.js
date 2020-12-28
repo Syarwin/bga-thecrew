@@ -82,7 +82,9 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       if(exclusive){
         dojo.query("#hand .stockitem").removeClass("selected");
       }
-      dojo.addClass("hand_item_" + cardId, "selected");
+      if($("hand_item_" + cardId)){
+        dojo.addClass("hand_item_" + cardId, "selected");
+      }
     },
 
     notif_newHand(n){

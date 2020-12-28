@@ -1,6 +1,7 @@
 <?php
 namespace CREW\Game;
 use thecrew;
+use \CREW\Cards;
 
 /*
  * Globals
@@ -35,11 +36,11 @@ class Globals extends \APP_DbObject
     'trickColor' => 0,
     'missionFinished' => 0,
     'distressDirection' => DONT_USE,
-
-    'special_id' => 0,
-    'special_id2' => 0,
+    'specialId' => 0,
+    'specialId2' => 0,
     'checkCount' => 0,
     'endOfGame' => 0,
+
     'intro_shown' => 0,
     'premium' => false,
   ];
@@ -88,7 +89,17 @@ class Globals extends \APP_DbObject
 
   public static function getCommander()
   {
-    return self::get("commanderId");
+    return (int) self::get("commanderId");
+  }
+
+  public static function getSpecial()
+  {
+    return (int) self::get('specialId');
+  }
+
+  public static function getSpecial2()
+  {
+    return (int) self::get('specialId2');
   }
 
   public static function getTrickCount()
@@ -121,6 +132,11 @@ class Globals extends \APP_DbObject
     return self::get("endOfGame") == 1;
   }
 
+  public static function isLastTrick()
+  {
+    return Cards::countInHand() <= 1;
+  }
+
   /*
    * Setters
    */
@@ -131,19 +147,13 @@ class Globals extends \APP_DbObject
   public static function startNewMission(){
     self::set('trickCount', 0);
     self::set('checkCount', 0);
-
-    // TODO ???
-    self::set( 'special_id', 0);
-    self::set( 'special_id2', 0);
+    self::set('specialId', 0);
+    self::set('specialId2', 0);
   }
 
   public static function startNewTrick(){
     self::inc('trickCount');
     self::set('trickColor', 0);
-
-    // TODO ???
-    self::set( 'special_id', 0);
-    self::set( 'special_id2', 0);
   }
 
   public static function setTrickColor($color){
@@ -170,5 +180,9 @@ class Globals extends \APP_DbObject
 
   public static function setDistressDirection($dir){
     self::set('distressDirection', $dir);
+  }
+
+  public static function setSpecial($pId, $special = ''){
+    self::set('specialId' . $special, $pId);
   }
 }

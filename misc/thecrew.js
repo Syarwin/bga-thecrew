@@ -1,111 +1,6 @@
-/**
- *------
- * BGA framework: Â© Gregory Isabelli <gisabelli@boardgamearena.com> & Emmanuel Colin <ecolin@boardgamearena.com>
- * thecrew implementation : Â© Nicolas Gocel <nicolas.gocel@gmail.com>
- *
- * This code has been produced on the BGA studio platform for use on http://boardgamearena.com.
- * See http://en.boardgamearena.com/#!doc/Studio for more information.
- * -----
- *
- * thecrew.js
- *
- * thecrew user interface script
- *
- * In this file, you are describing the logic of your user interface, in Javascript language.
- *
- */
-
-define([
-    "dojo","dojo/_base/declare",
-    "ebg/core/gamegui",
-    "ebg/counter",
-    "ebg/stock",
-],
-function (dojo, declare) {
-    return declare("bgagame.thecrew", ebg.core.gamegui, {
-        constructor: function(){
-
-            // Here, you can init the global variables of your user interface
-            // Example:
-            this.commander_id = null;
-            this.players = null;
-            this.colors = null;
-
-
-            // Number of turns
-            this.mission_counter = null;
-            this.attempts_counter = null;
-            this.total_attempts_counter = null;
-            this.trick_counters = {};
-            this.cards_counters = {};
-            this.multiSelect = null;
-            this.selected = null;
-            this.stateName = null;
-
-        },
-
-        /*
-            setup:
-
-            This method must set up the game user interface according to current game situation specified
-            in parameters.
-
-            The method is called each time the game interface is displayed to a player, ie:
-            _ when the game starts
-            _ when a player refreshes the game page (F5)
-
-            "gamedatas" argument contains all datas retrieved by your "getAllDatas" PHP method.
-        */
-
         setup: function( gamedatas )
         {
-
-            this.players = gamedatas.players;
-            this.colors = gamedatas.colors;
-
-            // Number of turns
-
-
-            // Setting up player boards
-            for( var rel in ordered )
-            {
-
-                var cardontable =  player['comm'];
-                if(cardontable  !== undefined)
-                {
-                	dojo.place( this.format_block('jstpl_cardontable', cardontable), $('comcard_'+player_id));
-                	dojo.query('#card_' + cardontable['id']).connect('onclick', this, 'onPlayCard');
-                    this.createCardTooltip('card_' + cardontable['id'], cardontable['type'], cardontable['type_arg']);
-                }
-
-                dojo.place(this.format_block('jstpl_player', {player_id:player_id}), 'player_board_' + player_id);
-
-
-                dojo.removeClass('radio_' + player['id']);
-                dojo.addClass('radio_' + player['id'], 'radio');
-                dojo.addClass('radio_' + player['id'], player['comm_token']);
-
-                this.addTooltipHtml( 'radio_' + player_id, this.format_block('jstpl_tooltip_common', {title: _('Radio communication token'), description:  _('Communication token gives information of the communicated color card :<br/>- At the top, if it is your highest card of this color.<br/>- In the middle, if it is your only card of this color.<br/>- At the bottom, if it is your lowest card of this color.<br/>- Red, you cannot communicate.')}));
-
-            }
-
-
-         // Cards in player's hand
-
-
-            if(this.gamedatas.distress == 1)
-            {
-            	dojo.query("#distress").addClass("activated");
-            }
-            this.addTooltipHtml( 'distress', this.format_block('jstpl_tooltip_common', {title: _('Distress token'), description:  _('A distress signal can be sent out before the first trick of a mission and before any communication. If the distress signal is activated, each crew member may pass one card to his neighbor. Rockets may not be passed on!')}));
-
-            dojo.query('#distress' ).connect( 'onclick', this, 'onDistress');
             dojo.query('.playertable' ).connect( 'onclick', this, 'onPickCrew');
-
-
-            // Setup game notifications to handle (see "setupNotifications" method below)
-            this.setupNotifications();
-
         },
 
 
@@ -124,22 +19,6 @@ function (dojo, declare) {
 
             switch( stateName )
             {
-
-            case 'question':
-        		this.showTasks(args.args.tasks);
-            	break;
-
-            case 'pickCrew':
-        		this.showTasks(args.args.tasks);
-            	if(this.isCurrentPlayerActive())
-        		{
-            		for( var player_id in args.args.possible )
-                    {
-            			dojo.query("#playertable_"+player_id).addClass("selectable");
-                    }
-        		}
-            	break;
-
             case 'multiSelect':
         		this.showTasks(args.args.tasks);
         		this.multiSelect = args.args.ids;
@@ -201,43 +80,9 @@ function (dojo, declare) {
 	            case "multiSelect":
             		this.addActionButton('cancel_button', _("No move") , 'onCancel');
             		break;
-
-
-		            case "question":
-		            	var i = 0;
-		            	var split = args.replies.split("/");
-		            	for (i = 0; i < split.length; i++)
-		            	{
-			            	this.addActionButton(i+'_button', split[i] , 'onButtonChoose');
-		            	}
-		            	break;
-
-		            case "distressSetup":
-		            	this.addActionButton('left_button', _("Left") , 'onButtonChoose');
-		            	this.addActionButton('right_button', _("Right") , 'onButtonChoose');
-		            	this.addActionButton('no_button', _("No card passed") , 'onButtonChoose');
-		            	break;
                 }
             }
         },
-
-        onButtonChoose:function(event)
-        {
-            dojo.stopEvent( event );
-            if(this.isCurrentPlayerActive()&& this.checkAction( "actButton" ))
-            {
-            	$action = event.currentTarget.id.replace('_button','');
-
-    			dojo.query(".finalbutton").addClass("hidden");
-
-            	this.ajaxcall('/thecrew/thecrew/actButton.html', {
-                    lock:true,
-                    choice:$action,
-                },this, function( result ) {
-                }, function( is_error ) { } );
-            }
-       },
-
 
 
         onCancel: function (event) {
@@ -247,28 +92,6 @@ function (dojo, declare) {
                 this.ajaxcall('/thecrew/thecrew/actCancel.html', {
                     lock:true,
                 },this, function( result ) {}, function( is_error ) { } );
-            }
-        },
-
-
-        onPickCrew:function(event)
-        {
-        	dojo.stopEvent( event );
-            if(this.isCurrentPlayerActive())
-            {
-            	if(event.currentTarget.classList.contains('selectable') && this.checkAction( "actPickCrew" ) ) {
-
-            		var split = event.currentTarget.id.split('_');
-	            		var id = split[split.length - 1];
-
-	                    dojo.query(".selectable").removeClass("selectable");
-
-	            		this.ajaxcall('/thecrew/thecrew/actPickCrew.html', {
-		 	                   lock:true,
-		 	                  crewId:id
-		 	                },this, function( result ) {
-		 	                }, function( is_error ) { } );
-            	}
             }
         },
 
@@ -322,58 +145,9 @@ function (dojo, declare) {
 
         setupNotifications: function()
         {
-            dojo.subscribe('cleanUp', this, "notif_cleanUp");
-            dojo.subscribe('commander', this, "notif_commander");
-            dojo.subscribe('special', this, "notif_special");
-            dojo.subscribe('newHand', this, "notif_newHand");
-            dojo.subscribe('takeTask', this, "notif_takeTask");
-            dojo.subscribe('playCard', this, "notif_playCard");
-            dojo.subscribe('commCard', this, "notif_commCard");
-            dojo.subscribe('continue', this, "notif_continue");
-            dojo.subscribe('move', this, "notif_move");
-            dojo.subscribe('resetComm', this, "notif_resetComm");
-            dojo.subscribe('commpending', this, "notif_commpending");
-            dojo.subscribe('distress', this, "notif_distress");
-            dojo.subscribe('speak', this, "notif_speak");
-            dojo.subscribe('give', this, "notif_give");
-            dojo.subscribe('receive', this, "notif_receive");
-            dojo.subscribe('taskUpdate', this, "notif_taskUpdate");
-            dojo.subscribe('endComm', this, "notif_endComm");
-            dojo.subscribe('trickWin', this, "notif_trickWin");
-            dojo.subscribe('noPremium', this, "notif_nopremium");
-            dojo.subscribe('giveAllCardsToPlayer', this, "notif_giveAllCardsToPlayer");
-
             this.notifqueue.setSynchronous('move', 1000);
-            this.notifqueue.setSynchronous('trickWin', 1000); // Reasonable time for players to see the cards played before they are gathered
-            this.notifqueue.setSynchronous('giveAllCardsToPlayer', 2000); // The time needed for cards to move and disappear
-
         },
 
-
-
-        notif_speak: function(notif)
-        {
-        	var elem = dojo.byId("discussion_bubble_tasks_"+notif.args.player_id);
-        	if(elem == null)
-        	{
-	        	this.showBubble( 'playertable_'+notif.args.player_id, notif.args.content, 0, 10000, 'bubble_custom' ) ;
-        	}
-        },
-
-
-
-        notif_special: function(notif) {
-        	if(notif.args.special2 == true)
-        	{
-	        	dojo.query(".special2").addClass("hidden");
-	    		dojo.query("#special2_icon_spot_"+notif.args.player_id).removeClass("hidden");
-        	}
-        	else
-        	{
-	        	dojo.query(".special").addClass("hidden");
-	    		dojo.query("#special_icon_spot_"+notif.args.player_id).removeClass("hidden");
-        	}
-        },
 
         notif_move: function(notif) {
 

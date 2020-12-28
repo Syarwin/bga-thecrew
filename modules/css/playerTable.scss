@@ -10,6 +10,11 @@
     background-color:rgba(255,255,255,0.8);
   }
 
+  &.selectable {
+    animation:0.9s borderBlink infinite;
+    cursor:pointer;
+  }
+
   @for $i from 0 through 4 {
     &[data-no="#{$i}"] { order:$i; }
   }
@@ -100,7 +105,11 @@
       &[data-radio="waiting"] .radio { display:none; }
       &[data-radio="used"] .radio {
         top: 44px;
-        background-position: 20% 100%;
+        background-position: 20% 50%;
+      }
+      &[data-radio="hidden"] .radio {
+        top: 44px;
+        background-position: 0% 100%;
       }
 
       &[data-radio="waiting"] .communication-waiting { display:block; }
@@ -182,6 +191,7 @@
       padding: 5px 0px;
       border-bottom: 1px solid gray;
       border-top-right-radius: 5px;
+      position:relative;
     }
 
     .player-table-mission {
@@ -220,4 +230,68 @@
   #overall-content[data-commander="#{$i}"] .player-table[data-no="#{$i}"] .player-table-wrapper .commander { display:block; }
   #overall-content[data-special="#{$i}"]   .player-table[data-no="#{$i}"] .player-table-wrapper .special { display:block; }
   #overall-content[data-special2="#{$i}"]  .player-table[data-no="#{$i}"] .player-table-wrapper .special2 { display:block; }
+}
+
+
+
+@import url(https://fonts.googleapis.com/css?family=Permanent+Marker);
+
+.bubble {
+  position: absolute;
+  padding: 10px 20px;
+  margin: 10px 10px 0px 0px;
+  border-radius: 10px;
+  border: 3px solid black;
+  background: white;
+  top: 0;
+  font-family: "Permanent Marker";
+  font-size: 30px;
+  color: black;
+
+  opacity: 0;
+  right: 380px;
+  transition: opacity 0.5s, right 0.5s, left 0.5s;
+  &.show {
+    opacity: 1;
+    right: 402px;
+  }
+
+   &::before {
+     content: '';
+     position: absolute;
+     bottom: -20px;
+     height: 20px;
+     width: 40px;
+     border-radius: 0 0 0 100%;
+     right: 0;
+     box-shadow:
+       2px -2px 0 0 #000 inset,
+       23px 0 0 0 #fff inset,
+       25px -2px 0 0 #000 inset;
+   }
+}
+
+.player-table[data-no="0"],
+.player-table[data-no="1"] {
+  .bubble {
+    left: 277px;
+    right:auto;
+    margin: 10px 0px 0px 10px;
+
+    &.show {
+      opacity: 1;
+      left: 297px;
+      right:auto;
+    }
+
+    &::before {
+      border-radius: 0 0 100% 0;
+      box-shadow:
+        -2px -2px 0 0 #000 inset,
+        -23px 0 0 0 #fff inset,
+        -25px -2px 0 0 #000 inset;
+      left: 0;
+      right:auto;
+    }
+  }
 }

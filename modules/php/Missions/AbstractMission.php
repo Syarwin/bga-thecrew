@@ -3,6 +3,7 @@ namespace CREW\Missions;
 use CREW\Tasks;
 use CREW\Game\Players;
 use CREW\Game\Globals;
+use CREW\Game\Notifications;
 use thecrew;
 
 abstract class AbstractMission
@@ -12,6 +13,8 @@ abstract class AbstractMission
   protected $tasks = 0;
   protected $tiles = [];
   protected $question = null;
+  protected $repliers = null;
+  protected $deadzone = false;
   protected $disruption = 0;
 
   public function getUiData()
@@ -21,10 +24,14 @@ abstract class AbstractMission
       'desc' => $this->desc,
       'tasks' => $this->tasks,
       'tiles' => $this->tiles,
+      'deadzone' => $this->deadzone,
     ];
   }
 
   public function getId(){ return $this->id; }
+  public function getQuestion(){ return $this->question; }
+  public function getReplies() { return $this->replies; }
+  public function isDeadZone(){ return $this->deadzone; }
 
   public function isDisrupted(){
     return $this->disruption > Globals::getTrickCount();
@@ -42,7 +49,6 @@ abstract class AbstractMission
         'player_name' => Players::getCommander()->getName(),
         'question' => $this->question,
       ]);
-      thecrew::get()->activeNextPlayer();
     }
   }
 
@@ -59,23 +65,31 @@ abstract class AbstractMission
   }
 
 
-  public function check()
+  public function pickCrew($crewId)
   {
-    if(thecrew::getUniqueValueFromDB("select count(*) from task")>0 // NOI18N
-        && thecrew::getUniqueValueFromDB("select count(*) from task where status <> 'ok'") == 0)// NOI18N
-    {
-        $this->missionSuccess();
-    }
-    else if(thecrew::getUniqueValueFromDB("select count(*) from task where status = 'nok'") > 0// NOI18N
-        || $this->isLastTrick())
-    {
-        $this->missionFailed();
-    }
-    else
-    {
-        //otherwise we continue
-        $this->thecrew->setGameStateValue( 'mission_finished', 0 );
-    }
+    $player = Players::getCurrent();
+    $crew = Players::get($crewId);
+    Globals::setSpecial($crewId);
+    Notifications::specialCrewMember($player, $crew);
+  }
 
+
+
+  public function check(){
+    self::setStatus(Tasks::getStatus());
+  }
+  public function setStatus($p){
+    Globals::setMissionFinished($p);
+  }
+  public function getStatus(){
+    return Globals::getMissionFinished();
+  }
+  public function fail(){ self::setStatus(-1); }
+  public function success(){ self::setStatus(1); }
+  public function continue(){ self::setStatus(0); }
+
+  // Utils
+  protected function getSpecial(){
+    return Players::get(Globals::getSpecial());
   }
 }

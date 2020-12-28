@@ -119,6 +119,14 @@ class Players extends \CREW\Helpers\DB_Manager
     ])->run();
   }
 
+  public function clearDistressCards()
+  {
+    self::DB()->update([
+      'distress_choice' => 0,
+      'distress_card_id' => null,
+    ])->run();    
+  }
+
   public function getNextToCommunicate()
   {
     return self::DB()->where('comm_pending', 1)->where('comm_token', '<>', 'used')->limit(1)->get(true);

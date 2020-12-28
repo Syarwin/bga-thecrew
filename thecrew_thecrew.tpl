@@ -76,6 +76,8 @@
       <div id="distress-panel-top"></div>
 
       <div id="distress-panel-middle">
+        <div id="distress-panel-icon"></div>
+
         <h2>
           {DISTRESS}
         </h2>
@@ -86,10 +88,7 @@
           <button id="anticlockwise-button" class="finalbutton bgabutton bgabutton_blue"><div></div></button>
         </div>
 
-        <div id="distress-panel-active">
-          <div id="distress-panel-icon"></div>
-          <div id="distress-panel-direction"></div>
-        </div>
+        <div id="distress-panel-direction"></div>
       </div>
 
       <div id="distress-panel-bottom"></div>
@@ -143,7 +142,7 @@ var jstpl_playerTable = `
   </div>
 
   <div class="player-table-wrapper">
-    <div class="player-table-name" style="color:#\${color}">
+    <div id="player-table-name-\${id}" class="player-table-name" style="color:#\${color}">
       \${name}
     </div>
 

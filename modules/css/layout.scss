@@ -172,7 +172,7 @@ html,body {
             height: 40px;
             background-image: url("img/sprites.png");
             background-size: 1100%;
-            background-position: 80% 100%;
+            background-position: 80% 50%;
             @include shadow;
 
             @for $i from 0 through 4 {
@@ -255,6 +255,15 @@ html,body {
           flex-flow:column;
           align-items: center;
 
+          #distress-panel-icon {
+            background-image: url('img/sprites.png');
+            background-size: 1100%;
+            background-position: 10% 50%;
+            width:80px;
+            height:80px;
+            margin-bottom: 20px;
+          }
+
           h2 {
             font-weight: 700;
             margin-top: 2px;
@@ -297,25 +306,15 @@ html,body {
             }
           }
 
-          #distress-panel-active {
+          #distress-panel-direction {
             display: none;
-
-            #distress-panel-icon {
-              background-image: url('img/sprites.png');
-              background-size: 1100%;
-              background-position: 10% 50%;
-              width:100px;
-              height:100px;
-            }
-
-            #distress-panel-direction {
-              background-image: url('img/sprites.png');
-              background-size: 1100%;
-              background-position: 20% 100%;
-              width:60px;
-              height:60px;
-              margin:50px auto 0px;
-            }
+            background-image: url('img/sprites.png');
+            background-size: 1100%;
+            background-position: 20% 100%;
+            width:60px;
+            height:60px;
+            margin:50px auto 0px;
+            @include shadow;
           }
         }
 
@@ -332,14 +331,15 @@ html,body {
               display:none;
             }
 
-            #distress-panel-active {
+            #distress-panel-direction {
               display:block;
             }
           }
         }
 
-        &[data-dir="3"] #distress-panel-middle #distress-panel-active #distress-panel-direction {
+        &[data-dir="3"] #distress-panel-middle #distress-panel-direction {
           background-position: 10% 100%;
+          filter: drop-shadow(0 0 2px #FFF);
         }
       }
 

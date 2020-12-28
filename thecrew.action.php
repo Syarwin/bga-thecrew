@@ -60,6 +60,19 @@ class action_thecrew extends APP_GameAction
     self::ajaxResponse( );
   }
 
+
+/***********************
+******* QUESTION *******
+***********************/
+  public function actReply()
+  {
+    self::setAjaxMode();
+    $reply = self::getArg("reply", AT_posint, true );
+    $this->game->actReply($reply);
+    self::ajaxResponse();
+  }
+
+
 /***********************
 ******* DISTRESS *******
 ***********************/
@@ -109,16 +122,13 @@ class action_thecrew extends APP_GameAction
 
 
 
-
-public function actPickCrew()
-{
-self::setAjaxMode();
-
-$crewId = self::getArg( "crewId", AT_posint, true );
-$this->game->actPickCrew( $crewId);
-
-self::ajaxResponse( );
-}
+  public function actPickCrew()
+  {
+    self::setAjaxMode();
+    $crewId = self::getArg("pId", AT_posint, true );
+    $this->game->actPickCrew( $crewId);
+    self::ajaxResponse();
+  }
 
 
 

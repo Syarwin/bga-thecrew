@@ -77,6 +77,7 @@ trait DistressTrait
       Cards::move($card['id'], ['hand', $targetId]);
       Notifications::distressExchange($player, $target, $card);
     }
+    Players::clearDistressCards();
 
     $this->gamestate->changeActivePlayer(Globals::getCommander());
     $this->gamestate->nextState('next');

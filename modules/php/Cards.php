@@ -74,7 +74,8 @@ class Cards extends Helpers\Pieces
 
 
     foreach($colors as $cId => $maxValue) {
-      for($value = 1; $value <= $maxValue; $value++) {
+      $start = ($challenge && $cId == CARD_ROCKET)? 2 : 1;
+      for($value = $start; $value <= $maxValue; $value++) {
         $cards[] = [
           'color' => $cId,
           'value' => $value
@@ -93,15 +94,6 @@ class Cards extends Helpers\Pieces
     // Take back all cards (from any location => null) to deck and shuffle
     self::moveAllInLocation(null, "deck");
     self::shuffle('deck');
-
-/*
-    // Deal communication cards
-    $coms = $this->cards->getCardsOfType(COMM);
-    foreach($coms as $card_id => $card) {
-      $player_id = array_shift($players)['player_id'];
-      $this->cards->moveCard( $card_id, 'comm', $player_id);
-    }
-*/
   }
 
 

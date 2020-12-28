@@ -30,7 +30,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       debug("Playing a card", n);
       // Play a card on the table
       this.playCardOnTable(n.args.card);
-      this.descCardsCounter(n.args.card.player_id);
+      this.descCardsCounter(n.args.card.pId);
     },
 
 

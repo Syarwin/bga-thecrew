@@ -2,12 +2,15 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
   return declare("thecrew.playerTrait", null, {
     constructor(){
       this._notifications.push(
-        ['commander', 100]
+        ['commander', 100],
+        ['specialCrewMember', 100]
       );
 
       this.trickCounters = [];
       this.cardsCounters = [];
       this.positions = [];
+      this._callbackOnPlayer = null;
+      this._selectablePlayers = [];
     },
 
     /*
@@ -28,6 +31,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         this.place('jstpl_playerMat', player, 'card-mat-' + row);
         this.place('jstpl_playerCheckMark', player, 'end-panel-' + row);
         this.place('jstpl_playerDistressChoice', player, 'distress-panel-' + row);
+        dojo.connect($('player-table-' + player.id), 'click', () => this.onClickPlayer(player.id));
 
         // Create tasks
         player.tasks.forEach(task => this.addTask(task, 'tasks-' + player.id) );
@@ -83,6 +87,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
         this.setCommunicationCard(player.id, player.commCard);
         this.setRadioToken(player.id, player.commToken);
+        // Set distress choice
+        dojo.attr('distress-choice-' + player.id, 'data-choice', player.distressChoice);
 
         if(this.player_id == player.id){
           dojo.attr('comm-card-' + player.id, 'data-pending', player.commPending? 1 : 0);
@@ -99,13 +105,50 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     updateCommander(){
       dojo.attr('overall-content', 'data-commander', this.gamedatas.players[this.gamedatas.commanderId].no);
-      dojo.attr('overall-content', 'data-special', null); // TODO
-      dojo.attr('overall-content', 'data-special2', null);
+
+      let special = this.gamedatas.players[this.gamedatas.specialId] ?? { no : -1};
+      dojo.attr('overall-content', 'data-special', special.no);
+
+      let special2 = this.gamedatas.players[this.gamedatas.specialId2] ?? { no : -1};
+      dojo.attr('overall-content', 'data-special2', special2.no);
     },
 
     notif_commander(n) {
       this.gamedatas.commanderId = n.args.player_id;
       this.updateCommander();
+    },
+
+    notif_specialCrewMember(n){
+      if(n.args.special_id){
+        this.gamedatas.specialId = n.args.special_id;
+      }
+
+      if(n.args.special2_id){
+        this.gamedatas.special2Id = n.args.special2_id;
+      }
+
+      this.updateCommander();
+    },
+
+
+    makePlayersSelectable(players, callback){
+      this._callbackOnPlayer = callback;
+      this._selectablePlayers = players;
+
+      dojo.query(".player-table").removeClass("selectable").addClass("unselectable");
+      players.forEach(pId => {
+        dojo.query("#player-table-" + pId).removeClass('unselectable').addClass('selectable');
+        this.addPrimaryActionButton('btnPlayer'+pId, this.gamedatas.players[pId].name, () => this.onClickPlayer(pId) );
+      });
+    },
+
+    onClickPlayer(pId){
+      debug("Clicked on player : ", pId);
+
+      if(!this._selectablePlayers.includes(pId))
+        return;
+
+      this._callbackOnPlayer(pId);
     },
 
   });

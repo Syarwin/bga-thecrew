@@ -2,7 +2,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
   return declare("thecrew.pickTaskTrait", null, {
     constructor(){
       this._notifications.push(
-        ['takeTask', 1000]
+        ['takeTask', 1000],
+        ['taskUpdate', 10]
       );
     },
 
@@ -24,6 +25,11 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     },
 
     showTasks(tasks){
+      if(tasks.length == 0){
+        this.switchCentralZone('none');
+        return;
+      }
+
       this.switchCentralZone('tasks');
       dojo.empty("tasks-list");
       tasks.forEach(task => this.addTask(task, 'tasks-list') );
@@ -31,7 +37,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
 
     addTask(task, container){
-      task.tileClass = task.tile == ''? '' : ('tile-' + task.tile);
+      task.tileClass = task.tile == ''? 'no-tile' : ('tile-' + task.tile);
       this.place('jstpl_task', task, container);
       this.createTaskTooltip(task);
     },
@@ -76,5 +82,11 @@ TODO
       }).play();
     },
 
+
+    notif_taskUpdate(n){
+      debug("Update task status", n);
+      dojo.attr('task-' + n.args.task.id, 'data-status', n.args.task.status);
+      $task
+    },
   });
 });

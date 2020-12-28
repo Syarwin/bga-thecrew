@@ -31,8 +31,26 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     createMissionInformations(container = 'mission-informations'){
       dojo.empty(container);
       let mission = this.gamedatas.missions[this.gamedatas.status.mId - 1];
+
+      // Tasks
       if(mission.tasks > 0){
-        dojo.place(`<div class="mission-informations-tasks">${mission.tasks}</div>`, container);
+        dojo.place(`<div id="mission-informations-tasks" class="mission-informations-tasks">${mission.tasks}</div>`, container);
+        this.addTooltip('mission-informations-tasks', _('Number of tasks used for this mission'), '');
+      }
+
+      // Tiles
+      if(mission.tiles.length > 0){
+        dojo.place(`<div id="mission-informations-tiles" class="mission-informations-tiles"></div>`, container);
+        mission.tiles.forEach((tile, i) => {
+          dojo.place(`<div id='${container}-tile-${i}' class='task-tile tile-${tile}'></div>`, "mission-informations-tiles");
+          this.addTooltip(`${container}-tile-${i}`, this.getTileDescription(tile), '');
+        });
+      }
+
+      // Deadzone
+      if(mission.deadzone){
+        dojo.place('<div id="mission-informations-deadzone"><div id="deadzone-radio-token"></div><div id="deadzone-question"></div></div>', container);
+        this.addTitledTooltip("mission-informations-deadzone", _('Dead zone'), _('Your communications have been disrupted and you only have limited communication. When you want to communicate, place your card in front of you as you normally would. It must meet one of the three conditions (highest, single, or lowest of the cards in your hand, in the color suit). You are not however, allowed to place your radio communication token on the card.') );
       }
     },
 

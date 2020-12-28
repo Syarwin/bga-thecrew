@@ -22,8 +22,8 @@ define(["dojo", "dojo/_base/declare", "ebg/stock"], (dojo, declare) => {
         this.addTitledTooltip('comm-pending-' + player.id, _('Communication pending token'), _('If visible, you will start communication at the beggining of next trick.'));
       });
 
-
-      this.addTitledTooltip('distress', _('Distress token'), _('A distress signal can be sent out before the first trick of a mission and before any communication. If the distress signal is activated, each crew member may pass one card to his neighbor. Rockets may not be passed on!') );
+      this.addTitledTooltip('distress', _('Distress token'), _('A distress signal can be sent out before the first trick of a mission and before any communication. If the distress signal is activated, each crew member may pass one card to his neighbor. Rockets may not be passed on! Decide together if you will pass the cards to the left or the right. Everyone has to pass in the same direction!') );
+      this.addTitledTooltip('distress-panel-icon', _('Distress token'), _('A distress signal can be sent out before the first trick of a mission and before any communication. If the distress signal is activated, each crew member may pass one card to his neighbor. Rockets may not be passed on! Decide together if you will pass the cards to the left or the right. Everyone has to pass in the same direction!') );
     },
 
 
@@ -44,28 +44,29 @@ define(["dojo", "dojo/_base/declare", "ebg/stock"], (dojo, declare) => {
     },
 
 
+    getTileDescription(tile){
+      let taskTileDescriptions = {
+        '1' :  _('This task must be fulfilled first.'),
+        '2' :  _('This task must be fulfilled second.'),
+        '3' :  _('This task must be fulfilled third.'),
+        '4' :  _('This task must be fulfilled fourth.'),
+        '5' :  _('This task must be fulfilled fifth.'),
+        'o' :  _('This task must be fulfilled last.'),
+        'i1' :  _('This task must be fulfilled before &rsaquo;&rsaquo;.'),
+        'i2' :  _('This task must be fulfilled after &rsaquo;.'),
+        'i3' :  _('This task must be fulfilled after &rsaquo;&rsaquo;.'),
+        'i4' :  _('This task must be fulfilled after &rsaquo;&rsaquo;&rsaquo;.'),
+      };
+      return taskTileDescriptions[tile];
+    },
 
     createTaskTooltip(task) {
-      let taskTileDescriptions = {
-      	'1' :  _('This task must be fulfilled first.'),
-      	'2' :  _('This task must be fulfilled second.'),
-      	'3' :  _('This task must be fulfilled third.'),
-      	'4' :  _('This task must be fulfilled fourth.'),
-      	'5' :  _('This task must be fulfilled fifth.'),
-      	'o' :  _('This task must be fulfilled last.'),
-      	'i1' :  _('This task must be fulfilled before &rsaquo;&rsaquo;.'),
-      	'i2' :  _('This task must be fulfilled after &rsaquo;.'),
-      	'i3' :  _('This task must be fulfilled after &rsaquo;&rsaquo;.'),
-      	'i4' :  _('This task must be fulfilled after &rsaquo;&rsaquo;&rsaquo;.'),
-      };
-
-
       var msg = "";
       if(task.color != 7){ // TODO : whaat ??
         msg = this.getFormatedMsg(task);
 
-        if(task.tile != null && taskTileDescriptions[task.tile] != undefined){
-          msg += '<br/>' + taskTileDescriptions[task.tile];
+        if(task.tile != null && this.getTileDescription(task.tile) != undefined){
+          msg += '<br/>' + this.getTileDescription(task.tile);
         }
       }
 

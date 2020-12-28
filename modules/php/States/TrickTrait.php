@@ -125,9 +125,9 @@ trait TrickTrait
     // Update tasks
     Tasks::checkLastTrick();
     $mission = Missions::getCurrent();
-    // TODO $mission->check();
+    $mission->check();
 
-    $status = Tasks::getStatus();
+    $status = $mission->getStatus();
     if($status != 0){
       $msg = $status > 0? clienttranslate('Mission ${nb} completed') : clienttranslate('Mission ${nb} failed');
       Notifications::message($msg, ['nb' =>  $mission->getId() ]);

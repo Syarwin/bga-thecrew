@@ -55,6 +55,7 @@ class Player extends Helpers\DB_Manager
   public function isZombie(){ return $this->zombie; }
   public function getDistressChoice(){ return $this->distressChoice; }
   public function getDistressCard(){ return Cards::get($this->distressCard); }
+  public function getTricksWon(){ return $this->nTricks; }
 
   public function getUiData($pId)
   {

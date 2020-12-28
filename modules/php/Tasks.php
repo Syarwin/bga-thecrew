@@ -60,6 +60,9 @@ class Tasks extends \CREW\Helpers\DB_Manager
    */
   public static function addMany($n, $tiles = [])
   {
+    if($n == 0)
+      return;
+
     $lastTaskId = self::DB()->count();
 
     // Create possible tasks depending on challenge mode
@@ -221,15 +224,9 @@ class Tasks extends \CREW\Helpers\DB_Manager
     if(self::count() > 0 && self::DB()->where('status', '<>', 'ok')->count() == 0)
       return 1;
 
-    if(self::DB()->where('status', '=', 'nok')->count() > 0 || self::isLastTrick() )
+    if(self::DB()->where('status', '=', 'nok')->count() > 0 || Globals::isLastTrick() )
       return -1;
 
     return 0;
-  }
-
-
-  public static function isLastTrick()
-  {
-    return Cards::countInHand() <= 1;// That was the last trick
   }
 }

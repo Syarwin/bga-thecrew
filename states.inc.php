@@ -45,7 +45,6 @@ $machinestates = [
 /***********************
 ****** PICK TASK *******
 ***********************/
-
   STATE_PICK_TASK => [
     "name" => "pickTask",
     "description" => clienttranslate('${actplayer} must choose a task'),
@@ -70,24 +69,23 @@ $machinestates = [
     ]
   ],
 
-  /*
-  /***********************
-  ****** QUESTION *******
-  ***********************
+/***********************
+******* QUESTION *******
+***********************/
   STATE_QUESTION => [
     "name" => "question",
-    "description" => clienttranslate('Commander ${commander} asks ${actplayer} : ${question}'),
-    "descriptionmyturn" => clienttranslate('Commander ${commander} asks ${you} : ${question}'),
+    "description" => clienttranslate('Commander ${player_name} asks ${actplayer} : ${question}'),
+    "descriptionmyturn" => clienttranslate('Commander ${player_name} asks ${you} : ${question}'),
     "type" => "activeplayer",
     "args" => "argQuestion",
-    "possibleactions" => ["actButton"],
+    "possibleactions" => ["actReply"],
     "transitions" => [
-      "next" => STATE_NEXTQUESTION,
+      "next" => STATE_NEXT_QUESTION,
       "zombiePass" => STATE_CHANGE_MISSION
     ]
   ],
 
-  STATE_NEXTQUESTION => [
+  STATE_NEXT_QUESTION => [
     "name" => "nextQuestion",
     "description" => "",
     "type" => "game",
@@ -98,16 +96,27 @@ $machinestates = [
     ],
   ],
 
+
+  /**********************
+  ****** PICK CREW ******
+  **********************/
   STATE_PICK_CREW => [
-  "name" => "pickCrew",
-  "description" => clienttranslate('${actplayer} must choose a crew member'),
-  "descriptionmyturn" => clienttranslate('${you} must choose a crew member'),
-  "type" => "activeplayer",
-  "args" => "argPickCrew",
-  "possibleactions" => ["actPickCrew"],
-  "transitions" => ["task" => STATE_PICK_TASK, "trick" => STATE_NEW_TRICK, "next"=>STATE_NEXTQUESTION, "pickCrew" => STATE_PICK_CREW, "zombiePass" => STATE_CHANGE_MISSION]
+    "name" => "pickCrew",
+    "description" => clienttranslate('${actplayer} must choose a crew member'),
+    "descriptionmyturn" => clienttranslate('${you} must choose a crew member'),
+    "type" => "activeplayer",
+    "args" => "argPickCrew",
+    "possibleactions" => ["actPickCrew"],
+    "transitions" => [
+      "task" => STATE_PICK_TASK,
+      "trick" => STATE_NEW_TRICK,
+      "next" => STATE_NEXT_QUESTION,
+      "pickCrew" => STATE_PICK_CREW,
+      "zombiePass" => STATE_CHANGE_MISSION
+    ]
   ],
 
+/*
     STATE_MULTI_SELECT => [
         "name" => "multiSelect",
         "description" => clienttranslate('${actplayer} must do according to your mission'),
@@ -210,7 +219,9 @@ $machinestates = [
   ],
 
 
-
+  /************************
+  ****** PLAY CARD  *******
+  ************************/
   STATE_PLAYERTURN => [
     "name" => "playerTurn",
     "description" => clienttranslate('${actplayer} must play a card'),
@@ -239,8 +250,18 @@ $machinestates = [
     "updateGameProgression" => true
   ],
 
+/*************************
+****** / END TRICK *******
+*************************/
 
 
+
+
+/***********************
+************************
+**** END OF MISSION ****
+************************
+***********************/
   STATE_ENDMISSION => [
     "name" => "endMission",
     "args" => "argEndMission",
@@ -256,30 +277,34 @@ $machinestates = [
   ],
 
 
-    STATE_CHANGE_MISSION => [
-        "name" => "changeMission",
-        "description" => "",
-        "type" => "game",
-        "action" => "stChangeMission",
-        "transitions" => ["next" => STATE_PREPARATION, "save" => STATE_SAVE, "end" => STATE_SAVE]
-    ],
-
-    STATE_SAVE => [
-        "name" => "save",
-        "description" => "",
-        "type" => "game",
-        "action" => "stSave",
-        "transitions" => ["next" => STATE_END_OF_GAME]
-    ],
-
-    // Final state.
-    // Please do not modify (and do not overload action/args methods).
-    STATE_END_OF_GAME => [
-        "name" => "gameEnd",
-        "description" => clienttranslate("End of game"),
-        "type" => "manager",
-        "action" => "stGameEnd",
-        "args" => "argGameEnd"
+  STATE_CHANGE_MISSION => [
+    "name" => "changeMission",
+    "description" => "",
+    "type" => "game",
+    "action" => "stChangeMission",
+    "transitions" => [
+      "next" => STATE_PREPARATION,
+      "save" => STATE_SAVE,
+      "end" => STATE_SAVE
     ]
+  ],
 
+  STATE_SAVE => [
+    "name" => "save",
+    "description" => "",
+    "type" => "game",
+    "action" => "stSave",
+    "transitions" => ["next" => STATE_END_OF_GAME]
+  ],
+
+
+  // Final state.
+  // Please do not modify (and do not overload action/args methods).
+  STATE_END_OF_GAME => [
+    "name" => "gameEnd",
+    "description" => clienttranslate("End of game"),
+    "type" => "manager",
+    "action" => "stGameEnd",
+    "args" => "argGameEnd"
+  ]
 ];

@@ -31,14 +31,6 @@ trait MissionTrait
     $commander = Players::get($commanderId);
     Notifications::cleanUp();
 
-    /* TODO
-            self::notifyPlayer($player_id, 'commpending', '', array(
-                'pending' => 0,
-                'canCommunicate' => 1
-            ));
-    */
-
-
     // Notify player about commander
     Globals::setCommander($commanderId);
     Notifications::newCommander($commander);
@@ -48,6 +40,9 @@ trait MissionTrait
     $mission = Missions::getCurrent();
     $mission->prepare();
     $state = $mission->getStartingState();
+    if($state == 'question')
+      $this->activeNextPlayer();
+
     $this->gamestate->nextState($state);
   }
 
@@ -100,5 +95,15 @@ trait MissionTrait
       $newState = Globals::isEndOfGame()? 'end' : 'next';
       $this->gamestate->nextState($newState);
     }
+  }
+
+  function stSave()
+  {
+    if(Globals::isCampaign()) {
+      $logs = self::getCollectionFromDb("SELECT mission, attempt, success, distress FROM logbook");
+      $json = json_encode ($logs);
+      $this->storeLegacyTeamData($json);
+    }
+    $this->gamestate->nextState('next');
   }
 }

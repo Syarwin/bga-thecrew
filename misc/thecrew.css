@@ -145,47 +145,6 @@
 
 
 
-.check_ok {
-	position: absolute;
-    width: 40px;
-    height: 40px;
-    background-image: url('img/sprites.png');
-	background-size: 1100%;
-	background-position: 80% 100%;
-
-	left: 10px;
-	top: 44px;
-	filter: drop-shadow(0px 0px 2px #000);
-	-webkit-filter: drop-shadow(0px 0px 2px #000);
-}
-
-
-.tbd {
-    display : none !important;
-}
-
-.nok {
-	background-position: 70% 100%;
-}
-
-
-#distress {
-	position: relative;
-    width: 60px;
-    height: 60px;
-    background-image: url('img/sprites.png');
-	background-size: 1100%;
-	background-position: 100% 0%;
-	margin: auto;
-	margin-top : 10px;
-
-	filter: drop-shadow(0px 0px 2px #000);
-	-webkit-filter: drop-shadow(0px 0px 2px #000);
-}
-
-#distress.activated {
-	background-position: 10% 100%;
-}
 
 #myhand_wrap {
 	margin: 0px;
@@ -194,32 +153,6 @@
   	border-radius: 5px;
 }
 
-/** Task marker **/
-.task_marker {
-	position: absolute;
-    width: 40px;
-    height: 40px;
-    background-image: url('img/sprites.png');
-	background-size: 1100%;
-	background-position-x: 0%;
-	background-position-y: 0%;
-	opacity: 0;
-	left: 14px;
-	bottom: 4px;
-	filter: drop-shadow(1px 1px 2px #000);
-	-webkit-filter: drop-shadow(1px 1px 2px #000);
-}
-
-.task1 {background-position-x: 0%;	opacity: 1;}
-.task2 {background-position-x: 10%;	opacity: 1;}
-.task3 {background-position-x: 20%;	opacity: 1;}
-.task4 {background-position-x: 30%;	opacity: 1;}
-.task5 {background-position-x: 40%;	opacity: 1;}
-.tasko {background-position-x: 50%;	opacity: 1;}
-.taski1 {background-position-x: 60%;	opacity: 1;}
-.taski2 {background-position-x: 70%;	opacity: 1;}
-.taski3 {background-position-x: 80%;	opacity: 1;}
-.taski4 {background-position-x: 90%;	opacity: 1;}
 
 .bubble_custom {
     position: relative;

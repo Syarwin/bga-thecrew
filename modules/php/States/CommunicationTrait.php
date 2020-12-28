@@ -56,6 +56,7 @@ trait CommunicationTrait
   {
     $player = Players::get();
     $cards = $player->getCards();
+    $mission = Missions::getCurrent();
 
     // Compute min§max of each value
     $min = [null, 10, 10, 10, 10];
@@ -77,9 +78,13 @@ trait CommunicationTrait
       if($c == CARD_ROCKET || ($v != $min[$c] && $v != $max[$c]))
         continue;
 
+      $status = ($max[$c] == $min[$c]? 'middle' : ($v == $min[$c]? 'bottom' : 'top'));
+      if($mission->isDeadZone())
+        $status = 'hidden';
+
       $result[] = [
         'card' => $card,
-        'status' => ($max[$c] == $min[$c]? 'middle' : ($v == $min[$c]? 'bottom' : 'top'))
+        'status' => $status
       ];
     }
 
@@ -116,17 +121,6 @@ trait CommunicationTrait
   }
 
 
-
-
-  function argCommToken()
-  {
-      $result = array();
-      $player_id = self::getActivePlayerId();
-      $card = $this->getCommunicationCard($player_id);
-      $ret['card'] = $card;
-      $ret['possible'] = $this->getPossibleStatus($card);
-      return $ret;
-  }
 
 
 /*

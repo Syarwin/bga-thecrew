@@ -41,6 +41,7 @@ class thecrew extends Table
   use CREW\States\TrickTrait;
   use CREW\States\CommunicationTrait;
   use CREW\States\DistressTrait;
+  use CREW\States\QuestionTrait;
 
 
   public static $instance = null;
@@ -101,6 +102,8 @@ class thecrew extends Table
       'missions' => CREW\Missions::getUiData(),
       'status' => $status,
       'commanderId' => CREW\Game\Globals::getCommander(),
+      'specialId' => CREW\Game\Globals::getSpecial(),
+      'specialId2' => CREW\Game\Globals::getSpecial2(),
       'showIntro' => $status['mId'] == 1 && $status['total'] == 1 && CREW\Game\Globals::isCampaign(),
       'showMission' => CREW\Game\Globals::getTrickCount() == 0,
     ];

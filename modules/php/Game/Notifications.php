@@ -24,6 +24,15 @@ class Notifications
     self::notify($pId, 'message', $txt, $args);
   }
 
+  public static function speak($player, $msg){
+    self::notifyAll('speak', clienttranslate('${player_name} : ${msg}'), [
+      'i18n' => ['msg'],
+      'player' => $player,
+      'msg' => $msg,
+      'content' => $msg,
+    ]);
+  }
+
 
   public static function cleanUp(){
     self::notifyAll('cleanUp', '', [
@@ -43,6 +52,14 @@ class Notifications
   public static function newCommander($player){
     self::notifyAll('commander', clienttranslate('${player_name} is your new commander'), [
       'player' => $player
+    ]);
+  }
+
+  public static function specialCrewMember($player, $crew){
+    self::notifyAll('specialCrewMember', clienttranslate('${player_name} chooses ${special_name}'), [
+      'player' => $player,
+      'special_name' => $crew->getName(),
+      'special_id' => $crew->getId(),
     ]);
   }
 
@@ -83,6 +100,9 @@ class Notifications
   }
 
 
+  /******************
+   **** DISTRESS ****
+   *****************/
   public static function chooseDirection($player, $dir){
     self::notifyAll('chooseDistressDirection', '', [
       'pId' => $player->getId(),
@@ -95,7 +115,9 @@ class Notifications
     if($dir == CLOCKWISE) $msg = clienttranslate('Cards will be turned clockwise');
     if($dir == ANTICLOCKWISE) $msg = clienttranslate('Cards will be turned anticlockwise');
 
-    self::notifyAll('distressActivated', $msg, []);
+    self::notifyAll('distressActivated', $msg, [
+      'dir' => $dir
+    ]);
   }
 
   public static function chooseDistressCard($player, $card){
@@ -132,6 +154,11 @@ class Notifications
   }
 
 
+
+  /***********************
+   **** COMMUNICATION ****
+   **********************/
+
   public static function toggleCommPending($player){
     self::notify($player->getId(), 'commpending', '', [
       'pending' => $player->isCommPending(),
@@ -152,6 +179,7 @@ class Notifications
     if($status == 'top')    $msg = clienttranslate('${player_name} tells ${value_symbol}${color_symbol} is their highest card of this color');
     if($status == 'middle') $msg = clienttranslate('${player_name} tells ${value_symbol}${color_symbol} is their only card of this color');
     if($status == 'bottom') $msg = clienttranslate('${player_name} tells ${value_symbol}${color_symbol} is their lowest card of this color');
+    if($status == 'hidden') $msg = clienttranslate('${player_name} communicates ${value_symbol}${color_symbol}');
 
     self::notifyAll('endComm', $msg, [
       'player' => $player,
