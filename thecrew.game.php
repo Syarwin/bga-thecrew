@@ -117,8 +117,10 @@ class thecrew extends Table
    */
   public function getGameProgression()
   {
-    // TODO
-    return 0;
+    $nbTotalCards = Globals::isChallenge()? 30 : 40;
+    $nbPlayedCards = $nbTotalCards - Cards::countRemeaning();
+
+    return 100 * $nbPlayedCards / $nbTotalCards;
   }
 
 

@@ -189,9 +189,9 @@ class Tasks extends \CREW\Helpers\DB_Manager
     }
 
     //Update task according to tile Omega
-    $task = self::DB()->where('tile', 'o')->where('status', 'tbd')->get(true);
+    $task = self::DB()->where('tile', 'o')->where('status', 'ok')->get(true);
     if(!is_null($task)){
-      $taskMissed = self::DB()->where('status', 'tbd')->get(false);
+      $tasksMissed = self::DB()->where('status', 'tbd')->get(false);
       self::updateStatus($tasksMissed);
     }
   }

@@ -57,7 +57,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       let task = n.args.task,
           oTask = $('task-' + task.id);
 
-      this.attachToNewParent(oTask, 'tasks-' + task.pId);
+      this.attachToNewParent(oTask, 'player-table-missions-' + task.pId);
 
 /*
 TODO

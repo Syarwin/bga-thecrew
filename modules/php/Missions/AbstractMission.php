@@ -13,9 +13,10 @@ abstract class AbstractMission
   protected $tasks = 0;
   protected $tiles = [];
   protected $question = null;
-  protected $repliers = null;
+  protected $replies = null;
   protected $deadzone = false;
   protected $disruption = 0;
+  protected $informations = [];
 
   public function getUiData()
   {
@@ -25,6 +26,9 @@ abstract class AbstractMission
       'tasks' => $this->tasks,
       'tiles' => $this->tiles,
       'deadzone' => $this->deadzone,
+      'informations' => $this->informations,
+      'question' => $this->question,
+      'replies' => $this->replies,
     ];
   }
 
@@ -32,6 +36,7 @@ abstract class AbstractMission
   public function getQuestion(){ return $this->question; }
   public function getReplies() { return $this->replies; }
   public function isDeadZone(){ return $this->deadzone; }
+  public function canCommunicate($pId) { return true; }
 
   public function isDisrupted(){
     return $this->disruption > Globals::getTrickCount();
@@ -75,7 +80,7 @@ abstract class AbstractMission
 
 
 
-  public function check(){
+  public function check($lastTrick){
     self::setStatus(Tasks::getStatus());
   }
   public function setStatus($p){

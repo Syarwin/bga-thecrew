@@ -125,7 +125,11 @@ trait TrickTrait
     // Update tasks
     Tasks::checkLastTrick();
     $mission = Missions::getCurrent();
-    $mission->check();
+    $mission->check([
+      'bestCard' => $bestCard,
+      'winner' => $winner,
+      'cards' => $cards,
+    ]);
 
     $status = $mission->getStatus();
     if($status != 0){
@@ -138,13 +142,5 @@ trait TrickTrait
       $this->gamestate->changeActivePlayer($winner->getId());
       $this->gamestate->nextState("nextTrick");
     }
-
-/*
-TODO
-        if($this->getMission()['id'] == 12 && self::getGameStateValue( 'trick_count') == 1)
-        {
-            $this->swapOneCard();
-        }
-    */
   }
 }

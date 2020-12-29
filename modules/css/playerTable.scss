@@ -271,27 +271,26 @@
    }
 }
 
-.player-table[data-no="0"],
-.player-table[data-no="1"] {
-  .bubble {
-    left: 277px;
+.player-table[data-no="0"] .bubble,
+.player-table[data-no="1"] .bubble,
+.bubble.left {
+  left: 277px;
+  right:auto;
+  margin: 10px 0px 0px 10px;
+
+  &.show {
+    opacity: 1;
+    left: 297px;
     right:auto;
-    margin: 10px 0px 0px 10px;
+  }
 
-    &.show {
-      opacity: 1;
-      left: 297px;
-      right:auto;
-    }
-
-    &::before {
-      border-radius: 0 0 100% 0;
-      box-shadow:
-        -2px -2px 0 0 #000 inset,
-        -23px 0 0 0 #fff inset,
-        -25px -2px 0 0 #000 inset;
-      left: 0;
-      right:auto;
-    }
+  &::before {
+    border-radius: 0 0 100% 0;
+    box-shadow:
+      -2px -2px 0 0 #000 inset,
+      -23px 0 0 0 #fff inset,
+      -25px -2px 0 0 #000 inset;
+    left: 0;
+    right:auto;
   }
 }

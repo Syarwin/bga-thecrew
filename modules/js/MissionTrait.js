@@ -47,10 +47,34 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         });
       }
 
+      // Question
+      if(mission.question){
+        let question = _(mission.question);
+        let replies = mission.replies.map(reply => _(reply)).join('/');
+        dojo.place(`<div id="mission-informations-question"><div class='bubble left show'>${question}</div><div class='bubble show'>${replies}</div></div>`, container);
+      }
+
+      // Special
+      if(mission.informations.special){
+        let desc = _(mission.informations.special);
+        dojo.place(`<div id="mission-informations-special"><div class='icon-special'></div><div class='special-desc'>${desc}</div></div>`, container);
+        if(mission.informations.specialTooltip){
+          this.updateSpecialTooltip(_(mission.informations.specialTooltip));
+        }
+      }
+
       // Deadzone
       if(mission.deadzone){
         dojo.place('<div id="mission-informations-deadzone"><div id="deadzone-radio-token"></div><div id="deadzone-question"></div></div>', container);
         this.addTitledTooltip("mission-informations-deadzone", _('Dead zone'), _('Your communications have been disrupted and you only have limited communication. When you want to communicate, place your card in front of you as you normally would. It must meet one of the three conditions (highest, single, or lowest of the cards in your hand, in the color suit). You are not however, allowed to place your radio communication token on the card.') );
+      }
+
+
+      // Cards special
+      if(mission.informations.cards || mission.informations.cardsType){
+        let desc = mission.informations.cards? _(mission.informations.cards) : '';
+        let type = mission.informations.cardsType;
+        dojo.place(`<div id="mission-informations-cards"><div class='special-desc'>${desc}</div><div class='icon-cards' data-type='${type}'></div></div>`, container);
       }
     },
 
@@ -77,6 +101,11 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     notif_continue(n){
       dojo.addClass("continue-ok-" + n.args.player_id, "check-confirm");
+    },
+
+    getMissionSpecialDescription(){
+      let mission = this.gamedatas.missions[this.gamedatas.status.mId - 1];
+      return mission.informations.specialTooltip? _(mission.informations.specialTooltip) : _('This crew member is special for this mission.');
     },
   });
 });

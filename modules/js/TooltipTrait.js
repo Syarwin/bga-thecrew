@@ -15,7 +15,7 @@ define(["dojo", "dojo/_base/declare", "ebg/stock"], (dojo, declare) => {
         this.addTitledTooltip('panel-commander-' + player.id,_('Commander token'), commanderDesc);
         this.addTitledTooltip('commander-icon-' + player.id, _('Commander token'), commanderDesc);
 
-        this.addTitledTooltip('special-icon-' + player.id, _('Special one'), _('This crew member is special for this mission.') );
+        this.addTitledTooltip('special-icon-' + player.id, _('Special crew member'), this.getMissionSpecialDescription() );
         this.addTitledTooltip('special2-icon-' + player.id, _('Second special one'), _('This crew member must win the last trick.') );
 
         this.addTitledTooltip('radio-' + player.id, _('Radio communication token'), _('Communication token gives information of the communicated color card :<br/>- At the top, if it is your highest card of this color.<br/>- In the middle, if it is your only card of this color.<br/>- At the bottom, if it is your lowest card of this color.<br/>- Red, you cannot communicate.'));
@@ -26,10 +26,18 @@ define(["dojo", "dojo/_base/declare", "ebg/stock"], (dojo, declare) => {
       this.addTitledTooltip('distress-panel-icon', _('Distress token'), _('A distress signal can be sent out before the first trick of a mission and before any communication. If the distress signal is activated, each crew member may pass one card to his neighbor. Rockets may not be passed on! Decide together if you will pass the cards to the left or the right. Everyone has to pass in the same direction!') );
     },
 
+    updateSpecialTooltip(desc){
+      Object.values(this.gamedatas.players).forEach( player => {
+        this.addTitledTooltip('special-icon-' + player.id, _('Special crew member'), desc );
+      });
+      this.addTitledTooltip('mission-informations-special', _('Special crew member'), desc );
+
+    },
 
     addTitledTooltip(id, title, description, className = ''){
+      let withContent = description == ''? '' : 'with-content';
       var content = `
-        <div class="tooltip-container ${className}">
+        <div class="tooltip-container ${withContent} ${className}">
       		<span class="tooltip-title">${title}</span>
       `;
       if(description != '' && description != undefined){

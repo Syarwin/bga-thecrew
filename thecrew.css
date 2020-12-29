@@ -16,6 +16,12 @@
 @import url(https://fonts.googleapis.com/css?family=Permanent+Marker);
 @import url(https://fonts.googleapis.com/css?family=Crimson+Text:400,700,900,400italic,700italic,900italic|Playfair+Display:400,700,900,400italic,700italic,900italic|Rock+Salt:400);
 @import url(https://fonts.googleapis.com/css?family=Crimson+Text:400,700,900,400italic,700italic,900italic|Playfair+Display:400,700,900,400italic,700italic,900italic|Rock+Salt:400);
+@font-face {
+  font-family: 'Khula';
+  src: url("img/fonts/Khula-ExtraBold.woff2") format("woff2"), url("img/fonts/Khula-ExtraBold.woff") format("woff"), url("img/fonts/Khula-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap; }
 #logs span.logicon, .card-description span.logicon {
   position: relative;
   display: inline-block;
@@ -47,7 +53,7 @@
   #logs span.card-value.black, .card-description span.card-value.black {
     color: black; }
 
-.card-description .tooltip-title {
+.card-description .tooltip-title, .with-content .tooltip-title {
   font-weight: bold; }
 
 html, body {
@@ -733,17 +739,20 @@ html, body {
     box-shadow: 2px -2px 0 0 #000 inset, 23px 0 0 0 #fff inset, 25px -2px 0 0 #000 inset; }
 
 .player-table[data-no="0"] .bubble,
-.player-table[data-no="1"] .bubble {
+.player-table[data-no="1"] .bubble,
+.bubble.left {
   left: 277px;
   right: auto;
   margin: 10px 0px 0px 10px; }
   .player-table[data-no="0"] .bubble.show,
-  .player-table[data-no="1"] .bubble.show {
+  .player-table[data-no="1"] .bubble.show,
+  .bubble.left.show {
     opacity: 1;
     left: 297px;
     right: auto; }
   .player-table[data-no="0"] .bubble::before,
-  .player-table[data-no="1"] .bubble::before {
+  .player-table[data-no="1"] .bubble::before,
+  .bubble.left::before {
     border-radius: 0 0 100% 0;
     box-shadow: -2px -2px 0 0 #000 inset, -23px 0 0 0 #fff inset, -25px -2px 0 0 #000 inset;
     left: 0;
@@ -1054,7 +1063,7 @@ html, body {
   #mission-status article #mission-description {
     text-align: justify;
     font-size: 14px;
-    line-height: 1.35; }
+    line-height: 1.25; }
 #mission-status #mission-counter-wrapper {
   font-weight: 700;
   margin-bottom: 10px;
@@ -1104,9 +1113,60 @@ html, body {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  margin-top: 20px; }
+  margin-top: 20px;
+  margin-bottom: 10px; }
   #mission-status .mission-informations .mission-informations-tiles .task-tile {
     position: static; }
+#mission-status .mission-informations #mission-informations-question .bubble {
+  margin: 0;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  font-size: 12px;
+  float: right;
+  left: auto;
+  right: auto; }
+  #mission-status .mission-informations #mission-informations-question .bubble::before {
+    height: 15px;
+    bottom: -15px; }
+  #mission-status .mission-informations #mission-informations-question .bubble.left {
+    float: left; }
+#mission-status .mission-informations #mission-informations-special, #mission-status .mission-informations #mission-informations-cards {
+  clear: both;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  #mission-status .mission-informations #mission-informations-special .icon-special, #mission-status .mission-informations #mission-informations-cards .icon-special {
+    flex-shrink: 0;
+    width: 75px;
+    height: 87px;
+    background-image: url("img/special.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 0 2px #000);
+    -webkit-filter: drop-shadow(0 0 2px #000); }
+  #mission-status .mission-informations #mission-informations-special .icon-cards, #mission-status .mission-informations #mission-informations-cards .icon-cards {
+    flex-shrink: 0;
+    width: 90px;
+    height: 90px;
+    background-image: url("img/sprites.png");
+    background-size: 1100%;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 0 2px #000);
+    -webkit-filter: drop-shadow(0 0 2px #000); }
+    #mission-status .mission-informations #mission-informations-special .icon-cards[data-type='ones'], #mission-status .mission-informations #mission-informations-cards .icon-cards[data-type='ones'] {
+      background-position: 30% 100%; }
+    #mission-status .mission-informations #mission-informations-special .icon-cards[data-type='swap'], #mission-status .mission-informations #mission-informations-cards .icon-cards[data-type='swap'] {
+      background-position: 40% 100%; }
+    #mission-status .mission-informations #mission-informations-special .icon-cards[data-type='rockets'], #mission-status .mission-informations #mission-informations-cards .icon-cards[data-type='rockets'] {
+      background-position: 50% 100%; }
+  #mission-status .mission-informations #mission-informations-special .special-desc, #mission-status .mission-informations #mission-informations-cards .special-desc {
+    text-align: center;
+    color: #d44b38;
+    text-shadow: 0 0 2px #fff;
+    font-weight: bold;
+    font-family: 'Khula';
+    font-size: 19px;
+    line-height: 20px; }
 #mission-status .mission-informations #mission-informations-deadzone {
   margin: 10px auto;
   display: flex;

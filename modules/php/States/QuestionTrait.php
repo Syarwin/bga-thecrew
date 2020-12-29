@@ -66,6 +66,7 @@ trait QuestionTrait
     Utils::diff($playerIds, [Globals::getCommander()]);
     return [
       'players' => $playerIds,
+      'tasks' => Tasks::getUnassigned(),
     ];
       /*
       $result = array();
@@ -157,19 +158,6 @@ trait QuestionTrait
   $this->gamestate->nextState( 'pickCrew' );
   return;
   }
-  }
-  else if($mission['id'] == 11)
-  {
-  $sql = "update player set comm_token = 'used' where player_id=".$crew_id;
-  self::DbQuery( $sql );
-
-  $card = $this->getCommunicationCard($crew_id);
-
-  self::notifyAllPlayers('endComm', '',array(
-  'player_id' => $crew_id,
-  'comm_status' => 'used',
-  'card_id' => $card['id']
-  ));
   }
   else if($down)
   {

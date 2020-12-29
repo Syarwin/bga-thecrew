@@ -5,9 +5,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this._notifications.push(
         ['chooseDistressDirection', 10],
         ['distressActivated', 10],
-        ['chooseDistressCard', 10],
-        ['giveDistressCard', 1000],
-        ['receiveDistressCard', 1000]
+        ['chooseDistressCard', 10]
       );
     },
 
@@ -55,17 +53,5 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       debug('Choosing a card to distress', n);
       this.highlightCard(n.args.card.id);
     },
-
-
-    notif_giveDistressCard(n) {
-      this.slide('hand_item_' + n.args.card.id, 'player-table-' + n.args.player_id, 1000)
-        .then(() => this._hand.removeFromStockById(n.args.card.id) );
-    },
-
-    notif_receiveDistressCard(n) {
-      this.addCardInHand(n.args.card);
-      dojo.addClass("hand_item_" + n.args.card.id, "received");
-    },
-
   });
 });

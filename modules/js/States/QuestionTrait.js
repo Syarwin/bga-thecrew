@@ -47,8 +47,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
 
     onEnteringStatePickCrew(args){
-      // TODO : useful for later mission
-      //this.showTasks(args.args.tasks);
+      this.showTasks(args.tasks);
       if(this.isCurrentPlayerActive()){
         this.makePlayersSelectable(args.players, this.onPickCrew.bind(this));
       }

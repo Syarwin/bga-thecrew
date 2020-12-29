@@ -18,6 +18,16 @@
   -webkit-filter: drop-shadow(0 0 2px #000);
 }
 
+@font-face {
+    font-family: 'Khula';
+    src: url('img/fonts/Khula-ExtraBold.woff2') format('woff2'),
+        url('img/fonts/Khula-ExtraBold.woff') format('woff'),
+        url('img/fonts/Khula-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
 @import 'modules/css/logAndTooltip';
 @import 'modules/css/layout';
 @import 'modules/css/playerPanel';

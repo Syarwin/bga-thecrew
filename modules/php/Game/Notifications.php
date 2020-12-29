@@ -100,6 +100,17 @@ class Notifications
   }
 
 
+  public static function swapCard($from, $to, $card){
+    self::notify($from->getId(), 'giveCard', clienttranslate('You lost ${value_symbol}${color_symbol}'), [
+      'player' => $to,
+      'card' => $card,
+    ]);
+
+    self::notify($to->getId(), 'receiveCard', clienttranslate('You picked ${value_symbol}${color_symbol}'), [
+      'card' => $card,
+    ]);
+  }
+
   /******************
    **** DISTRESS ****
    *****************/
@@ -127,12 +138,12 @@ class Notifications
   }
 
   public static function distressExchange($from, $to, $card){
-    self::notify($from->getId(), 'giveDistressCard', clienttranslate('You give ${value_symbol}${color_symbol} to ${player_name}'), [
+    self::notify($from->getId(), 'giveCard', clienttranslate('You give ${value_symbol}${color_symbol} to ${player_name}'), [
       'card' => $card,
       'player' => $to,
     ]);
 
-    self::notify($to->getId(), 'receiveDistressCard', clienttranslate('You receive ${value_symbol}${color_symbol} from ${player_name}'), [
+    self::notify($to->getId(), 'receiveCard', clienttranslate('You receive ${value_symbol}${color_symbol} from ${player_name}'), [
       'card' => $card,
       'player' => $from,
     ]);

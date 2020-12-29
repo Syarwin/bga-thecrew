@@ -34,7 +34,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         dojo.connect($('player-table-' + player.id), 'click', () => this.onClickPlayer(player.id));
 
         // Create tasks
-        player.tasks.forEach(task => this.addTask(task, 'tasks-' + player.id) );
+        player.tasks.forEach(task => this.addTask(task, 'player-table-missions-' + player.id) );
 
         // Place communication card and radio token
         this.setCommunicationCard(player.id, player.commCard);

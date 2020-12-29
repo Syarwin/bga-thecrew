@@ -7,7 +7,9 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
   return declare("thecrew.cardTrait", null, {
     constructor(){
       this._notifications.push(
-        ['newHand', 100]
+        ['newHand', 100],
+        ['giveCard', 1000],
+        ['receiveCard', 1000]
       );
       this._callbackOnCard = null;
       this._selectableCards = [];
@@ -154,6 +156,17 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
            top: 0,
         }
       }).play();
+    },
+
+
+    notif_giveCard(n) {
+      this.slide('hand_item_' + n.args.card.id, 'player-table-' + n.args.player_id, 1000)
+        .then(() => this._hand.removeFromStockById(n.args.card.id) );
+    },
+
+    notif_receiveCard(n) {
+      this.addCardInHand(n.args.card);
+      dojo.addClass("hand_item_" + n.args.card.id, "received");
     },
   });
 });

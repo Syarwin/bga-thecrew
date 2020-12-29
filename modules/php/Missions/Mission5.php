@@ -10,10 +10,14 @@ class Mission5 extends AbstractMission
 
     $this->question = clienttranslate('How do you feel?');
     $this->replies = [clienttranslate('Good'), clienttranslate('Bad') ];
+    $this->informations = [
+      'special' => clienttranslate('No Tricks'),
+      'specialTooltip' => clienttranslate('This crew member must not win any tricks'),
+    ];
   }
 
 
-  function check()
+  function check($lastTrick)
   {
     $player = $this->getSpecial();
     if($player->getTricksWon() > 0){

@@ -84,6 +84,13 @@ class Player extends Helpers\DB_Manager
     return Cards::getOfPlayer($this->id);
   }
 
+  public function getRandomCard()
+  {
+    $cards = $this->getCards();
+    $index = array_rand($cards, 1);
+    return $cards[$index];
+  }
+
   public function getTasks()
   {
     return Tasks::getOfPlayer($this->id);
@@ -108,7 +115,7 @@ class Player extends Helpers\DB_Manager
   public function canCommunicate()
   {
     $mission = Missions::getCurrent();
-    return $this->commToken != 'used' && is_null($this->commCard) && !$mission->isDisrupted();
+    return $this->commToken != 'used' && is_null($this->commCard) && !$mission->isDisrupted(); // TODO && $mission->canCommunicate($this->id);
   }
 
   // TODO

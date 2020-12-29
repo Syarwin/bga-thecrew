@@ -146,11 +146,10 @@ var jstpl_playerTable = `
       \${name}
     </div>
 
-    <div class="player-table-mission">
+    <div id="player-table-missions-\${id}" class="player-table-mission">
       <div id="commander-icon-\${id}" class="commander"></div>
       <div id="special-icon-\${id}" class="special"></div>
       <div id="special2-icon-\${id}" class="special2"></div>
-      <div id="tasks-\${id}"></div>
     </div>
   </div>
 </div>`;

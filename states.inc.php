@@ -198,7 +198,7 @@ $machinestates = [
     "type" => "game",
     "action" => "stBeforeComm",
     "transitions" => [
-      "turn" => STATE_PLAYERTURN,
+      "turn" => STATE_PLAYER_TURN,
       "comm" => STATE_COMM
     ]
   ],
@@ -222,7 +222,7 @@ $machinestates = [
   /************************
   ****** PLAY CARD  *******
   ************************/
-  STATE_PLAYERTURN => [
+  STATE_PLAYER_TURN => [
     "name" => "playerTurn",
     "description" => clienttranslate('${actplayer} must play a card'),
     "descriptionmyturn" => clienttranslate('${you} must play a card'),
@@ -230,22 +230,22 @@ $machinestates = [
     "args" => "argPlayerTurn",
     "possibleactions" => ["actPlayCard", "actStartComm", "actDistress"],
     "transitions" => [
-      "next" => STATE_NEXTPLAYER,
+      "next" => STATE_NEXY_PLAYER,
       "startComm" => STATE_BEFORE_COMM,
       "distress" => STATE_DISTRESS_SETUP,
       "zombiePass" => STATE_CHANGE_MISSION
     ]
   ],
 
-  STATE_NEXTPLAYER => [
+  STATE_NEXY_PLAYER => [
     "name" => "nextPlayer",
     "description" => "",
     "type" => "game",
     "action" => "stNextPlayer",
     "transitions" => [
-      "nextPlayer" => STATE_PLAYERTURN,
+      "nextPlayer" => STATE_PLAYER_TURN,
       "nextTrick" => STATE_NEW_TRICK,
-      "endMission" => STATE_ENDMISSION
+      "endMission" => STATE_END_MISSION
     ],
     "updateGameProgression" => true
   ],
@@ -262,7 +262,7 @@ $machinestates = [
 **** END OF MISSION ****
 ************************
 ***********************/
-  STATE_ENDMISSION => [
+  STATE_END_MISSION => [
     "name" => "endMission",
     "args" => "argEndMission",
     "type" => "multipleactiveplayer",

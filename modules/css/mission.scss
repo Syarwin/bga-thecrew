@@ -18,7 +18,7 @@
     #mission-description {
       text-align: justify;
       font-size:14px;
-      line-height: 1.35;
+      line-height: 1.25;
     }
   }
 
@@ -83,9 +83,73 @@
       flex-wrap: wrap;
       justify-content: space-around;
       margin-top: 20px;
+      margin-bottom:10px;
 
       .task-tile {
         position:static;
+      }
+    }
+
+    #mission-informations-question {
+      .bubble {
+        margin:0;
+        margin-bottom: 10px;
+        padding:5px 10px;
+        font-size:12px;
+        float:right;
+        left:auto;
+        right:auto;
+
+        &::before {
+          height:15px;
+          bottom:-15px;
+        }
+
+        &.left {
+          float:left;
+        }
+      }
+    }
+
+    #mission-informations-special, #mission-informations-cards {
+      clear:both;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .icon-special {
+        flex-shrink: 0;
+        width: 75px;
+        height: 87px;
+        background-image: url("img/special.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        @include shadow;
+      }
+
+      .icon-cards {
+        flex-shrink: 0;
+        width: 90px;
+        height: 90px;
+        background-image: url("img/sprites.png");
+        background-size: 1100%;
+        background-repeat: no-repeat;
+        @include shadow;
+
+        &[data-type='ones'] { background-position: 30% 100%; }
+        &[data-type='swap'] { background-position: 40% 100%; }
+        &[data-type='rockets'] { background-position: 50% 100%; }
+        &[data-type='nines'] { background-position: 60% 100%; }
+      }
+
+      .special-desc {
+        text-align: center;
+        color: #d44b38;
+        text-shadow: 0 0 2px #fff;
+        font-weight: bold;
+        font-family: 'Khula';
+        font-size: 19px;
+        line-height: 20px;
       }
     }
 

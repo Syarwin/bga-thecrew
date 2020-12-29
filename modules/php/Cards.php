@@ -126,5 +126,19 @@ class Cards extends Helpers\Pieces
     self::move(self::getIds($cards), ['trick'. Globals::getTrickCount(), $player->getId() ]);
   }
 
+  public static function getRemeaningRockets()
+  {
+    self::getInLocationQ(['hand', '%'])->where('color', CARD_ROCKET)->get(false);
+  }
+
+  public static function getRemeaningOfValue($value)
+  {
+    self::getInLocationQ(['hand', '%'])->where('value', $value)->get(false);
+  }
+
+  public static function countRemeaning()
+  {
+    self::getInLocation(['hand', '%'])->count();
+  }
 
 }
