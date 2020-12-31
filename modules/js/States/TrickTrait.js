@@ -3,7 +3,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     constructor(){
       this._notifications.push(
         ['playCard', 1000],
-        ['trickWin', 2000]
+        ['trickWin', 2000],
+        ['newTrick', 10]
       );
     },
 
@@ -57,5 +58,15 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       dojo.attr('task-' + n.args.task.id, 'data-status', n.args.task.status);
     },
 
+
+    notif_newTrick(n){
+      // Update trick count and communication in case of disruption
+      this.gamedatas.trickCount = n.args.trickCount;
+      this.updateMissionCommunication();
+
+      if(!this.isSpectator){
+        dojo.toggleClass('comm-card-' + this.player_id, "selectable", n.args.players[this.player_id].canCommunicate);
+      }
+    },
   });
 });

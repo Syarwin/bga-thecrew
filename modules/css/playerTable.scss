@@ -92,6 +92,27 @@
         }
       }
 
+      .disruption {
+        display:none;
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        top: 38px;
+        left: 16px;
+        padding: 7px;
+        color: #d44b38;
+        text-shadow: 0 0 2px #fff;
+        font-weight: bold;
+        font-family: 'Khula';
+        font-size: 38px;
+        line-height: 20px;
+        text-align: center;
+        background: white;
+        border-radius: 50%;
+        border: 1px solid gray;
+        box-shadow: 1px 1px 3px black;
+      }
+
       &[data-pending="1"]{
         box-shadow: 0px 0px 6px 1px #00ff00 !important;
         .pending-icon {
@@ -221,6 +242,22 @@
         width:58px;
         height:87px;
         background-image: url("img/special2.png");
+      }
+    }
+  }
+}
+
+
+@for $i from 1 through 5 {
+  #thecrew-table[data-disruption="#{$i}"] .player-table .communication-card-holder .communication-card {
+    .radio {
+      display:none;
+    }
+
+    .disruption {
+      display:block;
+      &::after {
+        content:'#{$i}';
       }
     }
   }

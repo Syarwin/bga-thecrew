@@ -39,10 +39,10 @@ $game_options = [
       15 => ['name' => totranslate('Mission').' 15','premium' => true],
       16 => ['name' => totranslate('Mission').' 16','premium' => true],
       17 => ['name' => totranslate('Mission').' 17','premium' => true],
-/*
       18 => ['name' => totranslate('Mission').' 18','premium' => true],
       19 => ['name' => totranslate('Mission').' 19','premium' => true],
       20 => ['name' => totranslate('Mission').' 20','premium' => true],
+      /*
       21 => ['name' => totranslate('Mission').' 21','premium' => true],
       22 => ['name' => totranslate('Mission').' 22','premium' => true],
       23 => ['name' => totranslate('Mission').' 23','premium' => true],

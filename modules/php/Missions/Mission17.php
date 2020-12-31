@@ -1,5 +1,6 @@
 <?php
 namespace CREW\Missions;
+use \CREW\Cards;
 
 class Mission17 extends AbstractMission
 {

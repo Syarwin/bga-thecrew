@@ -20,6 +20,7 @@ define(["dojo", "dojo/_base/declare", "ebg/stock"], (dojo, declare) => {
 
         this.addTitledTooltip('radio-' + player.id, _('Radio communication token'), _('Communication token gives information of the communicated color card :<br/>- At the top, if it is your highest card of this color.<br/>- In the middle, if it is your only card of this color.<br/>- At the bottom, if it is your lowest card of this color.<br/>- Red, you cannot communicate.'));
         this.addTitledTooltip('comm-pending-' + player.id, _('Communication pending token'), _('If visible, you will start communication at the beggining of next trick.'));
+        this.addTitledTooltip('disruption-' + player.id, _('Disruption token'), _('Disruption token gives information of how many tricks are left before being able to communicate again.'));
       });
 
       this.addTitledTooltip('distress', _('Distress token'), _('A distress signal can be sent out before the first trick of a mission and before any communication. If the distress signal is activated, each crew member may pass one card to his neighbor. Rockets may not be passed on! Decide together if you will pass the cards to the left or the right. Everyone has to pass in the same direction!') );

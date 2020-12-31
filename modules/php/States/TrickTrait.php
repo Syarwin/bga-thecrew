@@ -21,6 +21,7 @@ trait TrickTrait
     Globals::startNewTrick();
     $status = LogBook::getStatus();
     $newState = Globals::getTrickCount() == 1? 'distress' : 'next';
+    Notifications::newTrick();
     $this->gamestate->nextState($newState);
   }
 

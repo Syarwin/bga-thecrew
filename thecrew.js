@@ -116,6 +116,7 @@
 
       notif_cleanUp(n) {
         this.gamedatas.status = n.args.status;
+        this.gamedatas.trickCount = 0;
         this.updateMissionStatus()
 
         this.gamedatas.players = n.args.players;

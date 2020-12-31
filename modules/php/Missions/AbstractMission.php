@@ -29,6 +29,7 @@ abstract class AbstractMission
       'informations' => $this->informations,
       'question' => $this->question,
       'replies' => $this->replies,
+      'disruption' => $this->disruption,
     ];
   }
 

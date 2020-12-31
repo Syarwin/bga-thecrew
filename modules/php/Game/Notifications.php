@@ -87,6 +87,12 @@ class Notifications
     ]);
   }
 
+  public static function newTrick(){
+    self::notifyAll('newTrick', '', [
+      'trickCount' => Globals::getTrickCount(),
+      'players' => Players::getUiData(0),
+    ]);
+  }
 
   public static function updateTaskStatus($task, $player){
     $msg = $task['status'] == 'ok'?

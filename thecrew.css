@@ -551,6 +551,25 @@ html, body {
         .player-table .communication-card-holder .communication-card .pending-icon svg {
           width: 70%;
           height: 70%; }
+      .player-table .communication-card-holder .communication-card .disruption {
+        display: none;
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        top: 38px;
+        left: 16px;
+        padding: 7px;
+        color: #d44b38;
+        text-shadow: 0 0 2px #fff;
+        font-weight: bold;
+        font-family: 'Khula';
+        font-size: 38px;
+        line-height: 20px;
+        text-align: center;
+        background: white;
+        border-radius: 50%;
+        border: 1px solid gray;
+        box-shadow: 1px 1px 3px black; }
       .player-table .communication-card-holder .communication-card[data-pending="1"] {
         box-shadow: 0px 0px 6px 1px #00ff00 !important; }
         .player-table .communication-card-holder .communication-card[data-pending="1"] .pending-icon {
@@ -656,6 +675,41 @@ html, body {
         width: 58px;
         height: 87px;
         background-image: url("img/special2.png"); }
+
+#thecrew-table[data-disruption="1"] .player-table .communication-card-holder .communication-card .radio {
+  display: none; }
+#thecrew-table[data-disruption="1"] .player-table .communication-card-holder .communication-card .disruption {
+  display: block; }
+  #thecrew-table[data-disruption="1"] .player-table .communication-card-holder .communication-card .disruption::after {
+    content: "1"; }
+
+#thecrew-table[data-disruption="2"] .player-table .communication-card-holder .communication-card .radio {
+  display: none; }
+#thecrew-table[data-disruption="2"] .player-table .communication-card-holder .communication-card .disruption {
+  display: block; }
+  #thecrew-table[data-disruption="2"] .player-table .communication-card-holder .communication-card .disruption::after {
+    content: "2"; }
+
+#thecrew-table[data-disruption="3"] .player-table .communication-card-holder .communication-card .radio {
+  display: none; }
+#thecrew-table[data-disruption="3"] .player-table .communication-card-holder .communication-card .disruption {
+  display: block; }
+  #thecrew-table[data-disruption="3"] .player-table .communication-card-holder .communication-card .disruption::after {
+    content: "3"; }
+
+#thecrew-table[data-disruption="4"] .player-table .communication-card-holder .communication-card .radio {
+  display: none; }
+#thecrew-table[data-disruption="4"] .player-table .communication-card-holder .communication-card .disruption {
+  display: block; }
+  #thecrew-table[data-disruption="4"] .player-table .communication-card-holder .communication-card .disruption::after {
+    content: "4"; }
+
+#thecrew-table[data-disruption="5"] .player-table .communication-card-holder .communication-card .radio {
+  display: none; }
+#thecrew-table[data-disruption="5"] .player-table .communication-card-holder .communication-card .disruption {
+  display: block; }
+  #thecrew-table[data-disruption="5"] .player-table .communication-card-holder .communication-card .disruption::after {
+    content: "5"; }
 
 #overall-content[data-commander="0"] .player-table[data-no="0"] .player-table-wrapper .commander {
   display: block; }
@@ -1159,6 +1213,8 @@ html, body {
       background-position: 40% 100%; }
     #mission-status .mission-informations #mission-informations-special .icon-cards[data-type='rockets'], #mission-status .mission-informations #mission-informations-cards .icon-cards[data-type='rockets'] {
       background-position: 50% 100%; }
+    #mission-status .mission-informations #mission-informations-special .icon-cards[data-type='nines'], #mission-status .mission-informations #mission-informations-cards .icon-cards[data-type='nines'] {
+      background-position: 60% 100%; }
   #mission-status .mission-informations #mission-informations-special .special-desc, #mission-status .mission-informations #mission-informations-cards .special-desc {
     text-align: center;
     color: #d44b38;
@@ -1188,5 +1244,25 @@ html, body {
     margin-left: -15px;
     filter: drop-shadow(0 0 2px #000);
     -webkit-filter: drop-shadow(0 0 2px #000); }
+#mission-status .mission-informations #mission-informations-disruption {
+  margin: 10px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  #mission-status .mission-informations #mission-informations-disruption #disruption-radio-token {
+    width: 50px;
+    height: 50px;
+    background-image: url("img/sprites.png");
+    background-size: 1100%;
+    background-position: 0 50%;
+    transform: rotate(10deg); }
+  #mission-status .mission-informations #mission-informations-disruption #disruption-number {
+    color: #d44b38;
+    text-shadow: 0 0 2px #fff;
+    font-weight: bold;
+    font-family: 'Khula';
+    font-size: 38px;
+    line-height: 20px;
+    margin-left: 5px; }
 
 /*# sourceMappingURL=thecrew.css.map */

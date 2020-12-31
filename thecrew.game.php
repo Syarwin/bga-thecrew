@@ -105,7 +105,7 @@ class thecrew extends Table
       'specialId' => CREW\Game\Globals::getSpecial(),
       'specialId2' => CREW\Game\Globals::getSpecial2(),
       'showIntro' => $status['mId'] == 1 && $status['total'] == 1 && CREW\Game\Globals::isCampaign(),
-      'showMission' => CREW\Game\Globals::getTrickCount() == 0,
+      'trickCount' => CREW\Game\Globals::getTrickCount(),
     ];
   }
 
@@ -117,8 +117,8 @@ class thecrew extends Table
    */
   public function getGameProgression()
   {
-    $nbTotalCards = Globals::isChallenge()? 30 : 40;
-    $nbPlayedCards = $nbTotalCards - Cards::countRemeaning();
+    $nbTotalCards = CREW\Game\Globals::isChallenge()? 30 : 40;
+    $nbPlayedCards = $nbTotalCards - CREW\Cards::countRemeaning();
 
     return 100 * $nbPlayedCards / $nbTotalCards;
   }

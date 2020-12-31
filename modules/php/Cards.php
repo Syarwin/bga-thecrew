@@ -128,17 +128,17 @@ class Cards extends Helpers\Pieces
 
   public static function getRemeaningRockets()
   {
-    self::getInLocationQ(['hand', '%'])->where('color', CARD_ROCKET)->get(false);
+    return self::getInLocationQ(['hand', '%'])->where('color', CARD_ROCKET)->get(false);
   }
 
   public static function getRemeaningOfValue($value)
   {
-    self::getInLocationQ(['hand', '%'])->where('value', $value)->get(false);
+    return self::getInLocationQ(['hand', '%'])->where('value', $value)->get(false);
   }
 
   public static function countRemeaning()
   {
-    self::getInLocation(['hand', '%'])->count();
+    return self::getInLocation(['hand', '%'])->count();
   }
 
 }

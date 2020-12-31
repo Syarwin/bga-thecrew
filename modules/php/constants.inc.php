@@ -25,7 +25,7 @@ define("STATE_BEFORE_COMM",13);
 define("STATE_COMM",14);
 
 define("STATE_PLAYER_TURN",15);
-define("STATE_NEXY_PLAYER",16);
+define("STATE_NEXT_PLAYER",16);
 
 define("STATE_END_MISSION",17);
 define("STATE_CHANGE_MISSION",18);

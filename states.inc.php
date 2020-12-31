@@ -230,14 +230,14 @@ $machinestates = [
     "args" => "argPlayerTurn",
     "possibleactions" => ["actPlayCard", "actStartComm", "actDistress"],
     "transitions" => [
-      "next" => STATE_NEXY_PLAYER,
+      "next" => STATE_NEXT_PLAYER,
       "startComm" => STATE_BEFORE_COMM,
       "distress" => STATE_DISTRESS_SETUP,
       "zombiePass" => STATE_CHANGE_MISSION
     ]
   ],
 
-  STATE_NEXY_PLAYER => [
+  STATE_NEXT_PLAYER => [
     "name" => "nextPlayer",
     "description" => "",
     "type" => "game",

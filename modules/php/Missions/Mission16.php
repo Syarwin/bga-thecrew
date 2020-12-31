@@ -1,5 +1,7 @@
 <?php
 namespace CREW\Missions;
+use \CREW\Cards;
+use \CREW\Game\Globals;
 
 class Mission16 extends AbstractMission
 {
