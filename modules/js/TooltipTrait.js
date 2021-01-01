@@ -1,4 +1,6 @@
 define(["dojo", "dojo/_base/declare", "ebg/stock"], (dojo, declare) => {
+  const HIDDEN_TASK = 7;
+
   return declare("thecrew.tooltipTrait", null, {
     constructor(){
     },
@@ -71,7 +73,7 @@ define(["dojo", "dojo/_base/declare", "ebg/stock"], (dojo, declare) => {
 
     createTaskTooltip(task) {
       var msg = "";
-      if(task.color != 7){ // TODO : whaat ??
+      if(task.color != HIDDEN_TASK){ // TODO : whaat ??
         msg = this.getFormatedMsg(task);
 
         if(task.tile != null && this.getTileDescription(task.tile) != undefined){

@@ -16,30 +16,19 @@ trait QuestionTrait
 {
   function argQuestion()
   {
+    $tasks = Tasks::getUnassigned();
     $mission = Missions::getCurrent();
+    if($mission->areTasksHidden()){
+      Tasks::hide($tasks);
+    }
 
     return [
       'i18n' => ['question'],
       'player_name' => Players::getCommander()->getName(),
       'question' => $mission->getQuestion(),
       'replies' => $mission->getReplies(),
-      'tasks' => Tasks::getUnassigned(),
+      'tasks' => $tasks,
     ];
-
-    /*
-    TODO : 'down' stuff
-      $sql = "SELECT task_id, card_type, card_type_arg, token, player_id, status FROM task where player_id IS NULL";
-      $result['tasks'] = self::getCollectionFromDb( $sql );
-
-      $down = array_key_exists('down', $mission);
-      if($down)
-      {
-          foreach($result['tasks'] as $task_id => $task) {
-              $result['tasks'][$task_id]['card_type'] = 7;
-              $result['tasks'][$task_id]['card_type_arg'] = 0;
-          }
-      }
-      */
   }
 
   function actReply($i)
@@ -62,25 +51,17 @@ trait QuestionTrait
 
   function argPickCrew()
   {
-    $playerIds = Players::getAll()->getIds();
-    Utils::diff($playerIds, [Globals::getCommander()]);
+    $tasks = Tasks::getUnassigned();
+    $mission = Missions::getCurrent();
+    if($mission->areTasksHidden()){
+      Tasks::hide($tasks);
+    }
+
     return [
-      'players' => $playerIds,
-      'tasks' => Tasks::getUnassigned(),
+      'players' => $mission->getTargetablePlayers(),
+      'tasks' => $tasks,
     ];
       /*
-      $result = array();
-      $sql = "SELECT task_id, card_type, card_type_arg, token, player_id, status FROM task where player_id IS NULL";
-      $result['tasks'] = self::getCollectionFromDb( $sql );
-      $mission = $this->getMission();
-      $down = array_key_exists('down', $mission);
-      if($down)
-      {
-          foreach($result['tasks'] as $task_id => $task) {
-              $result['tasks'][$task_id]['card_type'] = 7;
-              $result['tasks'][$task_id]['card_type_arg'] = 0;
-          }
-      }
 
       $evenly = 10;
       $evenlyLeft = 0;
@@ -161,25 +142,7 @@ trait QuestionTrait
   }
   else if($down)
   {
-  $sql = "update task set player_id =".$crew_id;
-  self::DbQuery( $sql );
 
-  $sql = "SELECT task_id, card_type, card_type_arg, token, player_id, status FROM task where player_id IS NOT NULL";
-  $tasks = self::getCollectionFromDb( $sql );
-
-  foreach($tasks as $task_id => $task) {
-
-  self::notifyAllPlayers('takeTask', clienttranslate('${player_name} takes task ${value_symbol}${color_symbol}'), array(
-  'task' => $task,
-  'player_id' => $crew_id,
-  'player_name' => $this->getPlayerName($crew_id),
-  'value' => $task['card_type_arg'],
-  'value_symbol' => $task['card_type_arg'], // The substitution will be done in JS format_string_recursive function
-  'color' => $task['card_type'],
-  'color_symbol' => $task['card_type'] // The substitution will be done in JS format_string_recursive function
-  ));
-  }
-  $mission['tasks'] = 0;
   }
   else if($distribution)
   {

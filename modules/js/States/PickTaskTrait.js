@@ -57,18 +57,11 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       let task = n.args.task,
           oTask = $('task-' + task.id);
 
-      this.attachToNewParent(oTask, 'player-table-missions-' + task.pId);
+      dojo.attr(oTask, 'data-color', task.color);
+      dojo.attr(oTask, 'data-value', task.value);
+      this.createTaskTooltip(task);
 
-/*
-TODO
-        if($(taskId).classList.contains('col7'))
-        {
-          //reveal task if necessary
-          dojo.query("#"+taskId).removeClass("col7 val0");
-          dojo.query("#"+taskId).addClass("col"+task['card_type']+" val"+task['card_type_arg']);
-        }
-        this.createTaskTooltip(task);
-*/
+      this.attachToNewParent(oTask, 'player-table-missions-' + task.pId);
 
       // Slide it
       dojo.animateProperty({

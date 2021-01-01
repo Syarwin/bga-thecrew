@@ -52,30 +52,54 @@
   }
 
   .mission-informations {
-    .mission-informations-tasks {
-      background: #d44b38;
-      width: 30px;
-      height: 30px;
-      margin:10px auto;
-      position: relative;
-      text-align: center;
-      color:white;
-      font-size:24px;
-      font-weight: bold;
 
-      &::before, &::after {
-        content: "";
-        position:absolute;
-        top: 0;
-        left: 0;
-        height:100%;
-        width:100%;
-        background: #d44b38;
-        z-index:-2;
+    #mission-informations-commander {
+      width: 73px;
+      height: 60px;
+      margin:0 auto;
+      background-image: url("img/captain.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      @include shadow;
+    }
+
+    #mission-informations-tasks-container {
+      margin:10px 0px;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+
+      .fa {
+        color: #d44b38;
+        text-shadow: 0 0 2px #fff;
+        font-size: 30px;
       }
 
-      &::before { transform: rotate(30deg); }
-      &::after { transform: rotate(60deg); }
+      .mission-informations-tasks {
+        background: #d44b38;
+        width: 30px;
+        height: 30px;
+        margin:0px 10px;
+        position: relative;
+        text-align: center;
+        color:white;
+        font-size:24px;
+        font-weight: bold;
+
+        &::before, &::after {
+          content: "";
+          position:absolute;
+          top: 0;
+          left: 0;
+          height:100%;
+          width:100%;
+          background: #d44b38;
+          z-index:-2;
+        }
+
+        &::before { transform: rotate(30deg); }
+        &::after { transform: rotate(60deg); }
+      }
     }
 
     .mission-informations-tiles {

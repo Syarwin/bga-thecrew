@@ -4,6 +4,7 @@ use CREW\Tasks;
 use CREW\Game\Players;
 use CREW\Game\Globals;
 use CREW\Game\Notifications;
+use CREW\Helpers\Utils;
 use thecrew;
 
 abstract class AbstractMission
@@ -11,6 +12,7 @@ abstract class AbstractMission
   protected $id = null;
   protected $desc = '';
   protected $tasks = 0;
+  protected $hiddenTasks = false;
   protected $tiles = [];
   protected $question = null;
   protected $replies = null;
@@ -30,6 +32,7 @@ abstract class AbstractMission
       'question' => $this->question,
       'replies' => $this->replies,
       'disruption' => $this->disruption,
+      'hiddenTasks' => $this->hiddenTasks,
     ];
   }
 
@@ -38,9 +41,18 @@ abstract class AbstractMission
   public function getReplies() { return $this->replies; }
   public function isDeadZone(){ return $this->deadzone; }
   public function canCommunicate($pId) { return true; }
+  public function areTasksHidden(){ return $this->hiddenTasks; }
 
   public function isDisrupted(){
     return $this->disruption > Globals::getTrickCount();
+  }
+
+  public function getTargetablePlayers($removeCommander = true){
+    $playerIds = Players::getAll()->getIds();
+    if($removeCommander){
+      Utils::diff($playerIds, [Globals::getCommander()]);
+    }
+    return $playerIds;
   }
 
   public function prepare()

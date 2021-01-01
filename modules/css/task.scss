@@ -15,6 +15,8 @@
     &[data-value="#{$i}"]{ background-position-x: ($i - 1) * 100% / 10; }
   }
 
+  // Hidden tasks
+  &[data-color="7"]{ background-position: 100% 0%; }
 
   &.selectable {
     animation:0.9s borderBlink infinite;

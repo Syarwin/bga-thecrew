@@ -61,6 +61,7 @@ define("CARD_PINK", 3);
 define("CARD_YELLOW", 4);
 define("CARD_ROCKET", 5);
 define("COMMUNICATION", 6);
+define("CARD_HIDDEN", 7);
 
 
 /*

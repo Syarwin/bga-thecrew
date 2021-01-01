@@ -847,6 +847,8 @@ html, body {
     background-position-x: 70%; }
   .task[data-value="9"] {
     background-position-x: 80%; }
+  .task[data-color="7"] {
+    background-position: 100% 0%; }
   .task.selectable {
     animation: 0.9s borderBlink infinite;
     cursor: pointer;
@@ -1140,29 +1142,47 @@ html, body {
     line-height: 44px;
     font-family: 'Crimson Text';
     letter-spacing: 0px; }
-#mission-status .mission-informations .mission-informations-tasks {
-  background: #d44b38;
-  width: 30px;
-  height: 30px;
-  margin: 10px auto;
-  position: relative;
-  text-align: center;
-  color: white;
-  font-size: 24px;
-  font-weight: bold; }
-  #mission-status .mission-informations .mission-informations-tasks::before, #mission-status .mission-informations .mission-informations-tasks::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
+#mission-status .mission-informations #mission-informations-commander {
+  width: 73px;
+  height: 60px;
+  margin: 0 auto;
+  background-image: url("img/captain.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 0 2px #000);
+  -webkit-filter: drop-shadow(0 0 2px #000); }
+#mission-status .mission-informations #mission-informations-tasks-container {
+  margin: 10px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  #mission-status .mission-informations #mission-informations-tasks-container .fa {
+    color: #d44b38;
+    text-shadow: 0 0 2px #fff;
+    font-size: 30px; }
+  #mission-status .mission-informations #mission-informations-tasks-container .mission-informations-tasks {
     background: #d44b38;
-    z-index: -2; }
-  #mission-status .mission-informations .mission-informations-tasks::before {
-    transform: rotate(30deg); }
-  #mission-status .mission-informations .mission-informations-tasks::after {
-    transform: rotate(60deg); }
+    width: 30px;
+    height: 30px;
+    margin: 0px 10px;
+    position: relative;
+    text-align: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold; }
+    #mission-status .mission-informations #mission-informations-tasks-container .mission-informations-tasks::before, #mission-status .mission-informations #mission-informations-tasks-container .mission-informations-tasks::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: #d44b38;
+      z-index: -2; }
+    #mission-status .mission-informations #mission-informations-tasks-container .mission-informations-tasks::before {
+      transform: rotate(30deg); }
+    #mission-status .mission-informations #mission-informations-tasks-container .mission-informations-tasks::after {
+      transform: rotate(60deg); }
 #mission-status .mission-informations .mission-informations-tiles {
   display: flex;
   flex-wrap: wrap;
