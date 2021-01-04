@@ -30,6 +30,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         this.place('jstpl_playerTable', player, 'table-' + row);
         this.place('jstpl_playerMat', player, 'card-mat-' + row);
         this.place('jstpl_playerCheckMark', player, 'end-panel-' + row);
+        this.place('jstpl_playerCheckMarkGiveTask', player, 'give-task-panel-' + row);
         this.place('jstpl_playerDistressChoice', player, 'distress-panel-' + row);
         dojo.connect($('player-table-' + player.id), 'click', () => this.onClickPlayer(player.id));
 
@@ -133,7 +134,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     makePlayersSelectable(players, callback){
       this._callbackOnPlayer = callback;
-      this._selectablePlayers = players;
+      this._selectablePlayers = players.map(pId => parseInt(pId));
 
       dojo.query(".player-table").removeClass("selectable").addClass("unselectable");
       players.forEach(pId => {
@@ -142,8 +143,14 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       });
     },
 
+    clearSelectablePlayers(){
+      dojo.query(".player-table").removeClass("selectable unselectable");
+      this._selectablePlayers.forEach(pId => dojo.destroy('btnPlayer'+pId) );
+      this._selectablePlayers = [];
+    },
+
     onClickPlayer(pId){
-      debug("Clicked on player : ", pId);
+      debug("Clicked on player : ", pId, this._selectablePlayers);
 
       if(!this._selectablePlayers.includes(pId))
         return;

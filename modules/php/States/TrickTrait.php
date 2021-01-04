@@ -20,7 +20,13 @@ trait TrickTrait
   {
     Globals::startNewTrick();
     $status = LogBook::getStatus();
-    $newState = Globals::getTrickCount() == 1? 'distress' : 'next';
+    $newState = 'next';
+    // If first trick, go to distress or 5 players special rule
+    if(Globals::getTrickCount() == 1){
+      $mission = Missions::getCurrent();
+      $nPlayers = Players::count();
+      $newState = ($nPlayers == 5 && $mission->isSpecialWithFivePlayers())? 'giveTask' : 'distress';
+    }
     Notifications::newTrick();
     $this->gamestate->nextState($newState);
   }

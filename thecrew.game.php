@@ -43,6 +43,7 @@ class thecrew extends Table
   use CREW\States\DistressTrait;
   use CREW\States\QuestionTrait;
   use CREW\States\MoveTileTrait;
+  use CREW\States\GiveTaskTrait;
 
 
   public static $instance = null;

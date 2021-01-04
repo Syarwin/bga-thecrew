@@ -21,6 +21,10 @@ define("STATE_DISTRESS_SETUP",10);
 define("STATE_DISTRESS",11);
 define("STATE_DISTRESS_EXCHANGE",12);
 
+define("STATE_GIVE_TASK", 20); // 5 players rule
+define("STATE_GIVE_TASK_CONFIRMATION", 21);
+define("STATE_GIVE_TASK_EXCHANGE", 22);
+
 define("STATE_BEFORE_COMM",13);
 define("STATE_COMM",14);
 

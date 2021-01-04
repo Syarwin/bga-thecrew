@@ -9,6 +9,5 @@ class Mission25 extends AbstractMission
     $this->tasks = 6;
     $this->tiles = ['i1', 'i2'];
     $this->deadzone = true;
-    $this->special5 = true;
   }
 }

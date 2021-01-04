@@ -166,13 +166,13 @@ html,body {
       /*
        * YES/NO at the end of a mission
        */
-      #end-panel {
+      #end-panel, #give-task-panel {
         display:none;
         flex-flow: column;
         justify-content: space-between;
 
         // Checkmarks
-        #end-panel-top, #end-panel-bottom {
+        #end-panel-top, #end-panel-bottom,  #give-task-panel-top,  #give-task-panel-bottom {
           display:flex;
           justify-content: space-between;
 
@@ -197,7 +197,7 @@ html,body {
         }
 
         // Central line with question
-        #end-panel-middle {
+        #end-panel-middle,  #give-task-panel-middle {
           display: flex;
           flex-flow:column;
           align-items: center;
@@ -209,7 +209,7 @@ html,body {
             font-size:16px;
           }
 
-          #end-panel-buttons {
+          #end-panel-buttons,  #give-task-buttons {
             width: 100%;
             display: flex;
             flex-flow:row;
@@ -354,11 +354,42 @@ html,body {
         }
       }
 
+
+
+      /*
+       * Give task panel
+       */
+      #give-task-panel {
+        #give-task-panel-middle {
+          #give-task-proposal {
+            display:flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+
+            #proposal-transaction {
+              display: flex;
+              align-items: center;
+              font-weight: bold;
+              
+              .thecrew-arrow-down {
+                transform:rotate(-90deg);
+                margin:0;
+                width:60px;
+                height:60px;
+              }
+            }
+          }
+        }
+      }
+
+
       // Focus on corresponding block
       &[data-display='cards'] #cards-mat { display: flex; }
       &[data-display='tasks'] #tasks { display: flex; }
       &[data-display='end'] #end-panel { display:flex; }
       &[data-display='distress'] #distress-panel { display:flex; }
+      &[data-display='give-task'] #give-task-panel { display:flex; }
     }
   }
 }

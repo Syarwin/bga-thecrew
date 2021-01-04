@@ -96,6 +96,29 @@
       <div id="distress-panel-bottom"></div>
 	  </div>
 
+
+    <div id="give-task-panel">
+      <div id="give-task-panel-top"></div>
+
+      <div id="give-task-panel-middle">
+        <div id="give-task-proposal">
+          <div id="proposal-task"></div>
+          <div id="proposal-transaction">
+            <div id="proposal-source"></div>
+            <div class="thecrew-arrow-down"></div>
+            <div id="proposal-target"></div>
+          </div>
+        </div>
+
+        <div id="give-task-buttons">
+          <button id="agree-button" class="finalbutton bgabutton bgabutton_blue">{YES}</button>
+          <button id="reject-button" class="finalbutton bgabutton bgabutton_gray">{NO}</button>
+        </div>
+      </div>
+
+      <div id="give-task-panel-bottom"></div>
+	  </div>
+
   </div>
 
   <div id="table-bottom"></div>
@@ -110,6 +133,7 @@
  */
 var jstpl_playerMat = '<div id="mat-${id}" data-no="${no}" class="mat-card-holder"></div>';
 var jstpl_playerCheckMark = '<div class="check-ok" data-no="${no}" id="continue-ok-${id}"></div>';
+var jstpl_playerCheckMarkGiveTask = '<div class="check-ok" data-no="${no}" id="give-task-ok-${id}"></div>';
 var jstpl_playerDistressChoice = '<div class="distress-choice" data-no="${no}" data-choice="${distressChoice}" id="distress-choice-${id}"></div>';
 var jstpl_playerPanel = `
 <div class="panel-container" id="panel-container-\${id}" data-no="\${no}">

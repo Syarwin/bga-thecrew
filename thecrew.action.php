@@ -149,23 +149,38 @@ class action_thecrew extends APP_GameAction
   }
 
 
+/************************
+**** 5 players rule *****
+************************/
+  public function actGiveTask()
+  {
+    self::setAjaxMode();
+    $taskId = self::getArg("taskId", AT_posint, true);
+    $pId = self::getArg("pId", AT_posint, true);
+    $this->game->actGiveTask($taskId, $pId);
+    self::ajaxResponse();
+  }
 
-public function actCancel()
-{
-self::setAjaxMode();
-$this->game->actCancel();
-self::ajaxResponse( );
-}
+  public function actPassGiveTask()
+  {
+    self::setAjaxMode();
+    $this->game->actPassGiveTask();
+    self::ajaxResponse( );
+  }
 
-public function actButton()
-{
-self::setAjaxMode();
 
-$choice = self::getArg( "choice", AT_alphanum, true );
-$this->game->actButton($choice);
+  public function actConfirmGiveTask()
+  {
+    self::setAjaxMode();
+    $this->game->actConfirmGiveTask();
+    self::ajaxResponse( );
+  }
 
-self::ajaxResponse( );
-}
-
+  public function actRejectGiveTask()
+  {
+    self::setAjaxMode();
+    $this->game->actRejectGiveTask();
+    self::ajaxResponse( );
+  }
 
 }

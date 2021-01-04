@@ -35,6 +35,7 @@ abstract class AbstractMission
       'disruption' => $this->disruption,
       'hiddenTasks' => $this->hiddenTasks,
       'distribution' => $this->distribution,
+      'specialRule' => $this->isSpecialWithFivePlayers(),
     ];
   }
 
@@ -44,6 +45,9 @@ abstract class AbstractMission
   public function isDeadZone(){ return $this->deadzone; }
   public function canCommunicate($pId) { return true; }
   public function areTasksHidden(){ return $this->hiddenTasks || $this->distribution; }
+  public function isSpecialWithFivePlayers(){
+    return $this->id >= 25 && $this->tasks > 0;
+  }
 
   public function isDisrupted(){
     return $this->disruption > Globals::getTrickCount();

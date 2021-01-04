@@ -38,8 +38,13 @@ class Globals extends \APP_DbObject
     'distressDirection' => DONT_USE,
     'specialId' => 0,
     'specialId2' => 0,
-    'checkCount' => 0,
+    'checkCount' => 0, // Useful for some missions eg 26.
     'endOfGame' => 0,
+
+    // 5 players rule
+    'playerWhoGiveId' => 0,
+    'taskToGiveId' => 0,
+    'playerToGiveId' => 0,
 
     'intro_shown' => 0,
     'premium' => false,
@@ -137,6 +142,14 @@ class Globals extends \APP_DbObject
     return Cards::countInHand() <= 1;
   }
 
+  public static function getTaskToGive(){
+    return [
+      'sourceId' => self::get('playerWhoGiveId'),
+      'taskId' => self::get('taskToGiveId'),
+      'targetId' => self::get('playerToGiveId'),
+    ];
+  }
+
   /*
    * Setters
    */
@@ -184,5 +197,12 @@ class Globals extends \APP_DbObject
 
   public static function setSpecial($pId, $special = ''){
     self::set('specialId' . $special, $pId);
+  }
+
+
+  public static function storeTaskToGive($sourceId, $tId, $targetId){
+    self::set('playerWhoGiveId', $sourceId);
+    self::set('taskToGiveId', $tId);
+    self::set('playerToGiveId', $targetId);
   }
 }

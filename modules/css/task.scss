@@ -30,6 +30,11 @@
     }
   }
 
+  &.selected {
+    animation:none;
+    box-shadow: 0 0 20px 3px #00ff00;
+  }
+
   &.tile-selectable {
     cursor:pointer;
 

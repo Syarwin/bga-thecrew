@@ -1,3 +1,13 @@
+.thecrew-arrow-down {
+  width: 50px;
+  height: 50px;
+  background-image: url("img/sprites.png");
+  background-position: 70% 100%;
+  background-size: 1100%;
+  margin: 0 -10px;
+}
+
+
 #mission-status {
   .open-book > * {
     column-gap: 4em;
@@ -38,16 +48,40 @@
     }
 
     span#mission-counter {
-      clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
-      background: black;
+      display: inline-block;
       width: 35px;
       height: 35px;
-      color: white;
       font-weight: bold;
       font-size: 23px;
+      color: white;
       line-height: 44px;
       font-family: 'Crimson Text';
       letter-spacing: 0px;
+      position:relative;
+
+      &::before, &::after {
+        content:'';
+        display: block;
+        clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+        position:absolute;
+        top:0;
+        background: black;
+        width: 35px;
+        height: 35px;
+        z-index:-1;
+      }
+
+      &::before {
+        display: none;
+      }
+      &.special-rule::before {
+        display: block;
+        background: #e8a853;
+        width: 51px;
+        height: 51px;
+        left: -8px;
+        top: -9px;
+      }
     }
   }
 
@@ -61,15 +95,6 @@
       background-size: contain;
       background-repeat: no-repeat;
       @include shadow;
-    }
-
-    .thecrew-arrow-down {
-      width: 50px;
-      height: 50px;
-      background-image: url("img/sprites.png");
-      background-position: 70% 100%;
-      background-size: 1100%;
-      margin: 0 -10px;
     }
 
     #mission-informations-distribution {

@@ -16,11 +16,13 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         this.makeTaskSelectable(args.tasks);
     },
 
-    makeTaskSelectable(tasks){
+    makeTaskSelectable(tasks, callback = null){
+      callback = callback ?? this.onChooseTask.bind(this);
+      
       tasks.forEach(task => {
         var oTask = $("task-" + task.id);
         dojo.addClass(oTask, "selectable");
-        this.connect(oTask, 'click', () => this.onChooseTask(task) );
+        this.connect(oTask, 'click', () => callback(task) );
       })
     },
 
@@ -79,7 +81,6 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     notif_taskUpdate(n){
       debug("Update task status", n);
       dojo.attr('task-' + n.args.task.id, 'data-status', n.args.task.status);
-      $task
     },
   });
 });

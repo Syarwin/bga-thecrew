@@ -220,6 +220,44 @@ class Notifications
 
 
 
+
+  /************************
+   **** 5 PLAYERS RULE ****
+   ***********************/
+   public static function passGiveTask(){
+     $player = Players::getCurrent();
+     self::notifyAll('message', clienttranslate('${player_name} does not propose any exchange'), ['player' => $player]);
+   }
+
+   public static function proposeGiveTask($source, $task, $target){
+     self::message(clienttranslate('${player_name} proposes to give task ${value_symbol}${color_symbol} to ${player_name2}'), [
+       'player' => $source,
+       'player_name2' => $target->getName(),
+       'task' => $task,
+     ]);
+  }
+   
+  public static function confirmGiveTask(){
+    $player = Players::getCurrent();
+    self::notifyAll('confirmGiveTask', clienttranslate('${player_name} agrees with proposal'), ['player' => $player]);
+  }
+
+  public static function rejectGiveTask(){
+    $player = Players::getCurrent();
+    self::notifyAll('message', clienttranslate('${player_name} disagrees with proposal'), ['player' => $player]);
+  }
+
+  public static function giveTask($source, $task, $target){
+    self::notifyAll('giveTask', clienttranslate('${player_name} gives task ${value_symbol}${color_symbol} to ${player_name2}'), [
+      'player' => $source,
+      'player_name2' => $target->getName(),
+      'task' => $task,
+    ]);
+  }
+
+
+
+
   /*
    * Automatically adds some standard field about player and/or card/task
    */

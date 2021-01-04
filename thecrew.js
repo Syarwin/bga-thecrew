@@ -35,6 +35,7 @@
      g_gamethemeurl + "modules/js/States/DistressTrait.js",
      g_gamethemeurl + "modules/js/States/QuestionTrait.js",
      g_gamethemeurl + "modules/js/States/MoveTileTrait.js",
+     g_gamethemeurl + "modules/js/States/GiveTaskTrait.js",
 
  ], function (dojo, declare) {
     return declare("bgagame.thecrew", [
@@ -49,6 +50,7 @@
       thecrew.distressTrait,
       thecrew.questionTrait,
       thecrew.moveTileTrait,
+      thecrew.giveTaskTrait,
     ], {
       constructor(){
         this._notifications.push(
@@ -80,6 +82,15 @@
 
       onUpdateActionButtons(){
         this.updatePlayersStatus();
+
+        // Checkmarks
+        // Must put the code here since that's the only place that is triggered when a player is set inactive
+        //   in a multiplayer state
+        dojo.query("#end-panel .check-ok").addClass("check-confirm");
+        this.getActivePlayers().forEach(pId => dojo.removeClass("continue-ok-" + pId, "check-confirm"));
+
+        dojo.query("#give-task-panel .check-ok").addClass("check-confirm");
+        this.getActivePlayers().forEach(pId => dojo.removeClass("give-task-ok-" + pId, "check-confirm"));
       },
 
 
@@ -96,12 +107,14 @@
         this._selectedComm = null;
         this._selectableTiles = [];
         this._selectedTile = null;
+        this._selectedTask = null;
 
 
-        dojo.query(".task").removeClass("selectable tile-selectable tile-selected");
+        dojo.query(".task").removeClass("unselectable selectable tile-selectable tile-selected selected");
         dojo.query(".player-table").removeClass("selectable");
         dojo.query("#hand .stockitem").removeClass("selectable unselectable");
-
+        dojo.empty('proposal-task');
+        
         this.inherited(arguments);
       },
 

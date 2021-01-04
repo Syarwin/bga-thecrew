@@ -142,9 +142,54 @@ $machinestates = [
     "action" => "stNewTrick",
     "transitions" => [
       "next" => STATE_BEFORE_COMM,
-      "distress" => STATE_DISTRESS_SETUP
+      "distress" => STATE_DISTRESS_SETUP,
+      "giveTask" => STATE_GIVE_TASK,
     ]
   ],
+
+
+  /***********************
+  ****** GIVE TASK  ******
+  ***********************/
+  STATE_GIVE_TASK => [
+    "name" => "giveTask",
+    "description" => clienttranslate('One crew member may propose to give one of its task to someone else'),
+    "descriptionmyturn" => clienttranslate('${you} may propose to give one of your task to someone else'),
+    "type" => "multipleactiveplayer",
+    "action" => "stGiveTask",
+    "args" => "argGiveTask",
+    "possibleactions" => ["actGiveTask", "actPassGiveTask"],
+    "transitions" => [
+      'pass' => STATE_DISTRESS_SETUP,
+      'askConfirmation' => STATE_GIVE_TASK_CONFIRMATION,
+      "zombiePass" => STATE_CHANGE_MISSION
+    ]
+  ],
+
+  STATE_GIVE_TASK_CONFIRMATION => [
+    "name" => "giveTaskConfirmation",
+    "description" => clienttranslate('The crew must confirm/reject ${player_name}\'s proposal'),
+    "descriptionmyturn" => clienttranslate('${you} must confirm/reject ${player_name}\'s proposal'),
+    "type" => "multipleactiveplayer",
+    "action" => "stGiveTaskConfirmation",
+    "args" => "argGiveTaskConfirmation",
+    "possibleactions" => ["actConfirmGiveTask", "actRejectGiveTask"],
+    "transitions" => [
+      'next' => STATE_GIVE_TASK_EXCHANGE,
+      'reject' => STATE_GIVE_TASK,
+      "zombiePass" => STATE_CHANGE_MISSION
+    ]
+  ],
+
+
+  STATE_GIVE_TASK_EXCHANGE => [
+    "name" => "giveTaskExchange",
+    "description" => "",
+    "type" => "game",
+    "action" => "stGiveTaskExchange",
+    "transitions" => ["next" => STATE_DISTRESS_SETUP],
+  ],
+
 
 
   /***********************

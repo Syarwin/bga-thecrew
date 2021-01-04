@@ -39,6 +39,9 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       dojo.empty(container);
       let mission = this.gamedatas.missions[this.gamedatas.status.mId - 1];
 
+      // 5 players special rule
+      dojo.toggleClass('mission-counter', 'special-rule', mission.specialRule);
+
       // Token commander
       if(mission.hiddenTasks){
         dojo.place(`<div id="mission-informations-commander"></div>`, container);
@@ -120,8 +123,6 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       }
 
       // Checkmarks
-      dojo.query("#end-panel .check-ok").addClass("check-confirm");
-      this.getActivePlayers().forEach(pId => dojo.removeClass("continue-ok-" + pId, "check-confirm"));
       if(!this.isSpectator){
         dojo.removeClass('comm-card-' + this.player_id, "selectable");
       }
@@ -129,6 +130,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     notif_continue(n){
       dojo.addClass("continue-ok-" + n.args.player_id, "check-confirm");
+      dojo.query('#end-panel-buttons .finalbutton').toggleClass('hidden', this.player_id == n.args.player_id);
     },
 
     getMissionSpecialDescription(){
