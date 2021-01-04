@@ -231,9 +231,12 @@ class Tasks extends \CREW\Helpers\DB_Manager
   }
 
 
-  function hide(&$tasks)
+  function hide(&$tasks, $exceptFirst = false)
   {
-    foreach($tasks as &$task){
+    foreach($tasks as $i => &$task){
+      if($i == 0 && $exceptFirst)
+        continue;
+      
       $task['value'] = 0;
       $task['color'] = CARD_HIDDEN;
     }

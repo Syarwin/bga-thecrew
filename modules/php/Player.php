@@ -96,6 +96,11 @@ class Player extends Helpers\DB_Manager
     return Tasks::getOfPlayer($this->id);
   }
 
+  public function countTasks()
+  {
+    return count($this->getTasks());
+  }
+
   public function getOnTable()
   {
     return Cards::getOnTable($this->id);

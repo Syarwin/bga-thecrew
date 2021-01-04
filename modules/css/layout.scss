@@ -36,7 +36,7 @@ html,body {
       }
 
       #mission-status {
-        width:460px;
+        width:480px;
         padding: 0px;
       	border: none;
         background-color: #8B4513;
@@ -140,14 +140,24 @@ html,body {
           text-align: center;
         }
 
-        #tasks-list {
+        #tasks-list-container {
           width: 100%;
           display: flex;
-          justify-content: space-evenly;
-          flex-wrap: wrap;
+          justify-content: center;
           align-items: center;
           flex-grow: 1;
-          position: relative;
+
+          #tasks-list {
+            display: flex;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+            align-items: center;
+            position: relative;
+
+            .task {
+              margin:7px;
+            }
+          }
         }
       }
 

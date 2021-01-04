@@ -49,7 +49,9 @@
 	    <h2>
         {TASKS}
       </h2>
-      <div id="tasks-list"></div>
+      <div id="tasks-list-container">
+        <div id="tasks-list"></div>
+      </div>
     </div>
 
 

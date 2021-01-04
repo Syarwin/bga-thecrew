@@ -19,6 +19,7 @@ abstract class AbstractMission
   protected $deadzone = false;
   protected $disruption = 0;
   protected $informations = [];
+  protected $distribution = false;
 
   public function getUiData()
   {
@@ -33,6 +34,7 @@ abstract class AbstractMission
       'replies' => $this->replies,
       'disruption' => $this->disruption,
       'hiddenTasks' => $this->hiddenTasks,
+      'distribution' => $this->distribution,
     ];
   }
 
@@ -41,19 +43,60 @@ abstract class AbstractMission
   public function getReplies() { return $this->replies; }
   public function isDeadZone(){ return $this->deadzone; }
   public function canCommunicate($pId) { return true; }
-  public function areTasksHidden(){ return $this->hiddenTasks; }
+  public function areTasksHidden(){ return $this->hiddenTasks || $this->distribution; }
 
   public function isDisrupted(){
     return $this->disruption > Globals::getTrickCount();
   }
 
   public function getTargetablePlayers($removeCommander = true){
+    if($this->distribution)
+      return $this->getTargetablePlayersForDistribution();
+
     $playerIds = Players::getAll()->getIds();
     if($removeCommander){
       Utils::diff($playerIds, [Globals::getCommander()]);
     }
     return $playerIds;
   }
+
+
+  /*
+   * Enforce an evenly distribution
+   */
+  public function getTargetablePlayersForDistribution(){
+    // Compute how much task each player should have at the end
+    $players = Players::getAll();
+    $quotient = intdiv($this->tasks, $players->count());
+    $remainder = $this->tasks % $players->count();
+
+    // Compute the numer of player already having the max number of tasks
+    $nPlayersAtMax = $players->reduce(function($carry, $player) use ($quotient){
+      return $carry + ($player->countTasks() > $quotient? 1 : 0);
+    }, 0);
+
+
+    $result = [];
+    foreach(Players::getAll() as $pId => $player){
+      $nTasks = $player->countTasks();
+      if($nTasks < $quotient || ($nTasks == $quotient && $remainder > $nPlayersAtMax))
+        $result[] = $pId;
+    }
+
+    return $result;
+  }
+
+
+  /*
+   * Return the list of task, that might be hidden depending on the mission
+   */
+  public function getTasks($tasks){
+    if($this->areTasksHidden()){
+      Tasks::hide($tasks, $this->distribution);
+    }
+    return $tasks;
+  }
+
 
   public function prepare()
   {
@@ -85,10 +128,24 @@ abstract class AbstractMission
 
   public function pickCrew($crewId)
   {
-    $player = Players::getCurrent();
     $crew = Players::get($crewId);
-    Globals::setSpecial($crewId);
-    Notifications::specialCrewMember($player, $crew);
+
+    // Distribution => assign next task
+    if($this->distribution){
+      $taskId = Tasks::getUnassignedIds()[0];
+      $task = Tasks::assign($taskId, $crew);
+      Notifications::assignTask($task, $crew);
+
+      return count(Tasks::getUnassigned()) > 0? 'next' : 'trick';
+    }
+    // Otherwise, generic action is to declare crew member as special
+    else {
+      $player = Players::getCurrent();
+      Globals::setSpecial($crewId);
+      Notifications::specialCrewMember($player, $crew);
+    }
+
+    return null;
   }
 
 

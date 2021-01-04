@@ -56,33 +56,6 @@ $machinestates = [
 
 
 /***********************
-****** PICK TASK *******
-***********************/
-  STATE_PICK_TASK => [
-    "name" => "pickTask",
-    "description" => clienttranslate('${actplayer} must choose a task'),
-    "descriptionmyturn" => clienttranslate('${you} must choose a task'),
-    "type" => "activeplayer",
-    "args" => "argPickTask",
-    "possibleactions" => ["actChooseTask"],
-    "transitions" => [
-      "next" => STATE_NEXT_PLAYER_PICK_TASK,
-      "zombiePass" => STATE_CHANGE_MISSION
-    ]
-  ],
-
-  STATE_NEXT_PLAYER_PICK_TASK => [
-    "name" => "checkPickTask",
-    "description" => "",
-    "type" => "game",
-    "action" => "stNextPickTask",
-    "transitions" => [
-      "task" => STATE_PICK_TASK,
-      "turn" => STATE_NEW_TRICK
-    ]
-  ],
-
-/***********************
 ******* QUESTION *******
 ***********************/
   STATE_QUESTION => [
@@ -128,6 +101,33 @@ $machinestates = [
       "zombiePass" => STATE_CHANGE_MISSION
     ]
   ],
+
+  /***********************
+  ****** PICK TASK *******
+  ***********************/
+    STATE_PICK_TASK => [
+      "name" => "pickTask",
+      "description" => clienttranslate('${actplayer} must choose a task'),
+      "descriptionmyturn" => clienttranslate('${you} must choose a task'),
+      "type" => "activeplayer",
+      "args" => "argPickTask",
+      "possibleactions" => ["actChooseTask"],
+      "transitions" => [
+        "next" => STATE_NEXT_PLAYER_PICK_TASK,
+        "zombiePass" => STATE_CHANGE_MISSION
+      ]
+    ],
+
+    STATE_NEXT_PLAYER_PICK_TASK => [
+      "name" => "checkPickTask",
+      "description" => "",
+      "type" => "game",
+      "action" => "stNextPickTask",
+      "transitions" => [
+        "task" => STATE_PICK_TASK,
+        "turn" => STATE_NEW_TRICK
+      ]
+    ],
 
 
 /***********************
