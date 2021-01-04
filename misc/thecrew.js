@@ -149,23 +149,6 @@
         },
 
 
-        notif_move: function(notif) {
-
-            this.attachToNewParent( notif.args.item_id, notif.args.location_id);
-            this.createTaskTooltip(notif.args.task);
-
-            dojo.animateProperty({
-	       	    node: notif.args.item_id,
-	       	    duration: 1000,
-	            easing: dojo.fx.easing.expoInOut,
-	       	    properties: {
-	               left: 13,
-	               bottom: 4,
-	       	    }
-
-	       	  }).play();
-        },
-
 
         notif_distress: function(notif) {
        		dojo.query(".selectable").removeClass("selectable");

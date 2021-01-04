@@ -206,7 +206,8 @@ html, body {
           justify-content: space-evenly;
           flex-wrap: wrap;
           align-items: center;
-          flex-grow: 1; }
+          flex-grow: 1;
+          position: relative; }
       #thecrew-table > div#table-middle #end-panel {
         display: none;
         flex-flow: column;
@@ -857,6 +858,19 @@ html, body {
     .task.selectable:hover {
       animation: none;
       transform: scale(1.2); }
+  .task.tile-selectable {
+    cursor: pointer; }
+    .task.tile-selectable .task-tile {
+      animation: 0.9s borderBlink infinite;
+      box-shadow: 0 0 20px 3px #4782ff;
+      transition: transform 0.2s; }
+    .task.tile-selectable:hover .task-tile {
+      animation: none;
+      transform: scale(1.2); }
+  .task.tile-selected {
+    cursor: pointer; }
+    .task.tile-selected .task-tile {
+      box-shadow: 0 0 20px 3px #ff0000; }
   .task .check-ok {
     display: none;
     position: absolute;
@@ -883,7 +897,7 @@ html, body {
   background-size: 1100%;
   background-position: 0% 0%;
   left: 11px;
-  bottom: 4px;
+  top: 51px;
   filter: drop-shadow(0 0 2px #000);
   -webkit-filter: drop-shadow(0 0 2px #000); }
   .task-tile.tile-1 {
@@ -1190,7 +1204,8 @@ html, body {
   margin-top: 20px;
   margin-bottom: 10px; }
   #mission-status .mission-informations .mission-informations-tiles .task-tile {
-    position: static; }
+    position: static;
+    margin: 5px; }
 #mission-status .mission-informations #mission-informations-question .bubble {
   margin: 0;
   margin-bottom: 10px;

@@ -13,7 +13,7 @@ define("STATE_QUESTION",5);
 define("STATE_NEXT_QUESTION",6);
 
 define("STATE_PICK_CREW",7);
-define("STATE_MULTI_SELECT",8);
+define("STATE_MOVE_TILE",8);
 
 define("STATE_NEW_TRICK",9);
 

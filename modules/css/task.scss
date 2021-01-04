@@ -30,6 +30,28 @@
     }
   }
 
+  &.tile-selectable {
+    cursor:pointer;
+
+    .task-tile {
+      animation:0.9s borderBlink infinite;
+      box-shadow: 0 0 20px 3px #4782ff;
+      transition:transform 0.2s;
+    }
+
+    &:hover .task-tile {
+      animation:none;
+      transform:scale(1.2);
+    }
+  }
+
+  &.tile-selected {
+    cursor:pointer;
+    .task-tile {
+      box-shadow: 0 0 20px 3px #ff0000;
+    }
+  }
+
   .check-ok {
     display: none;
     position:absolute;
@@ -59,7 +81,7 @@
   background-size: 1100%;
   background-position: 0% 0%;
   left: 11px;
-  bottom: 4px;
+  top: 51px;
   @include shadow;
 
   &.tile-1 {background-position-x: 0%;}

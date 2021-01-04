@@ -29,6 +29,24 @@ class action_thecrew extends APP_GameAction
     }
   }
 
+
+  public function actMoveTile()
+  {
+    self::setAjaxMode();
+    $id1 = self::getArg("taskId1", AT_posint, true);
+    $id2 = self::getArg("taskId2", AT_posint, true);
+    $this->game->actMoveTile($id1 ,$id2);
+    self::ajaxResponse();
+  }
+
+  public function actPassMoveTile()
+  {
+    self::setAjaxMode();
+    $this->game->actPassMoveTile();
+    self::ajaxResponse();
+  }
+
+
   public function actChooseTask()
   {
     self::setAjaxMode();
@@ -149,15 +167,5 @@ $this->game->actButton($choice);
 self::ajaxResponse( );
 }
 
-public function actMultiSelect()
-{
-self::setAjaxMode();
-
-$id1 = self::getArg( "id1", AT_alphanum, true );
-$id2 = self::getArg( "id2", AT_alphanum, true );
-$this->game->actMultiSelect($id1 ,$id2);
-
-self::ajaxResponse( );
-}
 
 }

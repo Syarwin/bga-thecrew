@@ -117,6 +117,13 @@ class Notifications
     ]);
   }
 
+  public static function swapTiles($task1, $task2){
+    self::notifyAll('swapTiles', '', [
+      'task1' => $task1,
+      'task2' => $task2,
+    ]);
+  }
+
   /******************
    **** DISTRESS ****
    *****************/

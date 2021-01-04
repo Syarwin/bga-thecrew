@@ -37,7 +37,20 @@ $machinestates = [
       "trick" => STATE_NEW_TRICK,
       "question" => STATE_QUESTION,
       "pickCrew" => STATE_PICK_CREW,
-      "multiSelect" => STATE_MULTI_SELECT
+      "moveTile" => STATE_MOVE_TILE
+    ]
+  ],
+
+  STATE_MOVE_TILE => [
+    "name" => "moveTile",
+    "description" => clienttranslate('${actplayer} may swap the position of two task tokens'),
+    "descriptionmyturn" => clienttranslate('${you} may swap the position of two task tokens'),
+    "type" => "activeplayer",
+    "args" => "argMoveTile",
+    "possibleactions" => ["actMoveTile", "actPassMoveTile"],
+    "transitions" => [
+      "task" => STATE_PICK_TASK,
+      "zombiePass" => STATE_CHANGE_MISSION
     ]
   ],
 
@@ -115,20 +128,6 @@ $machinestates = [
       "zombiePass" => STATE_CHANGE_MISSION
     ]
   ],
-
-/*
-    STATE_MULTI_SELECT => [
-        "name" => "multiSelect",
-        "description" => clienttranslate('${actplayer} must do according to your mission'),
-        "descriptionmyturn" => clienttranslate('${you} must do according to your mission'),
-        "type" => "activeplayer",
-        "args" => "argMultiSelect",
-        "possibleactions" => ["actMultiSelect", "actCancel"],
-        "transitions" => ["same" => STATE_MULTI_SELECT, "cancel" => STATE_PICK_TASK,  "task" => STATE_PICK_TASK, "zombiePass" => STATE_CHANGE_MISSION]
-    ],
-*/
-
-
 
 
 /***********************

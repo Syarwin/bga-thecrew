@@ -239,4 +239,12 @@ class Tasks extends \CREW\Helpers\DB_Manager
     }
   }
 
+
+  /*
+   * Usefull in mission 23 to switch tiles
+   */
+  function setTile($taskId, $newTile)
+  {
+    self::DB()->update(['tile' => $newTile], $taskId);
+  }
 }

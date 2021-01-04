@@ -34,6 +34,7 @@
      g_gamethemeurl + "modules/js/States/CommunicationTrait.js",
      g_gamethemeurl + "modules/js/States/DistressTrait.js",
      g_gamethemeurl + "modules/js/States/QuestionTrait.js",
+     g_gamethemeurl + "modules/js/States/MoveTileTrait.js",
 
  ], function (dojo, declare) {
     return declare("bgagame.thecrew", [
@@ -47,6 +48,7 @@
       thecrew.communicationTrait,
       thecrew.distressTrait,
       thecrew.questionTrait,
+      thecrew.moveTileTrait,
     ], {
       constructor(){
         this._notifications.push(
@@ -92,9 +94,11 @@
         this._callbackOnPlayer = null;
         this._selectablePlayers = [];
         this._selectedComm = null;
+        this._selectableTiles = [];
+        this._selectedTile = null;
 
 
-        dojo.query(".task").removeClass("selectable");
+        dojo.query(".task").removeClass("selectable tile-selectable tile-selected");
         dojo.query(".player-table").removeClass("selectable");
         dojo.query("#hand .stockitem").removeClass("selectable unselectable");
 

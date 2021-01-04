@@ -122,9 +122,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
      clearPossible(){
        this.removeActionButtons();
        dojo.empty("customActions");
-
-       this._connections.forEach(dojo.disconnect);
-       this._connections = [];
+       this.disconnectAll();
      },
 
 
@@ -135,6 +133,10 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
        this._connections.push(dojo.connect(node, action, callback));
      },
 
+     disconnectAll(){
+       this._connections.forEach(dojo.disconnect);
+       this._connections = [];
+     },
 
      /*
       * setupNotifications
@@ -278,6 +280,15 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
     slide(sourceId, targetId, duration, delay = 0) {
       return new Promise((resolve, reject) => {
         var animation = this.slideToObject(sourceId, targetId, duration, delay);
+        dojo.connect(animation, 'onEnd', resolve);
+        animation.play();
+      });
+    },
+
+
+    slidePos(sourceId, targetId, left, top, duration, delay = 0) {
+      return new Promise((resolve, reject) => {
+        var animation = this.slideToObjectPos(sourceId, targetId, left, top, duration, delay);
         dojo.connect(animation, 'onEnd', resolve);
         animation.play();
       });

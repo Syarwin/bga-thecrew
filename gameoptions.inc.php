@@ -42,12 +42,12 @@ $game_options = [
       18 => ['name' => totranslate('Mission').' 18','premium' => true],
       19 => ['name' => totranslate('Mission').' 19','premium' => true],
       20 => ['name' => totranslate('Mission').' 20','premium' => true],
-      /*
       21 => ['name' => totranslate('Mission').' 21','premium' => true],
       22 => ['name' => totranslate('Mission').' 22','premium' => true],
       23 => ['name' => totranslate('Mission').' 23','premium' => true],
       24 => ['name' => totranslate('Mission').' 24','premium' => true],
       25 => ['name' => totranslate('Mission').' 25','premium' => true],
+      /*
       26 => ['name' => totranslate('Mission').' 26','premium' => true],
       27 => ['name' => totranslate('Mission').' 27','premium' => true],
       28 => ['name' => totranslate('Mission').' 28','premium' => true],
@@ -84,7 +84,7 @@ $game_options = [
       CHALLENGE_ON => [ 'name' => totranslate('On')],
     ],
     'startcondition' => [
-      2 => [
+      CHALLENGE_ON => [
         [
         'type' => 'maxplayers',
         'value' => 3,
