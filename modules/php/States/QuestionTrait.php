@@ -33,6 +33,7 @@ trait QuestionTrait
     $replies = Missions::getCurrent()->getReplies();
     $reply = $replies[$i];
     $player = Players::getCurrent();
+    $player->reply($i);
     Notifications::speak($player, $reply);
     $this->gamestate->nextState('next');
   }
@@ -55,30 +56,17 @@ trait QuestionTrait
       'players' => $mission->getTargetablePlayers(),
       'tasks' => $mission->getTasks($tasks),
     ];
-
-    /*
-    $result['possible'] = array();
-    $sql = "SELECT player_id id, comm_token FROM player ";
-    $result['players'] = self::getCollectionFromDb( $sql );
-    foreach($result['players'] as $player_id => $player) {
-
-        $nbMissions = self::getUniqueValueFromDB( "SELECT count(*) FROM task where player_id=".$player_id);
-        if($nbMissions < $evenly || ($nbMissions == $evenly && $evenlyLeft> $playersAtMax) )
-        {
-            if(($mission['id'] != 33 && $mission['id'] != 41 && $mission['id'] != 20) || $player_id != self::getGameStateValue('commander_id'))
-            {
-                $result['possible'][$player_id] = $player_id;
-            }
-        }
-    }
-    return $result;
-*/
   }
 
 
   function actPickCrew($crewId)
   {
     self::checkAction("actPickCrew");
+
+    // Clear replies
+    Players::clearReplies();
+    Notifications::clearReplies();
+    
     $player = Players::getCurrent();
     $mission = Missions::getCurrent();
     $newState = $mission->pickCrew($crewId);

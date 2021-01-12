@@ -84,6 +84,12 @@ class Players extends \CREW\Helpers\DB_Manager
     return $table[$player->getId()];
   }
 
+  public function getPrevId($player)
+  {
+    $table = thecrew::get()->getPrevPlayerTable();
+    return $table[$player->getId()];
+  }
+
   public function alreadyCommmunicate()
   {
     return self::DB()->where('comm_card_id', '>', 0)->count() > 0;
@@ -116,6 +122,14 @@ class Players extends \CREW\Helpers\DB_Manager
       'comm_token' => 'middle',
       'comm_pending' => 0,
       'player_trick_number' => 0,
+      'reply_choice' => null,
+    ])->run();
+  }
+
+  public function clearReplies()
+  {
+    self::DB()->update([
+      'reply_choice' => null,
     ])->run();
   }
 
@@ -124,7 +138,7 @@ class Players extends \CREW\Helpers\DB_Manager
     self::DB()->update([
       'distress_choice' => 0,
       'distress_card_id' => null,
-    ])->run();    
+    ])->run();
   }
 
   public function getNextToCommunicate()

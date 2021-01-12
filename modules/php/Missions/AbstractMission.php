@@ -20,6 +20,7 @@ abstract class AbstractMission
   protected $disruption = 0;
   protected $informations = [];
   protected $distribution = false;
+  protected $balanced = false;
 
   public function getUiData()
   {
@@ -35,13 +36,18 @@ abstract class AbstractMission
       'disruption' => $this->disruption,
       'hiddenTasks' => $this->hiddenTasks,
       'distribution' => $this->distribution,
+      'balanced' => $this->balanced,
       'specialRule' => $this->isSpecialWithFivePlayers(),
     ];
   }
 
   public function getId(){ return $this->id; }
-  public function getQuestion(){ return $this->question; }
-  public function getReplies() { return $this->replies; }
+  public function getQuestion(){
+    return $this->distribution? clienttranslate('Do you want to take the task?') : $this->question;
+  }
+  public function getReplies() {
+    return $this->distribution?  [clienttranslate('Yes'), clienttranslate('No') ] : $this->replies;
+  }
   public function isDeadZone(){ return $this->deadzone; }
   public function canCommunicate($pId) { return true; }
   public function areTasksHidden(){ return $this->hiddenTasks || $this->distribution; }
@@ -120,7 +126,7 @@ abstract class AbstractMission
 
   public function getStartingState()
   {
-    if($this->question != null){
+    if($this->question != null || $this->distribution){
       return 'question';
     } else if($this->tasks > 0) {
       return 'task';
@@ -142,6 +148,14 @@ abstract class AbstractMission
 
       return count(Tasks::getUnassigned()) > 0? 'next' : 'trick';
     }
+    // Tasks hidden => the commander assign all of them to someone
+    else if($this->hiddenTasks){
+      foreach(Tasks::getUnassignedIds() as $taskId){
+        // Assign task and notify
+        $task = Tasks::assign($taskId, $crew);
+        Notifications::assignTask($task, $crew);
+      }
+    }
     // Otherwise, generic action is to declare crew member as special
     else {
       $player = Players::getCurrent();
@@ -156,16 +170,26 @@ abstract class AbstractMission
 
   public function check($lastTrick){
     self::setStatus(Tasks::getStatus());
+
+    if($this->balanced){
+      $players = Players::getAll();
+      $min = $players->reduce(function($min, $player){ return min($min, $player->getTricksWon()); }, 100);
+      $max = $players->reduce(function($max, $player){ return max($max, $player->getTricksWon()); }, 0);
+
+      $status = $min + 2 < $max? MISSION_FAIL : (Globals::isLastTrick()? MISSION_SUCCESS : MISSION_CONTINUE);
+      $this->setStatus($status);
+    }
   }
+
   public function setStatus($p){
     Globals::setMissionFinished($p);
   }
   public function getStatus(){
     return Globals::getMissionFinished();
   }
-  public function fail(){ self::setStatus(-1); }
-  public function success(){ self::setStatus(1); }
-  public function continue(){ self::setStatus(0); }
+  public function fail(){ self::setStatus(MISSION_FAIL); }
+  public function success(){ self::setStatus(MISSION_SUCCESS); }
+  public function continue(){ self::setStatus(MISSION_CONTINUE); }
 
   // Utils
   protected function getSpecial(){

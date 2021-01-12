@@ -20,6 +20,7 @@ class Mission12 extends AbstractMission
 
   public function check($lastTrick)
   {
+    parent::check($lastTrick);
     if(Globals::getTrickCount() != 1)
       return;
 

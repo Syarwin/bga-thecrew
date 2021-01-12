@@ -29,6 +29,10 @@
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 
+    .player-reply {
+      display:none;
+    }
+
     .communication-card {
       position: relative;
       width: 84px;
@@ -197,6 +201,35 @@
     }
   }
 
+  &[data-reply="on"] .communication-card-holder {
+    background-color:rgba(255,255,255,0.2);
+    .communication-card {
+      display: none;
+    }
+
+    .player-reply {
+      display:block;
+      position:relative;
+      height:92%;
+
+      .bubble {
+        position:relative;
+        margin:0;
+        margin-bottom: 10px;
+        padding:5px 10px;
+        font-size:21px;
+        float:none;
+        left:auto;
+        right:auto;
+
+        &::before {
+          height:15px;
+          bottom:-15px;
+        }
+      }
+    }
+  }
+
 
   .player-table-wrapper {
     flex-grow: 1;
@@ -308,8 +341,9 @@
    }
 }
 
-.player-table[data-no="0"] .bubble,
-.player-table[data-no="1"] .bubble,
+
+//.player-table[data-no="0"] .bubble,
+//.player-table[data-no="1"] .bubble,
 .bubble.left {
   left: 277px;
   right:auto;

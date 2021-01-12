@@ -150,6 +150,12 @@ class Globals extends \APP_DbObject
     ];
   }
 
+  public static function getCheckCount()
+  {
+    return self::get("checkCount");
+  }
+
+
   /*
    * Setters
    */
@@ -197,6 +203,10 @@ class Globals extends \APP_DbObject
 
   public static function setSpecial($pId, $special = ''){
     self::set('specialId' . $special, $pId);
+  }
+
+  public static function incCheckCount($value = 1){
+    self::inc('checkCount', $value);
   }
 
 

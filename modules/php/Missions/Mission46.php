@@ -1,46 +1,53 @@
 <?php
 namespace CREW\Missions;
+use \CREW\Cards;
+use \CREW\Game\Globals;
+use \CREW\Game\Players;
+use \CREW\Game\Notifications;
 
 class Mission46 extends AbstractMission
 {
   public function __construct(){
     $this->id = 46;
-//    $this->desc = clienttranslate('Most of the modules are still on emergency back-up supply while you puzzle over the cause of the rapid cooling. Callisto, one of the 79 moons of Jupiter, passes by, the moment you appear to escape the frost field. <b>Before you select the task cards, you can swap the position of two task tokens. Decide together but do not reveal anything about your own cards.</b>');
-//    $this->tasks = 5;
-//    $this->tiles = [1,2,3,4,5];
+    $this->desc = clienttranslate('While you are being assailed with an overwhelming amount of information, you find you are still able to instinctively react to danger. Suddenly the main modules of the ship shut down during the jump, and red warning lights and alarms tear you from of your previously trance-like state. <b>Your task is that the crew member to the left of the member with the pink nine must win all pink cards. Say who has pink nine.</b>');
 
-    //$this->questions =  'question' => clienttranslate('Do you want to take the task?'), 'replies' => clienttranslate('Yes/No')
+    $this->informations = [
+      'special' => clienttranslate('All Pink Cards'),
+      'specialTooltip' => clienttranslate('This crew member must win all the pink cards'),
+    ];
   }
 
-  public function getStartingState()
+  public function prepare()
   {
-    return 'trick';
+    $card = Cards::getSelectQuery()->where('color', CARD_PINK)->where('value', 9)->get(true);
+    $player = Players::get($card['pId']);
+
+    // Notify the player
+    Notifications::message(clienttranslate('${player_name} has ${value_symbol}${color_symbol}'), [
+      'player' => $player,
+      'card' => $card,
+    ]);
+
+    // Make the next player special
+    $special = Players::getPrevId($player);
+    Globals::setSpecial($special);
+    Notifications::specialMemberMission46(Players::get($special));
   }
 
-/*
-$card_id = self::getUniqueValueFromDB( "SELECT card_id FROM card where card_type = '3' and card_type_arg = 9");
-$card = $this->cards->getCard($card_id);
 
-// And notify
-self::notifyAllPlayers('note', clienttranslate('${player_name} has ${value_symbol}${color_symbol}'), array(
-    'card_id' => $card_id,
-    'card' => $card,
-    'player_id' => $card['location_arg'],
-    'player_name' => self::getPlayerName($card['location_arg']),
-    'value' => $card['type_arg'],
-    'value_symbol' => $card['type_arg'], // The substitution will be done in JS format_string_recursive function
-    'color' => $card['type'],
-    'color_symbol' => $card['type'], // The substitution will be done in JS format_string_recursive function
-    ));
+  public function check($lastTrick)
+  {
+    $containPink = array_reduce($lastTrick['cards'], function($carry, $card){ return $carry || $card['color'] == CARD_PINK; }, false);
+    $remeainingPink = Cards::getRemeaningOfColor(CARD_PINK);
 
-$crew_id = $this->getPlayerAfter($card['location_arg']);
-
-self::setGameStateValue( 'special_id', $crew_id );
-
-self::notifyAllPlayers('special', clienttranslate('${player_name} must win all pink cards'), array(
-    'player_id' => $crew_id,
-    'player_name' => $this->getPlayerName($crew_id)
-));
-$this->gamestate->nextState( 'trick' );
-*/
+    if($containPink && !$lastTrick['winner']->isSpecial()){
+      $this->fail();
+    }
+    else if(Globals::isLastTrick() || empty($remeainingPink)){
+      $this->success();
+    }
+    else {
+      $this->continue();
+    }
+  }
 }

@@ -2,7 +2,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
   return declare("thecrew.questionTrait", null, {
     constructor(){
       this._notifications.push(
-        ['speak', 1000]
+        ['speak', 1000],
+        ['clearReplies', 10]
       );
     },
 
@@ -24,6 +25,13 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     },
 
 
+
+    notif_speak(n) {
+      debug('Someone answered', n);
+      this.setupReply(n.args.player_id, _(n.args.content));
+    },
+
+/*
     notif_speak(n) {
       debug('Someone answered', n);
       let id = 'bubble-' + n.args.player_id;
@@ -44,7 +52,18 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         }, 8000)
       }, 100);
     },
+*/
+    setupReply(pId, content){
+      $('reply-' + pId).innerHTML = content;
+      dojo.addClass('reply-' + pId, 'show');
+      dojo.attr('player-table-' + pId, 'data-reply', 'on');
+    },
 
+    notif_clearReplies(n){
+       Object.values(this.gamedatas.players).forEach(player => {
+        dojo.attr('player-table-' + player.id, 'data-reply', 'off');
+      })
+    },
 
     onEnteringStatePickCrew(args){
       this.showTasks(args.tasks);

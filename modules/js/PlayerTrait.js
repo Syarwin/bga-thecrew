@@ -56,6 +56,14 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         this.cardsCounters[player.id] = new ebg.counter();
         this.cardsCounters[player.id].create('cards-in-hands-counter-' + player.id);
 
+        /*
+         * Display answer if needed
+         */
+        if(player.reply != null){
+          let mission = this.getMission();
+          var msg = _(mission.replies[player.reply]);
+          this.setupReply(player.id, msg);
+        }
 
         // Create hand if current player
         if(this.player_id == player.id){
@@ -115,11 +123,13 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     },
 
     notif_commander(n) {
+      debug("New commander", n);
       this.gamedatas.commanderId = n.args.player_id;
       this.updateCommander();
     },
 
     notif_specialCrewMember(n){
+      debug("New special crew member", n);
       if(n.args.special_id){
         this.gamedatas.specialId = n.args.special_id;
       }

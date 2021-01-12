@@ -18,17 +18,28 @@
   }
 
   article {
-    display: flex;
-    column-count: 0;
-
-    & > div {
-      flex:1;
-    }
+    min-height: 244px;
 
     #mission-description {
       text-align: justify;
       font-size:14px;
       line-height: 1.25;
+      margin-bottom: 30px;
+    }
+  }
+
+  &.small-description {
+    article {
+      display: flex;
+      column-count: 0;
+
+      & > div {
+        flex:1;
+      }
+
+      #mission-description {
+        margin-bottom:0px;
+      }
     }
   }
 
@@ -162,7 +173,7 @@ OLD STAR DESIGN FROM FIRST VERSION OF PUBLISHED GAME
     .mission-informations-tiles {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-around;
+      justify-content: center;
       margin-top: 20px;
       margin-bottom:10px;
 
@@ -193,13 +204,24 @@ OLD STAR DESIGN FROM FIRST VERSION OF PUBLISHED GAME
       }
     }
 
+
+    #mission-informations-balanced {
+      width: 70px;
+      height: 70px;
+      margin:0 auto;
+      background-image: url("img/sprites.png");
+      background-size: 1100%;
+      background-repeat: no-repeat;
+      background-position: 80% 100%;
+    }
+
     #mission-informations-special, #mission-informations-cards {
       clear:both;
       display: flex;
       justify-content: center;
       align-items: center;
 
-      .icon-special {
+      .icon-special, .icon-commander {
         flex-shrink: 0;
         width: 75px;
         height: 87px;
@@ -207,6 +229,12 @@ OLD STAR DESIGN FROM FIRST VERSION OF PUBLISHED GAME
         background-size: contain;
         background-repeat: no-repeat;
         @include shadow;
+      }
+
+      .icon-commander {
+        width: 73px;
+        height: 60px;
+        background-image: url("img/captain.png");
       }
 
       .icon-cards {

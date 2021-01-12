@@ -108,6 +108,7 @@ class thecrew extends Table
       'specialId2' => CREW\Game\Globals::getSpecial2(),
       'showIntro' => $status['mId'] == 1 && $status['total'] == 1 && CREW\Game\Globals::isCampaign(),
       'trickCount' => CREW\Game\Globals::getTrickCount(),
+      'isCampaign' => CREW\Game\Globals::isCampaign(),
     ];
   }
 
@@ -177,9 +178,9 @@ class thecrew extends Table
    */
   public function upgradeTableDb($from_version)
   {
-    if( $from_version <= 2008261355 ){
+    if( $from_version <= 2101121214 ){
       // ! important ! Use DBPREFIX_<table_name> for all tables
-      $sql = "ALTER TABLE DBPREFIX_player ADD `comm_pending` smallint(1) NOT NULL DEFAULT '0'";
+      $sql = "ALTER TABLE DB_PREFIX_player ADD `reply_choice` int(10) unsigned NULL";
       self::applyDbUpgradeToAllDB( $sql );
     }
   }

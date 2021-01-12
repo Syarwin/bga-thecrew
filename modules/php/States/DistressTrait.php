@@ -25,7 +25,7 @@ trait DistressTrait
     Notifications::chooseDirection($player, $dir);
 
     // Get other players choice that differs from mine
-    $choices = Players::getAll()->map(function($player){ return $player->getDistressChoice(); });
+    $choices = Players::getAll()->assocMap(function($player){ return $player->getDistressChoice(); });
     $otherChoices = array_diff($choices, [$dir]);
     if(empty($otherChoices)){
       // Everyone agrees on same direction, let's go!
@@ -38,6 +38,8 @@ trait DistressTrait
       } else {
         $this->gamestate->nextState('turn');
       }
+    } else {
+      $this->gamestate->setPlayersMultiactive(array_keys($otherChoices), '', true);
     }
   }
 

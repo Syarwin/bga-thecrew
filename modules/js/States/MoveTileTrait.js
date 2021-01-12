@@ -21,10 +21,10 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     makeTaskTileSelectable(taskIds){
       this.disconnectAll();
-      dojo.query('#tasks-list .task').removeClass('tile-selectable');
+      dojo.query('#tasks-list .task').removeClass('tile-selectable selectable');
       taskIds.forEach(taskId => {
         var oTask = $("task-" + taskId);
-        dojo.addClass(oTask, "tile-selectable");
+        dojo.addClass(oTask, dojo.attr(oTask, 'data-tile') != ''? "tile-selectable" : "selectable");
         this.connect(oTask, 'click', () => this.onChooseTaskTile(taskId) );
       })
     },
@@ -69,9 +69,6 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       let tiles = [tId1, tId2].map(tId => document.querySelector('#task-' + tId + ' .task-tile') );
 
       tiles.forEach((tile, i) => {
-        if(tile == null)
-          return;
-
         tile.id = 'task-tile-animation-' + i;
         this.attachToNewParent(tile.id, 'tasks-list');
         let target = 'task-' + (i == 0? tId2 : tId1);

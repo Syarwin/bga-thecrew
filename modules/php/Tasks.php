@@ -21,16 +21,6 @@ class Tasks extends \CREW\Helpers\DB_Manager
       'tile' => $row['tile'],
       'pId' => $row['player_id'],
       'status' => $row['status'],
-
-/*
-      `task_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-      `card_type` varchar(16) NOT NULL COMMENT 'Color of the card: 1 => blue, 2 => green, 3 => pink, 4 => yellow, 5 => Rocket, 6 => reminder',
-      `card_type_arg` int(11) NOT NULL COMMENT 'Value of the card. Numeric value',
-      `token` varchar(3) NOT NULL DEFAULT '' COMMENT '',
-      `player_id` int(11) NULL COMMENT 'The id of the owner if it means something',
-      `status` varchar(3) NOT NULL DEFAULT 'tbd' COMMENT 'tbd, nok, ok',
-      `trick` int(5) NULL COMMENT 'trick number where task has been done',
-*/
     ];
   }
 
@@ -83,7 +73,8 @@ class Tasks extends \CREW\Helpers\DB_Manager
 
     // Pick n random elements
     $picked = (array) array_rand($tasks, $n);
-
+    shuffle($picked);
+    
     // Insert in DB
     foreach($picked as $i => $key){
       $task = $tasks[$key];
@@ -236,7 +227,7 @@ class Tasks extends \CREW\Helpers\DB_Manager
     foreach($tasks as $i => &$task){
       if($i == 0 && $exceptFirst)
         continue;
-      
+
       $task['value'] = 0;
       $task['color'] = CARD_HIDDEN;
     }

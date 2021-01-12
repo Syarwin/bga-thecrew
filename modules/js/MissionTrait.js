@@ -17,9 +17,15 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this.updateMissionStatus();
     },
 
+    getMission(){
+      return this.gamedatas.missions[this.gamedatas.status.mId - 1];
+    },
+
     updateMissionStatus(){
       let mId = this.gamedatas.status.mId;
-      $('mission-description').innerHTML = _(this.gamedatas.missions[mId - 1].desc);
+      let tDesc = _(this.gamedatas.missions[mId - 1].desc);
+      $('mission-description').innerHTML = tDesc;
+      dojo.toggleClass('mission-status', 'small-description', tDesc.length < 500);
       this.createMissionInformations();
       this.missionCounter.setValue(mId);
       this.attemptsCounter.setValue(this.gamedatas.status.attempts);
@@ -37,7 +43,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     createMissionInformations(container = 'mission-informations'){
       dojo.empty(container);
-      let mission = this.gamedatas.missions[this.gamedatas.status.mId - 1];
+      let mission = this.getMission();
 
       // 5 players special rule
       dojo.toggleClass('mission-counter', 'special-rule', mission.specialRule);
@@ -55,14 +61,6 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         this.addTooltip('mission-informations-tasks', _('Number of tasks used for this mission'), '');
       }
 
-      // Distribution
-      if(mission.distribution){
-        dojo.place(`<div id="mission-informations-commander"></div>`, container);
-        this.addTooltip('mission-informations-commander', _('Your commander now uncovers a task card and asks each crew member in turn whether he or she wants to take on the task. It may only be answered with "yes" or "no". Afterwards, your commander decides who actually receives the assignment. He or she can also choose himself or herself. Repeat the process until all of the tasks are distributed. Note, however, that the tasks must be evenly distributed: At the end of the distribution, no one may have two tasks more than another crew member. '), '');
-        dojo.place(`<div id="mission-informations-distribution"><div class="thecrew-arrow-down"></div><div class="thecrew-arrow-down"></div><div class="thecrew-arrow-down"></div></div>`, container);
-      }
-
-
       // Tiles
       if(mission.tiles.length > 0){
         dojo.place(`<div id="mission-informations-tiles" class="mission-informations-tiles"></div>`, container);
@@ -72,6 +70,14 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         });
       }
 
+
+      // Distribution
+      if(mission.distribution){
+        dojo.place(`<div id="mission-informations-commander"></div>`, container);
+        this.addTooltip('mission-informations-commander', _('Your commander now uncovers a task card and asks each crew member in turn whether he or she wants to take on the task. It may only be answered with "yes" or "no". Afterwards, your commander decides who actually receives the assignment. He or she can also choose himself or herself. Repeat the process until all of the tasks are distributed. Note, however, that the tasks must be evenly distributed: At the end of the distribution, no one may have two tasks more than another crew member. '), '');
+        dojo.place(`<div id="mission-informations-distribution"><div class="thecrew-arrow-down"></div><div class="thecrew-arrow-down"></div><div class="thecrew-arrow-down"></div></div>`, container);
+      }
+
       // Question
       if(mission.question){
         let question = _(mission.question);
@@ -79,10 +85,12 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         dojo.place(`<div id="mission-informations-question"><div class='bubble left show'>${question}</div><div class='bubble show'>${replies}</div></div>`, container);
       }
 
+
       // Special
       if(mission.informations.special){
         let desc = _(mission.informations.special);
-        dojo.place(`<div id="mission-informations-special"><div class='icon-special'></div><div class='special-desc'>${desc}</div></div>`, container);
+        let icon = mission.informations.specialIcon ?? "special";
+        dojo.place(`<div id="mission-informations-special"><div class='icon-${icon}'></div><div class='special-desc'>${desc}</div></div>`, container);
         if(mission.informations.specialTooltip){
           this.updateSpecialTooltip(_(mission.informations.specialTooltip));
         }
@@ -93,6 +101,13 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         dojo.place('<div id="mission-informations-deadzone"><div id="deadzone-radio-token"></div><div id="deadzone-question"></div></div>', container);
         this.addTitledTooltip("mission-informations-deadzone", _('Dead zone'), _('Your communications have been disrupted and you only have limited communication. When you want to communicate, place your card in front of you as you normally would. It must meet one of the three conditions (highest, single, or lowest of the cards in your hand, in the color suit). You are not however, allowed to place your radio communication token on the card.') );
       }
+
+      // Balanced
+      if(mission.balanced){
+        dojo.place(`<div id="mission-informations-balanced"></div>`, container);
+        this.addTooltip('mission-informations-balanced', _('At no time may a crew member have won 2 tricks more than another crew member.'), '');
+      }
+
 
       // Disruption
       if(mission.disruption > 0){
@@ -114,6 +129,18 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
       let msg = (args.end > 0)? _('Mission ${nb} <span class="success">completed</span>') :  _('Mission ${nb} <span class="failure">failed</span>');
       $('endResult').innerHTML = msg.replace('${nb}', args.number);
+
+      let noMsg = '';
+      if(this.gamedatas.isCampaign){
+        msg = args.end > 0? _('Do you want to play next mission or leave campaign for now?') : _('Do you want to retry this mission or leave campaign for now?');
+        noMsg = _('Leave');
+      } else {
+        msg = args.end > 0? _('Do you want to play next mission or stop here?') : _('Do you want to retry this mission or stop here?');
+        noMsg = _('Stop');
+      }
+      $('endResultMessage').innerHTML = msg;
+      $('yes-button').innerHTML = args.end > 0? _('Next mission') : _('Retry');
+      $('no-button').innerHTML = noMsg;
 
       // Show/hide Yes/No buttons
       dojo.query('#end-panel-buttons .finalbutton').toggleClass('hidden', !this.isCurrentPlayerActive());

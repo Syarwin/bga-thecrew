@@ -13,6 +13,7 @@ ALTER TABLE `player` ADD `comm_pending` smallint(1) NOT NULL DEFAULT '0' COMMENT
 ALTER TABLE `player` ADD `comm_card_id` int(10) DEFAULT NULL COMMENT 'id of the communicated card';
 ALTER TABLE `player` ADD `distress_choice` smallint(1) DEFAULT 0 COMMENT 'unset, clockwise, anticlockwise or dontuse';
 ALTER TABLE `player` ADD `distress_card_id` int(10) unsigned NULL COMMENT 'id of the card to pass with distress';
+ALTER TABLE `player` ADD `reply_choice` int(10) unsigned NULL COMMENT 'id of the chosen reply';
 
 
 -- Standard schema to manage cards

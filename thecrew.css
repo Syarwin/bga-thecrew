@@ -504,6 +504,8 @@ html, body {
     border-right: 1px solid grey;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px; }
+    .player-table .communication-card-holder .player-reply {
+      display: none; }
     .player-table .communication-card-holder .communication-card {
       position: relative;
       width: 84px;
@@ -663,6 +665,26 @@ html, body {
     opacity: 0.9; }
   100% {
     opacity: 0.1; } }
+  .player-table[data-reply="on"] .communication-card-holder {
+    background-color: rgba(255, 255, 255, 0.2); }
+    .player-table[data-reply="on"] .communication-card-holder .communication-card {
+      display: none; }
+    .player-table[data-reply="on"] .communication-card-holder .player-reply {
+      display: block;
+      position: relative;
+      height: 92%; }
+      .player-table[data-reply="on"] .communication-card-holder .player-reply .bubble {
+        position: relative;
+        margin: 0;
+        margin-bottom: 10px;
+        padding: 5px 10px;
+        font-size: 21px;
+        float: none;
+        left: auto;
+        right: auto; }
+        .player-table[data-reply="on"] .communication-card-holder .player-reply .bubble::before {
+          height: 15px;
+          bottom: -15px; }
   .player-table .player-table-wrapper {
     flex-grow: 1;
     height: 100%;
@@ -818,20 +840,14 @@ html, body {
     right: 0;
     box-shadow: 2px -2px 0 0 #000 inset, 23px 0 0 0 #fff inset, 25px -2px 0 0 #000 inset; }
 
-.player-table[data-no="0"] .bubble,
-.player-table[data-no="1"] .bubble,
 .bubble.left {
   left: 277px;
   right: auto;
   margin: 10px 0px 0px 10px; }
-  .player-table[data-no="0"] .bubble.show,
-  .player-table[data-no="1"] .bubble.show,
   .bubble.left.show {
     opacity: 1;
     left: 297px;
     right: auto; }
-  .player-table[data-no="0"] .bubble::before,
-  .player-table[data-no="1"] .bubble::before,
   .bubble.left::before {
     border-radius: 0 0 100% 0;
     box-shadow: -2px -2px 0 0 #000 inset, -23px 0 0 0 #fff inset, -25px -2px 0 0 #000 inset;
@@ -1162,14 +1178,19 @@ html, body {
 #mission-status .open-book header {
   padding: 0; }
 #mission-status article {
-  display: flex;
-  column-count: 0; }
-  #mission-status article > div {
-    flex: 1; }
+  min-height: 244px; }
   #mission-status article #mission-description {
     text-align: justify;
     font-size: 14px;
-    line-height: 1.25; }
+    line-height: 1.25;
+    margin-bottom: 30px; }
+#mission-status.small-description article {
+  display: flex;
+  column-count: 0; }
+  #mission-status.small-description article > div {
+    flex: 1; }
+  #mission-status.small-description article #mission-description {
+    margin-bottom: 0px; }
 #mission-status #mission-counter-wrapper {
   font-weight: 700;
   margin-bottom: 10px;
@@ -1277,7 +1298,7 @@ html, body {
 #mission-status .mission-informations .mission-informations-tiles {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
   margin-top: 20px;
   margin-bottom: 10px; }
   #mission-status .mission-informations .mission-informations-tiles .task-tile {
@@ -1296,12 +1317,20 @@ html, body {
     bottom: -15px; }
   #mission-status .mission-informations #mission-informations-question .bubble.left {
     float: left; }
+#mission-status .mission-informations #mission-informations-balanced {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto;
+  background-image: url("img/sprites.png");
+  background-size: 1100%;
+  background-repeat: no-repeat;
+  background-position: 80% 100%; }
 #mission-status .mission-informations #mission-informations-special, #mission-status .mission-informations #mission-informations-cards {
   clear: both;
   display: flex;
   justify-content: center;
   align-items: center; }
-  #mission-status .mission-informations #mission-informations-special .icon-special, #mission-status .mission-informations #mission-informations-cards .icon-special {
+  #mission-status .mission-informations #mission-informations-special .icon-special, #mission-status .mission-informations #mission-informations-special .icon-commander, #mission-status .mission-informations #mission-informations-cards .icon-special, #mission-status .mission-informations #mission-informations-cards .icon-commander {
     flex-shrink: 0;
     width: 75px;
     height: 87px;
@@ -1310,6 +1339,10 @@ html, body {
     background-repeat: no-repeat;
     filter: drop-shadow(0 0 2px #000);
     -webkit-filter: drop-shadow(0 0 2px #000); }
+  #mission-status .mission-informations #mission-informations-special .icon-commander, #mission-status .mission-informations #mission-informations-cards .icon-commander {
+    width: 73px;
+    height: 60px;
+    background-image: url("img/captain.png"); }
   #mission-status .mission-informations #mission-informations-special .icon-cards, #mission-status .mission-informations #mission-informations-cards .icon-cards {
     flex-shrink: 0;
     width: 90px;

@@ -15,7 +15,7 @@ class Player extends Helpers\DB_Manager
     $this->no = (int) $row['player_no'];
     $this->name = $row['player_name'];
     $this->color = $row['player_color'];
-    $this->score = $row['player_score'];
+    $this->score = (int) $row['player_score'];
     $this->eliminated = $row['player_eliminated'] == 1;
     $this->zombie = $row['player_zombie'] == 1;
     $this->nTricks = $row['player_trick_number'];
@@ -24,6 +24,7 @@ class Player extends Helpers\DB_Manager
     $this->commPending = (int) $row['comm_pending'];
     $this->distressChoice = $row['distress_choice'];
     $this->distressCard = $row['distress_card_id'];
+    $this->reply = $row['reply_choice'];
   }
 
   private $id;
@@ -56,6 +57,8 @@ class Player extends Helpers\DB_Manager
   public function getDistressChoice(){ return $this->distressChoice; }
   public function getDistressCard(){ return Cards::get($this->distressCard); }
   public function getTricksWon(){ return $this->nTricks; }
+  public function isCommander() { return $this->id == Globals::getCommander(); }
+  public function isSpecial() { return $this->id == Globals::getSpecial(); }
 
   public function getUiData($pId)
   {
@@ -76,6 +79,7 @@ class Player extends Helpers\DB_Manager
       'canCommunicate' => $this->canCommunicate(),
       'distressChoice' => $this->distressChoice,
       'distressCard' => $pId == $this->id? $this->distressCard : null,
+      'reply' => $this->reply,
     ];
   }
 
@@ -123,10 +127,6 @@ class Player extends Helpers\DB_Manager
     return $this->commToken != 'used' && is_null($this->commCard) && !$mission->isDisrupted(); // TODO && $mission->canCommunicate($this->id);
   }
 
-  // TODO
-  //            $sql = "update player set comm_token = 'used' where player_id=".$player_id;
-  //            self::DbQuery( $sql );
-
   public function winTrick()
   {
     self::DB()->inc(['player_trick_number' => 1], $this->id);
@@ -169,5 +169,11 @@ class Player extends Helpers\DB_Manager
   {
     $this->distressCard = $cardId;
     self::DB()->update(['distress_card_id' => $cardId], $this->id);
+  }
+
+  // Save reply at the given question
+  public function reply($i)
+  {
+    self::DB()->update(['reply_choice' => $i], $this->id);
   }
 }

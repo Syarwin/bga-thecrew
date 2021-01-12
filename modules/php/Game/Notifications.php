@@ -55,10 +55,22 @@ class Notifications
     ]);
   }
 
+  public static function clearReplies(){
+    self::notifyAll('clearReplies', '', []);
+  }
+
   public static function specialCrewMember($player, $crew){
     self::notifyAll('specialCrewMember', clienttranslate('${player_name} chooses ${special_name}'), [
       'player' => $player,
       'special_name' => $crew->getName(),
+      'special_id' => $crew->getId(),
+    ]);
+  }
+
+
+  public static function specialMemberMission46($crew){
+    self::notifyAll('specialCrewMember', clienttranslate('${player_name} must win all pink cards'), [
+      'player' => $crew,
       'special_id' => $crew->getId(),
     ]);
   }
@@ -236,7 +248,7 @@ class Notifications
        'task' => $task,
      ]);
   }
-   
+
   public static function confirmGiveTask(){
     $player = Players::getCurrent();
     self::notifyAll('confirmGiveTask', clienttranslate('${player_name} agrees with proposal'), ['player' => $player]);

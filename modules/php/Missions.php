@@ -9,7 +9,7 @@ class Missions extends \APP_DbObject
   public static function getUiData()
   {
     $ui = [];
-    for($i = 1; $i <= 25; $i++){
+    for($i = 1; $i <= 50; $i++){
       $className = "CREW\Missions\Mission".$i;
       $mission = new $className();
       $ui[] = $mission->getUiData();

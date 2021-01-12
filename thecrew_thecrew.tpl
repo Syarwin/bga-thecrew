@@ -60,13 +60,11 @@
 
       <div id="end-panel-middle">
         <h2 id="endResult"></h2>
-        <h2>
-          {CONTINUE}
-        </h2>
+        <h2 id="endResultMessage"></h2>
 
         <div id="end-panel-buttons">
-          <button id="yes-button" class="finalbutton bgabutton bgabutton_blue">{YES}</button>
-          <button id="no-button" class="finalbutton bgabutton bgabutton_gray">{NO}</button>
+          <button id="yes-button" class="finalbutton bgabutton bgabutton_blue"></button>
+          <button id="no-button" class="finalbutton bgabutton bgabutton_gray"></button>
         </div>
       </div>
 
@@ -153,6 +151,9 @@ var jstpl_playerPanel = `
 var jstpl_playerTable = `
 <div id="player-table-\${id}" class="player-table" data-no="\${no}">
   <div class="communication-card-holder">
+    <div class="player-reply">
+      <div class="bubble" id="reply-\${id}"></div>
+    </div>
     <div id="comm-card-\${id}" class="communication-card" data-color="6" data-value="">
       <div class="radio middle" id="radio-\${id}"></div>
       <div class="disruption" id="disruption-\${id}"><i class="fa fa-bolt" aria-hidden="true"></i></div>
@@ -183,7 +184,7 @@ var jstpl_playerTable = `
 
 
 var jstpl_task = `
-<div id="task-\${id}" class="task" data-color="\${color}" data-value="\${value}" data-status="\${status}">
+<div id="task-\${id}" class="task" data-color="\${color}" data-value="\${value}" data-status="\${status}" data-tile="\${tile}">
   <div class="task-tile \${tileClass}"></div>
   <div class="check-ok"></div>
 </div>`;

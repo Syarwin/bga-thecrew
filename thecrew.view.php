@@ -26,29 +26,28 @@
 
 require_once( APP_BASE_PATH."view/common/game.view.php" );
 
-  class view_thecrew_thecrew extends game_view
-  {
-    function getGameName() {
-        return "thecrew";
-    }
-  	function build_page( $viewArgs )
-  	{
-  	    // Get players & players number
-        $players = $this->game->loadPlayersBasicInfos();
-        $players_nbr = count( $players );
-
-        /*********** Place your code below:  ************/
-
-        $this->tpl['MISSION'] = self::_("Mission");
-        $this->tpl['TRY'] = self::_("Mission attempts : ");
-        $this->tpl['TOTALTRY'] = self::_("Total attempts : ");
-        $this->tpl['TASKS'] = self::_("Available tasks");
-        $this->tpl['NBR'] = $players_nbr;
-        $this->tpl['CONTINUE'] = self::_("Do you want to continue?");
-        $this->tpl['YES'] = self::_("Yes");
-        $this->tpl['NO'] = self::_("No");
-        $this->tpl['DISTRESS'] = self::_("Do you want to use the distress signal?");
-
-        /*********** Do not change anything below this line  ************/
-  	}
+class view_thecrew_thecrew extends game_view
+{
+  function getGameName() {
+      return "thecrew";
   }
+	function build_page( $viewArgs )
+	{
+	    // Get players & players number
+      $players = $this->game->loadPlayersBasicInfos();
+      $players_nbr = count( $players );
+
+      /*********** Place your code below:  ************/
+
+      $this->tpl['MISSION'] = self::_("Mission");
+      $this->tpl['TRY'] = self::_("Mission attempts : ");
+      $this->tpl['TOTALTRY'] = self::_("Total attempts : ");
+      $this->tpl['TASKS'] = self::_("Available tasks");
+      $this->tpl['NBR'] = $players_nbr;
+      $this->tpl['YES'] = self::_("Yes");
+      $this->tpl['NO'] = self::_("No");
+      $this->tpl['DISTRESS'] = self::_("Do you want to use the distress signal?");
+
+      /*********** Do not change anything below this line  ************/
+	}
+}

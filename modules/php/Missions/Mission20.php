@@ -15,14 +15,4 @@ class Mission20 extends AbstractMission
     $this->question = clienttranslate('Are you OK to take the tasks?');
     $this->replies = [clienttranslate('Yes'), clienttranslate('No') ];
   }
-
-  public function pickCrew($crewId)
-  {
-    $player = Players::get($crewId);
-    foreach(Tasks::getUnassignedIds() as $taskId){
-      // Assign task and notify
-      $task = Tasks::assign($taskId, $player);
-      Notifications::assignTask($task, $player);
-    }
-  }
 }

@@ -42,38 +42,5 @@ class Mission23 extends AbstractMission
     Tasks::setTile($id1, $task2['tile']);
     Tasks::setTile($id2, $task1['tile']);
     Notifications::swapTiles(Tasks::get($id1), Tasks::get($id2));
-    /*
-      $idl1 = str_replace ('marker_','', $id1);
-      $idl2 = str_replace ('marker_','', $id2);
-      $t1 =  self::getUniqueValueFromDB( "SELECT task_id FROM task where token = '".$idl1."'");
-      $t2 =  self::getUniqueValueFromDB( "SELECT task_id FROM task where token = '".$idl2."'");
-
-      $sql = "update task set token = '".$idl2."' where task_id=".$t1;
-      self::DbQuery( $sql );
-      $sql = "update task set token = '".$idl1."' where task_id=".$t2;
-      self::DbQuery( $sql );
-
-      $sql = "SELECT task_id, card_type, card_type_arg, token, player_id, status FROM task where task_id=".$t1;
-      $task1 = self::getObjectFromDb( $sql );
-
-      $sql = "SELECT task_id, card_type, card_type_arg, token, player_id, status FROM task where task_id=".$t2;
-      $task2 = self::getObjectFromDb( $sql );
-
-      self::notifyAllPlayers('move', '' ,array(
-          'player_id' => self::getCurrentPlayerId(),
-          'player_name' => self::getPlayerName(self::getCurrentPlayerId()),
-          'task' => $task2,
-          'item_id' => $id1,
-          'location_id' => 'task_'.$t2
-      ));
-
-      self::notifyAllPlayers('move', '' ,array(
-          'player_id' => self::getCurrentPlayerId(),
-          'player_name' => self::getPlayerName(self::getCurrentPlayerId()),
-          'task' => $task1,
-          'item_id' => $id2,
-          'location_id' => 'task_'.$t1
-      ));
-      */
   }
 }

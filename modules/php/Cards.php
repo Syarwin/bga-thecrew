@@ -133,7 +133,12 @@ class Cards extends Helpers\Pieces
 
   public static function getRemeaningOfValue($value)
   {
-    return self::getInLocationQ(['hand', '%'])->where('value', $value)->get(false);
+    return self::getInLocationQ(['hand', '%'])->where('value', $value)->where('color', '<>', CARD_ROCKET)->get(false);
+  }
+
+  public static function getRemeaningOfColor($color)
+  {
+    return self::getInLocationQ(['hand', '%'])->where('color', $color)->get(false);
   }
 
   public static function countRemeaning()
