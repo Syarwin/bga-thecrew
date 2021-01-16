@@ -64,7 +64,7 @@
 
         <div id="end-panel-buttons">
           <button id="yes-button" class="finalbutton bgabutton bgabutton_blue"></button>
-          <button id="no-button" class="finalbutton bgabutton bgabutton_gray"></button>
+          <button id="no-button" class="bgabutton bgabutton_gray"></button>
         </div>
       </div>
 

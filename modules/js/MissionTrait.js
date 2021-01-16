@@ -144,7 +144,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
       // Show/hide Yes/No buttons
       dojo.query('#end-panel-buttons .finalbutton').toggleClass('hidden', !this.isCurrentPlayerActive());
-      if(this.isCurrentPlayerActive()){
+      if(!this.isSpectator){
         this.connect($('yes-button'), 'click', () => this.takeAction("actContinueMissions") );
         this.connect($('no-button'),  'click', () => this.takeAction("actStopMissions") );
       }
@@ -157,7 +157,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     notif_continue(n){
       dojo.addClass("continue-ok-" + n.args.player_id, "check-confirm");
-      dojo.query('#end-panel-buttons .finalbutton').toggleClass('hidden', this.player_id == n.args.player_id);
+      if(this.player_id == n.args.player_id)
+        dojo.query('#end-panel-buttons .finalbutton').addClass('hidden');
     },
 
     getMissionSpecialDescription(){

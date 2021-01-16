@@ -76,16 +76,14 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       debug("Someone communicate a card", n);
       this.setRadioToken(n.args.player_id, n.args.comm_status);
       this.setCommunicationCard(n.args.player_id, n.args.card);
-/*
-          dojo.removeClass('radio_' + notif.args.player_id);
-          dojo.addClass('radio_' + notif.args.player_id, 'radio appears');
-*/
+      dojo.removeClass('comm-card-' + n.args.player_id, "selectable");
     },
 
     notif_usedComm(n){
       debug("Someone played his communicated card", n);
       this.setRadioToken(n.args.pId, 'used');
       this.setCommunicationCard(n.args.pId);
+      dojo.removeClass('comm-card-' + n.args.player_id, "selectable");
     },
 
 

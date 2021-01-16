@@ -40,7 +40,14 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this.switchCentralZone('distress');
       dojo.attr('distress-panel', 'data-dir', args.dir);
       if(!this.isSpectator){
-        this.makeCardsSelectable(args['_private'], this.onClickCardToDistress.bind(this));
+        this.makeCardsSelectable(args['_private'].cards, this.onClickCardToDistress.bind(this));
+
+        this.gamedatas.gamestate.descriptionmyturn = dojo.string.substitute(
+          _('${you} must choose a card to pass to ${player_name}'), {
+            you: this.coloredName(),
+            player_name : this.coloredName(args._private.pId),
+        });
+        this.updatePageTitle();
       }
     },
 

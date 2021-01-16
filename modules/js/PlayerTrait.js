@@ -113,7 +113,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
 
     updateCommander(){
-      dojo.attr('overall-content', 'data-commander', this.gamedatas.players[this.gamedatas.commanderId].no);
+      let commander = this.gamedatas.players[this.gamedatas.commanderId] ?? { no : -1};
+      dojo.attr('overall-content', 'data-commander', commander.no);
 
       let special = this.gamedatas.players[this.gamedatas.specialId] ?? { no : -1};
       dojo.attr('overall-content', 'data-special', special.no);

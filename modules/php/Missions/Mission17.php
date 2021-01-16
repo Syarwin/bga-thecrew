@@ -1,6 +1,7 @@
 <?php
 namespace CREW\Missions;
 use \CREW\Cards;
+use \CREW\Game\Globals;
 
 class Mission17 extends AbstractMission
 {
@@ -25,7 +26,7 @@ class Mission17 extends AbstractMission
 
       // If all tasks are satisfied, we must wait all the 9 to be played
       $nines = Cards::getRemeaningOfValue(9);
-      if(self::getStatus() == MISSION_SUCCESS && !empty($nines)){
+      if(self::getStatus() == MISSION_SUCCESS && !empty($nines) && !Globals::isLastTrick()){
         $this->continue();
       }
     }

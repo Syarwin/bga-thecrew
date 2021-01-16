@@ -317,14 +317,15 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
     /*
      * Return a span with a colored 'You'
      */
-    coloredYou() {
-        var color = this.gamedatas.players[this.player_id].color;
-        var color_bg = "";
-        if (this.gamedatas.players[this.player_id] && this.gamedatas.players[this.player_id].color_back) {
-            color_bg = "background-color:#" + this.gamedatas.players[this.player_id].color_back + ";";
-        }
-        var you = "<span style=\"font-weight:bold;color:#" + color + ";" + color_bg + "\">" + __("lang_mainsite", "You") + "</span>";
-        return you;
+    coloredName(pId = null) {
+      pId = pId ?? this.player_id;
+      let color = this.gamedatas.players[pId].color;
+      let color_bg = "";
+      if (this.gamedatas.players[pId] && this.gamedatas.players[pId].color_back) {
+        color_bg = "background-color:#" + this.gamedatas.players[pId].color_back + ";";
+      }
+      let playerName = pId == this.player_id? __("lang_mainsite", "You") : this.gamedatas.players[pId].name;
+      return "<span style=\"font-weight:bold;color:#" + color + ";" + color_bg + "\">" + playerName + "</span>";
     },
   });
 });

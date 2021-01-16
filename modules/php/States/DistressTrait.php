@@ -49,10 +49,19 @@ trait DistressTrait
       'dir' => Globals::getDistressDirection(),
       '_private' => []
     ];
-    foreach(Players::getAll() as $player){
+    foreach(Players::getAll() as $pId => $player){
+      // Filter out rockets
       $hand = $player->getCards();
       Utils::filter($hand, function($card){ return $card['color'] != CARD_ROCKET; });
-      $data['_private'][$player->getId()] = array_map(function($card){ return $card['id'];}, $hand);
+
+      // Find the name of target
+      $targetId = Globals::getDistressDirection() == CLOCKWISE? $this->getPlayerAfter($pId) : $this->getPlayerBefore($pId);
+      $target = Players::get($targetId);
+
+      $data['_private'][$player->getId()] = [
+        'pId' => $target->getId(),
+        'cards' => array_map(function($card){ return $card['id'];}, $hand)
+      ];
     }
 
     return $data;

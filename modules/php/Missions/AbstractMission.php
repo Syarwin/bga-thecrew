@@ -176,7 +176,7 @@ abstract class AbstractMission
       $min = $players->reduce(function($min, $player){ return min($min, $player->getTricksWon()); }, 100);
       $max = $players->reduce(function($max, $player){ return max($max, $player->getTricksWon()); }, 0);
 
-      $status = $min + 2 < $max? MISSION_FAIL : (Globals::isLastTrick()? MISSION_SUCCESS : MISSION_CONTINUE);
+      $status = $min + 2 <= $max? MISSION_FAIL : (Globals::isLastTrick()? MISSION_SUCCESS : MISSION_CONTINUE);
       $this->setStatus($status);
     }
   }

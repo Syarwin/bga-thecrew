@@ -114,7 +114,7 @@
         dojo.query(".player-table").removeClass("selectable");
         dojo.query("#hand .stockitem").removeClass("selectable unselectable");
         dojo.empty('proposal-task');
-        
+
         this.inherited(arguments);
       },
 
@@ -138,6 +138,11 @@
 
         this.gamedatas.players = n.args.players;
         this.updatePlayersData();
+
+        this.gamedatas.commanderId = null;
+        this.gamedatas.specialId = null;
+        this.gamedatas.specialId2 = null;
+        this.updateCommander();
 
         dojo.query('.task').forEach(dojo.destroy);
         dojo.query('.card').forEach(dojo.destroy);

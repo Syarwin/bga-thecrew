@@ -21,7 +21,7 @@ $game_options = [
   OPTION_MISSION => [
     'name' => totranslate('Mission'),
     'values' => [
-      CAMPAIGN => ['name' => totranslate('Campaign'), 'description' => totranslate('Continue existing campaign or start a new one'), 'tmdisplay' => totranslate('Campaing') ],
+      CAMPAIGN => ['name' => totranslate('Campaign'), 'description' => totranslate('Continue existing campaign or start a new one'), 'tmdisplay' => totranslate('Campaign') ],
       1 => ['name' => totranslate('Mission').' 1', 'description' => totranslate('Starting at mission'). ' 1', 'tmdisplay' => totranslate('Starting at mission'). ' 1'],
       2 => ['name' => totranslate('Mission').' 2', 'description' => totranslate('Starting at mission'). ' 2', 'tmdisplay' => totranslate('Starting at mission'). ' 2'],
       3 => ['name' => totranslate('Mission').' 3', 'description' => totranslate('Starting at mission'). ' 3', 'tmdisplay' => totranslate('Starting at mission'). ' 3'],
