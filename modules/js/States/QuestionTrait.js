@@ -56,6 +56,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     setupReply(pId, content){
       $('reply-' + pId).innerHTML = content;
       dojo.addClass('reply-' + pId, 'show');
+      dojo.toggleClass('reply-' + pId, "small", content.length > 10);
       dojo.attr('player-table-' + pId, 'data-reply', 'on');
     },
 

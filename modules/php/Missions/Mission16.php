@@ -21,7 +21,7 @@ class Mission16 extends AbstractMission
 
     if($lastTrick['bestCard']['value'] == 9){
       $this->fail();
-    } else if(empty($nines) || Globals::isLastTrick()) {
+    } else if($nines->empty() || Globals::isLastTrick()) {
       $this->success();
     } else {
       $this->continue();

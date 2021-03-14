@@ -116,7 +116,9 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
 
     addCardOnTable(card, container = null){
-      this.place('jstpl_card', card, container ?? 'mat-' + card.pId);
+      if(container == null) container = 'mat-' + card.pId;
+
+      this.place('jstpl_card', card, container);
       this.createCardTooltip(card, "card-" + card.id);
       dojo.connect($("card-" + card.id), 'onclick', () => this.onPlayCard(card) );
     },

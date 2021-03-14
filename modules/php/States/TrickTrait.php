@@ -51,9 +51,13 @@ trait TrickTrait
         $hand = $filteredHand;
     }
 
+    $cards = array_map(function($card){ return $card['id'];}, $hand);
+    $commCard = $player->getCardOnComm();
     return [
-      'cards' => array_map(function($card){ return $card['id'];}, $hand),
+      'cards' => $cards,
       'canDistress' => LogBook::canActivateDistress(),
+      'commCard' => $commCard,
+      'canPlayCommunicatedCard' => ($commCard != null && in_array($commCard['id'], $cards)),
     ];
   }
 

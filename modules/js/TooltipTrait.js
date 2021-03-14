@@ -18,7 +18,7 @@ define(["dojo", "dojo/_base/declare", "ebg/stock"], (dojo, declare) => {
         this.addTitledTooltip('commander-icon-' + player.id, _('Commander token'), commanderDesc);
 
         this.addTitledTooltip('special-icon-' + player.id, _('Special crew member'), this.getMissionSpecialDescription() );
-        this.addTitledTooltip('special2-icon-' + player.id, _('Second special one'), _('This crew member must win the last trick.') );
+        this.addTitledTooltip('special2-icon-' + player.id, _('Second special one'), _('This crew member must win only the last trick.') );
 
         this.addTitledTooltip('radio-' + player.id, _('Radio communication token'), _('Communication token gives information of the communicated color card :<br/>- At the top, if it is your highest card of this color.<br/>- In the middle, if it is your only card of this color.<br/>- At the bottom, if it is your lowest card of this color.<br/>- Red, you cannot communicate.'));
         this.addTitledTooltip('comm-pending-' + player.id, _('Communication pending token'), _('If visible, you will start communication at the beggining of next trick.'));

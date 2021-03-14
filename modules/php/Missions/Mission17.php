@@ -26,7 +26,7 @@ class Mission17 extends AbstractMission
 
       // If all tasks are satisfied, we must wait all the 9 to be played
       $nines = Cards::getRemeaningOfValue(9);
-      if(self::getStatus() == MISSION_SUCCESS && !empty($nines) && !Globals::isLastTrick()){
+      if(self::getStatus() == MISSION_SUCCESS && !$nines->empty() && !Globals::isLastTrick()){
         $this->continue();
       }
     }

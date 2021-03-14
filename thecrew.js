@@ -113,6 +113,7 @@
         dojo.query(".task").removeClass("unselectable selectable tile-selectable tile-selected selected");
         dojo.query(".player-table").removeClass("selectable");
         dojo.query("#hand .stockitem").removeClass("selectable unselectable");
+        dojo.query(".selectableToPlay").removeClass("selectableToPlay"); // Selectable comm card to play
         dojo.empty('proposal-task');
 
         this.inherited(arguments);

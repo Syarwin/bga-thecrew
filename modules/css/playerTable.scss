@@ -38,7 +38,7 @@
       width: 84px;
       height: 132px;
 
-      &.selectable {
+      &.selectable, &.selectableToPlay {
         cursor:pointer;
         box-shadow: 0 0 5px 1px #4782ff;
         transition:transform 0.15s;
@@ -226,6 +226,10 @@
           height:15px;
           bottom:-15px;
         }
+
+        &.small {
+          font-size: 15px;
+        }
       }
     }
   }
@@ -291,6 +295,16 @@
       display:block;
       &::after {
         content:'#{$i}';
+      }
+    }
+
+    &[data-pending="1"]{
+      .pending-icon {
+        top:71px;
+      }
+
+      .disruption {
+        top:10px;
       }
     }
   }

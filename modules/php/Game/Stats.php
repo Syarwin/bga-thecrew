@@ -27,7 +27,7 @@ class Stats
   public static function setupNewGame(){
     $stats = thecrew::get()->getStatTypes();
 
-    self::init('table', 'turns_number');
+//    self::init('table', 'turns_number');
     /*
     foreach ($stats['player'] as $key => $value) {
       if($value['id'] > 10 && $value['type'] == 'int' && $key != 'empty_slots_number')

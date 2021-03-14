@@ -17,8 +17,9 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     },
 
     makeTaskSelectable(tasks, callback = null){
-      callback = callback ?? this.onChooseTask.bind(this);
-      
+      if(callback == null)
+        callback = this.onChooseTask.bind(this);
+
       tasks.forEach(task => {
         var oTask = $("task-" + task.id);
         dojo.addClass(oTask, "selectable");

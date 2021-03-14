@@ -76,6 +76,23 @@ class Notifications
   }
 
 
+
+  public static function specialMemberMission50($crew){
+    self::notifyAll('specialCrewMember', clienttranslate('${player_name} must win the first four tricks'), [
+      'player' => $crew,
+      'special_id' => $crew->getId(),
+    ]);
+  }
+
+  public static function special2MemberMission50($crew){
+    self::notifyAll('specialCrewMember', clienttranslate('${player_name} must win the last trick'), [
+      'player' => $crew,
+      'special2_id' => $crew->getId(),
+    ]);
+  }
+
+
+
   public static function assignTask($task, $player){
     self::notifyAll('takeTask', clienttranslate('${player_name} takes task ${value_symbol}${color_symbol}'), [
       'player' => $player,
@@ -226,7 +243,7 @@ class Notifications
 
   public static function usedComm($player){
     self::notifyAll('usedComm', '', [
-      'pId' => $player->getId(),
+      'player' => $player,
     ]);
   }
 

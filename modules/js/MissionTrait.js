@@ -37,7 +37,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     updateMissionCommunication(){
       let mission = this.gamedatas.missions[this.gamedatas.status.mId - 1];
-      let disruption = mission.disruption ?? 0;
+      let disruption = mission.disruption? mission.disruption : 0;
       dojo.attr('thecrew-table', 'data-disruption', Math.max(0, disruption - this.gamedatas.trickCount));
     },
 
@@ -89,7 +89,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       // Special
       if(mission.informations.special){
         let desc = _(mission.informations.special);
-        let icon = mission.informations.specialIcon ?? "special";
+        let icon = mission.informations.specialIcon ? mission.informations.specialIcon : "special";
         dojo.place(`<div id="mission-informations-special"><div class='icon-${icon}'></div><div class='special-desc'>${desc}</div></div>`, container);
         if(mission.informations.specialTooltip){
           this.updateSpecialTooltip(_(mission.informations.specialTooltip));

@@ -28,7 +28,7 @@ class Mission13 extends AbstractMission
 
     // Otherwise, check if all rockets were played
     $rockets = Cards::getRemeaningRockets();
-    if(empty($rockets)){
+    if($rockets->empty()){
       $this->success();
     } else {
       $this->continue();

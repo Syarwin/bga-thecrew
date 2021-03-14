@@ -29,7 +29,7 @@ class Mission46 extends AbstractMission
     ]);
 
     // Make the next player special
-    $special = Players::getPrevId($player);
+    $special = Players::getNextId($player);
     Globals::setSpecial($special);
     Notifications::specialMemberMission46(Players::get($special));
   }
@@ -43,7 +43,7 @@ class Mission46 extends AbstractMission
     if($containPink && !$lastTrick['winner']->isSpecial()){
       $this->fail();
     }
-    else if(Globals::isLastTrick() || empty($remeainingPink)){
+    else if(Globals::isLastTrick() || $remeainingPink->empty()){
       $this->success();
     }
     else {

@@ -318,7 +318,9 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
      * Return a span with a colored 'You'
      */
     coloredName(pId = null) {
-      pId = pId ?? this.player_id;
+      if(pId == null)
+        pId = this.player_id;
+        
       let color = this.gamedatas.players[pId].color;
       let color_bg = "";
       if (this.gamedatas.players[pId] && this.gamedatas.players[pId].color_back) {

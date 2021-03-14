@@ -59,8 +59,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         /*
          * Display answer if needed
          */
-        if(player.reply != null){
-          let mission = this.getMission();
+        let mission = this.getMission();
+        if(player.reply != null && mission.replies){
           var msg = _(mission.replies[player.reply]);
           this.setupReply(player.id, msg);
         }
@@ -113,13 +113,13 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
 
     updateCommander(){
-      let commander = this.gamedatas.players[this.gamedatas.commanderId] ?? { no : -1};
+      let commander = this.gamedatas.players[this.gamedatas.commanderId] ? this.gamedatas.players[this.gamedatas.commanderId] : { no : -1};
       dojo.attr('overall-content', 'data-commander', commander.no);
 
-      let special = this.gamedatas.players[this.gamedatas.specialId] ?? { no : -1};
+      let special = this.gamedatas.players[this.gamedatas.specialId] ?  this.gamedatas.players[this.gamedatas.specialId] : { no : -1};
       dojo.attr('overall-content', 'data-special', special.no);
 
-      let special2 = this.gamedatas.players[this.gamedatas.specialId2] ?? { no : -1};
+      let special2 = this.gamedatas.players[this.gamedatas.specialId2] ? this.gamedatas.players[this.gamedatas.specialId2] : { no : -1};
       dojo.attr('overall-content', 'data-special2', special2.no);
     },
 

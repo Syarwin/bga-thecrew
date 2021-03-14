@@ -2,6 +2,7 @@
 namespace CREW\Missions;
 use \CREW\Cards;
 use \CREW\Game\Globals;
+use \CREW\Game\Players;
 
 class Mission44 extends AbstractMission
 {
@@ -28,7 +29,10 @@ class Mission44 extends AbstractMission
       }
 
       // Must be in order
-      if(Globals::getCheckCount() != $lastTrick['bestCard']['value'] - 1){
+      $expectedValue = Globals::getCheckCount();
+      if(Players::count() == 3 && Globals::isChallenge()) $expectedValue++;
+
+      if($expectedValue != $lastTrick['bestCard']['value'] - 1){
         $this->fail();
         return;
       }
@@ -39,7 +43,7 @@ class Mission44 extends AbstractMission
 
     // Otherwise, check if all rockets were played
     $rockets = Cards::getRemeaningRockets();
-    if(empty($rockets)){
+    if($rockets->empty()){
       $this->success();
     } else {
       $this->continue();

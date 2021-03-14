@@ -81,8 +81,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     notif_usedComm(n){
       debug("Someone played his communicated card", n);
-      this.setRadioToken(n.args.pId, 'used');
-      this.setCommunicationCard(n.args.pId);
+      this.setRadioToken(n.args.player_id, 'used');
+      this.setCommunicationCard(n.args.player_id);
       dojo.removeClass('comm-card-' + n.args.player_id, "selectable");
     },
 

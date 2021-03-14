@@ -22,7 +22,7 @@
   font-weight: 800;
   font-style: normal;
   font-display: swap; }
-#logs span.logicon, .card-description span.logicon {
+#logs span.logicon, .card-description span.logicon, .chatwindowtype_tablelog span.logicon {
   position: relative;
   display: inline-block;
   width: 12px;
@@ -30,27 +30,27 @@
   margin: 0px;
   background-image: url("img/sprites.png");
   background-size: 1100%; }
-  #logs span.logicon.blue, .card-description span.logicon.blue {
+  #logs span.logicon.blue, .card-description span.logicon.blue, .chatwindowtype_tablelog span.logicon.blue {
     background-position: 30% 50%; }
-  #logs span.logicon.green, .card-description span.logicon.green {
+  #logs span.logicon.green, .card-description span.logicon.green, .chatwindowtype_tablelog span.logicon.green {
     background-position: 40% 50%; }
-  #logs span.logicon.pink, .card-description span.logicon.pink {
+  #logs span.logicon.pink, .card-description span.logicon.pink, .chatwindowtype_tablelog span.logicon.pink {
     background-position: 50% 50%; }
-  #logs span.logicon.yellow, .card-description span.logicon.yellow {
+  #logs span.logicon.yellow, .card-description span.logicon.yellow, .chatwindowtype_tablelog span.logicon.yellow {
     background-position: 60% 50%; }
-  #logs span.logicon.black, .card-description span.logicon.black {
+  #logs span.logicon.black, .card-description span.logicon.black, .chatwindowtype_tablelog span.logicon.black {
     background-position: 100% 50%; }
-#logs span.card-value, .card-description span.card-value {
+#logs span.card-value, .card-description span.card-value, .chatwindowtype_tablelog span.card-value {
   font-weight: bold; }
-  #logs span.card-value.blue, .card-description span.card-value.blue {
+  #logs span.card-value.blue, .card-description span.card-value.blue, .chatwindowtype_tablelog span.card-value.blue {
     color: blue; }
-  #logs span.card-value.green, .card-description span.card-value.green {
+  #logs span.card-value.green, .card-description span.card-value.green, .chatwindowtype_tablelog span.card-value.green {
     color: green; }
-  #logs span.card-value.yellow, .card-description span.card-value.yellow {
+  #logs span.card-value.yellow, .card-description span.card-value.yellow, .chatwindowtype_tablelog span.card-value.yellow {
     color: #e7b734; }
-  #logs span.card-value.pink, .card-description span.card-value.pink {
+  #logs span.card-value.pink, .card-description span.card-value.pink, .chatwindowtype_tablelog span.card-value.pink {
     color: #e97aaf; }
-  #logs span.card-value.black, .card-description span.card-value.black {
+  #logs span.card-value.black, .card-description span.card-value.black, .chatwindowtype_tablelog span.card-value.black {
     color: black; }
 
 .card-description .tooltip-title, .with-content .tooltip-title {
@@ -515,11 +515,11 @@ html, body {
       filter: drop-shadow(0 0 2px #000);
       -webkit-filter: drop-shadow(0 0 2px #000);
       border-radius: 5px; }
-      .player-table .communication-card-holder .communication-card.selectable {
+      .player-table .communication-card-holder .communication-card.selectable, .player-table .communication-card-holder .communication-card.selectableToPlay {
         cursor: pointer;
         box-shadow: 0 0 5px 1px #4782ff;
         transition: transform 0.15s; }
-        .player-table .communication-card-holder .communication-card.selectable:hover {
+        .player-table .communication-card-holder .communication-card.selectable:hover, .player-table .communication-card-holder .communication-card.selectableToPlay:hover {
           animation: none;
           transform: scale(1.15); }
       .player-table .communication-card-holder .communication-card[data-color="6"] {
@@ -685,6 +685,8 @@ html, body {
         .player-table[data-reply="on"] .communication-card-holder .player-reply .bubble::before {
           height: 15px;
           bottom: -15px; }
+        .player-table[data-reply="on"] .communication-card-holder .player-reply .bubble.small {
+          font-size: 15px; }
   .player-table .player-table-wrapper {
     flex-grow: 1;
     height: 100%;
@@ -730,6 +732,10 @@ html, body {
   display: block; }
   #thecrew-table[data-disruption="1"] .player-table .communication-card-holder .communication-card .disruption::after {
     content: "1"; }
+#thecrew-table[data-disruption="1"] .player-table .communication-card-holder .communication-card[data-pending="1"] .pending-icon {
+  top: 71px; }
+#thecrew-table[data-disruption="1"] .player-table .communication-card-holder .communication-card[data-pending="1"] .disruption {
+  top: 10px; }
 
 #thecrew-table[data-disruption="2"] .player-table .communication-card-holder .communication-card .radio {
   display: none; }
@@ -737,6 +743,10 @@ html, body {
   display: block; }
   #thecrew-table[data-disruption="2"] .player-table .communication-card-holder .communication-card .disruption::after {
     content: "2"; }
+#thecrew-table[data-disruption="2"] .player-table .communication-card-holder .communication-card[data-pending="1"] .pending-icon {
+  top: 71px; }
+#thecrew-table[data-disruption="2"] .player-table .communication-card-holder .communication-card[data-pending="1"] .disruption {
+  top: 10px; }
 
 #thecrew-table[data-disruption="3"] .player-table .communication-card-holder .communication-card .radio {
   display: none; }
@@ -744,6 +754,10 @@ html, body {
   display: block; }
   #thecrew-table[data-disruption="3"] .player-table .communication-card-holder .communication-card .disruption::after {
     content: "3"; }
+#thecrew-table[data-disruption="3"] .player-table .communication-card-holder .communication-card[data-pending="1"] .pending-icon {
+  top: 71px; }
+#thecrew-table[data-disruption="3"] .player-table .communication-card-holder .communication-card[data-pending="1"] .disruption {
+  top: 10px; }
 
 #thecrew-table[data-disruption="4"] .player-table .communication-card-holder .communication-card .radio {
   display: none; }
@@ -751,6 +765,10 @@ html, body {
   display: block; }
   #thecrew-table[data-disruption="4"] .player-table .communication-card-holder .communication-card .disruption::after {
     content: "4"; }
+#thecrew-table[data-disruption="4"] .player-table .communication-card-holder .communication-card[data-pending="1"] .pending-icon {
+  top: 71px; }
+#thecrew-table[data-disruption="4"] .player-table .communication-card-holder .communication-card[data-pending="1"] .disruption {
+  top: 10px; }
 
 #thecrew-table[data-disruption="5"] .player-table .communication-card-holder .communication-card .radio {
   display: none; }
@@ -758,6 +776,10 @@ html, body {
   display: block; }
   #thecrew-table[data-disruption="5"] .player-table .communication-card-holder .communication-card .disruption::after {
     content: "5"; }
+#thecrew-table[data-disruption="5"] .player-table .communication-card-holder .communication-card[data-pending="1"] .pending-icon {
+  top: 71px; }
+#thecrew-table[data-disruption="5"] .player-table .communication-card-holder .communication-card[data-pending="1"] .disruption {
+  top: 10px; }
 
 #overall-content[data-commander="0"] .player-table[data-no="0"] .player-table-wrapper .commander {
   display: block; }

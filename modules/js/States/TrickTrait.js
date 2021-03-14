@@ -16,6 +16,10 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
       if(this.isCurrentPlayerActive()){
         this.makeCardsSelectable(args.cards, (card) => this.onClickCardToPlay(card) );
+        if(args.canPlayCommunicatedCard){
+          dojo.addClass('comm-card-' + this.player_id, 'selectableToPlay');
+          this.connect($('comm-card-' + this.player_id), 'click', () => this.onClickCardToPlay(args.commCard) );
+        }
       }
     },
 

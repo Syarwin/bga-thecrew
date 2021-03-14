@@ -42,8 +42,9 @@ trait CommunicationTrait
     $player->toggleComm();
     Notifications::toggleCommPending($player);
 
+    $mission = Missions::getCurrent();
     $stateName = $this->gamestate->state()['name'];
-    if($player->isCommPending() && $stateName == 'playerTurn' && Cards::countOnTable() == 0){
+    if(!$mission->isDisrupted() && $player->isCommPending() && $stateName == 'playerTurn' && Cards::countOnTable() == 0){
       $this->gamestate->nextState('startComm');
     }
   }

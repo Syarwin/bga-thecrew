@@ -205,6 +205,11 @@ class Globals extends \APP_DbObject
     self::set('specialId' . $special, $pId);
   }
 
+  public static function setSpecial2($pId, $special = ''){
+    self::set('specialId2' . $special, $pId);
+  }
+
+
   public static function incCheckCount($value = 1){
     self::inc('checkCount', $value);
   }

@@ -59,6 +59,7 @@ class Player extends Helpers\DB_Manager
   public function getTricksWon(){ return $this->nTricks; }
   public function isCommander() { return $this->id == Globals::getCommander(); }
   public function isSpecial() { return $this->id == Globals::getSpecial(); }
+  public function isSpecial2() { return $this->id == Globals::getSpecial2(); }
 
   public function getUiData($pId)
   {
@@ -123,8 +124,7 @@ class Player extends Helpers\DB_Manager
 
   public function canCommunicate()
   {
-    $mission = Missions::getCurrent();
-    return $this->commToken != 'used' && is_null($this->commCard) && !$mission->isDisrupted(); // TODO && $mission->canCommunicate($this->id);
+    return $this->commToken != 'used' && is_null($this->commCard);
   }
 
   public function winTrick()
