@@ -15,6 +15,15 @@ class Mission44 extends AbstractMission
     ];
   }
 
+  public function getUiData()
+  {
+      $data = parent::getUiData();
+      if(Globals::isChallenge())
+        $data['desc'] = clienttranslate('Up until now, wormholes have been at most theoretical constructs and now here you are, standing right in front of one. It overshadows you like a black monolith — incomprehensible, but with a huge attraction. You send a message to Earth and prepare the engines for the jump. <b>Every rocket card must win a trick. First the the two rocket card, the three, and finally the four.</b>');
+      return $data;
+  }
+
+
 
   public function check($lastTrick)
   {

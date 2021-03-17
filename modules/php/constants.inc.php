@@ -6,35 +6,35 @@
 define("STATE_SETUP",1);
 define("STATE_PREPARATION",2);
 
-define("STATE_PICK_TASK",3);
-define("STATE_NEXT_PLAYER_PICK_TASK",4);
+define("STATE_PICK_TASK",5);
+define("STATE_NEXT_PLAYER_PICK_TASK",30);
 
-define("STATE_QUESTION",5);
-define("STATE_NEXT_QUESTION",6);
+define("STATE_QUESTION",17);
+define("STATE_NEXT_QUESTION",18);
 
-define("STATE_PICK_CREW",7);
-define("STATE_MOVE_TILE",8);
+define("STATE_PICK_CREW",19);
+define("STATE_MOVE_TILE",20);
 
-define("STATE_NEW_TRICK",9);
+define("STATE_NEW_TRICK",4);
 
-define("STATE_DISTRESS_SETUP",10);
-define("STATE_DISTRESS",11);
-define("STATE_DISTRESS_EXCHANGE",12);
+define("STATE_DISTRESS_SETUP",14);
+define("STATE_DISTRESS",15);
+define("STATE_DISTRESS_EXCHANGE",16);
 
-define("STATE_GIVE_TASK", 20); // 5 players rule
-define("STATE_GIVE_TASK_CONFIRMATION", 21);
-define("STATE_GIVE_TASK_EXCHANGE", 22);
+define("STATE_GIVE_TASK", 31); // 5 players rule
+define("STATE_GIVE_TASK_CONFIRMATION", 32);
+define("STATE_GIVE_TASK_EXCHANGE", 33);
 
-define("STATE_BEFORE_COMM",13);
-define("STATE_COMM",14);
+define("STATE_BEFORE_COMM",10);
+define("STATE_COMM",9);
 
-define("STATE_PLAYER_TURN",15);
-define("STATE_NEXT_PLAYER",16);
+define("STATE_PLAYER_TURN",3);
+define("STATE_NEXT_PLAYER",7);
 
-define("STATE_END_MISSION",17);
-define("STATE_CHANGE_MISSION",18);
+define("STATE_END_MISSION",8);
+define("STATE_CHANGE_MISSION",13);
 
-define("STATE_SAVE",19);
+define("STATE_SAVE",21);
 define("STATE_END_OF_GAME",99);
 
 

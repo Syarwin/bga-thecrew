@@ -10,10 +10,12 @@
 ALTER TABLE `player` ADD `player_trick_number` int(10) NOT NULL DEFAULT 0 COMMENT 'Number of tricks collected by the player during this hand';
 ALTER TABLE `player` ADD `comm_token` varchar(16) NOT NULL DEFAULT 'middle' COMMENT 'communication token status: up, middle, bottom, used, hidden';
 ALTER TABLE `player` ADD `comm_pending` smallint(1) NOT NULL DEFAULT '0' COMMENT 'want to communicate next time is possible';
+
 ALTER TABLE `player` ADD `comm_card_id` int(10) DEFAULT NULL COMMENT 'id of the communicated card';
 ALTER TABLE `player` ADD `distress_choice` smallint(1) DEFAULT 0 COMMENT 'unset, clockwise, anticlockwise or dontuse';
 ALTER TABLE `player` ADD `distress_card_id` int(10) unsigned NULL COMMENT 'id of the card to pass with distress';
 ALTER TABLE `player` ADD `reply_choice` int(10) unsigned NULL COMMENT 'id of the chosen reply';
+
 
 
 -- Standard schema to manage cards
@@ -21,11 +23,11 @@ CREATE TABLE IF NOT EXISTS `card` (
   `card_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `card_location` varchar(16) NOT NULL COMMENT 'Deck, comm, hand, cardontable, trickX',
   `card_state` int(11) NOT NULL,
+
   `color` int(4) NOT NULL COMMENT 'Color of the card: 1 => blue, 2 => green, 3 => pink, 4 => yellow, 5 => Rocket, 6 => reminder',
   `value` int(11) NOT NULL COMMENT 'Value of the card. Numeric value',
   PRIMARY KEY (`card_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 
 
 CREATE TABLE IF NOT EXISTS `task` (

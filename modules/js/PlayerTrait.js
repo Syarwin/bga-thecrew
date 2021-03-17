@@ -150,7 +150,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       dojo.query(".player-table").removeClass("selectable").addClass("unselectable");
       players.forEach(pId => {
         dojo.query("#player-table-" + pId).removeClass('unselectable').addClass('selectable');
-        this.addPrimaryActionButton('btnPlayer'+pId, this.gamedatas.players[pId].name, () => this.onClickPlayer(pId) );
+        this.addPrimaryActionButton('btnPlayer'+pId, this.gamedatas.players[pId].name, () => this.onClickPlayer(parseInt(pId)) );
       });
     },
 

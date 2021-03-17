@@ -32,22 +32,25 @@ class Globals extends \APP_DbObject
   private static $globals = [
     'trickCount' => 0,
     'commanderId' => 0,
-    'lastWinnerId' => 0,
     'trickColor' => 0,
-    'missionFinished' => 0,
     'distressDirection' => DONT_USE,
+        'notusedglobal1' => 0,  // Original code has hole in sequence
+        'notusedglobal2' => 0,  // Original code has hole in sequence
+    'lastWinnerId' => 0,
+        'notusedglobal3' => 0,  // Original code has hole in sequence
+    'missionFinished' => 0,
     'specialId' => 0,
-    'specialId2' => 0,
     'checkCount' => 0, // Useful for some missions eg 26.
+    'specialId2' => 0,
     'endOfGame' => 0,
+    'premium' => false,
+    'intro_shown' => 0,
+
 
     // 5 players rule
     'playerWhoGiveId' => 0,
     'taskToGiveId' => 0,
     'playerToGiveId' => 0,
-
-    'intro_shown' => 0,
-    'premium' => false,
   ];
 
   public static function declare($game){

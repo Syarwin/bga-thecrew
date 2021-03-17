@@ -66,6 +66,10 @@ trait TrickTrait
   function actPlayCard($cardId) {
     self::checkAction("actPlayCard");
 
+    $cards = $this->argPlayerTurn()['cards'];
+    if(!in_array($cardId, $cards))
+      throw new \BgaUserException(_("You cannot play this card"));
+
     $card = Cards::get($cardId);
     $player = Players::get($card['pId']);
     Cards::play($card);

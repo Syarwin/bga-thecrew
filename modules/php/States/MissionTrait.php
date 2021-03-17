@@ -77,8 +77,9 @@ trait MissionTrait
   {
     $missionId = Missions::getCurrentId();
     if(Globals::getMissionFinished() > 0){
-      LogBook::startMission($missionId + 1);
-      if($missionId == 50){
+      $missionId++;
+      LogBook::startMission($missionId);
+      if($missionId == 51){
         $this->gamestate->nextState('save');
         return;
       }
@@ -87,7 +88,7 @@ trait MissionTrait
     }
 
 
-    if($missionId >= 10 && !Globals::isPremium()){
+    if($missionId > 10 && !Globals::isPremium()){
       Notifications::noPremium();
       $this->gamestate->nextState('end');
     } else {

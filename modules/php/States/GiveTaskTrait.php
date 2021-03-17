@@ -77,6 +77,7 @@ trait GiveTaskTrait
   function actRejectGiveTask()
   {
     Notifications::rejectGiveTask();
+    $this->gamestate->setAllPlayersMultiactive();
     $this->gamestate->nextState("reject");
   }
 

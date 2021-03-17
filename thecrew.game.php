@@ -34,6 +34,8 @@ spl_autoload_register($swdNamespaceAutoload, true, true);
 require_once(APP_GAMEMODULE_PATH . 'module/table/table.game.php');
 
 
+use CREW\Game\Globals;
+
 class thecrew extends Table
 {
   use CREW\States\MissionTrait;
@@ -51,7 +53,7 @@ class thecrew extends Table
   {
     parent::__construct();
     self::$instance = $this;
-    CREW\Game\Globals::declare($this);
+    Globals::declare($this);
   }
 
   public static function get()
@@ -103,12 +105,12 @@ class thecrew extends Table
       'players' => CREW\Game\Players::getUiData($pId),
       'missions' => CREW\Missions::getUiData(),
       'status' => $status,
-      'commanderId' => CREW\Game\Globals::getCommander(),
-      'specialId' => CREW\Game\Globals::getSpecial(),
-      'specialId2' => CREW\Game\Globals::getSpecial2(),
-      'showIntro' => $status['mId'] == 1 && $status['total'] == 1 && CREW\Game\Globals::isCampaign(),
-      'trickCount' => CREW\Game\Globals::getTrickCount(),
-      'isCampaign' => CREW\Game\Globals::isCampaign(),
+      'commanderId' => Globals::getCommander(),
+      'specialId' => Globals::getSpecial(),
+      'specialId2' => Globals::getSpecial2(),
+      'showIntro' => $status['mId'] == 1 && $status['total'] == 1 && Globals::isCampaign() && Globals::getTrickCount() <= 1,
+      'trickCount' => Globals::getTrickCount(),
+      'isCampaign' => Globals::isCampaign(),
     ];
   }
 
@@ -120,7 +122,7 @@ class thecrew extends Table
    */
   public function getGameProgression()
   {
-    $nbTotalCards = CREW\Game\Globals::isChallenge()? 30 : 40;
+    $nbTotalCards = Globals::isChallenge()? 30 : 40;
     $nbPlayedCards = $nbTotalCards - CREW\Cards::countRemeaning();
 
     return 100 * $nbPlayedCards / $nbTotalCards;
@@ -178,12 +180,47 @@ class thecrew extends Table
    */
   public function upgradeTableDb($from_version)
   {
-    if( $from_version <= 2101121214 ){
-      // ! important ! Use DBPREFIX_<table_name> for all tables
-      $sql = "ALTER TABLE DB_PREFIX_player ADD `reply_choice` int(10) unsigned NULL";
-      self::applyDbUpgradeToAllDB( $sql );
+    if( $from_version <= 2010221013){
+      self::testBigMerge();
+    }
+
+    if($frow_version <= 2103171142){
+      self::applyDbUpgradeToAllDB("DELETE FROM DBPREFIX_card WHERE `color` = 6");
     }
   }
+
+  public function testBigMerge()
+  {
+    self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_player CHANGE COLUMN `card_id` `distress_card_id` INT");
+    self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_player ADD `comm_card_id` int(10) DEFAULT NULL COMMENT 'id of the communicated card'");
+    self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_player ADD `distress_choice` smallint(1) DEFAULT 0 COMMENT 'unset, clockwise, anticlockwise or dontuse'");
+    self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_player ADD `reply_choice` int(10) unsigned NULL COMMENT 'id of the chosen reply'");
+
+    // ! important ! Use DBPREFIX_<table_name> for all tables
+    $commCards = self::getObjectListFromDB("SELECT * FROM card WHERE card_location = 'comm'");
+    foreach($commCards as $card){
+      if($card['card_type'] != 6){
+        self::applyDbUpgradeToAllDB("UPDATE DBPREFIX_player SET `comm_card_id` = ". $card['card_id'] ." WHERE `player_id` = ". $card['card_location_arg']);
+        self::applyDbUpgradeToAllDB("UPDATE DBPREFIX_card SET `card_location` = 'hand' WHERE `card_id` = ". $card['card_id']);
+      }
+      else {
+        self::DbQuery("DELETE FROM card WHERE `card_id` = ". $card['card_id']);
+      }
+    }
+
+
+    self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_task CHANGE COLUMN `card_type` `color` INT");
+    self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_task CHANGE COLUMN `card_type_arg` `value` INT");
+    self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_task CHANGE COLUMN `token` `tile` VARCHAR(3)");
+
+    self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_card CHANGE COLUMN `card_type` `color` INT");
+    self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_card CHANGE COLUMN `card_type_arg` `value` INT");
+    self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_card CHANGE COLUMN `card_location` `card_location` VARCHAR(50)");
+    self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_card ADD `card_state` int(11) NOT NULL");
+    self::applyDbUpgradeToAllDB("UPDATE DBPREFIX_card SET card_location = 'table' WHERE `card_location` = 'cardsontable'");
+    self::applyDbUpgradeToAllDB("UPDATE DBPREFIX_card SET card_location = CONCAT(`card_location`, '_', `card_location_arg`) WHERE `card_location_arg` != ''");
+  }
+
 
 
   ///////////////////////////////////////////////////////////
