@@ -290,6 +290,9 @@ html, body {
             #thecrew-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-choice="3"], #thecrew-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-choice="3"] {
               background-position: 10% 100%;
               filter: drop-shadow(0 0 2px #FFF); }
+            #thecrew-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-choice="4"], #thecrew-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-choice="4"] {
+              background-position: 90% 100%;
+              filter: drop-shadow(0 0 2px #FFF); }
             #thecrew-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-no="0"], #thecrew-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-no="0"] {
               order: 0; }
             #thecrew-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-no="1"], #thecrew-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-no="1"] {
@@ -334,6 +337,9 @@ html, body {
               justify-content: center; }
               #thecrew-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-buttons button#dont-use-button {
                 font-size: 18px; }
+              #thecrew-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-buttons button#agree-button {
+                width: auto;
+                padding: 0px 5px; }
               #thecrew-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-buttons button#clockwise-button div, #thecrew-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-buttons button#anticlockwise-button div {
                 background-image: url("img/sprites.png");
                 background-size: 1100%;
@@ -471,6 +477,12 @@ html, body {
 
 #overall-content[data-commander="5"] .panel-container[data-no="5"] .panel-commander {
   display: block; }
+
+#player_config #autopick-selector {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center; }
 
 .player-table {
   width: 400px;

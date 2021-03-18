@@ -253,6 +253,7 @@ html,body {
             &[data-choice="1"] {  background-position: 20% 100%; }
             &[data-choice="2"] {  background-position: 70% 50%; }
             &[data-choice="3"] {  background-position: 10% 100%; filter: drop-shadow(0 0 2px #FFF);}
+            &[data-choice="4"] {  background-position: 90% 100%;}
 
             @for $i from 0 through 4 {
               &[data-no="#{$i}"] { order:$i; }
@@ -302,6 +303,11 @@ html,body {
 
               &#dont-use-button {
                 font-size:18px;
+              }
+
+              &#agree-button {
+                width:auto;
+                padding:0px 5px;
               }
 
               &#clockwise-button div, &#anticlockwise-button div {
@@ -371,7 +377,7 @@ html,body {
               display: flex;
               align-items: center;
               font-weight: bold;
-              
+
               .thecrew-arrow-down {
                 transform:rotate(-90deg);
                 margin:0;

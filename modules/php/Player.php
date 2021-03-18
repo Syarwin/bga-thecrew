@@ -25,6 +25,7 @@ class Player extends Helpers\DB_Manager
     $this->distressChoice = $row['distress_choice'];
     $this->distressCard = $row['distress_card_id'];
     $this->reply = $row['reply_choice'];
+    $this->distressAuto = $row['distress_auto'];
   }
 
   private $id;
@@ -60,6 +61,7 @@ class Player extends Helpers\DB_Manager
   public function isCommander() { return $this->id == Globals::getCommander(); }
   public function isSpecial() { return $this->id == Globals::getSpecial(); }
   public function isSpecial2() { return $this->id == Globals::getSpecial2(); }
+  public function getDistressAuto(){ return $this->distressAuto; }
 
   public function getUiData($pId)
   {
@@ -80,6 +82,7 @@ class Player extends Helpers\DB_Manager
       'canCommunicate' => $this->canCommunicate(),
       'distressChoice' => $this->distressChoice,
       'distressCard' => $pId == $this->id? $this->distressCard : null,
+      'distressAuto' => $this->distressAuto,
       'reply' => $this->reply,
     ];
   }
@@ -175,5 +178,11 @@ class Player extends Helpers\DB_Manager
   public function reply($i)
   {
     self::DB()->update(['reply_choice' => $i], $this->id);
+  }
+
+
+  public function setAutoPick($mode)
+  {
+    self::DB()->update(['distress_auto' => $mode], $this->id);
   }
 }

@@ -184,8 +184,12 @@ class thecrew extends Table
       self::testBigMerge();
     }
 
-    if($frow_version <= 2103171142){
+    if($from_version <= 2103171142){
       self::applyDbUpgradeToAllDB("DELETE FROM DBPREFIX_card WHERE `color` = 6");
+    }
+
+    if($from_version <= 2103172308){
+      self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_player ADD `distress_auto` smallint(1) DEFAULT 0 COMMENT 'none, autono, autoyes'");
     }
   }
 

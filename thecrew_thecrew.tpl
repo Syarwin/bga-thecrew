@@ -85,6 +85,7 @@
         <div id="distress-panel-buttons">
           <button id="clockwise-button" class="finalbutton bgabutton bgabutton_blue"><div></div></button>
           <button id="dont-use-button" class="finalbutton bgabutton bgabutton_gray">{NO}</button>
+          <button id="agree-button" class="finalbutton bgabutton bgabutton_gray">{WHATEVER}</button>
           <button id="anticlockwise-button" class="finalbutton bgabutton bgabutton_blue"><div></div></button>
         </div>
 
@@ -191,6 +192,25 @@ var jstpl_task = `
 
 var jstpl_card = `
 <div class="card" data-color="\${color}" data-value="\${value}" id="card-\${id}"></div>`;
+
+
+
+var jstpl_configPlayerBoard = `
+<div class='player-board' id="player_board_config">
+  <div id="player_config" class="player_board_content">
+    <div id="autopick-selector">
+        \${autopick}
+        <select id="autopick">
+          <option value='0'>\${disabled}</option>
+          <option value='2'>\${alwaysno}</option>
+          <option value='4'>\${alwaysagree}</option>
+        </select>
+    </div>
+  </div>
+</div>
+`;
+
+
 </script>
 
 {OVERALL_GAME_FOOTER}

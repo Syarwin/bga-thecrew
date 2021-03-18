@@ -22,7 +22,7 @@ trait CommunicationTrait
 
     $player = Players::getNextToCommunicate();
     $mission = Missions::getCurrent();
-    if(!$mission->isDisrupted() && !is_null($player)){
+    if(!$mission->isDisrupted() && !is_null($player) && $player->canCommunicate()){
       $player->toggleComm();
       Notifications::startComm($player);
       $nextPlayer = $player;
@@ -44,7 +44,7 @@ trait CommunicationTrait
 
     $mission = Missions::getCurrent();
     $stateName = $this->gamestate->state()['name'];
-    if(!$mission->isDisrupted() && $player->isCommPending() && $stateName == 'playerTurn' && Cards::countOnTable() == 0){
+    if(!$mission->isDisrupted() && $player->isCommPending() && $stateName == 'playerTurn' && Cards::countOnTable() == 0 && $player->canCommunicate()){
       $this->gamestate->nextState('startComm');
     }
   }

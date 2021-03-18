@@ -102,7 +102,11 @@ trait MissionTrait
   {
     if(Globals::isCampaign()) {
       $logs = self::getCollectionFromDb("SELECT mission, attempt, success, distress FROM logbook");
-      $json = json_encode ($logs);
+      $result = [];
+      foreach($logs as $log)
+        $result[] = [$log['mission'], $log['attempt'], $log['success'], $log['distress']];
+
+      $json = json_encode($result);
       $this->storeLegacyTeamData($json);
     }
     $this->gamestate->nextState('next');

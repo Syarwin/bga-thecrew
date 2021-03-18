@@ -12,11 +12,31 @@ use CREW\Cards;
  */
 trait DistressTrait
 {
+  function stPreDistress()
+  {
+    foreach(Players::getAll() as $player){
+      $player->chooseDirection($player->getDistressAuto());
+    }
+
+    $choices = Players::getAllDistressChoices();
+    $choices = array_values(array_diff($choices, [WHATEVER]));
+    $needVote = (count($choices) > 1 || $choices[0] == 0);
+    $this->gamestate->nextState($needVote? 'setup' : 'turn');
+  }
+
+
+
   function stDistressSetup()
   {
     $this->gamestate->setAllPlayersMultiactive();
   }
 
+  function argDistressSetup()
+  {
+    return [
+      'players' => Players::getAllDistressChoicesAssoc()
+    ];
+  }
 
   function actChooseDirection($dir)
   {
@@ -25,9 +45,11 @@ trait DistressTrait
     Notifications::chooseDirection($player, $dir);
 
     // Get other players choice that differs from mine
-    $choices = Players::getAll()->assocMap(function($player){ return $player->getDistressChoice(); });
-    $otherChoices = array_diff($choices, [$dir]);
-    if(empty($otherChoices)){
+    $choices = Players::getAllDistressChoices();
+    $choices = array_values(array_diff($choices, [WHATEVER]));
+    if(empty($choices) || (count($choices) == 1 && $choices[0] != 0)){
+      $dir = empty($choices)? DONT_USE : $choices[0];
+
       // Everyone agrees on same direction, let's go!
       Notifications::chooseDistressDirection($dir);
       Globals::setDistressDirection($dir);
@@ -39,7 +61,13 @@ trait DistressTrait
         $this->gamestate->nextState('turn');
       }
     } else {
-      $this->gamestate->setPlayersMultiactive(array_keys($otherChoices), '', true);
+      if($dir == WHATEVER){
+        $this->gamestate->setPlayerNonMultiactive($player->getId(), '');
+      } else {
+        $choices = Players::getAllDistressChoicesAssoc();
+        $otherChoices = array_diff($choices, [$dir, WHATEVER]);
+        $this->gamestate->setPlayersMultiactive(array_keys($otherChoices), '', true);
+      }
     }
   }
 
@@ -92,5 +120,15 @@ trait DistressTrait
 
     $this->gamestate->changeActivePlayer(Globals::getCommander());
     $this->gamestate->nextState('next');
+  }
+
+
+  /***********************
+  ******* AUTOPICK *******
+  ***********************/
+  public function actSetAutopick($mode)
+  {
+    $player = Players::getCurrent();
+    $player->setAutoPick($mode);
   }
 }

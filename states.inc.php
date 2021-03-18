@@ -142,7 +142,7 @@ $machinestates = [
     "action" => "stNewTrick",
     "transitions" => [
       "next" => STATE_BEFORE_COMM,
-      "distress" => STATE_DISTRESS_SETUP,
+      "distress" => STATE_PRE_DISTRESS,
       "giveTask" => STATE_GIVE_TASK,
     ]
   ],
@@ -160,7 +160,7 @@ $machinestates = [
     "args" => "argGiveTask",
     "possibleactions" => ["actGiveTask", "actPassGiveTask"],
     "transitions" => [
-      'pass' => STATE_DISTRESS_SETUP,
+      'pass' => STATE_PRE_DISTRESS,
       'askConfirmation' => STATE_GIVE_TASK_CONFIRMATION,
       "zombiePass" => STATE_CHANGE_MISSION
     ]
@@ -187,7 +187,7 @@ $machinestates = [
     "description" => "",
     "type" => "game",
     "action" => "stGiveTaskExchange",
-    "transitions" => ["next" => STATE_DISTRESS_SETUP],
+    "transitions" => ["next" => STATE_PRE_DISTRESS],
   ],
 
 
@@ -195,12 +195,24 @@ $machinestates = [
   /***********************
   ****** DISTRESS  *******
   ***********************/
+  STATE_PRE_DISTRESS => [
+    "name" => "preDistress",
+    "description" => "",
+    "type" => "game",
+    "action" => "stPreDistress",
+    "transitions" => [
+      "setup" => STATE_DISTRESS_SETUP,
+      "turn" => STATE_BEFORE_COMM,
+    ],
+  ],
+
   STATE_DISTRESS_SETUP => [
     "name" => "distressSetup",
     "description" => clienttranslate('The distress signal might be used'),
     "descriptionmyturn" => clienttranslate('${you} may use the distress signal'),
     "type" => "multipleactiveplayer",
     "action" => "stDistressSetup",
+    "args" => "argDistressSetup",
     "possibleactions" => ["actChooseDirection"],
     "transitions" => [
       "next" => STATE_DISTRESS,
@@ -276,7 +288,7 @@ $machinestates = [
     "transitions" => [
       "next" => STATE_NEXT_PLAYER,
       "startComm" => STATE_BEFORE_COMM,
-      "distress" => STATE_DISTRESS_SETUP,
+      "distress" => STATE_PRE_DISTRESS,
       "zombiePass" => STATE_CHANGE_MISSION
     ]
   ],

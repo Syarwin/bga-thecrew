@@ -17,6 +17,8 @@ define("STATE_MOVE_TILE",20);
 
 define("STATE_NEW_TRICK",4);
 
+
+define("STATE_PRE_DISTRESS",35);
 define("STATE_DISTRESS_SETUP",14);
 define("STATE_DISTRESS",15);
 define("STATE_DISTRESS_EXCHANGE",16);
@@ -55,6 +57,12 @@ define('CHALLENGE_ON', 2);
 define('CLOCKWISE', 1);
 define('DONT_USE', 2);
 define('ANTICLOCKWISE', 3);
+define('WHATEVER', 4);
+
+
+define('DISABLED', 0);
+define('ALWAYS_NO', 2);
+define('ALWAYS_AGREE', 4);
 
 /*
  * COLORS

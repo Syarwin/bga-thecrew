@@ -77,6 +77,7 @@
           this.startCampaign();
         }
 
+        this.setupSettings();
         this.inherited(arguments);
       },
 
@@ -199,6 +200,24 @@
             </div>
           </div>
         </div>`;
+      },
+
+
+      setupSettings(){
+        if(this.isReadOnly())
+          return;
+
+        this.place('jstpl_configPlayerBoard', {
+          autopick:_('Auto-answer distress signal'),
+          disabled:_('Disabled'),
+          alwaysno:_('Always no'),
+          alwaysagree:_('Always agree'),
+        }, 'player_boards', 'first');
+
+        $('autopick').value = this.gamedatas.players[this.player_id].distressAuto;
+          dojo.connect($('autopick'), 'change', () => {
+          this.ajaxcall("/thecrew/thecrew/setAutopick.html", { autopick: $("autopick").value }, () => {});
+        });
       },
    });
 });

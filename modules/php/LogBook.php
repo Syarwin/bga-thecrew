@@ -81,7 +81,10 @@ class LogBook extends \CREW\Helpers\DB_Manager
       $json = substr($json, 1, strlen($json)-2);
       $logs = json_decode ($json, true);
       foreach($logs as $log_id => $log){
-        self::insert($log['mission'], $log['attempt'], $log['success'], $log['distress']);
+        if(\array_key_exists('mission', $log))
+          self::insert($log['mission'], $log['attempt'], $log['success'], $log['distress']);
+        else
+          self::insert($log[0], $log[1], $log[2], $log[3]);
       }
     }
     else {

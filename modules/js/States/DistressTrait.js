@@ -1,5 +1,5 @@
 define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
-  const CLOCKWISE = 1, DONT_USE = 2, ANTICLOCKWISE = 3;
+  const CLOCKWISE = 1, DONT_USE = 2, ANTICLOCKWISE = 3, AGREE = 4;
   return declare("thecrew.distressTrait", null, {
     constructor(){
       this._notifications.push(
@@ -18,6 +18,9 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this.connect($('clockwise-button'), 'click', () => this.onChooseDistressDirection(CLOCKWISE) );
       this.connect($('dont-use-button'),  'click', () => this.onChooseDistressDirection(DONT_USE) );
       this.connect($('anticlockwise-button'),  'click', () => this.onChooseDistressDirection(ANTICLOCKWISE) );
+      this.connect($('agree-button'),  'click', () => this.onChooseDistressDirection(AGREE) );
+
+      Object.keys(args.players).forEach(pId => dojo.attr('distress-choice-' + pId, 'data-choice', args.players[pId]) );
     },
 
     onChooseDistressDirection(dir){

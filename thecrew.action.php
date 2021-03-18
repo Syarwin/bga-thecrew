@@ -30,6 +30,16 @@ class action_thecrew extends APP_GameAction
   }
 
 
+  public function setAutopick()
+  {
+    self::setAjaxMode();
+    $mode = self::getArg("autopick", AT_posint, true);
+    $this->game->actSetAutopick($mode);
+    self::ajaxResponse();
+  }
+
+
+
   public function actMoveTile()
   {
     self::setAjaxMode();

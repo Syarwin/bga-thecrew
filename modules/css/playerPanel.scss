@@ -53,3 +53,13 @@
 @for $i from 0 through 5 {
   #overall-content[data-commander="#{$i}"] .panel-container[data-no="#{$i}"] .panel-commander { display:block; }
 }
+
+
+#player_config {
+  #autopick-selector {
+    display:flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+  }
+}

@@ -143,6 +143,15 @@ class Players extends \CREW\Helpers\DB_Manager
 
   public function getNextToCommunicate()
   {
-    return self::DB()->where('comm_pending', 1)->where('comm_token', '<>', 'used')->limit(1)->get(true);
+    return self::DB()->where('comm_pending', 1)->where('comm_token', '<>', 'used')->whereNull('comm_card_id')->limit(1)->get(true);
   }
+
+  public function getAllDistressChoices() {
+    return array_unique(self::getAll()->map(function($player){ return $player->getDistressChoice(); }));
+  }
+
+  public function getAllDistressChoicesAssoc() {
+    return self::getAll()->assocMap(function($player){ return $player->getDistressChoice(); });
+  }
+
 }
