@@ -73,7 +73,7 @@ class LogBook extends \CREW\Helpers\DB_Manager
    */
   public static function loadCampaign()
   {
-    if(!Globals::isCampaign())
+    if(!Globals::isCampaign(true))
       return;
 
     $json = thecrew::get()->retrieveLegacyTeamData();
@@ -86,10 +86,21 @@ class LogBook extends \CREW\Helpers\DB_Manager
         else
           self::insert($log[0], $log[1], $log[2], $log[3]);
       }
+
+      // If campaign is over, start a new one
+      $mId = Missions::getCurrentId();
+      if($mId == 51){
+        self::startOver();
+      }
     }
     else {
       self::startMission(1);
     }
+  }
+
+  public static function startOver(){
+    self::DB()->delete()->run();
+    self::startMission(1);
   }
 
 

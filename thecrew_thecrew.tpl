@@ -85,7 +85,7 @@
         <div id="distress-panel-buttons">
           <button id="clockwise-button" class="finalbutton bgabutton bgabutton_blue"><div></div></button>
           <button id="dont-use-button" class="finalbutton bgabutton bgabutton_gray">{NO}</button>
-          <button id="agree-button" class="finalbutton bgabutton bgabutton_gray">{WHATEVER}</button>
+          <button id="whatever-button" class="finalbutton bgabutton bgabutton_gray">{WHATEVER}</button>
           <button id="anticlockwise-button" class="finalbutton bgabutton bgabutton_blue"><div></div></button>
         </div>
 

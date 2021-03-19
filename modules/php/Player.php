@@ -95,6 +95,9 @@ class Player extends Helpers\DB_Manager
   public function getRandomCard()
   {
     $cards = $this->getCards();
+    if($this->commCard != null){
+      $cards = array_filter($cards, function($card) { return $card['id'] != $this->commCard; });
+    }
     $index = array_rand($cards, 1);
     return $cards[$index];
   }

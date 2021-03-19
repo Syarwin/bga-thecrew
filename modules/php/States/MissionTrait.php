@@ -60,12 +60,14 @@ trait MissionTrait
 
   function actContinueMissions()
   {
+    self::checkAction("actContinueMissions");
     Notifications::continueMissions();
     $this->gamestate->setPlayerNonMultiactive(self::getCurrentPlayerId(), "next");
   }
 
   function actStopMissions()
   {
+    self::checkAction("actStopMissions");
     Globals::setEndOfGame();
     Notifications::stopMissions();
     $this->gamestate->nextState("next");

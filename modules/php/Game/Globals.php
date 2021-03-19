@@ -80,9 +80,10 @@ class Globals extends \APP_DbObject
   /*
    * Getters
    */
-  public static function isCampaign()
+  public static function isCampaign($testLoadMode = false)
   {
-    return self::get("startingMission") == CAMPAIGN;
+    $t = $testLoadMode? [CAMPAIGN] : [CAMPAIGN, NEW_CAMPAIGN];
+    return in_array(self::get("startingMission"), $t);
   }
 
   public static function isChallenge()

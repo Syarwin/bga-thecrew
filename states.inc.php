@@ -90,6 +90,12 @@ $machinestates = [
     "name" => "pickCrew",
     "description" => clienttranslate('${actplayer} must choose a crew member'),
     "descriptionmyturn" => clienttranslate('${you} must choose a crew member'),
+
+    "description50first" => clienttranslate('${actplayer} must choose a crew member for the first four tricks'),
+    "description50firstmyturn" => clienttranslate('${you} must choose a crew member for the first four tricks'),
+    "description50last" => clienttranslate('${actplayer} must choose a crew member for the last trick'),
+    "description50lastmyturn" => clienttranslate('${you} must choose a crew member for the last trick'),
+
     "type" => "activeplayer",
     "args" => "argPickCrew",
     "possibleactions" => ["actPickCrew"],
@@ -325,6 +331,7 @@ $machinestates = [
     "possibleactions" => ["actButton"],
     "description" => clienttranslate('All players must continue or stop'),
     "descriptionmyturn" => clienttranslate('${you} must continue or stop'),
+    "possibleactions" => ['actContinueMissions', 'actStopMissions'],
     "transitions" => [
       "next" => STATE_CHANGE_MISSION,
       "end" => STATE_SAVE,

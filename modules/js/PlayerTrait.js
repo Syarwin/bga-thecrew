@@ -136,7 +136,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       }
 
       if(n.args.special2_id){
-        this.gamedatas.special2Id = n.args.special2_id;
+        this.gamedatas.specialId2 = n.args.special2_id;
       }
 
       this.updateCommander();

@@ -45,11 +45,27 @@ define("STATE_END_OF_GAME",99);
  */
 define('OPTION_MISSION', 100);
 define('CAMPAIGN', 999);
+define('NEW_CAMPAIGN', 998);
 
 
 define('OPTION_CHALLENGE', 101);
 define('CHALLENGE_OFF', 1);
 define('CHALLENGE_ON', 2);
+
+
+define('OPTION_TIME', 102);
+define('TIME_INF', 1);
+define('TIME_SHORT', 2);
+define('TIME_MED', 3);
+define('TIME_LONG', 4);
+
+
+define('OPTION_JOURNEY', 103);
+define('FULL_JOURNEY', 1);
+define('SINGLE_MISSION', 2);
+define('SHORT_JOURNEY', 3);
+define('MEDIUM_JOURNEY', 4);
+define('LONG_JOURNEY', 5);
 
 /*
  * DISTRESS DIRECTION

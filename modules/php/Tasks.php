@@ -74,7 +74,7 @@ class Tasks extends \CREW\Helpers\DB_Manager
     // Pick n random elements
     $picked = (array) array_rand($tasks, $n);
     shuffle($picked);
-    
+
     // Insert in DB
     foreach($picked as $i => $key){
       $task = $tasks[$key];
@@ -175,7 +175,7 @@ class Tasks extends \CREW\Helpers\DB_Manager
     //Update task according to tile > >> >>> >>>>
     $tasks = self::DB()->where('tile', 'LIKE', 'i%')->where('status', 'ok')->orderBy('tile')->get(false);
     foreach($tasks as $task) {
-      $taskMissed = self::DB()->where('tile', 'LIKE', 'i%')->where('tile', '<', $task['tile'])->where('status', 'tbd')->get(false);
+      $tasksMissed = self::DB()->where('tile', 'LIKE', 'i%')->where('tile', '<', $task['tile'])->where('status', 'tbd')->get(false);
       self::updateStatus($tasksMissed);
     }
 

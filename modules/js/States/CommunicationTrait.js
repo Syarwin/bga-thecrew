@@ -5,7 +5,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         ['commpending', 1],
         ['startComm', 10],
         ['cancelComm', 10],
-        ['endComm', 1000],
+        ['endComm', 700],
         ['usedComm', 10]
       );
       this._selectedComm = null;

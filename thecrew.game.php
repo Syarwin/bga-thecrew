@@ -189,12 +189,33 @@ class thecrew extends Table
     }
 
     if($from_version <= 2103172308){
-      self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_player ADD `distress_auto` smallint(1) DEFAULT 0 COMMENT 'none, autono, autoyes'");
+      try {
+        self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_player ADD `distress_auto` smallint(1) DEFAULT 0 COMMENT 'none, autono, autoyes'");
+      } catch(Exception $e){
+          print_r($e);
+      }
+    }
+
+
+    // Doing all the necessary previous upgrade
+    if($from_version <= 2103181046){
+      $result = self::getUniqueValueFromDB("SHOW COLUMNS FROM `player` LIKE 'comm_card_id'");
+      if(is_null($result)){
+        self::testBigMerge();
+      }
+
+      self::applyDbUpgradeToAllDB("DELETE FROM DBPREFIX_card WHERE `color` = 6");
+
+      $result = self::getUniqueValueFromDB("SHOW COLUMNS FROM `player` LIKE 'distress_auto'");
+      if(is_null($result)){
+        self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_player ADD `distress_auto` smallint(1) DEFAULT 0 COMMENT 'none, autono, autoyes'");
+      }
     }
   }
 
   public function testBigMerge()
   {
+  try{
     self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_player CHANGE COLUMN `card_id` `distress_card_id` INT");
     self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_player ADD `comm_card_id` int(10) DEFAULT NULL COMMENT 'id of the communicated card'");
     self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_player ADD `distress_choice` smallint(1) DEFAULT 0 COMMENT 'unset, clockwise, anticlockwise or dontuse'");
@@ -223,6 +244,8 @@ class thecrew extends Table
     self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_card ADD `card_state` int(11) NOT NULL");
     self::applyDbUpgradeToAllDB("UPDATE DBPREFIX_card SET card_location = 'table' WHERE `card_location` = 'cardsontable'");
     self::applyDbUpgradeToAllDB("UPDATE DBPREFIX_card SET card_location = CONCAT(`card_location`, '_', `card_location_arg`) WHERE `card_location_arg` != ''");
+
+  } catch(Exception $e){}
   }
 
 

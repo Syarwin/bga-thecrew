@@ -17,13 +17,22 @@ class Mission50 extends AbstractMission
     $this->informations = [
       'special' => clienttranslate('Only the first four tricks'),
       'specialTooltip' => clienttranslate('This crew member must win only the first four tricks'),
+
+      'special2' => clienttranslate('Only the last trick'),
+      'special2Tooltip' => clienttranslate('This crew member must win only the last trick'),
     ];
   }
 
   public function getTargetablePlayers($removeCommander = false)
   {
     // Allow the commander to target himself
-    return parent::getTargetablePlayers(false);
+    $pIds = parent::getTargetablePlayers(false);
+
+    // Remove special #1 for #2
+    if(Globals::getSpecial() != 0)
+      $pIds = array_values(array_diff($pIds, [Globals::getSpecial()]));
+
+    return $pIds;
   }
 
 

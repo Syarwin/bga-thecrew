@@ -15,6 +15,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this.totalAttemptsCounter = new ebg.counter();
       this.totalAttemptsCounter.create('total-try-counter');
       this.updateMissionStatus();
+
+      dojo.connect($('mission-description'), 'click', () => dojo.toggleClass('mission-status', 'collapse'));
     },
 
     getMission(){
@@ -95,6 +97,14 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
           this.updateSpecialTooltip(_(mission.informations.specialTooltip));
         }
       }
+
+      if(mission.informations.special2){
+        let desc = _(mission.informations.special2);
+        let icon = mission.informations.special2Icon ? mission.informations.special2Icon : "special2";
+        dojo.place(`<div id="mission-informations-special2"><div class='icon-${icon}'></div><div class='special-desc'>${desc}</div></div>`, container);
+        this.addTitledTooltip('mission-informations-special2', _('Second special one'), _('This crew member must win only the last trick.') );
+      }
+
 
       // Deadzone
       if(mission.deadzone){

@@ -72,8 +72,16 @@ $game_options = [
       48 => ['name' => totranslate('Mission').' 48', 'description' => totranslate('Starting at mission'). ' 48', 'tmdisplay' => totranslate('Starting at mission'). ' 48', 'premium' => true],
       49 => ['name' => totranslate('Mission').' 49', 'description' => totranslate('Starting at mission'). ' 49', 'tmdisplay' => totranslate('Starting at mission'). ' 49', 'premium' => true],
       50 => ['name' => totranslate('Mission').' 50', 'description' => totranslate('Starting at mission'). ' 50', 'tmdisplay' => totranslate('Starting at mission'). ' 50', 'premium' => true],
+
+      NEW_CAMPAIGN => [
+        'name' => totranslate('New campaign'),
+        'description' => totranslate('WARNING : this will erase your ongoing campaign if you have one'),
+        'tmdisplay' => totranslate('New campaign'),
+        'nobeginner' => true,
+      ],
     ]
   ],
+
 
   OPTION_CHALLENGE => [
     'name' => totranslate('Challenge mode for Three'),
@@ -92,4 +100,62 @@ $game_options = [
       ]
     ]
   ],
+
+
+  OPTION_TIME => [
+    'name' => totranslate('Desired duration'),
+    'values' => [
+      TIME_INF => [
+        'name' => totranslate('Unlimited'),
+        'tmdisplay' => totranslate('Unlimited'),
+      ],
+      TIME_SHORT => [
+        'name' => totranslate('30min'),
+        'tmdisplay' => totranslate('30min'),
+      ],
+      TIME_MED => [
+        'name' => totranslate('1h'),
+        'tmdisplay' => totranslate('1h'),
+      ],
+      TIME_LONG => [
+        'name' => totranslate('2h'),
+        'tmdisplay' => totranslate('2h'),
+      ],
+    ],
+    'displaycondition' => [
+      [
+       'type' => 'otheroption',
+       'id' => GAMESTATE_CLOCK_MODE,
+       'value' => [0,1,2,9],
+     ],
+   ]
+  ],
+
+
+  OPTION_JOURNEY => [
+    'name' => totranslate('Journey length'),
+    'values' => [
+      FULL_JOURNEY => [
+        'name' => totranslate('Full campaign'),
+        'tmdisplay' => totranslate('Full campaign'),
+      ],
+      SINGLE_MISSION => [
+        'name' => totranslate('1 mission'),
+        'tmdisplay' => totranslate('1 mission'),
+      ],
+      SHORT_JOURNEY => [
+        'name' => totranslate('5 missions'),
+        'tmdisplay' => totranslate('5 missions'),
+      ],
+      MEDIUM_JOURNEY => [
+        'name' => totranslate('10 missions'),
+        'tmdisplay' => totranslate('10 missions'),
+      ],
+      LONG_JOURNEY => [
+        'name' => totranslate('25 missions'),
+        'tmdisplay' => totranslate('25 missions'),
+      ],
+    ],
+  ],
+
 ];
