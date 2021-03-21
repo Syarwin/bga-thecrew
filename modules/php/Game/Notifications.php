@@ -116,6 +116,19 @@ class Notifications
     ]);
   }
 
+
+  public static function clearPreselect($player, $invalid = false){
+    $msg = $invalid? clienttranslate("Your preselected card is not valid to play") : "";
+    self::notify($player->getId(), "clearPreselect", $msg, []);
+  }
+
+  public static function preselect($player, $card){
+    self::notify($player->getId(), "preselect", '', [
+      'card' => $card,
+    ]);
+  }
+
+
   public static function newTrick(){
     self::notifyAll('newTrick', '', [
       'trickCount' => Globals::getTrickCount(),

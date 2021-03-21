@@ -40,7 +40,7 @@ $gameinfos = [
   'favorite_colors_support' => true,
 
   'game_interface_width' => [
-    'min' => 740,
+    'min' => 850,
     'max' => null
   ],
 

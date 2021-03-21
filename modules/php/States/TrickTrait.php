@@ -64,7 +64,7 @@ trait TrickTrait
 
 
   function actPlayCard($cardId) {
-    self::checkAction("actPlayCard");
+    $this->gamestate->checkPossibleAction("actPlayCard");
 
     $cards = $this->argPlayerTurn()['cards'];
     if(!in_array($cardId, $cards))
@@ -88,6 +88,45 @@ trait TrickTrait
     }
 
     $this->gamestate->nextState('next');
+  }
+
+
+  function actPreselectCard($cardId) {
+    $this->gamestate->checkPossibleAction("actPreselectCard");
+
+    $card = Cards::get($cardId);
+    $player = Players::get($card['pId']);
+    $currentPlayer = Players::getCurrent();
+    if($player->getId() != $currentPlayer->getId())
+      throw new \BgaUserException(_("This is not one of your card"));
+
+    $preselectedCard = $player->getPreselectedCard();
+    if($preselectedCard['id'] == $cardId){
+      // Unselect
+      $player->clearPreselect();
+      Notifications::clearPreselect($player);
+    }
+    else {
+      $player->preselectCard($cardId);
+      Notifications::preselect($player, $card);
+    }
+  }
+
+
+  function stPlayerTurn(){
+    $player = Players::getActive();
+    $card = $player->getPreselectedCard();
+
+    // Player preselect something ?
+    if($card != null){
+      $cards = $this->argPlayerTurn()['cards'];
+      if(!in_array($card['id'], $cards)){
+        $player->clearPreselect();
+        Notifications::clearPreselect($player, true);
+      } else {
+        self::actPlayCard($card['id']);
+      }
+    }
   }
 
 
@@ -151,7 +190,7 @@ trait TrickTrait
       $msg = $status > 0? clienttranslate('Mission ${nb} completed') : clienttranslate('Mission ${nb} failed');
       Notifications::message($msg, ['nb' =>  $mission->getId() ]);
       Globals::setMissionFinished($status);
-      $this->gamestate->setAllPlayersMultiactive();
+//      $this->gamestate->setAllPlayersMultiactive();
       $this->gamestate->nextState("endMission");
     } else {
       $this->gamestate->changeActivePlayer($winner->getId());

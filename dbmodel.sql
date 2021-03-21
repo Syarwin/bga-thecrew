@@ -16,6 +16,8 @@ ALTER TABLE `player` ADD `distress_choice` smallint(1) DEFAULT 0 COMMENT 'unset,
 ALTER TABLE `player` ADD `distress_card_id` int(10) unsigned NULL COMMENT 'id of the card to pass with distress';
 ALTER TABLE `player` ADD `reply_choice` int(10) unsigned NULL COMMENT 'id of the chosen reply';
 ALTER TABLE `player` ADD `distress_auto` smallint(1) DEFAULT 0 COMMENT 'none, autono, autoyes';
+ALTER TABLE `player` ADD `continue_auto` smallint(1) DEFAULT 0 COMMENT 'none, autoyes';
+ALTER TABLE `player` ADD `preselect_card_id` int(10) unsigned NULL COMMENT 'id of the preselected card';
 
 
 

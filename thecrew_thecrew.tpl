@@ -186,8 +186,10 @@ var jstpl_playerTable = `
 
 var jstpl_task = `
 <div id="task-\${id}" class="task" data-color="\${color}" data-value="\${value}" data-status="\${status}" data-tile="\${tile}">
-  <div class="task-tile \${tileClass}"></div>
-  <div class="check-ok"></div>
+  <div class="task-inner">
+    <div class="task-tile \${tileClass}"></div>
+    <div class="check-ok"></div>
+  </div>
 </div>`;
 
 var jstpl_card = `
@@ -206,6 +208,15 @@ var jstpl_configPlayerBoard = `
           <option value='4'>\${alwaysagree}</option>
         </select>
     </div>
+
+    <div id="autocontinue-selector">
+        \${autocontinue}
+        <select id="autocontinue">
+          <option value='0'>\${disabled}</option>
+          <option value='1'>\${alwaysyes}</option>
+        </select>
+    </div>
+
   </div>
 </div>
 `;

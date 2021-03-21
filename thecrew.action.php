@@ -38,6 +38,14 @@ class action_thecrew extends APP_GameAction
     self::ajaxResponse();
   }
 
+  public function setAutocontinue()
+  {
+    self::setAjaxMode();
+    $mode = self::getArg("autocontinue", AT_posint, true);
+    $this->game->actSetAutocontinue($mode);
+    self::ajaxResponse();
+  }
+
 
 
   public function actMoveTile()
@@ -70,6 +78,15 @@ class action_thecrew extends APP_GameAction
     self::setAjaxMode();
     $cardId = self::getArg("cardId", AT_posint, true);
     $this->game->actPlayCard( $cardId);
+    self::ajaxResponse( );
+  }
+
+
+  public function actPreselectCard()
+  {
+    self::setAjaxMode();
+    $cardId = self::getArg("cardId", AT_posint, true);
+    $this->game->actPreselectCard($cardId);
     self::ajaxResponse( );
   }
 

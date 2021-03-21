@@ -23,16 +23,19 @@ define("STATE_DISTRESS_SETUP",14);
 define("STATE_DISTRESS",15);
 define("STATE_DISTRESS_EXCHANGE",16);
 
+define('STATE_PRE_GIVE_TASK', 37);
 define("STATE_GIVE_TASK", 31); // 5 players rule
 define("STATE_GIVE_TASK_CONFIRMATION", 32);
 define("STATE_GIVE_TASK_EXCHANGE", 33);
 
 define("STATE_BEFORE_COMM",10);
 define("STATE_COMM",9);
+define('STATE_USELESS_NOW', 12);
 
 define("STATE_PLAYER_TURN",3);
 define("STATE_NEXT_PLAYER",7);
 
+define("STATE_PRE_END_MISSION",36);
 define("STATE_END_MISSION",8);
 define("STATE_CHANGE_MISSION",13);
 

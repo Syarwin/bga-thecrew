@@ -305,7 +305,7 @@ html,body {
                 font-size:18px;
               }
 
-              &#agree-button {
+              &#whatever-button {
                 width:auto;
                 padding:0px 5px;
               }
@@ -429,7 +429,7 @@ html,body {
           }
         }
 
-        &.selected, &.received {
+        &.selected, &.received, &.preselected {
           border: 3px solid red;
           z-index: 4;
           margin-top: -3px;
@@ -440,6 +440,10 @@ html,body {
         &.received {
           border-color:green;
           box-shadow: 0 0 5px 1px #0f0;
+        }
+        &.preselected {
+          border-color: #f700dc;
+          box-shadow: 0 0 5px 1px #b51795;
         }
       }
     }

@@ -3,8 +3,10 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     constructor(){
       this._notifications.push(
         ['playCard', 1000],
-        ['trickWin', 2000],
-        ['newTrick', 10]
+        ['trickWin', 1500],
+        ['newTrick', 10],
+        ['clearPreselect', 10],
+        ['preselect', 10]
       );
     },
 
@@ -21,8 +23,13 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
           this.connect($('comm-card-' + this.player_id), 'click', () => this.onClickCardToPlay(args.commCard) );
         }
       }
-    },
 
+      // Preselection
+      else if(!this.isReadOnly()){
+        let cards = this._hand.items.map(item => item.id);
+        this.makeCardsSelectable(cards, (card) => this.onClickCardToPreselect(card) );
+      }
+    },
 
     onClickCardToPlay(card){
       if(!this.isCurrentPlayerActive())
@@ -34,7 +41,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     notif_playCard(n) {
       debug("Playing a card", n);
       this.clearPossible();
-      
+
       // Play a card on the table
       this.playCardOnTable(n.args.card);
       this.descCardsCounter(n.args.card.pId);
@@ -54,8 +61,9 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         // Program the anim: 1. Slide the cart (1 second)
         this.slide(cardId, 'mat-' + winnerId, 1000)
         .then(() => {
+          dojo.fadeOut({ node: cardId }).play();
           // 2. Delete it : immediately for card under the top card, 1s for the top card
-          setTimeout( () => dojo.destroy(cardId), isWinningCard? 1000 : 10);
+          setTimeout( () => dojo.destroy(cardId), isWinningCard? 500 : 10);
         });
       });
     },
@@ -73,6 +81,22 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       if(!this.isSpectator){
         dojo.toggleClass('comm-card-' + this.player_id, "selectable", n.args.players[this.player_id].canCommunicate);
       }
+    },
+
+
+
+    onClickCardToPreselect(card){
+      this.takeAction("actPreselectCard", { cardId: card.id});
+    },
+
+    notif_preselect(n){
+      debug("Preselected card", n);
+      dojo.query('.preselected').removeClass('preselected');
+      dojo.addClass('hand_item_' + n.args.card.id, 'preselected');
+    },
+
+    notif_clearPreselect(n){
+      dojo.query('.preselected').removeClass('preselected');
     },
   });
 });

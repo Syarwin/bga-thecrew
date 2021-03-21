@@ -149,7 +149,7 @@ $machinestates = [
     "transitions" => [
       "next" => STATE_BEFORE_COMM,
       "distress" => STATE_PRE_DISTRESS,
-      "giveTask" => STATE_GIVE_TASK,
+      "giveTask" => STATE_PRE_GIVE_TASK,
     ]
   ],
 
@@ -157,12 +157,22 @@ $machinestates = [
   /***********************
   ****** GIVE TASK  ******
   ***********************/
+  STATE_PRE_GIVE_TASK => [
+    "name" => "preGiveTask",
+    "description" => "",
+    "type" => "game",
+    "action" => "stPreGiveTask",
+    "transitions" => [
+      '' => STATE_GIVE_TASK
+    ],
+  ],
+
+
   STATE_GIVE_TASK => [
     "name" => "giveTask",
     "description" => clienttranslate('One crew member may propose to give one of its task to someone else'),
     "descriptionmyturn" => clienttranslate('${you} may propose to give one of your task to someone else'),
     "type" => "multipleactiveplayer",
-    "action" => "stGiveTask",
     "args" => "argGiveTask",
     "possibleactions" => ["actGiveTask", "actPassGiveTask"],
     "transitions" => [
@@ -182,7 +192,7 @@ $machinestates = [
     "possibleactions" => ["actConfirmGiveTask", "actRejectGiveTask"],
     "transitions" => [
       'next' => STATE_GIVE_TASK_EXCHANGE,
-      'reject' => STATE_GIVE_TASK,
+      'reject' => STATE_PRE_GIVE_TASK,
       "zombiePass" => STATE_CHANGE_MISSION
     ]
   ],
@@ -280,6 +290,16 @@ $machinestates = [
     ]
   ],
 
+  STATE_USELESS_NOW => [
+    "name" => "uselessNow",
+    "description" => "",
+    "type" => "game",
+    "action" => "stUselessNow",
+    "transitions" => [
+      "" => STATE_COMM
+    ]
+  ],
+
 
   /************************
   ****** PLAY CARD  *******
@@ -290,7 +310,8 @@ $machinestates = [
     "descriptionmyturn" => clienttranslate('${you} must play a card'),
     "type" => "activeplayer",
     "args" => "argPlayerTurn",
-    "possibleactions" => ["actPlayCard", "actStartComm", "actDistress"],
+    "action" => "stPlayerTurn",
+    "possibleactions" => ["actPlayCard", "actStartComm", "actDistress", "actPreselectCard"],
     "transitions" => [
       "next" => STATE_NEXT_PLAYER,
       "startComm" => STATE_BEFORE_COMM,
@@ -307,7 +328,7 @@ $machinestates = [
     "transitions" => [
       "nextPlayer" => STATE_PLAYER_TURN,
       "nextTrick" => STATE_NEW_TRICK,
-      "endMission" => STATE_END_MISSION
+      "endMission" => STATE_PRE_END_MISSION
     ],
     "updateGameProgression" => true
   ],
@@ -324,6 +345,17 @@ $machinestates = [
 **** END OF MISSION ****
 ************************
 ***********************/
+  STATE_PRE_END_MISSION => [
+    "name" => "preEndMission",
+    "description" => "",
+    "type" => "game",
+    "action" => "stPreEndMission",
+    "transitions" => [
+      "next" => STATE_CHANGE_MISSION,
+      "pending" => STATE_END_MISSION,
+    ],
+  ],
+
   STATE_END_MISSION => [
     "name" => "endMission",
     "args" => "argEndMission",

@@ -26,6 +26,8 @@ class Player extends Helpers\DB_Manager
     $this->distressCard = $row['distress_card_id'];
     $this->reply = $row['reply_choice'];
     $this->distressAuto = $row['distress_auto'];
+    $this->continueAuto = $row['continue_auto'];
+    $this->preselectedCard = $row['preselect_card_id'];
   }
 
   private $id;
@@ -41,6 +43,9 @@ class Player extends Helpers\DB_Manager
   private $commPending;
   private $distressChoice;
   private $distressCard;
+  private $distressAuto;
+  private $continueAuto;
+  private $preselectedCard;
 
 
   /////////////////////////////////
@@ -62,6 +67,7 @@ class Player extends Helpers\DB_Manager
   public function isSpecial() { return $this->id == Globals::getSpecial(); }
   public function isSpecial2() { return $this->id == Globals::getSpecial2(); }
   public function getDistressAuto(){ return $this->distressAuto; }
+  public function getContinueAuto(){ return $this->continueAuto; }
 
   public function getUiData($pId)
   {
@@ -73,6 +79,7 @@ class Player extends Helpers\DB_Manager
       'score'     => $this->score,
       'nTricks'   => $this->nTricks,
       'cards'     => $pId == $this->id? $this->getCards() : [],
+      'preselected' => $pId == $this->id? $this->preselectedCard : null,
       'nCards'    => count($this->getCards()),
       'tasks'     => $this->getTasks(),
       'table'     => $this->getOnTable(),
@@ -84,6 +91,7 @@ class Player extends Helpers\DB_Manager
       'distressCard' => $pId == $this->id? $this->distressCard : null,
       'distressAuto' => $this->distressAuto,
       'reply' => $this->reply,
+      'continueAuto' => $this->continueAuto,
     ];
   }
 
@@ -121,6 +129,12 @@ class Player extends Helpers\DB_Manager
   {
     return is_null($this->commCard)? null : Cards::get($this->commCard);
   }
+
+  public function getPreselectedCard()
+  {
+    return is_null($this->preselectedCard)? null : Cards::get($this->preselectedCard);
+  }
+
 
   public function isCommPending()
   {
@@ -188,4 +202,20 @@ class Player extends Helpers\DB_Manager
   {
     self::DB()->update(['distress_auto' => $mode], $this->id);
   }
+
+  public function setAutoContinue($mode)
+  {
+    self::DB()->update(['continue_auto' => $mode], $this->id);
+  }
+
+  public function preselectCard($cardId)
+  {
+    self::DB()->update(['preselect_card_id' => $cardId], $this->id);
+  }
+
+  public function clearPreselect()
+  {
+    self::DB()->update(['preselect_card_id' => null], $this->id);
+  }
+
 }

@@ -120,4 +120,11 @@ trait CommunicationTrait
     Notifications::communicate($player, $card, $status);
     $this->gamestate->nextState('next');
   }
+
+
+  // Useless now
+  function stUselessNow()
+  {
+    $this->gamestate->nextState();
+  }
 }

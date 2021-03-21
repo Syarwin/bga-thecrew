@@ -211,7 +211,18 @@ class thecrew extends Table
         self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_player ADD `distress_auto` smallint(1) DEFAULT 0 COMMENT 'none, autono, autoyes'");
       }
     }
+
+
+    if($from_version <= 2103202326){
+      try {
+        self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_player ADD `continue_auto` smallint(1) DEFAULT 0 COMMENT 'none, autoyes'");
+        self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_player ADD `preselect_card_id` int(10) unsigned NULL COMMENT 'id of the preselected card'");
+      } catch(Exception $e){
+          print_r($e);
+      }
+    }
   }
+
 
   public function testBigMerge()
   {

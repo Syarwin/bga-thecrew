@@ -212,11 +212,22 @@
           disabled:_('Disabled'),
           alwaysno:_('Always no'),
           alwaysagree:_('Always agree'),
+
+          autocontinue:_('Auto-answer continue missions'),
+          alwaysyes:_('Always yes'),
         }, 'player_boards', 'first');
 
+        // Auto answer distress
         $('autopick').value = this.gamedatas.players[this.player_id].distressAuto;
-          dojo.connect($('autopick'), 'change', () => {
+        dojo.connect($('autopick'), 'change', () => {
           this.ajaxcall("/thecrew/thecrew/setAutopick.html", { autopick: $("autopick").value }, () => {});
+        });
+
+
+        // Auto answer continue
+        $('autocontinue').value = this.gamedatas.players[this.player_id].continueAuto;
+        dojo.connect($('autocontinue'), 'change', () => {
+          this.ajaxcall("/thecrew/thecrew/setAutocontinue.html", { autocontinue: $("autocontinue").value }, () => {});
         });
       },
    });

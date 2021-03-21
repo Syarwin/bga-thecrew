@@ -13,9 +13,10 @@ use CREW\Missions;
  */
 trait GiveTaskTrait
 {
-  public function stGiveTask()
+  public function stPreGiveTask()
   {
     $this->gamestate->setAllPlayersMultiactive();
+    $this->gamestate->nextState('');
   }
 
   public function argGiveTask()
@@ -35,6 +36,7 @@ trait GiveTaskTrait
     Globals::storeTaskToGive($source->getId(), $taskId, $pId);
 
     Notifications::proposeGiveTask($source, $task, $target);
+    $this->gamestate->setAllPlayersMultiactive();
     $this->gamestate->nextState('askConfirmation');
   }
 
@@ -50,8 +52,6 @@ trait GiveTaskTrait
    */
   public function stGiveTaskConfirmation()
   {
-    $this->gamestate->setAllPlayersMultiactive();
-
     $transaction = Globals::getTaskToGive();
     $this->gamestate->setPlayerNonMultiactive($transaction['sourceId'], '');
   }

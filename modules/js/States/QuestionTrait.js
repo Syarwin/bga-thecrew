@@ -70,7 +70,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this.showTasks(args.tasks);
 
       if(this.gamedatas.status.mId == 50){
-        let first = this.gamedatas.specialId == 0;
+        let first = this.gamedatas.specialId == 0 || this.gamedatas.specialId == null;
         this.gamedatas.gamestate.description = first? this.gamedatas.gamestate.description50first : this.gamedatas.gamestate.description50last;
         this.gamedatas.gamestate.descriptionmyturn = first? this.gamedatas.gamestate.description50firstmyturn : this.gamedatas.gamestate.description50lastmyturn;
         this.updatePageTitle();

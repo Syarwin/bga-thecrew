@@ -2,29 +2,38 @@
   position: relative;
   width: 63px;
   height: 99px;
-  background-image: url("img/tasks.png");
-  background-size: 1100%;
-  border-radius: 5px;
-  @include shadow;
+
+  .task-inner {
+    width: 63px;
+    height: 99px;
+    position:absolute;
+    right:0;
+    background-image: url("img/tasks.png");
+    background-size: 1100%;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #000;
+  }
 
   @for $i from 1 through 4 {
-    &[data-color="#{$i}"]{ background-position-y: ($i - 1) * 100% / 3; }
+    &[data-color="#{$i}"] .task-inner { background-position-y: ($i - 1) * 100% / 3; }
   }
 
   @for $i from 1 through 9 {
-    &[data-value="#{$i}"]{ background-position-x: ($i - 1) * 100% / 10; }
+    &[data-value="#{$i}"] .task-inner { background-position-x: ($i - 1) * 100% / 10; }
   }
 
   // Hidden tasks
-  &[data-color="7"]{ background-position: 100% 0%; }
+  &[data-color="7"] .task-inner { background-position: 100% 0%; }
 
   &.selectable {
-    animation:0.9s borderBlink infinite;
-    cursor:pointer;
-    box-shadow: 0 0 20px 3px #4782ff;
-    transition:transform 0.2s;
+    .task-inner {
+      animation:0.9s borderBlink infinite;
+      cursor:pointer;
+      box-shadow: 0 0 20px 3px #4782ff;
+      transition:transform 0.2s;
+    }
 
-    &:hover {
+    &:hover .task-inner {
       animation:none;
       transform:scale(1.2);
     }

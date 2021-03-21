@@ -50,6 +50,23 @@ trait MissionTrait
   /************************
   ****** END MISSION ******
   ************************/
+  function stPreEndMission()
+  {
+    $players = [];
+    foreach(Players::getAll() as $player){
+      if($player->getContinueAuto() == DISABLED)
+        $players[] = $player->getId();
+    }
+
+    if(empty($players)){
+      $this->gamestate->nextState('next');
+    } else {
+      $this->gamestate->setPlayersMultiactive($players, "next", true);
+      $this->gamestate->nextState('pending');
+    }
+  }
+
+
   function argEndMission()
   {
     return [
@@ -67,7 +84,7 @@ trait MissionTrait
 
   function actStopMissions()
   {
-    self::checkAction("actStopMissions");
+    $this->gamestate->checkPossibleAction('actStopMissions');
     Globals::setEndOfGame();
     Notifications::stopMissions();
     $this->gamestate->nextState("next");
@@ -113,4 +130,15 @@ trait MissionTrait
     }
     $this->gamestate->nextState('next');
   }
+
+
+  /***********************
+  ******* AUTOANSWER *******
+  ***********************/
+  public function actSetAutocontinue($mode)
+  {
+    $player = Players::getCurrent();
+    $player->setAutoContinue($mode);
+  }
+
 }

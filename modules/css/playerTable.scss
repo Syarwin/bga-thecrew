@@ -256,13 +256,14 @@
       flex-grow: 1;
       display: flex;
       justify-content: space-evenly;
-      flex-wrap: wrap;
       align-items: center;
+      max-width:300px;
 
       .commander, .special, .special2 {
         display:none;
         background-size: contain;
         background-repeat: no-repeat;
+        flex-shrink: 0;
         @include shadow;
       }
       .commander {
