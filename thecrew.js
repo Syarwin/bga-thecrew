@@ -148,6 +148,7 @@
 
         dojo.query('.task').forEach(dojo.destroy);
         dojo.query('.card').forEach(dojo.destroy);
+        dojo.query('.preselected').removeClass('preselected');
       },
 
       startCampaign(){

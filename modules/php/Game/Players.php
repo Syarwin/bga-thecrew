@@ -123,6 +123,7 @@ class Players extends \CREW\Helpers\DB_Manager
       'comm_pending' => 0,
       'player_trick_number' => 0,
       'reply_choice' => null,
+      'preselect_card_id' => null,
     ])->run();
   }
 

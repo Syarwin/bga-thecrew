@@ -84,9 +84,10 @@ class thecrew extends Table
 
     if($options[OPTION_MISSION] == CAMPAIGN)
       CREW\LogBook::loadCampaign();
-    else
-      CREW\LogBook::startMission($options[OPTION_MISSION]);
-
+    else {
+      $mission = $options[OPTION_MISSION] == NEW_CAMPAIGN? 1 : $options[OPTION_MISSION];
+      CREW\LogBook::startMission($mission);
+    }
 
     $this->activeNextPlayer();
   }

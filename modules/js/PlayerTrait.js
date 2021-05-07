@@ -73,7 +73,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
             this.highlightCard(player.distressCard);
           dojo.connect($('comm-card-' + player.id), 'onclick', () => this.toggleCommunication() );
 
-          if(player.preselected)
+          if(player.preselected && $('hand_item_' + player.preselected))
             dojo.addClass('hand_item_' + player.preselected, 'preselected');
         }
       });
