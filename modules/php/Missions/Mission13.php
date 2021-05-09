@@ -1,6 +1,7 @@
 <?php
 namespace CREW\Missions;
 use \CREW\Cards;
+use CREW\Game\Globals;
 
 class Mission13 extends AbstractMission
 {
@@ -15,7 +16,7 @@ class Mission13 extends AbstractMission
 
 
   public function check($lastTrick)
-  {
+  {  
     // If at least one rocket, check that only one rockets is here
     if($lastTrick['bestCard']['color'] == CARD_ROCKET){
       foreach($lastTrick['cards'] as $card){
@@ -32,6 +33,9 @@ class Mission13 extends AbstractMission
       $this->success();
     } else {
       $this->continue();
+      parent::check($lastTrick);
     }
+     
+     
   }
 }
