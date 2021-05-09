@@ -16,7 +16,7 @@ class Mission13 extends AbstractMission
 
 
   public function check($lastTrick)
-  {  
+  {
     // If at least one rocket, check that only one rockets is here
     if($lastTrick['bestCard']['color'] == CARD_ROCKET){
       foreach($lastTrick['cards'] as $card){
@@ -32,10 +32,10 @@ class Mission13 extends AbstractMission
     if($rockets->empty()){
       $this->success();
     } else {
-      $this->continue();
-      parent::check($lastTrick);
+      if(Globals::isLastTrick())
+        $this->fail(); // Only happens in challenge 3p mode where the last card remeaning in a rocket...
+      else
+        $this->continue();
     }
-     
-     
   }
 }
