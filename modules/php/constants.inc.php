@@ -70,6 +70,10 @@ define('SHORT_JOURNEY', 3);
 define('MEDIUM_JOURNEY', 4);
 define('LONG_JOURNEY', 5);
 
+define('OPTION_SEE_DISCARD', 104);
+define('OPTION_SEE_DISCARD_OFF', 0);
+define('OPTION_SEE_DISCARD_ON', 1);
+
 /*
  * DISTRESS DIRECTION
  */

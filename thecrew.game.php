@@ -112,6 +112,9 @@ class thecrew extends Table
       'showIntro' => $status['mId'] == 1 && $status['total'] == 1 && Globals::isCampaign() && Globals::getTrickCount() <= 1,
       'trickCount' => Globals::getTrickCount(),
       'isCampaign' => Globals::isCampaign(),
+
+      'isVisibleDiscard' => Globals::isVisibleDiscard(),
+      'discard' => Globals::isVisibleDiscard()? CREW\Cards::getInLocation('trick%')->toArray() : [],
     ];
   }
 

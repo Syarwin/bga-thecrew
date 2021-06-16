@@ -125,6 +125,12 @@
 
 <div id="hand-container"></div>
 
+<div id="discard-container">
+  <div id="discard-wrapper">
+    <div id="discard-grid"></div>
+  </div>
+</div>
+
 <script type="text/javascript">
 // Javascript HTML templates
 /*

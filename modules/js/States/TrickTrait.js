@@ -64,6 +64,10 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
           dojo.fadeOut({ node: cardId }).play();
           // 2. Delete it : immediately for card under the top card, 1s for the top card
           setTimeout( () => dojo.destroy(cardId), isWinningCard? 500 : 10);
+
+          if(this.gamedatas.isVisibleDiscard){
+            dojo.addClass('discard-'+ card.color + '-' + card.value, "played");
+          }
         });
       });
     },

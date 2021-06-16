@@ -170,5 +170,40 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this.addCardInHand(n.args.card);
       dojo.addClass("hand_item_" + n.args.card.id, "received");
     },
+
+
+
+    /**********************
+    ******* DISCARD *******
+    **********************/
+    setupDiscard(){
+      dojo.addClass('discard-container', 'active');
+      
+      let addSquare = (c, i) => {
+        dojo.place(`<div id="discard-${c}-${i}" class="discard-slot color-${c} number-${i}">${i}</div>`, 'discard-grid');
+      };
+
+      for(let i = 1; i <= 9; i++){
+        addSquare(1, i);
+      }
+      for(let i = 1; i <= 9; i++){
+        addSquare(2, i);
+      }
+      addSquare(5, 1);
+      addSquare(5, 2);
+
+      for(let i = 1; i <= 9; i++){
+        addSquare(3, i);
+      }
+      for(let i = 1; i <= 9; i++){
+        addSquare(4, i);
+      }
+      addSquare(5, 3);
+      addSquare(5, 4);
+
+      this.gamedatas.discard.forEach(card => {
+        dojo.addClass('discard-' + card.color + '-' + card.value, 'played');
+      })
+    },
   });
 });

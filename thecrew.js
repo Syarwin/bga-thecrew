@@ -76,6 +76,9 @@
         if(gamedatas.showIntro){
           this.startCampaign();
         }
+        if(gamedatas.isVisibleDiscard){
+          this.setupDiscard();
+        }
 
         this.setupSettings();
         this.inherited(arguments);
@@ -149,6 +152,7 @@
         dojo.query('.task').forEach(dojo.destroy);
         dojo.query('.card').forEach(dojo.destroy);
         dojo.query('.preselected').removeClass('preselected');
+        dojo.query('.discard-slot').removeClass('played');
       },
 
       startCampaign(){
