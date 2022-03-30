@@ -36,6 +36,20 @@ class Players extends \CREW\Helpers\DB_Manager
     thecrew::get()->reloadPlayersBasicInfos();
 
     Globals::setPremium($atleastOnePremium);
+
+    // setup Jarvis for 2 Players
+    if (count($players) == 2) {
+      Globals::setJarvis(true);
+      Globals::setJarvisActive(false);
+      Globals::setJarvisTricks(0);
+
+      $ids = array_keys($players);
+      $key = array_rand($ids);
+      Globals::setJarvisPlaysAfter($ids[$key]);
+    } else {
+      Globals::setJarvis(false);
+      Globals::setJarvisActive(false);
+    }
   }
 
 

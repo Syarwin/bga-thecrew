@@ -105,3 +105,9 @@ define("CARD_HIDDEN", 7);
 define('MISSION_FAIL', -1);
 define('MISSION_CONTINUE', 0);
 define('MISSION_SUCCESS', 1);
+
+
+/*
+ * 2 player mode (Jarvis)
+ */
+define('JARVIS_ID', 1);

@@ -53,6 +53,15 @@ class Globals extends \APP_DbObject
     'playerWhoGiveId' => 0,
     'taskToGiveId' => 0,
     'playerToGiveId' => 0,
+
+    // 2 player mode
+    'jarvis' => 'bool',
+    'jarvisPlaysAfter' => 'int',
+    'jarvisActive' => 'bool',
+    'jarvisTricks' => 'int',
+    'jarvisCardList' => 'obj',
+    'jarvisReply' => 'int',
+    'jarvisDistressCard' => 'int',
   ];
 
   public static function declare($game)
@@ -170,6 +179,22 @@ class Globals extends \APP_DbObject
     return self::get('checkCount');
   }
 
+  public static function getJarvis() {
+    self::get('jarvis');
+  }
+
+  public static function getJarvisActive() {
+    self::get('jarvisActive');
+  }
+
+  public static function getJarvisTricks() {
+    self::get('jarvisTricks');
+  }
+
+  public static function getJarvisPlaysAfter() {
+    self::get('jarvisPlaysAfter');
+  }
+
   /*
    * Setters
    */
@@ -243,5 +268,21 @@ class Globals extends \APP_DbObject
     self::set('playerWhoGiveId', $sourceId);
     self::set('taskToGiveId', $tId);
     self::set('playerToGiveId', $targetId);
+  }
+
+  public static function setJarvis($jarvis) {
+    self::set('jarvis', $jarvis);
+  }
+
+  public static function setJarvisActive($jarvisActive) {
+    self::set('jarvisActive', $jarvisActive);
+  }
+
+  public static function setJarvisTricks($jarvisTricks) {
+    self::set('jarvisTricks', $jarvisTricks);
+  }
+
+  public static function setJarvisPlaysAfter($jarvisPlaysAfter) {
+    self::set('jarvisPlaysAfter', $jarvisPlaysAfter);
   }
 }
