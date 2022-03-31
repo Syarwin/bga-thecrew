@@ -8,7 +8,7 @@
  * See http://en.boardgamearena.com/#!doc/Studio for more information.
  * -----
  *
- * thecrew.css
+ * thecrewleocaseiro.css
  *
  * The Crew stylesheet
  *
@@ -63,16 +63,16 @@ html, body {
   background-attachment: fixed;
   background-color: black; }
 
-#thecrew-table {
+#thecrewleocaseiro-table {
   margin-top: 10px;
   position: relative;
   display: flex;
   flex-flow: column; }
-  #thecrew-table > div {
+  #thecrewleocaseiro-table > div {
     display: flex; }
-    #thecrew-table > div#table-top, #thecrew-table > div#table-bottom {
+    #thecrewleocaseiro-table > div#table-top, #thecrewleocaseiro-table > div#table-bottom {
       justify-content: space-between; }
-    #thecrew-table > div#table-middle {
+    #thecrewleocaseiro-table > div#table-middle {
       justify-content: center;
       /*
        * Card mat
@@ -89,27 +89,27 @@ html, body {
       /*
        * Give task panel
        */ }
-      #thecrew-table > div#table-middle > div {
+      #thecrewleocaseiro-table > div#table-middle > div {
         width: 400px;
         margin: 5px;
         border-radius: 5px;
         padding: 10px;
         background-color: rgba(255, 255, 255, 0.6);
         border: 1px solid black; }
-      #thecrew-table > div#table-middle #mission-status {
+      #thecrewleocaseiro-table > div#table-middle #mission-status {
         width: 480px;
         padding: 0px;
         border: none;
         background-color: #8B4513;
         border-radius: 0.25em;
         border: 1px solid #b98c5a; }
-        #thecrew-table > div#table-middle #mission-status #try-counter-wrapper, #thecrew-table > div#table-middle #mission-status #total-try-counter-wrapper {
+        #thecrewleocaseiro-table > div#table-middle #mission-status #try-counter-wrapper, #thecrewleocaseiro-table > div#table-middle #mission-status #total-try-counter-wrapper {
           font-weight: bold;
           font-size: 0.6em;
           text-transform: uppercase; }
-        #thecrew-table > div#table-middle #mission-status #try-counter, #thecrew-table > div#table-middle #mission-status #total-try-counter {
+        #thecrewleocaseiro-table > div#table-middle #mission-status #try-counter, #thecrewleocaseiro-table > div#table-middle #mission-status #total-try-counter {
           font-size: 1.3em; }
-        #thecrew-table > div#table-middle #mission-status #distress {
+        #thecrewleocaseiro-table > div#table-middle #mission-status #distress {
           display: none;
           position: relative;
           width: 60px;
@@ -120,32 +120,32 @@ html, body {
           background-position: 100% 0;
           filter: drop-shadow(0 0 2px #000);
           -webkit-filter: drop-shadow(0 0 2px #000); }
-          #thecrew-table > div#table-middle #mission-status #distress.activated {
+          #thecrewleocaseiro-table > div#table-middle #mission-status #distress.activated {
             display: block; }
-      #thecrew-table > div#table-middle #cards-mat {
+      #thecrewleocaseiro-table > div#table-middle #cards-mat {
         display: none;
         flex-flow: column;
         justify-content: space-between; }
-        #thecrew-table > div#table-middle #cards-mat #card-mat-top, #thecrew-table > div#table-middle #cards-mat #card-mat-bottom {
+        #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top, #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom {
           display: flex;
           justify-content: space-between; }
-          #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder, #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder {
+          #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder, #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder {
             position: relative;
             width: 84px;
             height: 132px;
             border-radius: 5px;
             border: 1px dashed black; }
-            #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder[data-no="0"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder[data-no="0"] {
+            #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder[data-no="0"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder[data-no="0"] {
               order: 0; }
-            #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder[data-no="1"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder[data-no="1"] {
+            #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder[data-no="1"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder[data-no="1"] {
               order: 1; }
-            #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder[data-no="2"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder[data-no="2"] {
+            #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder[data-no="2"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder[data-no="2"] {
               order: 2; }
-            #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder[data-no="3"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder[data-no="3"] {
+            #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder[data-no="3"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder[data-no="3"] {
               order: 3; }
-            #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder[data-no="4"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder[data-no="4"] {
+            #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder[data-no="4"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder[data-no="4"] {
               order: 4; }
-            #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card, #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card {
+            #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card, #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card {
               position: relative;
               width: 100%;
               height: 100%;
@@ -154,77 +154,77 @@ html, body {
               -webkit-filter: drop-shadow(0 0 2px #000);
               background-image: url("img/cards.png");
               background-size: 1100%; }
-              #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-color="1"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-color="1"] {
+              #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-color="1"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-color="1"] {
                 background-position-y: 0%; }
-              #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-color="2"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-color="2"] {
+              #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-color="2"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-color="2"] {
                 background-position-y: 33.3333333333%; }
-              #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-color="3"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-color="3"] {
+              #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-color="3"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-color="3"] {
                 background-position-y: 66.6666666667%; }
-              #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-color="4"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-color="4"] {
+              #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-color="4"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-color="4"] {
                 background-position-y: 100%; }
-              #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-value="1"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-value="1"] {
+              #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-value="1"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-value="1"] {
                 background-position-x: 0%; }
-              #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-value="2"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-value="2"] {
+              #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-value="2"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-value="2"] {
                 background-position-x: 10%; }
-              #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-value="3"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-value="3"] {
+              #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-value="3"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-value="3"] {
                 background-position-x: 20%; }
-              #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-value="4"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-value="4"] {
+              #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-value="4"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-value="4"] {
                 background-position-x: 30%; }
-              #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-value="5"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-value="5"] {
+              #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-value="5"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-value="5"] {
                 background-position-x: 40%; }
-              #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-value="6"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-value="6"] {
+              #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-value="6"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-value="6"] {
                 background-position-x: 50%; }
-              #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-value="7"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-value="7"] {
+              #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-value="7"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-value="7"] {
                 background-position-x: 60%; }
-              #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-value="8"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-value="8"] {
+              #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-value="8"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-value="8"] {
                 background-position-x: 70%; }
-              #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-value="9"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-value="9"] {
+              #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-value="9"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-value="9"] {
                 background-position-x: 80%; }
-              #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-color="5"][data-value="1"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-color="5"][data-value="1"] {
+              #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-color="5"][data-value="1"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-color="5"][data-value="1"] {
                 background-position-y: 0%;
                 background-position-x: 90%; }
-              #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-color="5"][data-value="2"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-color="5"][data-value="2"] {
+              #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-color="5"][data-value="2"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-color="5"][data-value="2"] {
                 background-position-y: 33.3%;
                 background-position-x: 90%; }
-              #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-color="5"][data-value="3"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-color="5"][data-value="3"] {
+              #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-color="5"][data-value="3"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-color="5"][data-value="3"] {
                 background-position-y: 66.6%;
                 background-position-x: 90%; }
-              #thecrew-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-color="5"][data-value="4"], #thecrew-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-color="5"][data-value="4"] {
+              #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-top div.mat-card-holder .card[data-color="5"][data-value="4"], #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom div.mat-card-holder .card[data-color="5"][data-value="4"] {
                 background-position-y: 100%;
                 background-position-x: 90%; }
-        #thecrew-table > div#table-middle #cards-mat #card-mat-bottom {
+        #thecrewleocaseiro-table > div#table-middle #cards-mat #card-mat-bottom {
           margin-top: 10px; }
-      #thecrew-table > div#table-middle #tasks {
+      #thecrewleocaseiro-table > div#table-middle #tasks {
         display: none;
         flex-flow: column; }
-        #thecrew-table > div#table-middle #tasks h2 {
+        #thecrewleocaseiro-table > div#table-middle #tasks h2 {
           width: 100%;
           font-weight: 700;
           margin-top: 2px;
           height: 18px;
           text-align: center; }
-        #thecrew-table > div#table-middle #tasks #tasks-list-container {
+        #thecrewleocaseiro-table > div#table-middle #tasks #tasks-list-container {
           width: 100%;
           display: flex;
           justify-content: center;
           align-items: center;
           flex-grow: 1; }
-          #thecrew-table > div#table-middle #tasks #tasks-list-container #tasks-list {
+          #thecrewleocaseiro-table > div#table-middle #tasks #tasks-list-container #tasks-list {
             display: flex;
             justify-content: space-evenly;
             flex-wrap: wrap;
             align-items: center;
             position: relative; }
-            #thecrew-table > div#table-middle #tasks #tasks-list-container #tasks-list .task {
+            #thecrewleocaseiro-table > div#table-middle #tasks #tasks-list-container #tasks-list .task {
               margin: 7px; }
-      #thecrew-table > div#table-middle #end-panel, #thecrew-table > div#table-middle #give-task-panel {
+      #thecrewleocaseiro-table > div#table-middle #end-panel, #thecrewleocaseiro-table > div#table-middle #give-task-panel {
         display: none;
         flex-flow: column;
         justify-content: space-between; }
-        #thecrew-table > div#table-middle #end-panel #end-panel-top, #thecrew-table > div#table-middle #end-panel #end-panel-bottom, #thecrew-table > div#table-middle #end-panel #give-task-panel-top, #thecrew-table > div#table-middle #end-panel #give-task-panel-bottom, #thecrew-table > div#table-middle #give-task-panel #end-panel-top, #thecrew-table > div#table-middle #give-task-panel #end-panel-bottom, #thecrew-table > div#table-middle #give-task-panel #give-task-panel-top, #thecrew-table > div#table-middle #give-task-panel #give-task-panel-bottom {
+        #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-top, #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-bottom, #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-top, #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-bottom, #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-top, #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-bottom, #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-top, #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-bottom {
           display: flex;
           justify-content: space-between; }
-          #thecrew-table > div#table-middle #end-panel #end-panel-top .check-ok, #thecrew-table > div#table-middle #end-panel #end-panel-bottom .check-ok, #thecrew-table > div#table-middle #end-panel #give-task-panel-top .check-ok, #thecrew-table > div#table-middle #end-panel #give-task-panel-bottom .check-ok, #thecrew-table > div#table-middle #give-task-panel #end-panel-top .check-ok, #thecrew-table > div#table-middle #give-task-panel #end-panel-bottom .check-ok, #thecrew-table > div#table-middle #give-task-panel #give-task-panel-top .check-ok, #thecrew-table > div#table-middle #give-task-panel #give-task-panel-bottom .check-ok {
+          #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-top .check-ok, #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-bottom .check-ok, #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-top .check-ok, #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-bottom .check-ok, #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-top .check-ok, #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-bottom .check-ok, #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-top .check-ok, #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-bottom .check-ok {
             margin: 5px;
             opacity: 0.4;
             width: 40px;
@@ -234,46 +234,46 @@ html, body {
             background-position: 80% 50%;
             filter: drop-shadow(0 0 2px #000);
             -webkit-filter: drop-shadow(0 0 2px #000); }
-            #thecrew-table > div#table-middle #end-panel #end-panel-top .check-ok[data-no="0"], #thecrew-table > div#table-middle #end-panel #end-panel-bottom .check-ok[data-no="0"], #thecrew-table > div#table-middle #end-panel #give-task-panel-top .check-ok[data-no="0"], #thecrew-table > div#table-middle #end-panel #give-task-panel-bottom .check-ok[data-no="0"], #thecrew-table > div#table-middle #give-task-panel #end-panel-top .check-ok[data-no="0"], #thecrew-table > div#table-middle #give-task-panel #end-panel-bottom .check-ok[data-no="0"], #thecrew-table > div#table-middle #give-task-panel #give-task-panel-top .check-ok[data-no="0"], #thecrew-table > div#table-middle #give-task-panel #give-task-panel-bottom .check-ok[data-no="0"] {
+            #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-top .check-ok[data-no="0"], #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-bottom .check-ok[data-no="0"], #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-top .check-ok[data-no="0"], #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-bottom .check-ok[data-no="0"], #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-top .check-ok[data-no="0"], #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-bottom .check-ok[data-no="0"], #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-top .check-ok[data-no="0"], #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-bottom .check-ok[data-no="0"] {
               order: 0; }
-            #thecrew-table > div#table-middle #end-panel #end-panel-top .check-ok[data-no="1"], #thecrew-table > div#table-middle #end-panel #end-panel-bottom .check-ok[data-no="1"], #thecrew-table > div#table-middle #end-panel #give-task-panel-top .check-ok[data-no="1"], #thecrew-table > div#table-middle #end-panel #give-task-panel-bottom .check-ok[data-no="1"], #thecrew-table > div#table-middle #give-task-panel #end-panel-top .check-ok[data-no="1"], #thecrew-table > div#table-middle #give-task-panel #end-panel-bottom .check-ok[data-no="1"], #thecrew-table > div#table-middle #give-task-panel #give-task-panel-top .check-ok[data-no="1"], #thecrew-table > div#table-middle #give-task-panel #give-task-panel-bottom .check-ok[data-no="1"] {
+            #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-top .check-ok[data-no="1"], #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-bottom .check-ok[data-no="1"], #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-top .check-ok[data-no="1"], #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-bottom .check-ok[data-no="1"], #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-top .check-ok[data-no="1"], #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-bottom .check-ok[data-no="1"], #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-top .check-ok[data-no="1"], #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-bottom .check-ok[data-no="1"] {
               order: 1; }
-            #thecrew-table > div#table-middle #end-panel #end-panel-top .check-ok[data-no="2"], #thecrew-table > div#table-middle #end-panel #end-panel-bottom .check-ok[data-no="2"], #thecrew-table > div#table-middle #end-panel #give-task-panel-top .check-ok[data-no="2"], #thecrew-table > div#table-middle #end-panel #give-task-panel-bottom .check-ok[data-no="2"], #thecrew-table > div#table-middle #give-task-panel #end-panel-top .check-ok[data-no="2"], #thecrew-table > div#table-middle #give-task-panel #end-panel-bottom .check-ok[data-no="2"], #thecrew-table > div#table-middle #give-task-panel #give-task-panel-top .check-ok[data-no="2"], #thecrew-table > div#table-middle #give-task-panel #give-task-panel-bottom .check-ok[data-no="2"] {
+            #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-top .check-ok[data-no="2"], #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-bottom .check-ok[data-no="2"], #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-top .check-ok[data-no="2"], #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-bottom .check-ok[data-no="2"], #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-top .check-ok[data-no="2"], #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-bottom .check-ok[data-no="2"], #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-top .check-ok[data-no="2"], #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-bottom .check-ok[data-no="2"] {
               order: 2; }
-            #thecrew-table > div#table-middle #end-panel #end-panel-top .check-ok[data-no="3"], #thecrew-table > div#table-middle #end-panel #end-panel-bottom .check-ok[data-no="3"], #thecrew-table > div#table-middle #end-panel #give-task-panel-top .check-ok[data-no="3"], #thecrew-table > div#table-middle #end-panel #give-task-panel-bottom .check-ok[data-no="3"], #thecrew-table > div#table-middle #give-task-panel #end-panel-top .check-ok[data-no="3"], #thecrew-table > div#table-middle #give-task-panel #end-panel-bottom .check-ok[data-no="3"], #thecrew-table > div#table-middle #give-task-panel #give-task-panel-top .check-ok[data-no="3"], #thecrew-table > div#table-middle #give-task-panel #give-task-panel-bottom .check-ok[data-no="3"] {
+            #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-top .check-ok[data-no="3"], #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-bottom .check-ok[data-no="3"], #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-top .check-ok[data-no="3"], #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-bottom .check-ok[data-no="3"], #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-top .check-ok[data-no="3"], #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-bottom .check-ok[data-no="3"], #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-top .check-ok[data-no="3"], #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-bottom .check-ok[data-no="3"] {
               order: 3; }
-            #thecrew-table > div#table-middle #end-panel #end-panel-top .check-ok[data-no="4"], #thecrew-table > div#table-middle #end-panel #end-panel-bottom .check-ok[data-no="4"], #thecrew-table > div#table-middle #end-panel #give-task-panel-top .check-ok[data-no="4"], #thecrew-table > div#table-middle #end-panel #give-task-panel-bottom .check-ok[data-no="4"], #thecrew-table > div#table-middle #give-task-panel #end-panel-top .check-ok[data-no="4"], #thecrew-table > div#table-middle #give-task-panel #end-panel-bottom .check-ok[data-no="4"], #thecrew-table > div#table-middle #give-task-panel #give-task-panel-top .check-ok[data-no="4"], #thecrew-table > div#table-middle #give-task-panel #give-task-panel-bottom .check-ok[data-no="4"] {
+            #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-top .check-ok[data-no="4"], #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-bottom .check-ok[data-no="4"], #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-top .check-ok[data-no="4"], #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-bottom .check-ok[data-no="4"], #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-top .check-ok[data-no="4"], #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-bottom .check-ok[data-no="4"], #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-top .check-ok[data-no="4"], #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-bottom .check-ok[data-no="4"] {
               order: 4; }
-            #thecrew-table > div#table-middle #end-panel #end-panel-top .check-ok.check-confirm, #thecrew-table > div#table-middle #end-panel #end-panel-bottom .check-ok.check-confirm, #thecrew-table > div#table-middle #end-panel #give-task-panel-top .check-ok.check-confirm, #thecrew-table > div#table-middle #end-panel #give-task-panel-bottom .check-ok.check-confirm, #thecrew-table > div#table-middle #give-task-panel #end-panel-top .check-ok.check-confirm, #thecrew-table > div#table-middle #give-task-panel #end-panel-bottom .check-ok.check-confirm, #thecrew-table > div#table-middle #give-task-panel #give-task-panel-top .check-ok.check-confirm, #thecrew-table > div#table-middle #give-task-panel #give-task-panel-bottom .check-ok.check-confirm {
+            #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-top .check-ok.check-confirm, #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-bottom .check-ok.check-confirm, #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-top .check-ok.check-confirm, #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-bottom .check-ok.check-confirm, #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-top .check-ok.check-confirm, #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-bottom .check-ok.check-confirm, #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-top .check-ok.check-confirm, #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-bottom .check-ok.check-confirm {
               opacity: 1; }
-        #thecrew-table > div#table-middle #end-panel #end-panel-middle, #thecrew-table > div#table-middle #end-panel #give-task-panel-middle, #thecrew-table > div#table-middle #give-task-panel #end-panel-middle, #thecrew-table > div#table-middle #give-task-panel #give-task-panel-middle {
+        #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-middle, #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-middle, #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-middle, #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-middle {
           display: flex;
           flex-flow: column;
           align-items: center; }
-          #thecrew-table > div#table-middle #end-panel #end-panel-middle h2, #thecrew-table > div#table-middle #end-panel #give-task-panel-middle h2, #thecrew-table > div#table-middle #give-task-panel #end-panel-middle h2, #thecrew-table > div#table-middle #give-task-panel #give-task-panel-middle h2 {
+          #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-middle h2, #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-middle h2, #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-middle h2, #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-middle h2 {
             font-weight: 700;
             margin-top: 2px;
             height: 18px;
             font-size: 16px; }
-          #thecrew-table > div#table-middle #end-panel #end-panel-middle #end-panel-buttons, #thecrew-table > div#table-middle #end-panel #end-panel-middle #give-task-buttons, #thecrew-table > div#table-middle #end-panel #give-task-panel-middle #end-panel-buttons, #thecrew-table > div#table-middle #end-panel #give-task-panel-middle #give-task-buttons, #thecrew-table > div#table-middle #give-task-panel #end-panel-middle #end-panel-buttons, #thecrew-table > div#table-middle #give-task-panel #end-panel-middle #give-task-buttons, #thecrew-table > div#table-middle #give-task-panel #give-task-panel-middle #end-panel-buttons, #thecrew-table > div#table-middle #give-task-panel #give-task-panel-middle #give-task-buttons {
+          #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-middle #end-panel-buttons, #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-middle #give-task-buttons, #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-middle #end-panel-buttons, #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-middle #give-task-buttons, #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-middle #end-panel-buttons, #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-middle #give-task-buttons, #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-middle #end-panel-buttons, #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-middle #give-task-buttons {
             width: 100%;
             display: flex;
             flex-flow: row;
             justify-content: space-evenly;
             flex-wrap: wrap;
             align-items: center; }
-            #thecrew-table > div#table-middle #end-panel #end-panel-middle #end-panel-buttons button, #thecrew-table > div#table-middle #end-panel #end-panel-middle #give-task-buttons button, #thecrew-table > div#table-middle #end-panel #give-task-panel-middle #end-panel-buttons button, #thecrew-table > div#table-middle #end-panel #give-task-panel-middle #give-task-buttons button, #thecrew-table > div#table-middle #give-task-panel #end-panel-middle #end-panel-buttons button, #thecrew-table > div#table-middle #give-task-panel #end-panel-middle #give-task-buttons button, #thecrew-table > div#table-middle #give-task-panel #give-task-panel-middle #end-panel-buttons button, #thecrew-table > div#table-middle #give-task-panel #give-task-panel-middle #give-task-buttons button {
+            #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-middle #end-panel-buttons button, #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-middle #give-task-buttons button, #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-middle #end-panel-buttons button, #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-middle #give-task-buttons button, #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-middle #end-panel-buttons button, #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-middle #give-task-buttons button, #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-middle #end-panel-buttons button, #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-middle #give-task-buttons button {
               width: auto; }
-              #thecrew-table > div#table-middle #end-panel #end-panel-middle #end-panel-buttons button.hidden, #thecrew-table > div#table-middle #end-panel #end-panel-middle #give-task-buttons button.hidden, #thecrew-table > div#table-middle #end-panel #give-task-panel-middle #end-panel-buttons button.hidden, #thecrew-table > div#table-middle #end-panel #give-task-panel-middle #give-task-buttons button.hidden, #thecrew-table > div#table-middle #give-task-panel #end-panel-middle #end-panel-buttons button.hidden, #thecrew-table > div#table-middle #give-task-panel #end-panel-middle #give-task-buttons button.hidden, #thecrew-table > div#table-middle #give-task-panel #give-task-panel-middle #end-panel-buttons button.hidden, #thecrew-table > div#table-middle #give-task-panel #give-task-panel-middle #give-task-buttons button.hidden {
+              #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-middle #end-panel-buttons button.hidden, #thecrewleocaseiro-table > div#table-middle #end-panel #end-panel-middle #give-task-buttons button.hidden, #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-middle #end-panel-buttons button.hidden, #thecrewleocaseiro-table > div#table-middle #end-panel #give-task-panel-middle #give-task-buttons button.hidden, #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-middle #end-panel-buttons button.hidden, #thecrewleocaseiro-table > div#table-middle #give-task-panel #end-panel-middle #give-task-buttons button.hidden, #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-middle #end-panel-buttons button.hidden, #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-middle #give-task-buttons button.hidden {
                 display: none; }
-      #thecrew-table > div#table-middle #distress-panel {
+      #thecrewleocaseiro-table > div#table-middle #distress-panel {
         display: none;
         flex-flow: column;
         justify-content: space-between; }
-        #thecrew-table > div#table-middle #distress-panel #distress-panel-top, #thecrew-table > div#table-middle #distress-panel #distress-panel-bottom {
+        #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-top, #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-bottom {
           display: flex;
           justify-content: space-between; }
-          #thecrew-table > div#table-middle #distress-panel #distress-panel-top .distress-choice, #thecrew-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice {
+          #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-top .distress-choice, #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice {
             margin: 5px;
             width: 40px;
             height: 40px;
@@ -281,51 +281,51 @@ html, body {
             background-size: 1100%;
             filter: drop-shadow(0 0 2px #000);
             -webkit-filter: drop-shadow(0 0 2px #000); }
-            #thecrew-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-choice="0"], #thecrew-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-choice="0"] {
+            #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-choice="0"], #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-choice="0"] {
               background-position: 0% 100%; }
-            #thecrew-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-choice="1"], #thecrew-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-choice="1"] {
+            #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-choice="1"], #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-choice="1"] {
               background-position: 20% 100%; }
-            #thecrew-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-choice="2"], #thecrew-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-choice="2"] {
+            #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-choice="2"], #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-choice="2"] {
               background-position: 70% 50%; }
-            #thecrew-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-choice="3"], #thecrew-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-choice="3"] {
+            #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-choice="3"], #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-choice="3"] {
               background-position: 10% 100%;
               filter: drop-shadow(0 0 2px #FFF); }
-            #thecrew-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-choice="4"], #thecrew-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-choice="4"] {
+            #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-choice="4"], #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-choice="4"] {
               background-position: 90% 100%; }
-            #thecrew-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-no="0"], #thecrew-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-no="0"] {
+            #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-no="0"], #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-no="0"] {
               order: 0; }
-            #thecrew-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-no="1"], #thecrew-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-no="1"] {
+            #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-no="1"], #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-no="1"] {
               order: 1; }
-            #thecrew-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-no="2"], #thecrew-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-no="2"] {
+            #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-no="2"], #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-no="2"] {
               order: 2; }
-            #thecrew-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-no="3"], #thecrew-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-no="3"] {
+            #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-no="3"], #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-no="3"] {
               order: 3; }
-            #thecrew-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-no="4"], #thecrew-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-no="4"] {
+            #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-top .distress-choice[data-no="4"], #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-bottom .distress-choice[data-no="4"] {
               order: 4; }
-        #thecrew-table > div#table-middle #distress-panel #distress-panel-middle {
+        #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-middle {
           display: flex;
           flex-flow: column;
           align-items: center; }
-          #thecrew-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-icon {
+          #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-icon {
             background-image: url("img/sprites.png");
             background-size: 1100%;
             background-position: 10% 50%;
             width: 80px;
             height: 80px;
             margin-bottom: 20px; }
-          #thecrew-table > div#table-middle #distress-panel #distress-panel-middle h2 {
+          #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-middle h2 {
             font-weight: 700;
             margin-top: 2px;
             height: 18px;
             font-size: 16px; }
-          #thecrew-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-buttons {
+          #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-buttons {
             width: 100%;
             display: flex;
             flex-flow: row;
             justify-content: space-evenly;
             flex-wrap: wrap;
             align-items: center; }
-            #thecrew-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-buttons button {
+            #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-buttons button {
               display: block;
               width: auto;
               padding: 0;
@@ -334,20 +334,20 @@ html, body {
               display: flex;
               align-items: center;
               justify-content: center; }
-              #thecrew-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-buttons button#dont-use-button {
+              #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-buttons button#dont-use-button {
                 font-size: 18px; }
-              #thecrew-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-buttons button#whatever-button {
+              #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-buttons button#whatever-button {
                 width: auto;
                 padding: 0px 5px; }
-              #thecrew-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-buttons button#clockwise-button div, #thecrew-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-buttons button#anticlockwise-button div {
+              #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-buttons button#clockwise-button div, #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-buttons button#anticlockwise-button div {
                 background-image: url("img/sprites.png");
                 background-size: 1100%;
                 background-position: 20% 100%;
                 width: 30px;
                 height: 30px; }
-              #thecrew-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-buttons button#anticlockwise-button div {
+              #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-buttons button#anticlockwise-button div {
                 background-position: 10% 100%; }
-          #thecrew-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-direction {
+          #thecrewleocaseiro-table > div#table-middle #distress-panel #distress-panel-middle #distress-panel-direction {
             display: none;
             background-image: url("img/sprites.png");
             background-size: 1100%;
@@ -357,41 +357,41 @@ html, body {
             margin: 50px auto 0px;
             filter: drop-shadow(0 0 2px #000);
             -webkit-filter: drop-shadow(0 0 2px #000); }
-        #thecrew-table > div#table-middle #distress-panel[data-dir="1"] #distress-panel-top, #thecrew-table > div#table-middle #distress-panel[data-dir="1"] #distress-panel-bottom, #thecrew-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-top, #thecrew-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-bottom {
+        #thecrewleocaseiro-table > div#table-middle #distress-panel[data-dir="1"] #distress-panel-top, #thecrewleocaseiro-table > div#table-middle #distress-panel[data-dir="1"] #distress-panel-bottom, #thecrewleocaseiro-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-top, #thecrewleocaseiro-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-bottom {
           display: none; }
-        #thecrew-table > div#table-middle #distress-panel[data-dir="1"] #distress-panel-middle, #thecrew-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-middle {
+        #thecrewleocaseiro-table > div#table-middle #distress-panel[data-dir="1"] #distress-panel-middle, #thecrewleocaseiro-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-middle {
           flex-grow: 1;
           justify-content: center; }
-          #thecrew-table > div#table-middle #distress-panel[data-dir="1"] #distress-panel-middle h2, #thecrew-table > div#table-middle #distress-panel[data-dir="1"] #distress-panel-middle #distress-panel-buttons, #thecrew-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-middle h2, #thecrew-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-middle #distress-panel-buttons {
+          #thecrewleocaseiro-table > div#table-middle #distress-panel[data-dir="1"] #distress-panel-middle h2, #thecrewleocaseiro-table > div#table-middle #distress-panel[data-dir="1"] #distress-panel-middle #distress-panel-buttons, #thecrewleocaseiro-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-middle h2, #thecrewleocaseiro-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-middle #distress-panel-buttons {
             display: none; }
-          #thecrew-table > div#table-middle #distress-panel[data-dir="1"] #distress-panel-middle #distress-panel-direction, #thecrew-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-middle #distress-panel-direction {
+          #thecrewleocaseiro-table > div#table-middle #distress-panel[data-dir="1"] #distress-panel-middle #distress-panel-direction, #thecrewleocaseiro-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-middle #distress-panel-direction {
             display: block; }
-        #thecrew-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-middle #distress-panel-direction {
+        #thecrewleocaseiro-table > div#table-middle #distress-panel[data-dir="3"] #distress-panel-middle #distress-panel-direction {
           background-position: 10% 100%;
           filter: drop-shadow(0 0 2px #FFF); }
-      #thecrew-table > div#table-middle #give-task-panel #give-task-panel-middle #give-task-proposal {
+      #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-middle #give-task-proposal {
         display: flex;
         flex-flow: column;
         justify-content: center;
         align-items: center; }
-        #thecrew-table > div#table-middle #give-task-panel #give-task-panel-middle #give-task-proposal #proposal-transaction {
+        #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-middle #give-task-proposal #proposal-transaction {
           display: flex;
           align-items: center;
           font-weight: bold; }
-          #thecrew-table > div#table-middle #give-task-panel #give-task-panel-middle #give-task-proposal #proposal-transaction .thecrew-arrow-down {
+          #thecrewleocaseiro-table > div#table-middle #give-task-panel #give-task-panel-middle #give-task-proposal #proposal-transaction .thecrewleocaseiro-arrow-down {
             transform: rotate(-90deg);
             margin: 0;
             width: 60px;
             height: 60px; }
-      #thecrew-table > div#table-middle[data-display='cards'] #cards-mat {
+      #thecrewleocaseiro-table > div#table-middle[data-display='cards'] #cards-mat {
         display: flex; }
-      #thecrew-table > div#table-middle[data-display='tasks'] #tasks {
+      #thecrewleocaseiro-table > div#table-middle[data-display='tasks'] #tasks {
         display: flex; }
-      #thecrew-table > div#table-middle[data-display='end'] #end-panel {
+      #thecrewleocaseiro-table > div#table-middle[data-display='end'] #end-panel {
         display: flex; }
-      #thecrew-table > div#table-middle[data-display='distress'] #distress-panel {
+      #thecrewleocaseiro-table > div#table-middle[data-display='distress'] #distress-panel {
         display: flex; }
-      #thecrew-table > div#table-middle[data-display='give-task'] #give-task-panel {
+      #thecrewleocaseiro-table > div#table-middle[data-display='give-task'] #give-task-panel {
         display: flex; }
 
 #hand-container #hand-wrapper {
@@ -785,59 +785,59 @@ html, body {
         height: 87px;
         background-image: url("img/special2.png"); }
 
-#thecrew-table[data-disruption="1"] .player-table .communication-card-holder .communication-card .radio {
+#thecrewleocaseiro-table[data-disruption="1"] .player-table .communication-card-holder .communication-card .radio {
   display: none; }
-#thecrew-table[data-disruption="1"] .player-table .communication-card-holder .communication-card .disruption {
+#thecrewleocaseiro-table[data-disruption="1"] .player-table .communication-card-holder .communication-card .disruption {
   display: block; }
-  #thecrew-table[data-disruption="1"] .player-table .communication-card-holder .communication-card .disruption::after {
+  #thecrewleocaseiro-table[data-disruption="1"] .player-table .communication-card-holder .communication-card .disruption::after {
     content: "1"; }
-#thecrew-table[data-disruption="1"] .player-table .communication-card-holder .communication-card[data-pending="1"] .pending-icon {
+#thecrewleocaseiro-table[data-disruption="1"] .player-table .communication-card-holder .communication-card[data-pending="1"] .pending-icon {
   top: 71px; }
-#thecrew-table[data-disruption="1"] .player-table .communication-card-holder .communication-card[data-pending="1"] .disruption {
+#thecrewleocaseiro-table[data-disruption="1"] .player-table .communication-card-holder .communication-card[data-pending="1"] .disruption {
   top: 10px; }
 
-#thecrew-table[data-disruption="2"] .player-table .communication-card-holder .communication-card .radio {
+#thecrewleocaseiro-table[data-disruption="2"] .player-table .communication-card-holder .communication-card .radio {
   display: none; }
-#thecrew-table[data-disruption="2"] .player-table .communication-card-holder .communication-card .disruption {
+#thecrewleocaseiro-table[data-disruption="2"] .player-table .communication-card-holder .communication-card .disruption {
   display: block; }
-  #thecrew-table[data-disruption="2"] .player-table .communication-card-holder .communication-card .disruption::after {
+  #thecrewleocaseiro-table[data-disruption="2"] .player-table .communication-card-holder .communication-card .disruption::after {
     content: "2"; }
-#thecrew-table[data-disruption="2"] .player-table .communication-card-holder .communication-card[data-pending="1"] .pending-icon {
+#thecrewleocaseiro-table[data-disruption="2"] .player-table .communication-card-holder .communication-card[data-pending="1"] .pending-icon {
   top: 71px; }
-#thecrew-table[data-disruption="2"] .player-table .communication-card-holder .communication-card[data-pending="1"] .disruption {
+#thecrewleocaseiro-table[data-disruption="2"] .player-table .communication-card-holder .communication-card[data-pending="1"] .disruption {
   top: 10px; }
 
-#thecrew-table[data-disruption="3"] .player-table .communication-card-holder .communication-card .radio {
+#thecrewleocaseiro-table[data-disruption="3"] .player-table .communication-card-holder .communication-card .radio {
   display: none; }
-#thecrew-table[data-disruption="3"] .player-table .communication-card-holder .communication-card .disruption {
+#thecrewleocaseiro-table[data-disruption="3"] .player-table .communication-card-holder .communication-card .disruption {
   display: block; }
-  #thecrew-table[data-disruption="3"] .player-table .communication-card-holder .communication-card .disruption::after {
+  #thecrewleocaseiro-table[data-disruption="3"] .player-table .communication-card-holder .communication-card .disruption::after {
     content: "3"; }
-#thecrew-table[data-disruption="3"] .player-table .communication-card-holder .communication-card[data-pending="1"] .pending-icon {
+#thecrewleocaseiro-table[data-disruption="3"] .player-table .communication-card-holder .communication-card[data-pending="1"] .pending-icon {
   top: 71px; }
-#thecrew-table[data-disruption="3"] .player-table .communication-card-holder .communication-card[data-pending="1"] .disruption {
+#thecrewleocaseiro-table[data-disruption="3"] .player-table .communication-card-holder .communication-card[data-pending="1"] .disruption {
   top: 10px; }
 
-#thecrew-table[data-disruption="4"] .player-table .communication-card-holder .communication-card .radio {
+#thecrewleocaseiro-table[data-disruption="4"] .player-table .communication-card-holder .communication-card .radio {
   display: none; }
-#thecrew-table[data-disruption="4"] .player-table .communication-card-holder .communication-card .disruption {
+#thecrewleocaseiro-table[data-disruption="4"] .player-table .communication-card-holder .communication-card .disruption {
   display: block; }
-  #thecrew-table[data-disruption="4"] .player-table .communication-card-holder .communication-card .disruption::after {
+  #thecrewleocaseiro-table[data-disruption="4"] .player-table .communication-card-holder .communication-card .disruption::after {
     content: "4"; }
-#thecrew-table[data-disruption="4"] .player-table .communication-card-holder .communication-card[data-pending="1"] .pending-icon {
+#thecrewleocaseiro-table[data-disruption="4"] .player-table .communication-card-holder .communication-card[data-pending="1"] .pending-icon {
   top: 71px; }
-#thecrew-table[data-disruption="4"] .player-table .communication-card-holder .communication-card[data-pending="1"] .disruption {
+#thecrewleocaseiro-table[data-disruption="4"] .player-table .communication-card-holder .communication-card[data-pending="1"] .disruption {
   top: 10px; }
 
-#thecrew-table[data-disruption="5"] .player-table .communication-card-holder .communication-card .radio {
+#thecrewleocaseiro-table[data-disruption="5"] .player-table .communication-card-holder .communication-card .radio {
   display: none; }
-#thecrew-table[data-disruption="5"] .player-table .communication-card-holder .communication-card .disruption {
+#thecrewleocaseiro-table[data-disruption="5"] .player-table .communication-card-holder .communication-card .disruption {
   display: block; }
-  #thecrew-table[data-disruption="5"] .player-table .communication-card-holder .communication-card .disruption::after {
+  #thecrewleocaseiro-table[data-disruption="5"] .player-table .communication-card-holder .communication-card .disruption::after {
     content: "5"; }
-#thecrew-table[data-disruption="5"] .player-table .communication-card-holder .communication-card[data-pending="1"] .pending-icon {
+#thecrewleocaseiro-table[data-disruption="5"] .player-table .communication-card-holder .communication-card[data-pending="1"] .pending-icon {
   top: 71px; }
-#thecrew-table[data-disruption="5"] .player-table .communication-card-holder .communication-card[data-pending="1"] .disruption {
+#thecrewleocaseiro-table[data-disruption="5"] .player-table .communication-card-holder .communication-card[data-pending="1"] .disruption {
   top: 10px; }
 
 #overall-content[data-commander="0"] .player-table[data-no="0"] .player-table-wrapper .commander {
@@ -1068,10 +1068,10 @@ html, body {
 ********* MODAL  *********
 **************************
 *************************/
-.thecrew_popin {
+.thecrewleocaseiro_popin {
   width: 80%;
   position: relative; }
-  .thecrew_popin .thecrew_popin_closeicon {
+  .thecrewleocaseiro_popin .thecrewleocaseiro_popin_closeicon {
     background-color: white;
     border-radius: 50%;
     width: 40px;
@@ -1084,11 +1084,11 @@ html, body {
     right: -20px;
     font-size: 82%;
     color: black !important; }
-    .thecrew_popin .thecrew_popin_closeicon:hover {
+    .thecrewleocaseiro_popin .thecrewleocaseiro_popin_closeicon:hover {
       text-decoration: none;
       color: #CCC !important;
       transform: scale(1.1); }
-    .thecrew_popin .thecrew_popin_closeicon i {
+    .thecrewleocaseiro_popin .thecrewleocaseiro_popin_closeicon i {
       margin-top: -2px; }
 
 #popin_campaignIntro_underlay {
@@ -1167,9 +1167,9 @@ html, body {
         text-indent: var(--book-hmargin);
         text-align: justify;
         margin-bottom: var(--book-vmargin); }
-      .book .open-book article .chapter-title + p:first-of-type, .book .open-book article .thecrew_popin_contents > p:first-of-type {
+      .book .open-book article .chapter-title + p:first-of-type, .book .open-book article .thecrewleocaseiro_popin_contents > p:first-of-type {
         text-indent: 0; }
-        .book .open-book article .chapter-title + p:first-of-type:first-letter, .book .open-book article .thecrew_popin_contents > p:first-of-type:first-letter {
+        .book .open-book article .chapter-title + p:first-of-type:first-letter, .book .open-book article .thecrewleocaseiro_popin_contents > p:first-of-type:first-letter {
           float: left;
           font: 700 3em/0.65 'Playfair Display', sans-serif;
           padding: 0.15em 0.05em 0 0;
@@ -1250,7 +1250,7 @@ html, body {
           .book .open-book .chapter-title::before, .book .open-book .chapter-title::after {
             height: 0.125em; } }
 
-.thecrew-arrow-down {
+.thecrewleocaseiro-arrow-down {
   width: 50px;
   height: 50px;
   background-image: url("img/sprites.png");
@@ -1338,9 +1338,9 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center; }
-  #mission-status .mission-informations #mission-informations-distribution .thecrew-arrow-down:first-child {
+  #mission-status .mission-informations #mission-informations-distribution .thecrewleocaseiro-arrow-down:first-child {
     transform: rotate(20deg); }
-  #mission-status .mission-informations #mission-informations-distribution .thecrew-arrow-down:last-child {
+  #mission-status .mission-informations #mission-informations-distribution .thecrewleocaseiro-arrow-down:last-child {
     transform: rotate(-20deg); }
 #mission-status .mission-informations #mission-informations-tasks-container {
   margin: 10px 0px;
@@ -1359,7 +1359,7 @@ html, body {
           color:white;
           font-size:24px;
           font-weight: bold;
-  
+
           &::before, &::after {
             content: "";
             position:absolute;
@@ -1370,7 +1370,7 @@ html, body {
             background: #d44b38;
             z-index:-2;
           }
-  
+
           &::before { transform: rotate(30deg); }
           &::after { transform: rotate(60deg); }
         }
@@ -1507,4 +1507,4 @@ html, body {
     line-height: 20px;
     margin-left: 5px; }
 
-/*# sourceMappingURL=thecrew.css.map */
+/*# sourceMappingURL=thecrewleocaseiro.css.map */

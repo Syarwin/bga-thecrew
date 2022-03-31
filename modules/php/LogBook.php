@@ -2,7 +2,7 @@
 namespace CREW;
 use CREW\Game\Globals;
 use CREW\Game\Players;
-use thecrew;
+use thecrewleocaseiro;
 
 /*
  * Log: a class that allows to log some actions
@@ -76,7 +76,7 @@ class LogBook extends \CREW\Helpers\DB_Manager
     if(!Globals::isCampaign(true))
       return;
 
-    $json = thecrew::get()->retrieveLegacyTeamData();
+    $json = thecrewleocaseiro::get()->retrieveLegacyTeamData();
     if(is_string($json)){
       $json = substr($json, 1, strlen($json)-2);
       $logs = json_decode ($json, true);

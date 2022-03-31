@@ -1,6 +1,6 @@
 <?php
 namespace CREW\Game;
-use thecrew;
+use thecrewleocaseiro;
 use CREW\Cards;
 
 /*
@@ -11,22 +11,22 @@ class Globals extends \APP_DbObject
   /* Exposing methods from Table object singleton instance */
   protected static function init($name, $value)
   {
-    thecrew::get()->setGameStateInitialValue($name, $value);
+    thecrewleocaseiro::get()->setGameStateInitialValue($name, $value);
   }
 
   protected static function set($name, $value)
   {
-    thecrew::get()->setGameStateValue($name, $value);
+    thecrewleocaseiro::get()->setGameStateValue($name, $value);
   }
 
   public static function get($name)
   {
-    return thecrew::get()->getGameStateValue($name);
+    return thecrewleocaseiro::get()->getGameStateValue($name);
   }
 
   protected static function inc($name, $value = 1)
   {
-    return thecrew::get()->incGameStateValue($name, $value);
+    return thecrewleocaseiro::get()->incGameStateValue($name, $value);
   }
 
   /*

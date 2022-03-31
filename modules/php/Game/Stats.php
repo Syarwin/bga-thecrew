@@ -1,31 +1,31 @@
 <?php
 namespace CREW\Game;
-use thecrew;
+use thecrewleocaseiro;
 
 class Stats
 {
   protected static function init($type, $name, $value = 0){
-    thecrew::get()->initStat($type, $name, $value);
+    thecrewleocaseiro::get()->initStat($type, $name, $value);
   }
 
   public static function inc($name, $player = null, $value = 1, $log = true){
     $pId = is_null($player)? null : ( ($player instanceof \CREW\Player)? $player->getId() : $player );
-    thecrew::get()->incStat($value, $name, $pId);
+    thecrewleocaseiro::get()->incStat($value, $name, $pId);
   }
 
 
   protected static function get($name, $player = null){
-    thecrew::get()->getStat($name, $player);
+    thecrewleocaseiro::get()->getStat($name, $player);
   }
 
   protected static function set($value, $name, $player = null){
     $pId = is_null($player)? null : ( ($player instanceof \CREW\Player)? $player->getId() : $player );
-    thecrew::get()->setStat($value, $name, $pId);
+    thecrewleocaseiro::get()->setStat($value, $name, $pId);
   }
 
 
   public static function setupNewGame(){
-    $stats = thecrew::get()->getStatTypes();
+    $stats = thecrewleocaseiro::get()->getStatTypes();
 
 //    self::init('table', 'turns_number');
     /*

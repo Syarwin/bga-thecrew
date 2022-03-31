@@ -1,4 +1,4 @@
-.thecrew-arrow-down {
+.thecrewleocaseiro-arrow-down {
   width: 50px;
   height: 50px;
   background-image: url("img/sprites.png");
@@ -125,10 +125,10 @@
       display:flex;
       justify-content: center;
       align-items: center;
-      .thecrew-arrow-down:first-child {
+      .thecrewleocaseiro-arrow-down:first-child {
         transform:rotate(20deg);
       }
-      .thecrew-arrow-down:last-child {
+      .thecrewleocaseiro-arrow-down:last-child {
         transform:rotate(-20deg);
       }
     }

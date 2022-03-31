@@ -1,7 +1,7 @@
 {OVERALL_GAME_HEADER}
 
 
-<div id="thecrew-table" data-players="{NBR}">
+<div id="thecrewleocaseiro-table" data-players="{NBR}">
 	<div id="table-top"></div>
 
 	<div id="table-middle">
@@ -104,7 +104,7 @@
           <div id="proposal-task"></div>
           <div id="proposal-transaction">
             <div id="proposal-source"></div>
-            <div class="thecrew-arrow-down"></div>
+            <div class="thecrewleocaseiro-arrow-down"></div>
             <div id="proposal-target"></div>
           </div>
         </div>

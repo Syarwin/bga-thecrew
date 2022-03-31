@@ -21,7 +21,7 @@ class Players extends \CREW\Helpers\DB_Manager
     // Create players
     self::DB()->delete();
 
-    $gameInfos = thecrew::get()->getGameinfos();
+    $gameInfos = thecrewleocaseiro::get()->getGameinfos();
     $colors = $gameInfos['player_colors'];
     $query = self::DB()->multipleInsert(['player_id', 'player_color', 'player_canal', 'player_name', 'player_avatar', 'player_score']);
     $values = [];
@@ -32,8 +32,8 @@ class Players extends \CREW\Helpers\DB_Manager
       $atleastOnePremium = $atleastOnePremium || $player['player_is_premium'];
     }
     $query->values($values);
-    thecrew::get()->reattributeColorsBasedOnPreferences($players, $gameInfos['player_colors']);
-    thecrew::get()->reloadPlayersBasicInfos();
+    thecrewleocaseiro::get()->reattributeColorsBasedOnPreferences($players, $gameInfos['player_colors']);
+    thecrewleocaseiro::get()->reloadPlayersBasicInfos();
 
     Globals::setPremium($atleastOnePremium);
 
@@ -56,12 +56,12 @@ class Players extends \CREW\Helpers\DB_Manager
 
   public function getActiveId()
   {
-    return thecrew::get()->getActivePlayerId();
+    return thecrewleocaseiro::get()->getActivePlayerId();
   }
 
   public function getCurrentId()
   {
-    return thecrew::get()->getCurrentPId();
+    return thecrewleocaseiro::get()->getCurrentPId();
   }
 
   public function getAll(){
@@ -94,13 +94,13 @@ class Players extends \CREW\Helpers\DB_Manager
 
   public function getNextId($player)
   {
-    $table = thecrew::get()->getNextPlayerTable();
+    $table = thecrewleocaseiro::get()->getNextPlayerTable();
     return $table[$player->getId()];
   }
 
   public function getPrevId($player)
   {
-    $table = thecrew::get()->getPrevPlayerTable();
+    $table = thecrewleocaseiro::get()->getPrevPlayerTable();
     return $table[$player->getId()];
   }
 

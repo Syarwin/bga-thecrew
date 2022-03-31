@@ -4,7 +4,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
   const CARD_HEIGHT = 157;
 
 
-  return declare("thecrew.cardTrait", null, {
+  return declare("thecrewleocaseiro.cardTrait", null, {
     constructor(){
       this._notifications.push(
         ['newHand', 100],
@@ -178,7 +178,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     **********************/
     setupDiscard(){
       dojo.addClass('discard-container', 'active');
-      
+
       let addSquare = (c, i) => {
         dojo.place(`<div id="discard-${c}-${i}" class="discard-slot color-${c} number-${i}">${i}</div>`, 'discard-grid');
       };
