@@ -180,19 +180,39 @@ class Globals extends \APP_DbObject
   }
 
   public static function getJarvis() {
-    self::get('jarvis');
+    return self::get('jarvis');
   }
 
-  public static function getJarvisActive() {
-    self::get('jarvisActive');
-  }
-
-  public static function getJarvisTricks() {
-    self::get('jarvisTricks');
+  public static function isJarvis() {
+    return (bool) self::getJarvis();
   }
 
   public static function getJarvisPlaysAfter() {
-    self::get('jarvisPlaysAfter');
+    return self::get('jarvisPlaysAfter');
+  }
+
+  public static function getJarvisActive() {
+    return self::get('jarvisActive');
+  }
+
+  public static function isJarvisActive() {
+    return (bool) self::getJarvisActive();
+  }
+
+  public static function getJarvisTricks() {
+    return self::get('jarvisTricks');
+  }
+
+  public static function getJarvisCardList() {
+    return self::get('jarvisCardList');
+  }
+
+  public static function getJarvisReply() {
+    return self::get('jarvisReply');
+  }
+
+  public static function getJarvisDistressCard() {
+    return self::get('jarvisDistressCard');
   }
 
   /*
@@ -284,5 +304,21 @@ class Globals extends \APP_DbObject
 
   public static function setJarvisPlaysAfter($jarvisPlaysAfter) {
     self::set('jarvisPlaysAfter', $jarvisPlaysAfter);
+  }
+
+  public static function setJarvisCardList($jarvisCardList) {
+    self::set('jarvisCardList', $jarvisCardList);
+  }
+
+  public static function setJarvisReply($jarvisReply) {
+    self::set('jarvisReply', $jarvisReply);
+  }
+
+  public static function setJarvisDistressCard($jarvisDistressCard) {
+    self::set('jarvisDistressCard', $jarvisDistressCard);
+  }
+
+  public static function setLeodebug($leodebug) {
+    self::set('leodebug', $leodebug);
   }
 }

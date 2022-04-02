@@ -3,6 +3,7 @@ namespace CREW;
 use CREW\Game\Globals;
 use CREW\Game\Notifications;
 use CREW\Game\Players;
+use CREW\Helpers\Utils;
 
 /*
  * Cards
@@ -87,8 +88,6 @@ class Cards extends Helpers\Pieces
     self::shuffle('deck');
   }
 
-
-
   public static function clearMission()
   {
     // Take back all cards (from any location => null) to deck and shuffle
@@ -101,19 +100,59 @@ class Cards extends Helpers\Pieces
   {
     $players = Players::getAll();
     $nbCards = intdiv(Globals::isChallenge()? 30 : 40 , $players->count() );
-
     // This guy will have one extra card if 3 players and challenge mode off
     $luckyGuy = (count($players) == 3 && !Globals::isChallenge())? array_rand($players->toAssoc()) : -1;
 
-    foreach($players as $pId => $player){
-      $hand = self::pickForLocation($nbCards + ($pId == $luckyGuy? 1 : 0), 'deck', ["hand", $pId] );
-      Notifications::newHand($pId, $hand->toArray());
+    if (Globals::isJarvis()) {
+      self::startNewMissionJarvis($nbCards, $luckyGuy, $players);
+    } else {
+      foreach($players as $pId => $player){
+        $hand = self::pickForLocation($nbCards + ($pId == $luckyGuy? 1 : 0), 'deck', ["hand", $pId] );
+        Notifications::newHand($pId, $hand->toArray());
+      }
     }
 
     $card4Rocket = self::getSelectQuery()->where('value',4)->where('color', CARD_ROCKET)->get();
+
+    Utils::chat_log("card4Rocket[pId]", $card4Rocket['pId']);
+    die();
     return $card4Rocket['pId'];
   }
 
+  public static function startNewMissionJarvis($nbCards, $luckyGuy, $players)
+  {
+    // draw 14 cards for jarvis, without rocket 4
+    $card4Rocket = self::getSelectQuery()->where('value', 4)->where('color', CARD_ROCKET)->get();
+    self::DB()->update(['card_location' => 'pause'], $card4Rocket['id']);
+    $cards = self::pickForLocation($nbCards + (JARVIS_ID == $luckyGuy? 1 : 0), 'deck', ["hand", JARVIS_ID] )->toAssoc();
+    Utils::shuffle_assoc($cards);
+
+    // setup hidden and shown cards
+    $hand = [];
+    $col = 1;
+    $hidden = true;
+    foreach ($cards as $cId => $card) {
+      $hand[$col][] = ['id' => $cId, 'hidden' => $hidden];
+      $col += $hidden ? 0 : 1;
+      $hidden = !$hidden;
+    }
+    Utils::chat_log("Jarvis hand", $hand);
+
+    Globals::setJarvisCardList($hand);
+    Notifications::newHand(JARVIS_ID, $cards);
+
+    self::DB()->update(['card_location' => 'deck'], $card4Rocket['id']);
+
+    foreach ($players as $pId => $player) {
+      if ($pId == JARVIS_ID) {
+        continue;
+      }
+
+      $hand = self::pickForLocation($nbCards + ($pId == $luckyGuy? 1 : 0), 'deck', ["hand", $pId] );
+      Utils::chat_log("$pId hand", $hand);
+      Notifications::newHand($pId, $hand->toArray());
+    }
+  }
 
   public static function play($card)
   {

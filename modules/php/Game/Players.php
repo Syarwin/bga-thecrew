@@ -1,6 +1,8 @@
 <?php
 namespace CREW\Game;
-use thecrew;
+use CREW\JarvisPlayer;
+use thecrewleocaseiro;
+use CREW\Helpers\Collection;
 
 /*
  * Players manager : allows to easily access players ...
@@ -10,6 +12,7 @@ class Players extends \CREW\Helpers\DB_Manager
 {
   protected static $table = 'player';
   protected static $primary = 'player_id';
+  protected static $jarvis = ['id' => JARVIS_ID, 'no' => 99, 'name' => 'Jarvis', 'color' => 'black', 'nTricks' => 0];
   protected static function cast($row)
   {
     return new \CREW\Player($row);
@@ -52,10 +55,11 @@ class Players extends \CREW\Helpers\DB_Manager
     }
   }
 
-
-
   public function getActiveId()
   {
+    if (Globals::isJarvisActive()) {
+      return JARVIS_ID;
+    }
     return thecrewleocaseiro::get()->getActivePlayerId();
   }
 
@@ -65,7 +69,20 @@ class Players extends \CREW\Helpers\DB_Manager
   }
 
   public function getAll(){
-    return self::DB()->get(false);
+    $players = self::DB()->get(false);
+
+    if (Globals::isJarvis()) {
+      // $players->merge(self::getJarvis());
+      $players[JARVIS_ID] = self::getJarvis();
+    }
+
+    return $players;
+  }
+
+  public function getJarvis()
+  {
+    // return new Collection(new JarvisPlayer());
+    return new JarvisPlayer();
   }
 
   /*
@@ -74,6 +91,10 @@ class Players extends \CREW\Helpers\DB_Manager
   public function get($pId = null)
   {
     $pId = $pId ?: self::getActiveId();
+    if ($pId == JARVIS_ID) {
+      return self::getJarvis();
+    }
+
     return self::DB()->where($pId)->get();
   }
 
@@ -92,16 +113,33 @@ class Players extends \CREW\Helpers\DB_Manager
     return self::get(Globals::getCommander());
   }
 
-  public function getNextId($player)
+  public function getNextId($player, $forceIncludeJarvis = false)
   {
+    $pId = is_int($player) ? $player : $player->getId();
+    if ($pId == Globals::getJarvisPlaysAfter() && (Globals::isJarvis() || $forceIncludeJarvis)) {
+      return JARVIS_ID;
+    } elseif ($pId == JARVIS_ID) {
+      $pId = Globals::getJarvisPlaysAfter();
+    }
+
     $table = thecrewleocaseiro::get()->getNextPlayerTable();
-    return $table[$player->getId()];
+    return (int) $table[$pId];
   }
 
-  public function getPrevId($player)
+  public function getPrevId($player, $forceIncludeJarvis = false)
   {
+    $pId = is_int($player) ? $player : $player->getId();
+    if ($pId == JARVIS_ID) {
+      return Globals::getJarvisPlaysAfter();
+    }
+
     $table = thecrewleocaseiro::get()->getPrevPlayerTable();
-    return $table[$player->getId()];
+    $pId = (int) $table[$pId];
+
+    if ($pId == Globals::getJarvisPlaysAfter() && (Globals::isJarvis() || $forceIncludeJarvis)) {
+      $pId = JARVIS_ID;
+    }
+    return $pId;
   }
 
   public function alreadyCommmunicate()
@@ -114,7 +152,7 @@ class Players extends \CREW\Helpers\DB_Manager
    */
   public function count()
   {
-    return self::DB()->count();
+    return self::DB()->count() + (Globals::isJarvis() ? 1 : 0);
   }
 
 
@@ -168,5 +206,4 @@ class Players extends \CREW\Helpers\DB_Manager
   public function getAllDistressChoicesAssoc() {
     return self::getAll()->assocMap(function($player){ return $player->getDistressChoice(); });
   }
-
 }
