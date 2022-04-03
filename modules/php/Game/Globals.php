@@ -1,13 +1,21 @@
 <?php
 namespace CREW\Game;
-use thecrewleocaseiro;
 use CREW\Cards;
+use thecrewleocaseiro;
 
 /*
  * Globals
  */
-class Globals extends \APP_DbObject
+class Globals extends \CREW\Helpers\DB_Manager
 {
+  protected static $table = 'global_variables';
+  protected static $primary = 'name';
+  protected static function cast($row)
+  {
+    $val = json_decode(\stripslashes($row['value']), true);
+    return self::$globals[$row['name']] == 'int' ? ((int) $val) : $val;
+  }
+
   /* Exposing methods from Table object singleton instance */
   protected static function init($name, $value)
   {
@@ -290,35 +298,51 @@ class Globals extends \APP_DbObject
     self::set('playerToGiveId', $targetId);
   }
 
-  public static function setJarvis($jarvis) {
-    self::set('jarvis', $jarvis);
+  public static function setJarvis($value) {
+    $jarvis = (bool) $value;
+    self::set('jarvis', (bool) $jarvis);
+    self::DB()->update(['value' => \addslashes(\json_encode($jarvis))], 'jarvis');
+    return $jarvis;
   }
 
-  public static function setJarvisActive($jarvisActive) {
-    self::set('jarvisActive', $jarvisActive);
-  }
-
-  public static function setJarvisTricks($jarvisTricks) {
-    self::set('jarvisTricks', $jarvisTricks);
-  }
-
-  public static function setJarvisPlaysAfter($jarvisPlaysAfter) {
+  public static function setJarvisPlaysAfter($value) {
+    $jarvisPlaysAfter = (int) $value;
     self::set('jarvisPlaysAfter', $jarvisPlaysAfter);
+    self::DB()->update(['value' => \addslashes(\json_encode($jarvisPlaysAfter))], 'jarvisPlaysAfter');
+    return $jarvisPlaysAfter;
+  }
+
+  public static function setJarvisActive($value) {
+    $jarvisActive = (bool) $value;
+    self::set('jarvisActive', $jarvisActive);
+    self::DB()->update(['value' => \addslashes(\json_encode($jarvisActive))], 'jarvisActive');
+    return $jarvisActive;
+  }
+
+  public static function setJarvisTricks($value) {
+    $jarvisTricks = (int) $value;
+    self::set('jarvisTricks', $jarvisTricks);
+    self::DB()->update(['value' => \addslashes(\json_encode($jarvisTricks))], 'jarvisTricks');
+    return $jarvisTricks;
   }
 
   public static function setJarvisCardList($jarvisCardList) {
     self::set('jarvisCardList', $jarvisCardList);
+    self::DB()->update(['value' => \addslashes(\json_encode($jarvisCardList))], 'jarvisCardList');
+    return $jarvisCardList;
   }
 
-  public static function setJarvisReply($jarvisReply) {
+  public static function setJarvisReply($value) {
+    $jarvisReply = (int) $value;
     self::set('jarvisReply', $jarvisReply);
+    self::DB()->update(['value' => \addslashes(\json_encode($jarvisReply))], 'jarvisReply');
+    return $jarvisReply;
   }
 
-  public static function setJarvisDistressCard($jarvisDistressCard) {
+  public static function setJarvisDistressCard($value) {
+    $jarvisDistressCard = (int) $value;
     self::set('jarvisDistressCard', $jarvisDistressCard);
-  }
-
-  public static function setLeodebug($leodebug) {
-    self::set('leodebug', $leodebug);
+    self::DB()->update(['value' => \addslashes(\json_encode($jarvisDistressCard))], 'jarvisDistressCard');
+    return $jarvisDistressCard;
   }
 }
