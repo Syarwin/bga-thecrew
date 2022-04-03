@@ -78,6 +78,9 @@ trait DistressTrait
       '_private' => []
     ];
     foreach(Players::getAll() as $pId => $player){
+      if ($pId == \JARVIS_ID) {
+        continue;
+      }
       // Filter out rockets
       $hand = $player->getCards();
       Utils::filter($hand, function($card){ return $card['color'] != CARD_ROCKET; });
@@ -90,6 +93,21 @@ trait DistressTrait
         'pId' => $target->getId(),
         'cards' => array_map(function($card){ return $card['id'];}, $hand)
       ];
+    }
+
+    if (Globals::isJarvis()) {
+      $player = Players::getJarvis();
+      $filteredHand = $player->getCards()->filter(function ($card) {
+        return $card['id'] < 99 && $card['color'] != \CARD_ROCKET;
+      });
+
+      $data['_private'][Globals::getCommander()]['jarvis'] = $filteredHand->getIds();
+
+      $targetId =
+        Globals::getDistressDirection() == CLOCKWISE
+          ? Players::getNextId(JARVIS_ID, true)
+          : Players::getPrevId(JARVIS_ID, true);
+      $data['_private'][Globals::getCommander()]['jarvisTarget'] = $targetId;
     }
 
     return $data;
@@ -106,15 +124,76 @@ trait DistressTrait
     $this->gamestate->setPlayerNonMultiactive($player->getId(), "next");
   }
 
+  function actChooseCardDistressJarvis($cardId, $jarvisCardId)
+  {
+    $this->gamestate->checkPossibleAction('actChooseCardDistress');
+
+    $card = Cards::get($cardId);
+    $player = Players::getCurrent();
+    $player->setDistressCard($cardId);
+    Notifications::chooseDistressCard($player, $card);
+
+    $card = Cards::get($jarvisCardId);
+    if ($card['pId'] != \JARVIS_ID) {
+      throw new feException('Card not owned by Jarvis. Should not happen');
+    }
+    Globals::setJarvisDistressCard($jarvisCardId);
+    // Notifications::chooseDistressCardJarvis($player, $card);
+
+    // Make the player inactive and change game state if no one if left active
+    $this->gamestate->setPlayerNonMultiactive($player->getId(), 'next');
+  }
+
 
   function stDistressExchange()
   {
+    // First handle Jarvis card
+    $jarvisGivingCard = null;
+    if (Globals::isJarvis()) {
+      $targetId =
+        Globals::getDistressDirection() == CLOCKWISE
+          ? Players::getNextId(JARVIS_ID, true)
+          : Players::getPrevId(JARVIS_ID, true);
+      $target = Players::get($targetId);
+      $jarvisGivingCard = Globals::getJarvisDistressCard();
+      $card = Cards::get($jarvisGivingCard);
+      Globals::setJarvisDistressCard(null);
+      Cards::move($card['id'], ['hand', $targetId]);
+      Notifications::distressExchange(Players::getJarvis(), $target, $card, null);
+    }
+
     foreach(Players::getAll() as $pId => $player){
+      if ($pId == \JARVIS_ID) {
+        continue;
+      }
       $targetId = Globals::getDistressDirection() == CLOCKWISE? $this->getPlayerAfter($pId) : $this->getPlayerBefore($pId);
       $target = Players::get($targetId);
       $card = $player->getDistressCard();
       Cards::move($card['id'], ['hand', $targetId]);
-      Notifications::distressExchange($player, $target, $card);
+
+      $jarvisColumn = null;
+      if ($targetId == \JARVIS_ID) {
+        $cardList = Globals::getJarvisCardList();
+        $found = false;
+        foreach ($cardList as $column => &$cards) {
+          if (!$found) {
+            foreach ($cards as $i => $c) {
+              if ($c['id'] == $jarvisGivingCard) {
+                $cards[$i] = [
+                  'id' => $card['id'],
+                  'hidden' => false,
+                ];
+                Globals::setJarvisCardList($cardList);
+                $found = true;
+                $jarvisColumn = $column;
+                break;
+              }
+            }
+          }
+        }
+      }
+
+      Notifications::distressExchange($player, $target, $card, $jarvisColumn);
     }
     Players::clearDistressCards();
 
