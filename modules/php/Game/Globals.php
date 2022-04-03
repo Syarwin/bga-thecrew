@@ -63,13 +63,13 @@ class Globals extends \CREW\Helpers\DB_Manager
     'playerToGiveId' => 0,
 
     // 2 player mode
-    'jarvis' => 'bool',
-    'jarvisPlaysAfter' => 'int',
-    'jarvisActive' => 'bool',
-    'jarvisTricks' => 'int',
-    'jarvisCardList' => 'obj',
-    'jarvisReply' => 'int',
-    'jarvisDistressCard' => 'int',
+    'jarvis' => false,
+    'jarvisPlaysAfter' => 0,
+    'jarvisActive' => false,
+    'jarvisTricks' => 0,
+    'jarvisCardList' => '[]',
+    'jarvisReply' => 0,
+    'jarvisDistressCard' => 0,
   ];
 
   public static function declare($game)
@@ -212,7 +212,7 @@ class Globals extends \CREW\Helpers\DB_Manager
   }
 
   public static function getJarvisCardList() {
-    return self::get('jarvisCardList');
+    return json_decode(self::get('jarvisCardList'));
   }
 
   public static function getJarvisReply() {
@@ -327,7 +327,7 @@ class Globals extends \CREW\Helpers\DB_Manager
   }
 
   public static function setJarvisCardList($jarvisCardList) {
-    self::set('jarvisCardList', $jarvisCardList);
+    self::set('jarvisCardList', json_encode($jarvisCardList));
     self::DB()->update(['value' => \addslashes(\json_encode($jarvisCardList))], 'jarvisCardList');
     return $jarvisCardList;
   }

@@ -114,8 +114,6 @@ class Cards extends Helpers\Pieces
 
     $card4Rocket = self::getSelectQuery()->where('value',4)->where('color', CARD_ROCKET)->get();
 
-    Utils::chat_log("card4Rocket[pId]", $card4Rocket['pId']);
-    die();
     return $card4Rocket['pId'];
   }
 
@@ -136,7 +134,6 @@ class Cards extends Helpers\Pieces
       $col += $hidden ? 0 : 1;
       $hidden = !$hidden;
     }
-    Utils::chat_log("Jarvis hand", $hand);
 
     Globals::setJarvisCardList($hand);
     Notifications::newHand(JARVIS_ID, $cards);
@@ -149,7 +146,6 @@ class Cards extends Helpers\Pieces
       }
 
       $hand = self::pickForLocation($nbCards + ($pId == $luckyGuy? 1 : 0), 'deck', ["hand", $pId] );
-      Utils::chat_log("$pId hand", $hand);
       Notifications::newHand($pId, $hand->toArray());
     }
   }

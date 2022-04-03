@@ -102,10 +102,10 @@ class JarvisPlayer
     $cardList = Globals::getJarvisCardList();
     foreach ($cardList as $col => $cards) {
       foreach ($cards as $card) {
-        $c = Cards::get($card['id']);
+        $c = Cards::get($card->id);
         $c['column'] = $col;
         $c['hidden'] = false;
-        if ($card['hidden'] && $hidden) {
+        if ($card->hidden && $hidden) {
           $c['hidden'] = true;
           unset($c['value']);
           unset($c['color']);

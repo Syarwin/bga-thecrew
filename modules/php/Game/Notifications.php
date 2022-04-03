@@ -192,7 +192,8 @@ class Notifications
     ]);
   }
 
-  public static function distressExchange($from, $to, $card){
+  public static function distressExchange($from, $to, $card, $column){
+    // TODO Jarvis
     self::notify($from->getId(), 'giveCard', clienttranslate('You give ${value_symbol}${color_symbol} to ${player_name}'), [
       'card' => $card,
       'player' => $to,
