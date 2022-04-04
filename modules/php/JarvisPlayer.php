@@ -1,6 +1,7 @@
 <?php
 namespace CREW;
 use CREW\Game\Globals;
+use CREW\Game\GlobalsVars;
 use CREW\Cards;
 use CREW\Tasks;
 use CREW\Helpers\Utils;
@@ -88,24 +89,24 @@ class JarvisPlayer
       'commPending' => $this->isCommPending(),
       'canCommunicate' => $this->canCommunicate(),
       'distressChoice' => $this->distressChoice,
-      'distressCard' => $current ? Globals::getJarvisDistressCard() : null,
+      'distressCard' => $current ? GlobalsVars::getJarvisDistressCard() : null,
       'distressAuto' => $this->distressAuto,
       'reply' => $this->reply,
       'continueAuto' => $this->continueAuto,
-      'afterPlayer' => Globals::getJarvisPlaysAfter(),
+      'afterPlayer' => GlobalsVars::getJarvisPlaysAfter(),
     ];
   }
 
   public function getCards($hidden = true, $column = null)
   {
     $filtered = new Collection();
-    $cardList = Globals::getJarvisCardList();
+    $cardList = GlobalsVars::getJarvisCardList();
     foreach ($cardList as $col => $cards) {
       foreach ($cards as $card) {
-        $c = Cards::get($card->id);
+        $c = Cards::get($card['id']);
         $c['column'] = $col;
         $c['hidden'] = false;
-        if ($card->hidden && $hidden) {
+        if ($card['hidden'] && $hidden) {
           $c['hidden'] = true;
           unset($c['value']);
           unset($c['color']);
@@ -169,7 +170,7 @@ class JarvisPlayer
 
   public function winTrick()
   {
-    Globals::setJarvisTricks((int) Globals::getJarvisTricks() + 1);
+    GlobalsVars::setJarvisTricks((int) GlobalsVars::getJarvisTricks() + 1);
   }
 
   public function toggleComm()
@@ -206,7 +207,7 @@ class JarvisPlayer
   // Save reply at the given question
   public function reply($i)
   {
-    Globals::setJarvisReply($i);
+    GlobalsVars::setJarvisReply($i);
   }
 
   public function setAutoPick($mode)
@@ -232,12 +233,12 @@ class JarvisPlayer
   }
   public function getTricksWon()
   {
-    return Globals::getJarvisTricks();
+    return GlobalsVars::getJarvisTricks();
   }
 
   public function getReply()
   {
-    Globals::getJarvisReply();
+    GlobalsVars::getJarvisReply();
   }
 
   public function jsonSerialize($currentPlayerId = null)
@@ -256,10 +257,10 @@ class JarvisPlayer
       'tasks' => $this->getTasks($current)->toArray(),
       'table' => $this->getOnTable()->toArray(),
       'distressChoice' => $this->distressChoice,
-      'distressCard' => $current ? Globals::getJarvisDistressCard() : null,
+      'distressCard' => $current ? GlobalsVars::getJarvisDistressCard() : null,
       'reply' => $this->getReply(),
       'id' => strval($this->id),
-      'afterPlayer' => Globals::getJarvisPlaysAfter(),
+      'afterPlayer' => GlobalsVars::getJarvisPlaysAfter(),
     ]);
 
     return $data;

@@ -42,22 +42,22 @@ class Players extends \CREW\Helpers\DB_Manager
 
     // setup Jarvis for 2 Players
     if (count($players) == 2) {
-      Globals::setJarvis(true);
-      Globals::setJarvisActive(false);
-      Globals::setJarvisTricks(0);
+      GlobalsVars::setJarvis(true);
+      GlobalsVars::setJarvisActive(false);
+      GlobalsVars::setJarvisTricks(0);
 
       $ids = array_keys($players);
       $key = array_rand($ids);
-      Globals::setJarvisPlaysAfter($ids[$key]);
+      GlobalsVars::setJarvisPlaysAfter($ids[$key]);
     } else {
-      Globals::setJarvis(false);
-      Globals::setJarvisActive(false);
+      GlobalsVars::setJarvis(false);
+      GlobalsVars::setJarvisActive(false);
     }
   }
 
   public function getActiveId()
   {
-    if (Globals::isJarvisActive()) {
+    if (GlobalsVars::isJarvisActive()) {
       return JARVIS_ID;
     }
     return thecrewleocaseiro::get()->getActivePlayerId();
@@ -71,8 +71,7 @@ class Players extends \CREW\Helpers\DB_Manager
   public function getAll(){
     $players = self::DB()->get(false);
 
-    if (Globals::isJarvis()) {
-      // $players->merge(self::getJarvis());
+    if (GlobalsVars::isJarvis()) {
       $players[JARVIS_ID] = self::getJarvis();
     }
 
@@ -81,7 +80,6 @@ class Players extends \CREW\Helpers\DB_Manager
 
   public function getJarvis()
   {
-    // return new Collection(new JarvisPlayer());
     return new JarvisPlayer();
   }
 
@@ -116,10 +114,10 @@ class Players extends \CREW\Helpers\DB_Manager
   public function getNextId($player, $forceIncludeJarvis = false)
   {
     $pId = is_int($player) ? $player : $player->getId();
-    if ($pId == Globals::getJarvisPlaysAfter() && (Globals::isJarvis() || $forceIncludeJarvis)) {
+    if ($pId == GlobalsVars::getJarvisPlaysAfter() && (GlobalsVars::isJarvis() || $forceIncludeJarvis)) {
       return JARVIS_ID;
     } elseif ($pId == JARVIS_ID) {
-      $pId = Globals::getJarvisPlaysAfter();
+      $pId = GlobalsVars::getJarvisPlaysAfter();
     }
 
     $table = thecrewleocaseiro::get()->getNextPlayerTable();
@@ -130,13 +128,13 @@ class Players extends \CREW\Helpers\DB_Manager
   {
     $pId = is_int($player) ? $player : $player->getId();
     if ($pId == JARVIS_ID) {
-      return Globals::getJarvisPlaysAfter();
+      return GlobalsVars::getJarvisPlaysAfter();
     }
 
     $table = thecrewleocaseiro::get()->getPrevPlayerTable();
     $pId = (int) $table[$pId];
 
-    if ($pId == Globals::getJarvisPlaysAfter() && (Globals::isJarvis() || $forceIncludeJarvis)) {
+    if ($pId == GlobalsVars::getJarvisPlaysAfter() && (GlobalsVars::isJarvis() || $forceIncludeJarvis)) {
       $pId = JARVIS_ID;
     }
     return $pId;
@@ -152,7 +150,7 @@ class Players extends \CREW\Helpers\DB_Manager
    */
   public function count()
   {
-    return self::DB()->count() + (Globals::isJarvis() ? 1 : 0);
+    return self::DB()->count() + (GlobalsVars::isJarvis() ? 1 : 0);
   }
 
 

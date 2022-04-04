@@ -1,6 +1,7 @@
 <?php
 namespace CREW;
 use CREW\Game\Globals;
+use CREW\Game\GlobalsVars;
 use CREW\Game\Notifications;
 use CREW\Game\Players;
 use CREW\Helpers\Utils;
@@ -103,7 +104,7 @@ class Cards extends Helpers\Pieces
     // This guy will have one extra card if 3 players and challenge mode off
     $luckyGuy = (count($players) == 3 && !Globals::isChallenge())? array_rand($players->toAssoc()) : -1;
 
-    if (Globals::isJarvis()) {
+    if (GlobalsVars::isJarvis()) {
       self::startNewMissionJarvis($nbCards, $luckyGuy, $players);
     } else {
       foreach($players as $pId => $player){
@@ -135,7 +136,7 @@ class Cards extends Helpers\Pieces
       $hidden = !$hidden;
     }
 
-    Globals::setJarvisCardList($hand);
+    GlobalsVars::setJarvisCardList($hand);
     Notifications::newHand(JARVIS_ID, $cards);
 
     self::DB()->update(['card_location' => 'deck'], $card4Rocket['id']);

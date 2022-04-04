@@ -1,21 +1,13 @@
 <?php
 namespace CREW\Game;
-use CREW\Cards;
 use thecrewleocaseiro;
+use CREW\Cards;
 
 /*
  * Globals
  */
-class Globals extends \CREW\Helpers\DB_Manager
+class Globals extends \APP_DbObject
 {
-  protected static $table = 'global_variables';
-  protected static $primary = 'name';
-  protected static function cast($row)
-  {
-    $val = json_decode(\stripslashes($row['value']), true);
-    return self::$globals[$row['name']] == 'int' ? ((int) $val) : $val;
-  }
-
   /* Exposing methods from Table object singleton instance */
   protected static function init($name, $value)
   {
@@ -61,15 +53,6 @@ class Globals extends \CREW\Helpers\DB_Manager
     'playerWhoGiveId' => 0,
     'taskToGiveId' => 0,
     'playerToGiveId' => 0,
-
-    // 2 player mode
-    'jarvis' => false,
-    'jarvisPlaysAfter' => 0,
-    'jarvisActive' => false,
-    'jarvisTricks' => 0,
-    'jarvisCardList' => '[]',
-    'jarvisReply' => 0,
-    'jarvisDistressCard' => 0,
   ];
 
   public static function declare($game)
@@ -187,42 +170,6 @@ class Globals extends \CREW\Helpers\DB_Manager
     return self::get('checkCount');
   }
 
-  public static function getJarvis() {
-    return self::get('jarvis');
-  }
-
-  public static function isJarvis() {
-    return (bool) self::getJarvis();
-  }
-
-  public static function getJarvisPlaysAfter() {
-    return self::get('jarvisPlaysAfter');
-  }
-
-  public static function getJarvisActive() {
-    return self::get('jarvisActive');
-  }
-
-  public static function isJarvisActive() {
-    return (bool) self::getJarvisActive();
-  }
-
-  public static function getJarvisTricks() {
-    return self::get('jarvisTricks');
-  }
-
-  public static function getJarvisCardList() {
-    return json_decode(self::get('jarvisCardList'));
-  }
-
-  public static function getJarvisReply() {
-    return self::get('jarvisReply');
-  }
-
-  public static function getJarvisDistressCard() {
-    return self::get('jarvisDistressCard');
-  }
-
   /*
    * Setters
    */
@@ -296,53 +243,5 @@ class Globals extends \CREW\Helpers\DB_Manager
     self::set('playerWhoGiveId', $sourceId);
     self::set('taskToGiveId', $tId);
     self::set('playerToGiveId', $targetId);
-  }
-
-  public static function setJarvis($value) {
-    $jarvis = (bool) $value;
-    self::set('jarvis', (bool) $jarvis);
-    self::DB()->update(['value' => \addslashes(\json_encode($jarvis))], 'jarvis');
-    return $jarvis;
-  }
-
-  public static function setJarvisPlaysAfter($value) {
-    $jarvisPlaysAfter = (int) $value;
-    self::set('jarvisPlaysAfter', $jarvisPlaysAfter);
-    self::DB()->update(['value' => \addslashes(\json_encode($jarvisPlaysAfter))], 'jarvisPlaysAfter');
-    return $jarvisPlaysAfter;
-  }
-
-  public static function setJarvisActive($value) {
-    $jarvisActive = (bool) $value;
-    self::set('jarvisActive', $jarvisActive);
-    self::DB()->update(['value' => \addslashes(\json_encode($jarvisActive))], 'jarvisActive');
-    return $jarvisActive;
-  }
-
-  public static function setJarvisTricks($value) {
-    $jarvisTricks = (int) $value;
-    self::set('jarvisTricks', $jarvisTricks);
-    self::DB()->update(['value' => \addslashes(\json_encode($jarvisTricks))], 'jarvisTricks');
-    return $jarvisTricks;
-  }
-
-  public static function setJarvisCardList($jarvisCardList) {
-    self::set('jarvisCardList', json_encode($jarvisCardList));
-    self::DB()->update(['value' => \addslashes(\json_encode($jarvisCardList))], 'jarvisCardList');
-    return $jarvisCardList;
-  }
-
-  public static function setJarvisReply($value) {
-    $jarvisReply = (int) $value;
-    self::set('jarvisReply', $jarvisReply);
-    self::DB()->update(['value' => \addslashes(\json_encode($jarvisReply))], 'jarvisReply');
-    return $jarvisReply;
-  }
-
-  public static function setJarvisDistressCard($value) {
-    $jarvisDistressCard = (int) $value;
-    self::set('jarvisDistressCard', $jarvisDistressCard);
-    self::DB()->update(['value' => \addslashes(\json_encode($jarvisDistressCard))], 'jarvisDistressCard');
-    return $jarvisDistressCard;
   }
 }

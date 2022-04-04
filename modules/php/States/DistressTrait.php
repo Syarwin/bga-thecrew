@@ -1,6 +1,7 @@
 <?php
 namespace CREW\States;
 use CREW\Game\Globals;
+use CREW\Game\GlobalsVars;
 use CREW\Game\Players;
 use CREW\Game\Notifications;
 use CREW\Helpers\Utils;
@@ -95,7 +96,7 @@ trait DistressTrait
       ];
     }
 
-    if (Globals::isJarvis()) {
+    if (GlobalsVars::isJarvis()) {
       $player = Players::getJarvis();
       $filteredHand = $player->getCards()->filter(function ($card) {
         return $card['id'] < 99 && $card['color'] != \CARD_ROCKET;
@@ -137,7 +138,7 @@ trait DistressTrait
     if ($card['pId'] != \JARVIS_ID) {
       throw new feException('Card not owned by Jarvis. Should not happen');
     }
-    Globals::setJarvisDistressCard($jarvisCardId);
+    GlobalsVars::setJarvisDistressCard($jarvisCardId);
     // Notifications::chooseDistressCardJarvis($player, $card);
 
     // Make the player inactive and change game state if no one if left active
@@ -149,15 +150,15 @@ trait DistressTrait
   {
     // First handle Jarvis card
     $jarvisGivingCard = null;
-    if (Globals::isJarvis()) {
+    if (GlobalsVars::isJarvis()) {
       $targetId =
         Globals::getDistressDirection() == CLOCKWISE
           ? Players::getNextId(JARVIS_ID, true)
           : Players::getPrevId(JARVIS_ID, true);
       $target = Players::get($targetId);
-      $jarvisGivingCard = Globals::getJarvisDistressCard();
+      $jarvisGivingCard = GlobalsVars::getJarvisDistressCard();
       $card = Cards::get($jarvisGivingCard);
-      Globals::setJarvisDistressCard(null);
+      GlobalsVars::setJarvisDistressCard(null);
       Cards::move($card['id'], ['hand', $targetId]);
       Notifications::distressExchange(Players::getJarvis(), $target, $card, null);
     }
@@ -173,7 +174,7 @@ trait DistressTrait
 
       $jarvisColumn = null;
       if ($targetId == \JARVIS_ID) {
-        $cardList = Globals::getJarvisCardList();
+        $cardList = GlobalsVars::getJarvisCardList();
         $found = false;
         foreach ($cardList as $column => &$cards) {
           if (!$found) {
@@ -183,7 +184,7 @@ trait DistressTrait
                   'id' => $card['id'],
                   'hidden' => false,
                 ];
-                Globals::setJarvisCardList($cardList);
+                GlobalsVars::setJarvisCardList($cardList);
                 $found = true;
                 $jarvisColumn = $column;
                 break;
