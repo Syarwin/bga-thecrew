@@ -5,9 +5,9 @@ Project staus - just started
 - [x] add 3rd player Jarvis when 2 players only
 
 Jarvis virtal actions (PHP)
-- [ ] cards without the 4 rocket
-- [ ] make sure cards works with variant (challenge for 3)
-- [ ] split hidden/shown cards
+- [x] cards without the 4 rocket
+- [x] make sure cards works with variant (challenge for 3)
+- [x] split hidden/shown cards
 - [ ] tasks
 - [ ] tricks
 - [ ] filter any mission that wouldn't work with Jarvis
@@ -21,10 +21,11 @@ Commander actions to manage Jarvis (PHP)
 
 
 Jarvis UI (JS)
-- [ ] interface Desktop
+- [x] interface Desktop
 - [ ] interface Mobile
-- [ ] hidden cards
-- [ ] shown cards
+- [x] hidden cards
+- [x] shown cards
+- [x] jarvis score
 - [ ] action to select card (commander)
 - [ ] action to confirm card (commander)
 - [ ] reveal hidden card after complete trick

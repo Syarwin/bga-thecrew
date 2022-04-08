@@ -1,0 +1,66 @@
+#thecrewleocaseiro-table {
+    #jarvis-hand-container {
+        display: none;
+        justify-content: flex-end;
+        order: 0;
+
+        #jarvis-hand {
+            margin: 3px 0 0;
+            padding: 7px;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.6);
+            display: flex;
+
+            .jarvis-column {
+                .jarvis-card ~ .jarvis-card {
+                    margin-top: -130%;
+                }
+
+                .jarvis-card {
+                    &.selected,
+                    &.received,
+                    &.preselected {
+                        border: 3px solid red;
+                        z-index: 4;
+                        margin-left: -4px;
+                        box-shadow: 0 0 5px 1px #f00;
+                    }
+                    &.received {
+                        border-color: green;
+                        box-shadow: 0 0 5px 1px #0f0;
+                    }
+                }
+            }
+        }
+    }
+
+    &[data-players='2'] #jarvis-hand-container {
+        display: flex;
+    }
+
+    #jarvis-hand {
+        .jarvis-card {
+            position:relative;
+            width: 84px;
+            height: 132px;
+            border-radius: 5px;
+            @include shadow;
+            background-image: url("img/cards.png");
+            background-size: 1100%;
+
+            @for $i from 1 through 4 {
+                &[data-color="#{$i}"]{ background-position-y: ($i - 1) * 100% / 3; }
+            }
+
+            @for $i from 1 through 9 {
+                &[data-value="#{$i}"]{ background-position-x: ($i - 1) * 100% / 10; }
+            }
+
+            &[data-color="5"][data-value="1"] { background-position-y: 0%; background-position-x: 90%; }
+            &[data-color="5"][data-value="2"] { background-position-y: 33.3%; background-position-x: 90%; }
+            &[data-color="5"][data-value="3"] { background-position-y: 66.6%;  background-position-x: 90%; }
+            &[data-color="5"][data-value="4"] { background-position-y: 100%; background-position-x: 90%; }
+            &[data-color="0"][data-value="0"] { background-position: 100% 0%; }
+        }
+    }
+}

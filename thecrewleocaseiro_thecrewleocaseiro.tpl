@@ -2,6 +2,7 @@
 
 
 <div id="thecrewleocaseiro-table" data-players="{NBR}">
+  <div id="jarvis-hand-container"><div id="jarvis-hand"></div></div>
 	<div id="table-top"></div>
 
 	<div id="table-middle">
@@ -225,6 +226,35 @@ var jstpl_configPlayerBoard = `
 
   </div>
 </div>
+`;
+
+var jstpl_jarvis = `<div id="overall_player_board_1" class="player-board" style="border-color: rgb(255, 0, 0); width: 234px; height: auto;">
+                        <div class="player_board_inner" id="player_board_inner_ff0000">
+                            <div class="emblemwrap" id="avatarwrap_1">
+                                <div class="emblempremium"></div>
+                            </div>
+                            <div id="rtc_placeholder_1" class="rtc_placeholder"></div>
+                            <div class="emblemwrap" id="avatar_active_wrap_1" style="display:none">
+                                <div class="icon20 icon20_night this_is_night hidden"></div>
+                            </div>
+                            <div class="player-name" id="player_name_1">
+                            	<a  style="color: #ff0000" target="_blank">Jarvis</a>
+                            	<i id="player_1_status" class="fa fa-circle status_offline player_status hidden"></i>
+                            	<div class="flag" style="background-position: -112px -66px; display:none;" title="France"></div>
+                            </div>
+                            <div id="player_board_1" class="player_board_content">
+                                <div class="player_score">
+                                    <span id="player_score_1" class="player_score_value"></span> <i class="fa fa-star" id="icon_point_1"></i>
+                                    <span class="player_elo_wrap">• <div class="gamerank gamerank_beginner "><span class="icon20 icon20_rankw"></span> <span class="gamerank_value" id="player_elo_1" "="">0</span></div></span>
+                                    <span id="timeToThink_1" class="timeToThink">--:--</span>
+                                </div>
+                                <div class="player_showcursor" id="player_showcursor_1"><input type="checkbox" checked="checked" class="player_hidecursor" id="player_hidecursor_1"> Show cursor <i class="fa fa-hand-pointer-o" style="color:#ff0000"></i></div>
+                                <div class="player_table_status" id="player_table_status_1"></div>
+</div>
+                            <div id="player_panel_content_ff0000" class="player_panel_content">
+                            </div>
+                        </div>
+                    </div>
 `;
 
 

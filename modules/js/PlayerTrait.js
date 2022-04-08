@@ -11,6 +11,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this.positions = [];
       this._callbackOnPlayer = null;
       this._selectablePlayers = [];
+
+      this.JARVIS_ID = 1;
     },
 
     /*
@@ -23,6 +25,10 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       let topRowNo = nPlayers == 5? [1,2,3] : [1,2];
 
       players.forEach( player => {
+        if (player.id === this.JARVIS_ID) {
+          dojo.place(this.format_string(jstpl_jarvis, {}), 'overall_player_board_' + player.afterPlayer, 'after');
+        }
+
         player.no = (player.no + nPlayers - currentPlayerNo) % nPlayers;
         this.positions[player.id] = player.no;
 
@@ -75,6 +81,11 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
           if(player.preselected && $('hand_item_' + player.preselected))
             dojo.addClass('hand_item_' + player.preselected, 'preselected');
+        }
+
+        // Setup Jarvis
+        if (player.id == this.JARVIS_ID) {
+          this.setupJarvisCards();
         }
       });
 
