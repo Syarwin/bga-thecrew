@@ -105,7 +105,8 @@ class Cards extends Helpers\Pieces
     $luckyGuy = (count($players) == 3 && !Globals::isChallenge())? array_rand($players->toAssoc()) : -1;
 
     if (GlobalsVars::isJarvis()) {
-      self::startNewMissionJarvis($nbCards, $luckyGuy, $players);
+      $luckyGuy = JARVIS_ID; // If JARVIS is present, he will be the lucky guy
+      self::startNewMissionJarvis($nbCards, JARVIS_ID, $players);
     } else {
       foreach($players as $pId => $player){
         $hand = self::pickForLocation($nbCards + ($pId == $luckyGuy? 1 : 0), 'deck', ["hand", $pId] );
