@@ -64,7 +64,7 @@ class Cards extends Helpers\Pieces
 
   public function setupNewGame($players, $options)
   {
-    $challenge = count($players) == 3 && $options[OPTION_CHALLENGE] == CHALLENGE_ON;
+    $challenge = count($players) <= 3 && $options[OPTION_CHALLENGE] == CHALLENGE_ON;
 
     $colors = [
       CARD_BLUE => 9,
@@ -131,8 +131,17 @@ class Cards extends Helpers\Pieces
     $hand = [];
     $col = 1;
     $hidden = true;
+
+    $totalOfCards = count($cards);
+    $lastCard = end($cards);
+    $lastCardId = $lastCard["id"];
+    $shouldShowLastCard = $totalOfCards % 2 > 0;
+
     foreach ($cards as $cId => $card) {
-      $hand[$col][] = ['id' => $cId, 'hidden' => $hidden];
+      // force to show last card, if number of cards is odd
+      $hiddenCard = $lastCardId == $cId && $shouldShowLastCard ? false : $hidden;
+
+      $hand[$col][] = ['id' => $cId, 'hidden' => $hiddenCard];
       $col += $hidden ? 0 : 1;
       $hidden = !$hidden;
     }
