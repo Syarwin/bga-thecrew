@@ -153,7 +153,6 @@ class Players extends \CREW\Helpers\DB_Manager
     return self::DB()->count() + (GlobalsVars::isJarvis() ? 1 : 0);
   }
 
-
   /*
    * getUiData : get all ui data of all players : id, no, name, team, color, powers list, farmers
    */
@@ -162,6 +161,58 @@ class Players extends \CREW\Helpers\DB_Manager
     return self::getAll()->assocMap(function($player) use ($pId){ return $player->getUiData($pId); });
   }
 
+  /*
+   * Get current turn order according to first player variable
+   */
+  public function getTurnOrder($firstPlayer = null, $includeJarvis = false)
+  {
+    $firstPlayer = $firstPlayer ?? Globals::getCommander();
+    $order = [];
+    $p = $firstPlayer;
+    do {
+      $order[] = $p;
+      $p = self::getNextId($p, $includeJarvis);
+    } while ($p != $firstPlayer);
+    return $order;
+  }
+
+  /**
+   * This activate next player
+   */
+  public function activeNext($ignoreJarvis = false)
+  {
+    $pId = self::getActiveId();
+    $nextPlayer = self::getNextId((int) $pId);
+    if ($nextPlayer == JARVIS_ID && !$ignoreJarvis) {
+      GlobalsVars::setJarvisActive(true);
+      $nextPlayer = Globals::getCommander();
+    } elseif ($nextPlayer == JARVIS_ID && $ignoreJarvis) {
+      $nextPlayer = self::getNextId(JARVIS_ID);
+    } else {
+      GlobalsVars::setJarvisActive(false);
+    }
+
+    thecrewleocaseiro::get()->gamestate->changeActivePlayer($nextPlayer);
+    return $nextPlayer;
+  }
+
+  /**
+   * This allow to change next player taking into account Jarvis
+   */
+  public function changeActive($pId)
+  {
+    if (GlobalsVars::isJarvis()) {
+      // We need to activate/desactivate Jarvis
+      if ($pId == JARVIS_ID) {
+        GlobalsVars::setJarvisActive(true);
+        $pId = Globals::getCommander();
+      } elseif (GlobalsVars::isJarvisActive()) {
+        GlobalsVars::setJarvisActive(false);
+      }
+    }
+
+    thecrewleocaseiro::get()->gamestate->changeActivePlayer($pId);
+  }
 
   public function clearMission()
   {

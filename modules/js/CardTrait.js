@@ -241,8 +241,6 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
      * addCardInHand: add a card to Tonojo's hand
      */
     addCardInJarvisHand(card) {
-      debugger;
-      // this.place('tplJarvisCard', card, 'jarvis-column-' + card.column);
       this.setJarvisCard(card);
       if (!card.hidden) {
         // this.addCardInHand(card);

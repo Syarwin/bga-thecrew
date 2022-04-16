@@ -91,7 +91,7 @@ class JarvisPlayer
       'distressChoice' => $this->distressChoice,
       'distressCard' => $current ? GlobalsVars::getJarvisDistressCard() : null,
       'distressAuto' => $this->distressAuto,
-      'reply' => $this->reply,
+      'reply' => $this->getReply(),
       'continueAuto' => $this->continueAuto,
       'afterPlayer' => GlobalsVars::getJarvisPlaysAfter(),
     ];
@@ -204,12 +204,6 @@ class JarvisPlayer
     return;
   }
 
-  // Save reply at the given question
-  public function reply($i)
-  {
-    GlobalsVars::setJarvisReply($i);
-  }
-
   public function setAutoPick($mode)
   {
     // No need for Jarvis
@@ -234,6 +228,12 @@ class JarvisPlayer
   public function getTricksWon()
   {
     return GlobalsVars::getJarvisTricks();
+  }
+
+  // Save reply at the given question
+  public function setReply($i)
+  {
+    GlobalsVars::setJarvisReply($i);
   }
 
   public function getReply()

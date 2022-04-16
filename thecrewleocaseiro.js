@@ -84,6 +84,16 @@
         this.inherited(arguments);
       },
 
+
+
+      onEnteringState(stateName, args) {
+        if (args.args && args.args.jarvisActive) {
+          this.changePageTitle('jarvis');
+        }
+
+        this.inherited(arguments);
+      },
+
       onUpdateActionButtons(){
         this.updatePlayersStatus();
 

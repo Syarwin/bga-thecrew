@@ -1,6 +1,7 @@
 <?php
 namespace CREW\States;
 use CREW\Game\Globals;
+use CREW\Game\GlobalsVars;
 use CREW\Game\Players;
 use CREW\Game\Notifications;
 use CREW\Helpers\Utils;
@@ -25,6 +26,7 @@ trait QuestionTrait
       'question' => $mission->getQuestion(),
       'replies' => $mission->getReplies(),
       'tasks' => $mission->getTasks($tasks),
+      'jarvisActive' => GlobalsVars::isJarvisActive(),
     ];
   }
 
@@ -42,7 +44,7 @@ trait QuestionTrait
   function stNextQuestion()
   {
     $this->activeNextPlayer();
-    $newState = $this->getActivePlayerId() == Globals::getCommander()? 'pick' : 'next';
+    $newState = $this->getActivePlayerId() == Globals::getCommander() && !GlobalsVars::isJarvisActive() ? 'pick' : 'next';
     $this->gamestate->nextState($newState);
   }
 

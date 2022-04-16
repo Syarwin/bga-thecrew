@@ -1,6 +1,7 @@
 <?php
 namespace CREW\States;
 use CREW\Game\Globals;
+use CREW\Game\GlobalsVars;
 use CREW\Game\Players;
 use CREW\Game\Notifications;
 use CREW\Cards;
@@ -18,6 +19,8 @@ trait MissionTrait
     Cards::clearMission();
     Tasks::clearMission();
     Players::clearMission();
+    GlobalsVars::setJarvisTricks(0);
+    GlobalsVars::setJarvisReply(0);
 
     // Start new mission
     Globals::startNewMission();

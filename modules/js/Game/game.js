@@ -126,6 +126,33 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
      },
 
 
+
+    /**
+     * Handle change page title
+     */
+    resetPageTitle() {
+      this.changePageTitle();
+    },
+
+    changePageTitle(suffix = null, save = false) {
+      if (suffix == null) {
+        suffix = 'generic';
+      }
+
+      if (!this.gamedatas.gamestate['descriptionmyturn' + suffix]) return;
+
+      if (save) {
+        this.gamedatas.gamestate.descriptionmyturngeneric = this.gamedatas.gamestate.descriptionmyturn;
+        this.gamedatas.gamestate.descriptiongeneric = this.gamedatas.gamestate.description;
+      }
+
+      this.gamedatas.gamestate.descriptionmyturn = this.gamedatas.gamestate['descriptionmyturn' + suffix];
+      if (this.gamedatas.gamestate['description' + suffix])
+        this.gamedatas.gamestate.description = this.gamedatas.gamestate['description' + suffix];
+      this.updatePageTitle();
+    },
+
+
      /*
       * Custom connect that keep track of all the connections
       */
@@ -320,7 +347,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
     coloredName(pId = null) {
       if(pId == null)
         pId = this.player_id;
-        
+
       let color = this.gamedatas.players[pId].color;
       let color_bg = "";
       if (this.gamedatas.players[pId] && this.gamedatas.players[pId].color_back) {

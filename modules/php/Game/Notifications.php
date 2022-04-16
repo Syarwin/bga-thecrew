@@ -49,6 +49,23 @@ class Notifications
     ]);
   }
 
+  public static function newJarvisHand($hand)
+  {
+    self::notifyAll('newJarvisHand', clienttranslate('Jarvis cards are:&nbsp;<br />${cards}'), [
+      'cards' => self::listCardsForNotification($hand),
+      'hand' => $hand,
+    ]);
+  }
+
+  public static function JarvisRevealNewCard($card, $column)
+  {
+    self::notifyAll('JarvisRevealNewCard', clienttranslate('Jarvis reveals ${cards}'), [
+      'cards' => self::listCardsForNotification([$card]),
+      'card' => $card,
+      'column' => $column,
+    ]);
+  }
+
   public static function newCommander($player){
     self::notifyAll('commander', clienttranslate('${player_name} is your new commander'), [
       'player' => $player

@@ -13,7 +13,7 @@ Jarvis virtal actions (PHP)
 - [ ] filter any mission that wouldn't work with Jarvis
 
 Commander actions to manage Jarvis (PHP)
-- [ ] select task(s)
+- [x] select task(s)
 - [ ] select card per turn
 - [ ] should be command turn
 - [ ] should be jarvis turn
