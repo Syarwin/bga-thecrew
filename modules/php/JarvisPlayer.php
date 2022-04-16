@@ -60,7 +60,7 @@ class JarvisPlayer
   public function getColor(){ return $this->color; }
   public function isEliminated(){ return $this->eliminated; }
   public function isZombie(){ return $this->zombie; }
-  public function getDistressChoice(){ return $this->distressChoice; }
+  public function getDistressChoice(){ return WHATEVER; }
   public function getDistressCard(){ return Cards::get($this->distressCard); }
 
   public function isCommander() { return $this->id == Globals::getCommander(); }

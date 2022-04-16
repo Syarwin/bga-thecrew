@@ -1532,6 +1532,19 @@ html, body {
   border-color: green;
   box-shadow: 0 0 5px 1px #0f0;
 }
+#thecrewleocaseiro-table #jarvis-hand-container #jarvis-hand .jarvis-column .jarvis-card.unselectable {
+  opacity: 1 !important;
+  cursor: not-allowed !important;
+}
+#thecrewleocaseiro-table #jarvis-hand-container #jarvis-hand .jarvis-column .jarvis-card.selectable {
+  cursor: pointer !important;
+  box-shadow: 0 0 5px 1px #4782ff;
+  transition: transform 0.2s;
+}
+#thecrewleocaseiro-table #jarvis-hand-container #jarvis-hand .jarvis-column .jarvis-card.selectable:hover {
+  transform: scale(1.2);
+  z-index: 2;
+}
 #thecrewleocaseiro-table[data-players="2"] #jarvis-hand-container {
   display: flex;
 }

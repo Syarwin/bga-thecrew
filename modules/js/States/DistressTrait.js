@@ -42,6 +42,10 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     onEnteringStateDistress(args){
       this.switchCentralZone('distress');
       dojo.attr('distress-panel', 'data-dir', args.dir);
+      debugger;
+      this._selectedDistressJarvis = null;
+      this._selectedDistress = null;
+
       if(!this.isSpectator){
         this.makeCardsSelectable(args['_private'].cards, this.onClickCardToDistress.bind(this));
 
@@ -52,11 +56,60 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         });
         this.updatePageTitle();
       }
+
+      if (args._private.jarvis) {
+        this.gamedatas.gamestate.descriptionmyturn = dojo.string.substitute(
+          _('${you} must choose a card to pass to ${player_name} and a card for Jarvis to pass to ${player_name2}'),
+          {
+            you: this.coloredYou(),
+            player_name: this.coloredPlayerName(this.gamedatas.players[args._private.pId].name),
+            player_name2: this.coloredPlayerName(this.gamedatas.players[args._private.jarvisTarget].name),
+          },
+        );
+        this._jarvisDistress = true;
+        args._private.jarvis.forEach((cardId) =>
+          this.onClick('card-' + cardId, () => this.onClickCardToDistressJarvis(cardId)),
+        );
+      } else {
+        this._jarvisDistress = false;
+      }
+
     },
 
     onClickCardToDistress(card){
       debug("Choosing to distress :", card);
       this.takeAction('actChooseCardDistress', { cardId: card.id });
+      this._selectedDistress = card.id;
+      this.updateDistressBtn();
+    },
+
+    onClickCardToDistressJarvis(card){
+      debug("Choosing to distress Jarvis:", card);
+      dojo.query('#jarvis-hand-container .selected').removeClass('selected');
+      dojo.addClass('card-' + cardId, 'selected');
+      this._selectedDistressJarvis = card.id;
+      this.updateDistressBtn();
+    },
+
+
+
+    updateDistressBtn() {
+      dojo.destroy('btnConfirmDistressChoice');
+      if (!this._jarvisDistress) {
+        this.addPrimaryActionButton('btnConfirmDistressChoice', _('Confirm'), () => {
+          dojo.destroy('btnConfirmDistressChoice');
+          this.takeAction('actChooseCardDistress', { cardId: this._selectedDistress }, false);
+        });
+      } else if (this._selectedDistress && this._selectedDistressJarvis) {
+        this.addPrimaryActionButton('btnConfirmDistressChoice', _('Confirm'), () => {
+          dojo.destroy('btnConfirmDistressChoice');
+          this.takeAction(
+            'actChooseCardDistressJarvis',
+            { cardId: this._selectedDistress, jarvisCardId: this._selectedDistressJarvis },
+            false,
+          );
+        });
+      }
     },
 
     notif_chooseDistressCard(n){

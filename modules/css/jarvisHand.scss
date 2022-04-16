@@ -29,6 +29,22 @@
                         border-color: green;
                         box-shadow: 0 0 5px 1px #0f0;
                     }
+
+                    &.unselectable {
+                        opacity:1 !important;
+                        cursor:not-allowed !important;
+                    }
+
+                    &.selectable {
+                        cursor:pointer !important;
+                        box-shadow: 0 0 5px 1px #4782ff;
+                        transition:transform 0.2s;
+
+                        &:hover {
+                            transform:scale(1.2);
+                            z-index:2;
+                        }
+                    }
                 }
             }
         }

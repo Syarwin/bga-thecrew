@@ -137,6 +137,15 @@ class action_thecrewleocaseiro extends APP_GameAction
     self::ajaxResponse( );
   }
 
+  public function actChooseCardDistressJarvis()
+  {
+    self::setAjaxMode();
+    $cardId = self::getArg('cardId', AT_posint, true);
+    $jarvisCardId = self::getArg('jarvisCardId', AT_posint, true);
+    $this->game->actChooseCardDistressJarvis($cardId, $jarvisCardId);
+    self::ajaxResponse();
+  }
+
 
 /***********************
 ***** COMMUNICATION ****

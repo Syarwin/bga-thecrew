@@ -87,7 +87,7 @@ trait DistressTrait
       Utils::filter($hand, function($card){ return $card['color'] != CARD_ROCKET; });
 
       // Find the name of target
-      $targetId = Globals::getDistressDirection() == CLOCKWISE? $this->getPlayerAfter($pId) : $this->getPlayerBefore($pId);
+      $targetId = Globals::getDistressDirection() == CLOCKWISE? Players::getNextId($pId, true) : Players::getPrevId($pId, true);
       $target = Players::get($targetId);
 
       $data['_private'][$player->getId()] = [
@@ -125,6 +125,9 @@ trait DistressTrait
     $this->gamestate->setPlayerNonMultiactive($player->getId(), "next");
   }
 
+  /**
+   * actChooseCardDistressJarvis: the commander choosed a card for him and Jarvis
+   */
   function actChooseCardDistressJarvis($cardId, $jarvisCardId)
   {
     $this->gamestate->checkPossibleAction('actChooseCardDistress');
@@ -135,7 +138,7 @@ trait DistressTrait
     Notifications::chooseDistressCard($player, $card);
 
     $card = Cards::get($jarvisCardId);
-    if ($card['pId'] != \JARVIS_ID) {
+    if ($card['pId'] != JARVIS_ID) {
       throw new feException('Card not owned by Jarvis. Should not happen');
     }
     GlobalsVars::setJarvisDistressCard($jarvisCardId);
@@ -167,7 +170,7 @@ trait DistressTrait
       if ($pId == \JARVIS_ID) {
         continue;
       }
-      $targetId = Globals::getDistressDirection() == CLOCKWISE? $this->getPlayerAfter($pId) : $this->getPlayerBefore($pId);
+      $targetId = Globals::getDistressDirection() == CLOCKWISE? Players::getNextId($pId, true) : Players::getPrevId($pId, true);
       $target = Players::get($targetId);
       $card = $player->getDistressCard();
       Cards::move($card['id'], ['hand', $targetId]);

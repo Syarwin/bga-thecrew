@@ -164,19 +164,30 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
 
     notif_giveCard(n) {
-      this.slide('hand_item_' + n.args.card.id, 'player-table-' + n.args.player_id, 1000)
-        .then(() => this._hand.removeFromStockById(n.args.card.id) );
-      // this.slide('card-' + n.args.card.id, 'jarvis-column-' + n.args.column);
+      if (n.args.column) {
+        n.args.card.column = n.args.column;
+        dojo.addClass('card-' + n.args.card.id, 'received');
+        this.slide('card-' + n.args.card.id, 'jarvis-column-' + n.args.column);
+      } else {
+        this.slide('hand_item_' + n.args.card.id, 'player-table-' + n.args.player_id, 1000)
+          .then(() => this._hand.removeFromStockById(n.args.card.id) );
+      }
     },
 
     notif_receiveCard(n) {
+      debug('Notif: receiving a card', n);
       this.addCardInHand(n.args.card);
       dojo.addClass("hand_item_" + n.args.card.id, "received");
     },
 
     notif_receiveCardJarvis(n) {
+      debug('Notif: receiving a card for jarvis', n);
+      n.args.card.column = n.args.column;
       this.addCardInJarvisHand(n.args.card);
       dojo.addClass("hand_item_" + n.args.card.id, "received");
+      this.slide('card-' + n.args.card.id, 'jarvis-column-' + n.args.column, {
+        from: 'player-table-' + n.args.player_id,
+      });
     },
 
 
@@ -238,12 +249,11 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     },
 
     /**
-     * addCardInHand: add a card to Tonojo's hand
+     * addCardInHand: add a card to Jarvis's hand
      */
     addCardInJarvisHand(card) {
       this.setJarvisCard(card);
       if (!card.hidden) {
-        // this.addCardInHand(card);
         this.createCardTooltip(card, 'card-' + card.id);
       }
     },

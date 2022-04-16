@@ -209,17 +209,46 @@ class Notifications
     ]);
   }
 
-  public static function distressExchange($from, $to, $card, $column){
-    // TODO Jarvis
-    self::notify($from->getId(), 'giveCard', clienttranslate('You give ${value_symbol}${color_symbol} to ${player_name}'), [
+  public static function chooseDistressCardJarvis($player, $card){
+    self::notify($player->getId(), 'chooseDistressCard', clienttranslate('You chose Jarvis will give the ${value_symbol}${color_symbol}'), [
       'card' => $card,
-      'player' => $to,
     ]);
+  }
 
-    self::notify($to->getId(), 'receiveCard', clienttranslate('You receive ${value_symbol}${color_symbol} from ${player_name}'), [
-      'card' => $card,
-      'player' => $from,
-    ]);
+  public static function distressExchange($from, $to, $card, $column){
+    $pIds = Players::getAll()->getIds();
+    if ($from->getId() == JARVIS_ID) {
+      $pId = array_values(array_diff($pIds, [JARVIS_ID, $to->getId()]))[0];
+      self::notify($pId, 'giveCard', clienttranslate('Jarvis gives ${value_symbol}${color_symbol} to ${player_name}'), [
+        'card' => $card,
+        'player' => $to,
+      ]);
+    } else {
+      self::notify($from->getId(), 'giveCard', clienttranslate('You give ${value_symbol}${color_symbol} to ${player_name}'), [
+        'card' => $card,
+        'player' => $to,
+      ]);
+    }
+
+    if ($to->getId() == JARVIS_ID) {
+      $pId = array_values(array_diff($pIds, [JARVIS_ID, $from->getId()]))[0];
+      self::notify(
+        $pId,
+        'receiveCardJarvis',
+        clienttranslate('Jarvis receive ${value_symbol}${color_symbol} from ${player_name}'),
+        [
+          'card' => $card,
+          'player' => $from,
+          'column' => $column,
+        ]
+      );
+    } else {
+
+      self::notify($to->getId(), 'receiveCard', clienttranslate('You receive ${value_symbol}${color_symbol} from ${player_name}'), [
+        'card' => $card,
+        'player' => $from,
+      ]);
+    }
   }
 
 
