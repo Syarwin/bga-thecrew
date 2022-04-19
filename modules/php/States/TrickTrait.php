@@ -6,6 +6,7 @@ use CREW\Game\Players;
 use CREW\Game\Notifications;
 use CREW\LogBook;
 use CREW\Cards;
+use CREW\Helpers\Utils;
 use CREW\Tasks;
 use CREW\Missions;
 
@@ -41,18 +42,27 @@ trait TrickTrait
   function argPlayerTurn()
   {
     $player = Players::getActive();
-    $hand = $player->getCards();
-    $color = Globals::getTrickColor();
 
-    // If not the first card of the trick
-    if($color != 0){
-      // Keep only the cards with matching color (if at least one such card)
-      $filteredHand = array_values(array_filter($hand, function($card) use ($color){ return $card['color'] == $color; }));
-      if(!empty($filteredHand))
-        $hand = $filteredHand;
+    if (GlobalsVars::isJarvisActive() && ($player->getId() == Globals::getCommander() || $player->getId() == JARVIS_ID)) {
+      $player = Players::getJarvis();
+      $cards = $this->getJarvisCards($player);
+      // var_dump($cards); //die();
+    } else {
+      $hand = $player->getCards();
+      $color = Globals::getTrickColor();
+
+      // If not the first card of the trick
+      if($color != 0){
+        // Keep only the cards with matching color (if at least one such card)
+        $filteredHand = array_values(array_filter($hand, function($card) use ($color){ return $card['color'] == $color; }));
+        if(!empty($filteredHand))
+          $hand = $filteredHand;
+      }
+
+      $cards = array_map(function($card){ return $card['id'];}, $hand);
+      // var_dump($cards); die();
     }
 
-    $cards = array_map(function($card){ return $card['id'];}, $hand);
     $commCard = $player->getCardOnComm();
     return [
       'cards' => $cards,
@@ -63,6 +73,34 @@ trait TrickTrait
     ];
   }
 
+
+  /**
+   * Return the playable cards for a player for current trick
+   */
+  function getJarvisCards($player)
+  {
+    $hand = $player->getCards();
+    $color = Globals::getTrickColor();
+
+    // If not the first card of the trick
+    if ($color != 0) {
+      // Keep only the cards with matching color (if at least one such card)
+      $filteredHand = $hand->filter(function ($card) use ($color) {
+        return ($card['color'] ?? -1) == $color;
+      });
+
+      if (!$filteredHand->empty() && Cards::getOrderedOnTable($player->getId())->empty()) {
+        $hand = $filteredHand;
+      }
+    } else {
+      // Added for hidden cards for Jarvis
+      $filteredHand = $hand->filter(function ($card) {
+        return $card['id'] < 99;
+      });
+      $hand = $filteredHand;
+    }
+    return $hand->getIds();
+  }
 
 
   function actPlayCard($cardId) {
@@ -103,7 +141,7 @@ trait TrickTrait
       throw new \BgaUserException(_("This is not one of your card"));
 
     $preselectedCard = $player->getPreselectedCard();
-    if($preselectedCard['id'] == $cardId){
+    if($preselectedCard !== null && $preselectedCard['id'] == $cardId){
       // Unselect
       $player->clearPreselect();
       Notifications::clearPreselect($player);

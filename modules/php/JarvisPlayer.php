@@ -121,6 +121,19 @@ class JarvisPlayer
     return $filtered;
   }
 
+  public function getCardColumn($searchedCard)
+  {
+    $cardList = GlobalsVars::getJarvisCardList();
+    foreach ($cardList as $colNum => $cards) {
+      foreach ($cards as $card) {
+        if ($card['id'] == $searchedCard['id']) {
+          return $colNum;
+        }
+      }
+    }
+    return null;
+  }
+
   public function getRandomCard()
   {
     $cards = $this->getCards();
@@ -153,7 +166,7 @@ class JarvisPlayer
 
   public function getPreselectedCard()
   {
-    return $this->preselectCard;
+    return null;
   }
 
 

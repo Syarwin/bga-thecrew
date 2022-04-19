@@ -111,7 +111,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     onPlayCard(card){
       debug("Clicked on card : ", card);
 
-      if(!this._selectableCards.includes(card.id))
+      if(!this._selectableCards.map(card => String(card)).includes(String(card.id)))
         return;
 
       this._callbackOnCard(card);
@@ -243,7 +243,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
      * tplJarvisCard: template for card
      */
     setJarvisCard(card) {
-      dojo.place(`<div class="jarvis-card" data-color="${card.color || 0}" data-value="${card.value || 0}" id="jarvis-card-${
+      dojo.place(`<div class="jarvis-card" data-color="${card.color || 0}" data-value="${card.value || 0}" id="hand_item_${
         card.id
       }"></div>`, `jarvis-column-${card.column}`);
     },
@@ -254,7 +254,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     addCardInJarvisHand(card) {
       this.setJarvisCard(card);
       if (!card.hidden) {
-        this.createCardTooltip(card, 'card-' + card.id);
+        this.createCardTooltip(card, "hand_item_" + card.id);
+        dojo.connect($("hand_item_"+card.id), 'onclick', () => this.onPlayCard(card) );
       }
     },
 

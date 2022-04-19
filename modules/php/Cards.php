@@ -39,6 +39,10 @@ class Cards extends Helpers\Pieces
     return self::getInLocation(['table', $pId])->toArray();
   }
 
+  public static function getOrderedOnTable($pId = '%'){
+    return self::getInLocationOrdered(['table', $pId]);
+  }
+
   public static function countOnTable($pId = '%'){
     return self::getInLocation(['table', $pId])->count();
   }

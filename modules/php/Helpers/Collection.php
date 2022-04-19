@@ -50,6 +50,11 @@ class Collection extends \ArrayObject
     return array_reduce($this->toArray(), $func, $init);
   }
 
+  public function filter($func)
+  {
+    return new Collection(array_filter($this->toAssoc(), $func));
+  }
+
   public function assocMap($func){
     return array_map($func, $this->toAssoc());
   }
