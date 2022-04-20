@@ -57,9 +57,9 @@ class Notifications
     ]);
   }
 
-  public static function JarvisRevealNewCard($card, $column)
+  public static function jarvisRevealNewCard($card, $column)
   {
-    self::notifyAll('JarvisRevealNewCard', clienttranslate('Jarvis reveals ${cards}'), [
+    self::notifyAll('jarvisRevealNewCard', clienttranslate('Jarvis reveals ${cards}'), [
       'cards' => self::listCardsForNotification([$card]),
       'card' => $card,
       'column' => $column,
