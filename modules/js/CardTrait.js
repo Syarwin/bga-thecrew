@@ -129,12 +129,6 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       let preexist = $('card-' + card.id);
       let target = (comm? 'comcard-' : 'mat-') + card.pId;
 
-      // Play card from Jarvis hand
-      // if (card.pId == JARVIS_ID && $('hand_item_' + card.id)) {
-      //   return this.slideToObject('hand_item_' + card.id, target).play();
-      // }
-
-      debugger;
       // Create card if needed, otherwise reattach
       if (preexist){
         this.attachToNewParent('card-' + card.id, target);
@@ -284,6 +278,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       oCard.setAttribute('data-color', card.color);
       oCard.setAttribute('data-value', card.value);
       this.createCardTooltip(card, 'hand_item_' + card.id);
+      dojo.connect($("hand_item_"+card.id), 'onclick', () => this.onPlayCard(card) );
     },
 
     /**
