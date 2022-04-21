@@ -151,7 +151,7 @@ class Cards extends Helpers\Pieces
     }
 
     GlobalsVars::setJarvisCardList($hand);
-    Notifications::newHand(JARVIS_ID, $cards);
+    Notifications::newJarvisHand(JarvisPlayer::getCards()->toArray());
 
     self::DB()->update(['card_location' => 'deck'], $card4Rocket['id']);
 

@@ -1,5 +1,7 @@
 <?php
 namespace CREW\Game;
+
+use CREW\Helpers\Utils;
 use thecrewleocaseiro;
 
 class Notifications
@@ -374,13 +376,15 @@ class Notifications
     // Grouping values by color
     $groupedValues = [];
     foreach($cards as $card) {
-      if(!isset($groupedValues[ $card['color'] ]))
+      // Ignore Jarvis hidden cards
+      if (isset($card['color']) && isset($card['value'])) {
+        if(!isset($groupedValues[ $card['color'] ]))
         $groupedValues[$card['color']] = [];
 
-      $groupedValues[$card['color']][] = $card['value'];
+        $groupedValues[$card['color']][] = $card['value'];
+      }
     }
     ksort($groupedValues);
-
 
     // Foreach color, list the values
     $args = [];

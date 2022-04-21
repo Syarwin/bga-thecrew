@@ -97,7 +97,7 @@ class JarvisPlayer
     ];
   }
 
-  public function getCards($hidden = true, $column = null)
+  public static function getCards($hidden = true, $column = null)
   {
     $filtered = new Collection();
     $cardList = GlobalsVars::getJarvisCardList();
@@ -106,6 +106,7 @@ class JarvisPlayer
         $c = Cards::get($card['id']);
         $c['column'] = $col;
         $c['hidden'] = false;
+        $c['pId'] = JARVIS_ID;
         if ($card['hidden'] && $hidden) {
           $c['hidden'] = true;
           unset($c['value']);
