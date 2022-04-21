@@ -74,6 +74,10 @@ define('OPTION_SEE_DISCARD', 104);
 define('OPTION_SEE_DISCARD_OFF', 0);
 define('OPTION_SEE_DISCARD_ON', 1);
 
+define('OPTION_JARVIS', 105);
+define('OPTION_JARVIS_OFF', 0);
+define('OPTION_JARVIS_ON', 1);
+
 /*
  * DISTRESS DIRECTION
  */
