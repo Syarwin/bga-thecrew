@@ -26,7 +26,7 @@ class JarvisPlayer
     $this->distressCard = null;
     $this->reply = null;
     $this->distressAuto = '0';
-    $this->continueAuto = '0';
+    $this->continueAuto = '1';
     $this->preselectedCard = null;
   }
 
@@ -214,8 +214,7 @@ class JarvisPlayer
 
   public function setDistressCard($cardId)
   {
-    // No need for Jarvis
-    return;
+    return WHATEVER;
   }
 
   public function setAutoPick($mode)
@@ -226,8 +225,7 @@ class JarvisPlayer
 
   public function setAutoContinue($mode)
   {
-    // No need for Jarvis
-    return;
+    return WHATEVER;
   }
 
   public function preselectCard($cardId)
