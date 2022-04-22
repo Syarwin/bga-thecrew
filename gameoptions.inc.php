@@ -417,7 +417,9 @@ $game_options = [
     'values' => [
       OPTION_JARVIS_OFF => ['name' => totranslate('Off')],
       OPTION_JARVIS_ON => [
-        'name' => totranslate('On'),
+        'name' => totranslate('Experimental 2 player mode'),
+        'beta'=> true,
+        'tmdisplay'=> totranslate('Experimental 2 player mode'),
         'description' => totranslate('Jarvis, the 2 player variant'),
       ],
     ],
