@@ -105,7 +105,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
       dojo.query("#hand .stockitem").removeClass("selectable").addClass("unselectable");
       dojo.query('#jarvis-hand-container .jarvis-card').removeClass('selectable').addClass('unselectable');
-      cards.forEach(cardId => dojo.query("#hand_item_" + cardId).removeClass('unselectable').addClass('selectable') );
+      // Jarvis hidden cards are >=100
+      cards.filter(card => card <= 100).forEach(cardId => dojo.query("#hand_item_" + cardId).removeClass('unselectable').addClass('selectable') );
     },
 
     onPlayCard(card){
