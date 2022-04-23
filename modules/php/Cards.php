@@ -104,13 +104,13 @@ class Cards extends Helpers\Pieces
   public static function startNewMission()
   {
     $players = Players::getAll();
-    $nbCards = intdiv(Globals::isChallenge()? 30 : 40 , $players->count() );
+    $nbCards = intdiv(Globals::isChallenge() ? 30 : 40 , $players->count() );
     // This guy will have one extra card if 3 players and challenge mode off
-    $luckyGuy = (count($players) == 3 && !Globals::isChallenge())? array_rand($players->toAssoc()) : -1;
+    $luckyGuy = (count($players) <= 3 && !Globals::isChallenge())? array_rand($players->toAssoc()) : -1;
 
     if (GlobalsVars::isJarvis()) {
-      $luckyGuy = JARVIS_ID; // If JARVIS is present, he will be the lucky guy
-      self::startNewMissionJarvis($nbCards, JARVIS_ID, $players);
+      $luckyGuy = !Globals::isChallenge() ? JARVIS_ID : -1; // If JARVIS is present, he will be the lucky guy
+      self::startNewMissionJarvis($nbCards, $luckyGuy, $players);
     } else {
       foreach($players as $pId => $player){
         $hand = self::pickForLocation($nbCards + ($pId == $luckyGuy? 1 : 0), 'deck', ["hand", $pId] );
@@ -125,11 +125,10 @@ class Cards extends Helpers\Pieces
 
   public static function startNewMissionJarvis($nbCards, $luckyGuy, $players)
   {
-    // draw 14 cards for jarvis, without rocket 4
+    // draw 10 or 14 cards for jarvis, without rocket 4
     $card4Rocket = self::getSelectQuery()->where('value', 4)->where('color', CARD_ROCKET)->get();
     self::DB()->update(['card_location' => 'pause'], $card4Rocket['id']);
-    $cards = self::pickForLocation($nbCards + (JARVIS_ID == $luckyGuy? 1 : 0), 'deck', ["hand", JARVIS_ID] )->toAssoc();
-    Utils::shuffle_assoc($cards);
+    $cards = self::pickForLocation($nbCards + (JARVIS_ID == $luckyGuy ? 1 : 0), 'deck', ["hand", JARVIS_ID] )->toAssoc();
 
     // setup hidden and shown cards
     $hand = [];
