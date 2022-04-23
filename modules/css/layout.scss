@@ -415,6 +415,10 @@ html,body {
 
         &.unselectable {
           opacity:0.6 !important;
+        }
+
+        &.unselectable,
+        &_unselectable {
           cursor:not-allowed !important;
         }
 

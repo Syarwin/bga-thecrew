@@ -229,6 +229,7 @@ class Notifications
       self::notify($from->getId(), 'giveCard', clienttranslate('You give ${value_symbol}${color_symbol} to ${player_name}'), [
         'card' => $card,
         'player' => $to,
+        'column' => $column,
       ]);
     }
 
@@ -245,7 +246,6 @@ class Notifications
         ]
       );
     } else {
-
       self::notify($to->getId(), 'receiveCard', clienttranslate('You receive ${value_symbol}${color_symbol} from ${player_name}'), [
         'card' => $card,
         'player' => $from,

@@ -21,7 +21,7 @@ trait DistressTrait
 
     $choices = Players::getAllDistressChoices();
     $choices = array_values(array_diff($choices, [WHATEVER]));
-    $needVote = (count($choices) > 1 || $choices[0] == 0);
+    $needVote = (count($choices) > 1 || (isset($choices[0]) && $choices[0] == 0));
     $this->gamestate->nextState($needVote? 'setup' : 'turn');
   }
 
@@ -142,7 +142,7 @@ trait DistressTrait
       throw new feException('Card not owned by Jarvis. Should not happen');
     }
     GlobalsVars::setJarvisDistressCard($jarvisCardId);
-    // Notifications::chooseDistressCardJarvis($player, $card);
+    Notifications::chooseDistressCardJarvis($player, $card);
 
     // Make the player inactive and change game state if no one if left active
     $this->gamestate->setPlayerNonMultiactive($player->getId(), 'next');
@@ -173,6 +173,7 @@ trait DistressTrait
       $targetId = Globals::getDistressDirection() == CLOCKWISE? Players::getNextId($pId, true) : Players::getPrevId($pId, true);
       $target = Players::get($targetId);
       $card = $player->getDistressCard();
+      $player->setDistressCard(null);
       Cards::move($card['id'], ['hand', $targetId]);
 
       $jarvisColumn = null;

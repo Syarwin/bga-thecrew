@@ -16,7 +16,9 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         ['newJarvisHand', 100],
       );
       this._callbackOnCard = null;
+      this._callbackOnJarvisCard = null;
       this._selectableCards = [];
+      this._selectableJarvisCards = [];
 
       this.colors = {
         1 : {
@@ -109,13 +111,43 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       cards.filter(card => card <= 100).forEach(cardId => dojo.query("#hand_item_" + cardId).removeClass('unselectable').addClass('selectable') );
     },
 
+    makeJarvisCardsSelectable(cards, callback){
+      this._callbackOnJarvisCard = callback;
+      this._selectableJarvisCards = cards;
+
+      dojo.query('#jarvis-hand-container .jarvis-card').removeClass('selectable').addClass('unselectable');
+      // Jarvis hidden cards are >=100
+      cards.filter(card => card <= 100).forEach(cardId => dojo.query("#hand_item_" + cardId).removeClass('unselectable').addClass('selectable') );
+    },
+
     onPlayCard(card){
+      if (card.column && this._selectableJarvisCards.length > 0) {
+        return this.onPlayJarvisCard(card);
+      }
+
       debug("Clicked on card : ", card);
 
       if(!this._selectableCards.map(card => String(card)).includes(String(card.id)))
         return;
 
-      this._callbackOnCard(card);
+      if (card.column && this._callbackOnJarvisCard !== null) {
+        this._callbackOnJarvisCard(card);
+      } else if (this._callbackOnCard) {
+        this._callbackOnCard(card);
+      }
+    },
+
+    onPlayJarvisCard(card){
+      debug("Clicked on Jarvis card : ", card);
+
+      if(!this._selectableJarvisCards.map(card => String(card)).includes(String(card.id)))
+        return;
+
+      if (this._callbackOnJarvisCard !== null) {
+        this._callbackOnJarvisCard(card);
+      } else {
+        this._callbackOnCard(card);
+      }
     },
 
     addCardOnTable(card, container = null){
@@ -175,11 +207,26 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       debug('Notif: give a card', n);
       if (n.args.column) {
         n.args.card.column = n.args.column;
-        dojo.addClass('card-' + n.args.card.id, 'received');
-        this.slide('card-' + n.args.card.id, 'jarvis-column-' + n.args.column);
+        this.slide('hand_item_' + n.args.card.id, 'jarvis-column-' + n.args.column)
+          .then(() => {
+            this._hand.removeFromStockById(n.args.card.id);
+            setTimeout(() => {
+              this.addCardInJarvisHand(n.args.card);
+              dojo.addClass('hand_item_' + n.args.card.id, 'received');
+            }, 10);
+          });
       } else {
         this.slide('hand_item_' + n.args.card.id, 'player-table-' + n.args.player_id, 1000)
-          .then(() => this._hand.removeFromStockById(n.args.card.id) );
+          .then(() => {
+            if (n.args.card.pId == JARVIS_ID) {
+              // JARVIS hand is not stock, so we remove it here
+              dojo.query('#hand_item_' + n.args.card.id).forEach(dojo.destroy);
+            } else {
+              this._hand.removeFromStockById(n.args.card.id)
+            }
+          });
+
+
       }
     },
 

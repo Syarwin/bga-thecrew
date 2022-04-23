@@ -42,7 +42,6 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     onEnteringStateDistress(args){
       this.switchCentralZone('distress');
       dojo.attr('distress-panel', 'data-dir', args.dir);
-      debugger;
       this._selectedDistressJarvis = null;
       this._selectedDistress = null;
 
@@ -54,39 +53,42 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
             you: this.coloredName(),
             player_name : this.coloredName(args._private.pId),
         });
-        this.updatePageTitle();
-      }
 
-      if (args._private.jarvis) {
-        this.gamedatas.gamestate.descriptionmyturn = dojo.string.substitute(
-          _('${you} must choose a card to pass to ${player_name} and a card for Jarvis to pass to ${player_name2}'),
-          {
-            you: this.coloredYou(),
-            player_name: this.coloredPlayerName(this.gamedatas.players[args._private.pId].name),
-            player_name2: this.coloredPlayerName(this.gamedatas.players[args._private.jarvisTarget].name),
-          },
-        );
-        this._jarvisDistress = true;
-        args._private.jarvis.forEach((cardId) =>
-          this.onClick('card-' + cardId, () => this.onClickCardToDistressJarvis(cardId)),
-        );
-      } else {
-        this._jarvisDistress = false;
+        if (args._private.jarvis) {
+          this.gamedatas.gamestate.descriptionmyturn = dojo.string.substitute(
+            _('${you} must choose a card to pass to ${player_name} and a card for Jarvis to pass to ${player_name2}'),
+            {
+              you: this.coloredName(this.player_id),
+              player_name: this.coloredName(args._private.pId),
+              player_name2: this.coloredName(args._private.jarvisTarget),
+            },
+          );
+          this._jarvisDistress = true;
+          this.makeJarvisCardsSelectable(args._private.jarvis, this.onClickCardToDistressJarvis.bind(this));
+        } else {
+          this._jarvisDistress = false;
+        }
+        this.updatePageTitle();
       }
 
     },
 
     onClickCardToDistress(card){
       debug("Choosing to distress :", card);
-      this.takeAction('actChooseCardDistress', { cardId: card.id });
-      this._selectedDistress = card.id;
-      this.updateDistressBtn();
+      if (this.isJarvisPlaying()) {
+        dojo.query('#hand-container .selected').removeClass('selected');
+        dojo.addClass('hand_item_' + card.id, 'selected');
+        this._selectedDistress = card.id;
+        this.updateDistressBtn();
+      } else {
+        this.takeAction('actChooseCardDistress', { cardId: card.id });
+      }
     },
 
     onClickCardToDistressJarvis(card){
       debug("Choosing to distress Jarvis:", card);
       dojo.query('#jarvis-hand-container .selected').removeClass('selected');
-      dojo.addClass('card-' + cardId, 'selected');
+      dojo.addClass('hand_item_' + card.id, 'selected');
       this._selectedDistressJarvis = card.id;
       this.updateDistressBtn();
     },

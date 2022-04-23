@@ -115,7 +115,8 @@
 
       clearPossible(){
         this._callbackOnCard = null;
-        this._selectableCards = [];
+        this._callbackOnJarvisCard = null;
+        this._selectableJarvisCards = [];
         this._callbackOnPlayer = null;
         this._selectablePlayers = [];
         this._selectedComm = null;

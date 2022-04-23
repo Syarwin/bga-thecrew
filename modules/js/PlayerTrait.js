@@ -15,6 +15,10 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this.JARVIS_ID = 1;
     },
 
+    isJarvisPlaying() {
+      return Object.values(this.gamedatas.players).some(({id}) => id === this.JARVIS_ID);
+    },
+
     /*
      * Called to setup player board, called at setup and when someone is eliminated
      */
