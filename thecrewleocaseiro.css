@@ -1512,6 +1512,8 @@ html, body {
   justify-content: flex-end;
   order: 0;
 }
+#thecrewleocaseiro-table #jarvis-hand-container.left-side {
+  justify-content: flex-start; }
 #thecrewleocaseiro-table #jarvis-hand-container #jarvis-hand {
   margin: 3px 0 0;
   padding: 7px;

@@ -91,6 +91,21 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
       this.updatePlayersData();
       this.updateCommander();
+      this.updatePlayersPositions();
+    },
+
+    updatePlayersPositions() {
+      let players = Object.values(this.gamedatas.players);
+      let playersOrder = players.sort((a,b) => a.no - b.no);
+
+      playersOrder.forEach((player) => {
+        let isLeft = player.no == 1;
+        $(`player-table-${player.id}`).classList.toggle('left-side', isLeft);
+
+        if (player.id == this.JARVIS_ID) {
+          $('jarvis-hand-container').classList.toggle('left-side', isLeft);
+        }
+      });
     },
 
     descCardsCounter(pId){

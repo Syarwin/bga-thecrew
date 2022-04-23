@@ -4,6 +4,10 @@
         justify-content: flex-end;
         order: 0;
 
+        &.left-side {
+            justify-content: flex-start;
+        }
+
         #jarvis-hand {
             margin: 3px 0 0;
             padding: 7px;

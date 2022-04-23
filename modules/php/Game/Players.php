@@ -161,21 +161,6 @@ class Players extends \CREW\Helpers\DB_Manager
     return self::getAll()->assocMap(function($player) use ($pId){ return $player->getUiData($pId); });
   }
 
-  /*
-   * Get current turn order according to first player variable
-   */
-  public function getTurnOrder($firstPlayer = null, $includeJarvis = false)
-  {
-    $firstPlayer = $firstPlayer ?? Globals::getCommander();
-    $order = [];
-    $p = $firstPlayer;
-    do {
-      $order[] = $p;
-      $p = self::getNextId($p, $includeJarvis);
-    } while ($p != $firstPlayer);
-    return $order;
-  }
-
   /**
    * This activate next player
    */
