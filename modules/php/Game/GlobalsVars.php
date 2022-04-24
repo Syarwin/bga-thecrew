@@ -1,6 +1,6 @@
 <?php
 namespace CREW\Game;
-use thecrewleocaseiro;
+use thecrew;
 
 /*
  * Globals

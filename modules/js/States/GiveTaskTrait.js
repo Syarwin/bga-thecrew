@@ -1,5 +1,5 @@
 define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
-  return declare("thecrewleocaseiro.giveTaskTrait", null, {
+  return declare("thecrew.giveTaskTrait", null, {
     constructor(){
       this._notifications.push(
         ['confirmGiveTask', 10],

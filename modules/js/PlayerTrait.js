@@ -1,5 +1,5 @@
 define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
-  return declare("thecrewleocaseiro.playerTrait", null, {
+  return declare("thecrew.playerTrait", null, {
     constructor(){
       this._notifications.push(
         ['commander', 100],
@@ -140,7 +140,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     },
 
     updatePlayersStatus(){
-      dojo.query("#thecrewleocaseiro-table .player-table").removeClass("active");
+      dojo.query("#thecrew-table .player-table").removeClass("active");
       this.getActivePlayers().forEach(pId => dojo.addClass("player-table-" + pId, "active"));
     },
 

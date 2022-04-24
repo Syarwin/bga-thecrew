@@ -2,13 +2,13 @@
 /**
  *------
  * BGA framework: © Gregory Isabelli <gisabelli@boardgamearena.com> & Emmanuel Colin <ecolin@boardgamearena.com>
- * thecrewleocaseiro implementation : © Nicolas Gocel <nicolas.gocel@gmail.com> & Timothée Pecatte <tim.pecatte@gmail.com>
+ * thecrew implementation : © Nicolas Gocel <nicolas.gocel@gmail.com> & Timothée Pecatte <tim.pecatte@gmail.com>
  *
  * This code has been produced on the BGA studio platform for use on http://boardgamearena.com.
  * See http://en.boardgamearena.com/#!doc/Studio for more information.
  * -----
  *
- * thecrewleocaseiro.game.php
+ * thecrew.game.php
  *
  * This is the main file for your game logic.
  *
@@ -25,7 +25,7 @@ $swdNamespaceAutoload = function ($class)
     if (file_exists($file)) {
       require_once($file);
     } else {
-      var_dump("Impossible to load thecrewleocaseiro class : $class");
+      var_dump("Impossible to load thecrew class : $class");
     }
   }
 };
@@ -36,7 +36,7 @@ require_once(APP_GAMEMODULE_PATH . 'module/table/table.game.php');
 
 use CREW\Game\Globals;
 
-class thecrewleocaseiro extends Table
+class thecrew extends Table
 {
   use CREW\States\MissionTrait;
   use CREW\States\PickTaskTrait;
@@ -63,7 +63,7 @@ class thecrewleocaseiro extends Table
 
   protected function getGameName()
   {
-      return "thecrewleocaseiro";
+      return "thecrew";
   }
 
 

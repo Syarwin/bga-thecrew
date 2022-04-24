@@ -1,6 +1,6 @@
 define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
   const CLOCKWISE = 1, DONT_USE = 2, ANTICLOCKWISE = 3, AGREE = 4;
-  return declare("thecrewleocaseiro.distressTrait", null, {
+  return declare("thecrew.distressTrait", null, {
     constructor(){
       this._notifications.push(
         ['chooseDistressDirection', 10],

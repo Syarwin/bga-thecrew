@@ -5,7 +5,7 @@ use CREW\Game\Players;
 use CREW\Game\Globals;
 use CREW\Game\Notifications;
 use CREW\Helpers\Utils;
-use thecrewleocaseiro;
+use thecrew;
 
 abstract class AbstractMission
 {

@@ -1,5 +1,5 @@
 define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
-  return declare("thecrewleocaseiro.questionTrait", null, {
+  return declare("thecrew.questionTrait", null, {
     constructor(){
       this._notifications.push(
         ['speak', 1000],

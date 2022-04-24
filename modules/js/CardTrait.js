@@ -5,7 +5,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
   const JARVIS_ID = 1;
 
-  return declare("thecrewleocaseiro.cardTrait", null, {
+  return declare("thecrew.cardTrait", null, {
     constructor(){
       this._notifications.push(
         ['newHand', 100],

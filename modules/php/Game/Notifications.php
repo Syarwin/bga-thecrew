@@ -2,18 +2,18 @@
 namespace CREW\Game;
 
 use CREW\Helpers\Utils;
-use thecrewleocaseiro;
+use thecrew;
 
 class Notifications
 {
   protected static function notifyAll($name, $msg, $data){
     self::updateArgs($data);
-    thecrewleocaseiro::get()->notifyAllPlayers($name, $msg, $data);
+    thecrew::get()->notifyAllPlayers($name, $msg, $data);
   }
 
   protected static function notify($pId, $name, $msg, $data){
     self::updateArgs($data);
-    thecrewleocaseiro::get()->notifyPlayer($pId, $name, $msg, $data);
+    thecrew::get()->notifyPlayer($pId, $name, $msg, $data);
   }
 
 

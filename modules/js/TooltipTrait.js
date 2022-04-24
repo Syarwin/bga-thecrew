@@ -1,7 +1,7 @@
 define(["dojo", "dojo/_base/declare", "ebg/stock"], (dojo, declare) => {
   const HIDDEN_TASK = 7;
 
-  return declare("thecrewleocaseiro.tooltipTrait", null, {
+  return declare("thecrew.tooltipTrait", null, {
     constructor(){
     },
 

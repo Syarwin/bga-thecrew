@@ -1,7 +1,7 @@
 <?php
 namespace CREW\Game;
 use CREW\JarvisPlayer;
-use thecrewleocaseiro;
+use thecrew;
 use CREW\Helpers\Collection;
 
 /*
@@ -24,7 +24,7 @@ class Players extends \CREW\Helpers\DB_Manager
     // Create players
     self::DB()->delete();
 
-    $gameInfos = thecrewleocaseiro::get()->getGameinfos();
+    $gameInfos = thecrew::get()->getGameinfos();
     $colors = $gameInfos['player_colors'];
     $query = self::DB()->multipleInsert(['player_id', 'player_color', 'player_canal', 'player_name', 'player_avatar', 'player_score']);
     $values = [];
@@ -35,8 +35,8 @@ class Players extends \CREW\Helpers\DB_Manager
       $atleastOnePremium = $atleastOnePremium || $player['player_is_premium'];
     }
     $query->values($values);
-    thecrewleocaseiro::get()->reattributeColorsBasedOnPreferences($players, $gameInfos['player_colors']);
-    thecrewleocaseiro::get()->reloadPlayersBasicInfos();
+    thecrew::get()->reattributeColorsBasedOnPreferences($players, $gameInfos['player_colors']);
+    thecrew::get()->reloadPlayersBasicInfos();
 
     Globals::setPremium($atleastOnePremium);
 
@@ -60,12 +60,12 @@ class Players extends \CREW\Helpers\DB_Manager
     if (GlobalsVars::isJarvisActive()) {
       return JARVIS_ID;
     }
-    return thecrewleocaseiro::get()->getActivePlayerId();
+    return thecrew::get()->getActivePlayerId();
   }
 
   public function getCurrentId()
   {
-    return thecrewleocaseiro::get()->getCurrentPId();
+    return thecrew::get()->getCurrentPId();
   }
 
   public function getAll(){
@@ -120,7 +120,7 @@ class Players extends \CREW\Helpers\DB_Manager
       $pId = GlobalsVars::getJarvisPlaysAfter();
     }
 
-    $table = thecrewleocaseiro::get()->getNextPlayerTable();
+    $table = thecrew::get()->getNextPlayerTable();
     return (int) $table[$pId];
   }
 
@@ -131,7 +131,7 @@ class Players extends \CREW\Helpers\DB_Manager
       return GlobalsVars::getJarvisPlaysAfter();
     }
 
-    $table = thecrewleocaseiro::get()->getPrevPlayerTable();
+    $table = thecrew::get()->getPrevPlayerTable();
     $pId = (int) $table[$pId];
 
     if ($pId == GlobalsVars::getJarvisPlaysAfter() && (GlobalsVars::isJarvis() || $forceIncludeJarvis)) {
@@ -177,7 +177,7 @@ class Players extends \CREW\Helpers\DB_Manager
       GlobalsVars::setJarvisActive(false);
     }
 
-    thecrewleocaseiro::get()->gamestate->changeActivePlayer($nextPlayer);
+    thecrew::get()->gamestate->changeActivePlayer($nextPlayer);
     return $nextPlayer;
   }
 
@@ -196,7 +196,7 @@ class Players extends \CREW\Helpers\DB_Manager
       }
     }
 
-    thecrewleocaseiro::get()->gamestate->changeActivePlayer($pId);
+    thecrew::get()->gamestate->changeActivePlayer($pId);
   }
 
   public function clearMission()

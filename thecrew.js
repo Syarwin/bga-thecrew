@@ -1,15 +1,15 @@
 /**
  *------
  * BGA framework: Â© Gregory Isabelli <gisabelli@boardgamearena.com> & Emmanuel Colin <ecolin@boardgamearena.com>
- * thecrewleocaseiro implementation : © Nicolas Gocel <nicolas.gocel@gmail.com>
+ * thecrew implementation : © Nicolas Gocel <nicolas.gocel@gmail.com>
  *
  * This code has been produced on the BGA studio platform for use on http://boardgamearena.com.
  * See http://en.boardgamearena.com/#!doc/Studio for more information.
  * -----
  *
- * thecrewleocaseiro.js
+ * thecrew.js
  *
- * thecrewleocaseiro user interface script
+ * thecrew user interface script
  *
  * In this file, you are describing the logic of your user interface, in Javascript language.
  *
@@ -38,19 +38,19 @@
      g_gamethemeurl + "modules/js/States/GiveTaskTrait.js",
 
  ], function (dojo, declare) {
-    return declare("bgagame.thecrewleocaseiro", [
+    return declare("bgagame.thecrew", [
       customgame.game,
-      thecrewleocaseiro.cardTrait,
-      thecrewleocaseiro.playerTrait,
-      thecrewleocaseiro.tooltipTrait,
-      thecrewleocaseiro.missionTrait,
-      thecrewleocaseiro.pickTaskTrait,
-      thecrewleocaseiro.trickTrait,
-      thecrewleocaseiro.communicationTrait,
-      thecrewleocaseiro.distressTrait,
-      thecrewleocaseiro.questionTrait,
-      thecrewleocaseiro.moveTileTrait,
-      thecrewleocaseiro.giveTaskTrait,
+      thecrew.cardTrait,
+      thecrew.playerTrait,
+      thecrew.tooltipTrait,
+      thecrew.missionTrait,
+      thecrew.pickTaskTrait,
+      thecrew.trickTrait,
+      thecrew.communicationTrait,
+      thecrew.distressTrait,
+      thecrew.questionTrait,
+      thecrew.moveTileTrait,
+      thecrew.giveTaskTrait,
     ], {
       constructor(){
         this._notifications.push(
@@ -179,7 +179,7 @@
 
         new customgame.modal("campaignIntro", {
           autoShow:true,
-          class:"thecrewleocaseiro_popin",
+          class:"thecrew_popin",
           closeIcon:'fa-times',
           verticalAlign:'flex-start',
           title: _("THE CREW"),
@@ -236,14 +236,14 @@
         // Auto answer distress
         $('autopick').value = this.gamedatas.players[this.player_id].distressAuto;
         dojo.connect($('autopick'), 'change', () => {
-          this.ajaxcall("/thecrewleocaseiro/thecrewleocaseiro/setAutopick.html", { autopick: $("autopick").value }, () => {});
+          this.ajaxcall("/thecrew/thecrew/setAutopick.html", { autopick: $("autopick").value }, () => {});
         });
 
 
         // Auto answer continue
         $('autocontinue').value = this.gamedatas.players[this.player_id].continueAuto;
         dojo.connect($('autocontinue'), 'change', () => {
-          this.ajaxcall("/thecrewleocaseiro/thecrewleocaseiro/setAutocontinue.html", { autocontinue: $("autocontinue").value }, () => {});
+          this.ajaxcall("/thecrew/thecrew/setAutocontinue.html", { autocontinue: $("autocontinue").value }, () => {});
         });
       },
    });

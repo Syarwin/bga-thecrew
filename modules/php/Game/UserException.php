@@ -1,11 +1,11 @@
 <?php
 namespace CREW\Game;
-use thecrewleocaseiro;
+use thecrew;
 
 class UserException extends \BgaUserException {
   public function __construct($str)
   {
-    parent::__construct(thecrewleocaseiro::translate($str));
+    parent::__construct(thecrew::translate($str));
   }
 }
 ?>

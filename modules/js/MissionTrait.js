@@ -1,5 +1,5 @@
 define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
-  return declare("thecrewleocaseiro.missionTrait", null, {
+  return declare("thecrew.missionTrait", null, {
     constructor(){
       this._notifications.push(
         ['continue', 10]
@@ -40,7 +40,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     updateMissionCommunication(){
       let mission = this.gamedatas.missions[this.gamedatas.status.mId - 1];
       let disruption = mission.disruption? mission.disruption : 0;
-      dojo.attr('thecrewleocaseiro-table', 'data-disruption', Math.max(0, disruption - this.gamedatas.trickCount));
+      dojo.attr('thecrew-table', 'data-disruption', Math.max(0, disruption - this.gamedatas.trickCount));
     },
 
     createMissionInformations(container = 'mission-informations'){
@@ -58,7 +58,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
       // Tasks
       if(mission.tasks > 0){
-        let arrow = mission.hiddenTasks? '<div class="thecrewleocaseiro-arrow-down"></div>' : '';
+        let arrow = mission.hiddenTasks? '<div class="thecrew-arrow-down"></div>' : '';
         dojo.place(`<div id="mission-informations-tasks-container">${arrow}<div id="mission-informations-tasks" class="mission-informations-tasks">${mission.tasks}</div></div>`, container);
         this.addTooltip('mission-informations-tasks', _('Number of tasks used for this mission'), '');
       }
@@ -77,7 +77,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       if(mission.distribution){
         dojo.place(`<div id="mission-informations-commander"></div>`, container);
         this.addTooltip('mission-informations-commander', _('Your commander now uncovers a task card and asks each crew member in turn whether he or she wants to take on the task. It may only be answered with "yes" or "no". Afterwards, your commander decides who actually receives the assignment. He or she can also choose himself or herself. Repeat the process until all of the tasks are distributed. Note, however, that the tasks must be evenly distributed: At the end of the distribution, no one may have two tasks more than another crew member. '), '');
-        dojo.place(`<div id="mission-informations-distribution"><div class="thecrewleocaseiro-arrow-down"></div><div class="thecrewleocaseiro-arrow-down"></div><div class="thecrewleocaseiro-arrow-down"></div></div>`, container);
+        dojo.place(`<div id="mission-informations-distribution"><div class="thecrew-arrow-down"></div><div class="thecrew-arrow-down"></div><div class="thecrew-arrow-down"></div></div>`, container);
       }
 
       // Question

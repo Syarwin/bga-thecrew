@@ -4,7 +4,7 @@ use \CREW\Game\Players;
 use \CREW\Game\Globals;
 use \CREW\Game\Notifications;
 use \CREW\Cards;
-use thecrewleocaseiro;
+use thecrew;
 
 class Mission12 extends AbstractMission
 {

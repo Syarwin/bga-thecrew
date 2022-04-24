@@ -8,14 +8,14 @@
  * See http://en.doc.boardgamearena.com/Studio for more information.
  * -----
  *
- * thecrewleocaseiro.action.php
+ * thecrew.action.php
  *
- * thecrewleocaseiro main action entry point
+ * thecrew main action entry point
  *
  */
 
 
-class action_thecrewleocaseiro extends APP_GameAction
+class action_thecrew extends APP_GameAction
 {
   // Constructor: please do not modify
   public function __default()
@@ -24,7 +24,7 @@ class action_thecrewleocaseiro extends APP_GameAction
       $this->view = "common_notifwindow";
       $this->viewArgs['table'] = self::getArg( "table", AT_posint, true );
     } else {
-      $this->view = "thecrewleocaseiro_thecrewleocaseiro";
+      $this->view = "thecrew_thecrew";
       self::trace( "Complete reinitialization of board game" );
     }
   }
