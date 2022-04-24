@@ -6,7 +6,6 @@ use CREW\Game\Players;
 use CREW\Game\Notifications;
 use CREW\LogBook;
 use CREW\Cards;
-use CREW\Helpers\Utils;
 use CREW\Tasks;
 use CREW\Missions;
 
@@ -60,7 +59,6 @@ trait TrickTrait
       }
 
       $cards = array_map(function($card){ return $card['id'];}, $hand);
-      // var_dump($cards); die();
     }
 
     $commCard = $player->getCardOnComm();

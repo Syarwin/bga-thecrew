@@ -1,7 +1,6 @@
 <?php
 namespace CREW\Game;
 
-use CREW\Helpers\Utils;
 use thecrew;
 
 class Notifications

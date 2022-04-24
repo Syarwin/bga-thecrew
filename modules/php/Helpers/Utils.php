@@ -13,12 +13,6 @@ abstract class Utils extends \APP_DbObject
     $data = array_values(array_diff($data, $arr));
   }
 
-  public static function chat_log($name, $var)
-  {
-    echo ">> ".$name." >>";
-    var_dump($var);
-  }
-
   public static function die($args=null){
     if(is_null($args)) throw new \BgaVisibleSystemException(implode("<br>", self::$logmsg));
     throw new \BgaVisibleSystemException(json_encode($args));

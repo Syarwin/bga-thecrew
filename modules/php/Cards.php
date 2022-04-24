@@ -4,7 +4,6 @@ use CREW\Game\Globals;
 use CREW\Game\GlobalsVars;
 use CREW\Game\Notifications;
 use CREW\Game\Players;
-use CREW\Helpers\Utils;
 
 /*
  * Cards
