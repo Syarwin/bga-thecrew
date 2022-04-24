@@ -35,12 +35,12 @@
                     }
 
                     &.unselectable {
-                        opacity:1 !important;
-                        cursor:not-allowed !important;
+                        opacity:1;
+                        cursor:not-allowed;
                     }
 
                     &.selectable {
-                        cursor:pointer !important;
+                        cursor:pointer;
                         box-shadow: 0 0 5px 1px #4782ff;
                         transition:transform 0.2s;
 

@@ -188,7 +188,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
       if (card.pId == JARVIS_ID) {
         // JARVIS hand is not stock, so we remove it here
-        dojo.query('#' + from).forEach(dojo.destroy);
+        dojo.destroy(from);
       }
       // Slide it !
       dojo.animateProperty({
@@ -219,8 +219,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         this.slide('hand_item_' + n.args.card.id, 'player-table-' + n.args.player_id, 1000)
           .then(() => {
             if (n.args.card.pId == JARVIS_ID) {
-              // JARVIS hand is not stock, so we remove it here
-              dojo.query('#hand_item_' + n.args.card.id).forEach(dojo.destroy);
+              dojo.destroy('hand_item_' + n.args.card.id);
             } else {
               this._hand.removeFromStockById(n.args.card.id)
             }
