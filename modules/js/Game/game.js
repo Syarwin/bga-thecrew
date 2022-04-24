@@ -127,13 +127,6 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
 
 
 
-    /**
-     * Handle change page title
-     */
-    resetPageTitle() {
-      this.changePageTitle();
-    },
-
     changePageTitle(suffix = null, save = false) {
       if (suffix == null) {
         suffix = 'generic';

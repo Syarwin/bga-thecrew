@@ -2,7 +2,7 @@ Fork to implement Jarvis - 2 player variant
 
 Project staus - just started
 
-- [x] add 3rd player Jarvis when 2 players only
+- [x] add 3rd player Jarvis when 2 player only
 
 Jarvis virtal actions (PHP)
 - [x] cards without the 4 rocket
