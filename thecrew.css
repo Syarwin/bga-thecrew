@@ -514,11 +514,8 @@ html, body {
 }
 #hand-container #hand-wrapper #hand .stockitem.unselectable {
   opacity: 0.6 !important;
-<<<<<<< HEAD
 }
 #hand-container #hand-wrapper #hand .stockitem.unselectable, #hand-container #hand-wrapper #hand .stockitem_unselectable {
-=======
->>>>>>> compile css from sass
   cursor: not-allowed !important;
 }
 #hand-container #hand-wrapper #hand .stockitem.selectable {
