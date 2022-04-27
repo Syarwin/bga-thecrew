@@ -74,6 +74,10 @@ define('OPTION_SEE_DISCARD', 104);
 define('OPTION_SEE_DISCARD_OFF', 0);
 define('OPTION_SEE_DISCARD_ON', 1);
 
+define('OPTION_JARVIS', 105);
+define('OPTION_JARVIS_OFF', 0);
+define('OPTION_JARVIS_ON', 1);
+
 /*
  * DISTRESS DIRECTION
  */
@@ -105,3 +109,9 @@ define("CARD_HIDDEN", 7);
 define('MISSION_FAIL', -1);
 define('MISSION_CONTINUE', 0);
 define('MISSION_SUCCESS', 1);
+
+
+/*
+ * 2 player mode (Jarvis)
+ */
+define('JARVIS_ID', 1);

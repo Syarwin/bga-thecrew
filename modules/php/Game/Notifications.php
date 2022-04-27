@@ -1,5 +1,6 @@
 <?php
 namespace CREW\Game;
+
 use thecrew;
 
 class Notifications
@@ -46,6 +47,23 @@ class Notifications
     self::notify($pId, 'newHand', clienttranslate('-- Your cards are:&nbsp;<br />${cards}'), [
       'cards' => self::listCardsForNotification($hand),
       'hand' => $hand,
+    ]);
+  }
+
+  public static function newJarvisHand($hand)
+  {
+    self::notifyAll('newJarvisHand', clienttranslate('Jarvis cards are:&nbsp;<br />${cards}'), [
+      'cards' => self::listCardsForNotification($hand),
+      'hand' => $hand,
+    ]);
+  }
+
+  public static function jarvisRevealNewCard($card, $column)
+  {
+    self::notifyAll('jarvisRevealNewCard', clienttranslate('Jarvis reveals ${cards}'), [
+      'cards' => self::listCardsForNotification([$card]),
+      'card' => $card,
+      'column' => $column,
     ]);
   }
 
@@ -192,16 +210,46 @@ class Notifications
     ]);
   }
 
-  public static function distressExchange($from, $to, $card){
-    self::notify($from->getId(), 'giveCard', clienttranslate('You give ${value_symbol}${color_symbol} to ${player_name}'), [
+  public static function chooseDistressCardJarvis($player, $card){
+    self::notify($player->getId(), 'chooseDistressCard', clienttranslate('You chose Jarvis will give the ${value_symbol}${color_symbol}'), [
       'card' => $card,
-      'player' => $to,
     ]);
+  }
 
-    self::notify($to->getId(), 'receiveCard', clienttranslate('You receive ${value_symbol}${color_symbol} from ${player_name}'), [
-      'card' => $card,
-      'player' => $from,
-    ]);
+  public static function distressExchange($from, $to, $card, $column){
+    $pIds = Players::getAll()->getIds();
+    if ($from->getId() == JARVIS_ID) {
+      $pId = array_values(array_diff($pIds, [JARVIS_ID, $to->getId()]))[0];
+      self::notify($pId, 'giveCard', clienttranslate('Jarvis gives ${value_symbol}${color_symbol} to ${player_name}'), [
+        'card' => $card,
+        'player' => $to,
+      ]);
+    } else {
+      self::notify($from->getId(), 'giveCard', clienttranslate('You give ${value_symbol}${color_symbol} to ${player_name}'), [
+        'card' => $card,
+        'player' => $to,
+        'column' => $column,
+      ]);
+    }
+
+    if ($to->getId() == JARVIS_ID) {
+      $pId = array_values(array_diff($pIds, [JARVIS_ID, $from->getId()]))[0];
+      self::notify(
+        $pId,
+        'receiveCardJarvis',
+        clienttranslate('Jarvis receive ${value_symbol}${color_symbol} from ${player_name}'),
+        [
+          'card' => $card,
+          'player' => $from,
+          'column' => $column,
+        ]
+      );
+    } else {
+      self::notify($to->getId(), 'receiveCard', clienttranslate('You receive ${value_symbol}${color_symbol} from ${player_name}'), [
+        'card' => $card,
+        'player' => $from,
+      ]);
+    }
   }
 
 
@@ -327,13 +375,15 @@ class Notifications
     // Grouping values by color
     $groupedValues = [];
     foreach($cards as $card) {
-      if(!isset($groupedValues[ $card['color'] ]))
+      // Ignore Jarvis hidden cards
+      if (isset($card['color']) && isset($card['value'])) {
+        if(!isset($groupedValues[ $card['color'] ]))
         $groupedValues[$card['color']] = [];
 
-      $groupedValues[$card['color']][] = $card['value'];
+        $groupedValues[$card['color']][] = $card['value'];
+      }
     }
     ksort($groupedValues);
-
 
     // Foreach color, list the values
     $args = [];

@@ -84,6 +84,16 @@
         this.inherited(arguments);
       },
 
+
+
+      onEnteringState(stateName, args) {
+        if (args.args && args.args.jarvisActive) {
+          this.changePageTitle('jarvis');
+        }
+
+        this.inherited(arguments);
+      },
+
       onUpdateActionButtons(){
         this.updatePlayersStatus();
 
@@ -105,7 +115,8 @@
 
       clearPossible(){
         this._callbackOnCard = null;
-        this._selectableCards = [];
+        this._callbackOnJarvisCard = null;
+        this._selectableJarvisCards = [];
         this._callbackOnPlayer = null;
         this._selectablePlayers = [];
         this._selectedComm = null;

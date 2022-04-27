@@ -16,7 +16,7 @@ $gameinfos = [
   ],
 
 
-  'players' => [3,4,5],
+  'players' => [2,3,4,5],
   'suggest_player_number' => 4,
   'not_recommend_player_number' => null,
 

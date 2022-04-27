@@ -1,6 +1,7 @@
 <?php
 namespace CREW;
 use CREW\Game\Globals;
+use CREW\Game\GlobalsVars;
 use CREW\Game\Notifications;
 use CREW\Game\Players;
 
@@ -37,6 +38,10 @@ class Cards extends Helpers\Pieces
     return self::getInLocation(['table', $pId])->toArray();
   }
 
+  public static function getOrderedOnTable($pId = '%'){
+    return self::getInLocationOrdered(['table', $pId]);
+  }
+
   public static function countOnTable($pId = '%'){
     return self::getInLocation(['table', $pId])->count();
   }
@@ -62,7 +67,7 @@ class Cards extends Helpers\Pieces
 
   public function setupNewGame($players, $options)
   {
-    $challenge = count($players) == 3 && $options[OPTION_CHALLENGE] == CHALLENGE_ON;
+    $challenge = count($players) <= 3 && $options[OPTION_CHALLENGE] == CHALLENGE_ON;
 
     $colors = [
       CARD_BLUE => 9,
@@ -87,8 +92,6 @@ class Cards extends Helpers\Pieces
     self::shuffle('deck');
   }
 
-
-
   public static function clearMission()
   {
     // Take back all cards (from any location => null) to deck and shuffle
@@ -100,20 +103,65 @@ class Cards extends Helpers\Pieces
   public static function startNewMission()
   {
     $players = Players::getAll();
-    $nbCards = intdiv(Globals::isChallenge()? 30 : 40 , $players->count() );
-
+    $nbCards = intdiv(Globals::isChallenge() ? 30 : 40 , $players->count() );
     // This guy will have one extra card if 3 players and challenge mode off
-    $luckyGuy = (count($players) == 3 && !Globals::isChallenge())? array_rand($players->toAssoc()) : -1;
+    $luckyGuy = (count($players) <= 3 && !Globals::isChallenge())? array_rand($players->toAssoc()) : -1;
 
-    foreach($players as $pId => $player){
-      $hand = self::pickForLocation($nbCards + ($pId == $luckyGuy? 1 : 0), 'deck', ["hand", $pId] );
-      Notifications::newHand($pId, $hand->toArray());
+    if (GlobalsVars::isJarvis()) {
+      $luckyGuy = !Globals::isChallenge() ? JARVIS_ID : -1; // If JARVIS is present, he will be the lucky guy
+      self::startNewMissionJarvis($nbCards, $luckyGuy, $players);
+    } else {
+      foreach($players as $pId => $player){
+        $hand = self::pickForLocation($nbCards + ($pId == $luckyGuy? 1 : 0), 'deck', ["hand", $pId] );
+        Notifications::newHand($pId, $hand->toArray());
+      }
     }
 
     $card4Rocket = self::getSelectQuery()->where('value',4)->where('color', CARD_ROCKET)->get();
+
     return $card4Rocket['pId'];
   }
 
+  public static function startNewMissionJarvis($nbCards, $luckyGuy, $players)
+  {
+    // draw 10 or 14 cards for jarvis, without rocket 4
+    $card4Rocket = self::getSelectQuery()->where('value', 4)->where('color', CARD_ROCKET)->get();
+    self::DB()->update(['card_location' => 'pause'], $card4Rocket['id']);
+    $cards = self::pickForLocation($nbCards + (JARVIS_ID == $luckyGuy ? 1 : 0), 'deck', ["hand", JARVIS_ID] )->toAssoc();
+
+    // setup hidden and shown cards
+    $hand = [];
+    $col = 1;
+    $hidden = true;
+
+    $totalOfCards = count($cards);
+    $lastCard = end($cards);
+    $lastCardId = $lastCard["id"];
+    $shouldShowLastCard = $totalOfCards % 2 > 0;
+
+    foreach ($cards as $cId => $card) {
+      // force to show last card, if number of cards is odd
+      $hiddenCard = $lastCardId == $cId && $shouldShowLastCard ? false : $hidden;
+
+      $hand[$col][] = ['id' => $cId, 'hidden' => $hiddenCard];
+      $col += $hidden ? 0 : 1;
+      $hidden = !$hidden;
+    }
+
+    GlobalsVars::setJarvisCardList($hand);
+    Notifications::newJarvisHand(JarvisPlayer::getCards()->toArray());
+
+    self::DB()->update(['card_location' => 'deck'], $card4Rocket['id']);
+
+    foreach ($players as $pId => $player) {
+      if ($pId == JARVIS_ID) {
+        continue;
+      }
+
+      $hand = self::pickForLocation($nbCards + ($pId == $luckyGuy? 1 : 0), 'deck', ["hand", $pId] );
+      Notifications::newHand($pId, $hand->toArray());
+    }
+  }
 
   public static function play($card)
   {

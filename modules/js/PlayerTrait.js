@@ -11,6 +11,12 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this.positions = [];
       this._callbackOnPlayer = null;
       this._selectablePlayers = [];
+
+      this.JARVIS_ID = 1;
+    },
+
+    isJarvisPlaying() {
+      return Object.values(this.gamedatas.players).some(({id}) => id === this.JARVIS_ID);
     },
 
     /*
@@ -23,6 +29,10 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       let topRowNo = nPlayers == 5? [1,2,3] : [1,2];
 
       players.forEach( player => {
+        if (player.id === this.JARVIS_ID) {
+          dojo.place(this.format_string(jstpl_jarvis, {}), 'overall_player_board_' + player.afterPlayer, 'after');
+        }
+
         player.no = (player.no + nPlayers - currentPlayerNo) % nPlayers;
         this.positions[player.id] = player.no;
 
@@ -76,10 +86,30 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
           if(player.preselected && $('hand_item_' + player.preselected))
             dojo.addClass('hand_item_' + player.preselected, 'preselected');
         }
+
+        // Setup Jarvis
+        if (player.id == this.JARVIS_ID) {
+          this.setupJarvisCards();
+        }
       });
 
       this.updatePlayersData();
       this.updateCommander();
+      this.updatePlayersPositions();
+    },
+
+    updatePlayersPositions() {
+      let players = Object.values(this.gamedatas.players);
+      let playersOrder = players.sort((a,b) => a.no - b.no);
+
+      playersOrder.forEach((player) => {
+        let isLeft = player.no == 1;
+        $(`player-table-${player.id}`).classList.toggle('left-side', isLeft);
+
+        if (player.id == this.JARVIS_ID) {
+          $('jarvis-hand-container').classList.toggle('left-side', isLeft);
+        }
+      });
     },
 
     descCardsCounter(pId){

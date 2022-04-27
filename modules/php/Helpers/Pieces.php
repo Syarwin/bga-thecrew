@@ -275,6 +275,11 @@ class Pieces extends DB_Manager {
     return self::getInLocationQ($location, $state, $orderBy)->get(false);
   }
 
+  public static function getInLocationOrdered($location, $state = null)
+  {
+    return self::getInLocation($location, $state, [static::$prefix . 'state', 'ASC']);
+  }
+
   /**
    * Return number of pieces in specific location
    */

@@ -1,6 +1,7 @@
 <?php
 namespace CREW\States;
 use CREW\Game\Globals;
+use CREW\Game\GlobalsVars;
 use CREW\Game\Players;
 use CREW\Game\Notifications;
 use CREW\LogBook;
@@ -40,27 +41,64 @@ trait TrickTrait
   function argPlayerTurn()
   {
     $player = Players::getActive();
-    $hand = $player->getCards();
-    $color = Globals::getTrickColor();
 
-    // If not the first card of the trick
-    if($color != 0){
-      // Keep only the cards with matching color (if at least one such card)
-      $filteredHand = array_values(array_filter($hand, function($card) use ($color){ return $card['color'] == $color; }));
-      if(!empty($filteredHand))
-        $hand = $filteredHand;
+    if (GlobalsVars::isJarvisActive() && ($player->getId() == Globals::getCommander() || $player->getId() == JARVIS_ID)) {
+      $player = Players::getJarvis();
+      $cards = $this->getJarvisCards($player);
+      // var_dump($cards); //die();
+    } else {
+      $hand = $player->getCards();
+      $color = Globals::getTrickColor();
+
+      // If not the first card of the trick
+      if($color != 0){
+        // Keep only the cards with matching color (if at least one such card)
+        $filteredHand = array_values(array_filter($hand, function($card) use ($color){ return $card['color'] == $color; }));
+        if(!empty($filteredHand))
+          $hand = $filteredHand;
+      }
+
+      $cards = array_map(function($card){ return $card['id'];}, $hand);
     }
 
-    $cards = array_map(function($card){ return $card['id'];}, $hand);
     $commCard = $player->getCardOnComm();
     return [
       'cards' => $cards,
       'canDistress' => LogBook::canActivateDistress(),
       'commCard' => $commCard,
       'canPlayCommunicatedCard' => ($commCard != null && in_array($commCard['id'], $cards)),
+      'jarvisActive' => GlobalsVars::isJarvisActive(),
     ];
   }
 
+
+  /**
+   * Return the playable cards for a player for current trick
+   */
+  function getJarvisCards($player)
+  {
+    $hand = $player->getCards();
+    $color = Globals::getTrickColor();
+
+    // If not the first card of the trick
+    if ($color != 0) {
+      // Keep only the cards with matching color (if at least one such card)
+      $filteredHand = $hand->filter(function ($card) use ($color) {
+        return ($card['color'] ?? -1) == $color;
+      });
+
+      if (!$filteredHand->empty() && Cards::getOrderedOnTable($player->getId())->empty()) {
+        $hand = $filteredHand;
+      }
+    } else {
+      // Added for hidden cards for Jarvis
+      $filteredHand = $hand->filter(function ($card) {
+        return $card['id'] < 99;
+      });
+      $hand = $filteredHand;
+    }
+    return $hand->getIds();
+  }
 
 
   function actPlayCard($cardId) {
@@ -101,7 +139,7 @@ trait TrickTrait
       throw new \BgaUserException(_("This is not one of your card"));
 
     $preselectedCard = $player->getPreselectedCard();
-    if($preselectedCard['id'] == $cardId){
+    if($preselectedCard !== null && $preselectedCard['id'] == $cardId){
       // Unselect
       $player->clearPreselect();
       Notifications::clearPreselect($player);
@@ -141,7 +179,7 @@ trait TrickTrait
       return;
     }
 
-    $pId = self::activeNextPlayer();
+    $pId = Players::activeNext();
     self::giveExtraTime($pId);
     $this->gamestate->nextState('nextPlayer');
   }
@@ -153,6 +191,7 @@ trait TrickTrait
    */
   function stEndOfTrick(){
     $cards = Cards::getOnTable();
+    $jarvisCard = null;
     $winningColor = Globals::getTrickColor();
     $bestCard = null;
 
@@ -166,6 +205,10 @@ trait TrickTrait
         if(is_null($bestCard) || $card['value'] > $bestCard['value']) {
           $bestCard = $card;
         }
+      }
+
+      if ($card['pId'] == JARVIS_ID) {
+        $jarvisCard = $card;
       }
     }
     $winner = Players::get($bestCard['pId']);
@@ -185,15 +228,37 @@ trait TrickTrait
       'cards' => $cards,
     ]);
 
+    if ($jarvisCard != null) {
+      $player = Players::get(JARVIS_ID);
+      $column = $player->getCardColumn($jarvisCard);
+      $cards = $player->getCards(false, $column)->toArray();
+
+      // only 1 cards => remove it
+      if (count($cards) == 1) {
+        $cards = [];
+      } else {
+        // We played the second card => remove it and "unhide" the first one
+        unset($cards[1]);
+        $cards[0]['hidden'] = false;
+        Notifications::jarvisRevealNewCard(Cards::get($cards[0]['id']), $column);
+      }
+
+      // Update card list
+      $cardList = GlobalsVars::getJarvisCardList();
+      $cardList[$column] = $cards;
+      GlobalsVars::setJarvisCardList($cardList);
+    }
+
     $status = $mission->getStatus();
     if($status != 0){
       $msg = $status > 0? clienttranslate('Mission ${nb} completed') : clienttranslate('Mission ${nb} failed');
       Notifications::message($msg, ['nb' =>  $mission->getId() ]);
       Globals::setMissionFinished($status);
+      GlobalsVars::setJarvisActive(false);
 //      $this->gamestate->setAllPlayersMultiactive();
       $this->gamestate->nextState("endMission");
     } else {
-      $this->gamestate->changeActivePlayer($winner->getId());
+      Players::changeActive($winner->getId());
       $this->gamestate->nextState("nextTrick");
     }
   }

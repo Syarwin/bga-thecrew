@@ -1,6 +1,7 @@
 <?php
 namespace CREW\States;
 use CREW\Game\Globals;
+use CREW\Game\GlobalsVars;
 use CREW\Game\Players;
 use CREW\Game\Notifications;
 use CREW\Tasks;
@@ -17,6 +18,7 @@ trait PickTaskTrait
   {
     return [
       'tasks' => Tasks::getUnassigned(),
+      'jarvisActive' => GlobalsVars::isJarvisActive(),
     ];
   }
 
@@ -48,10 +50,10 @@ trait PickTaskTrait
   function stNextPickTask()
   {
     if(count(Tasks::getUnassigned()) == 0){
-      $this->gamestate->changeActivePlayer(Globals::getCommander());
+      Players::changeActive(Globals::getCommander());
       $this->gamestate->nextState('turn');
     } else {
-      $this->activeNextPlayer();
+      Players::activeNext();
       $this->gamestate->nextState('task');
     }
   }

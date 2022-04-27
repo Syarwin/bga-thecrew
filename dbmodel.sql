@@ -51,3 +51,9 @@ CREATE TABLE IF NOT EXISTS `logbook` (
   `distress` smallint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`mission`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+CREATE TABLE IF NOT EXISTS `global_variables` (
+  `name` varchar(255) NOT NULL,
+  `value` JSON,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

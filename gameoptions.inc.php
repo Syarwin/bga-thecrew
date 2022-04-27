@@ -411,4 +411,41 @@ $game_options = [
       ],
     ],
   ],
+
+  OPTION_JARVIS => [
+    'name' => totranslate('2 player variant'),
+    'values' => [
+      OPTION_JARVIS_OFF => ['name' => totranslate('Off')],
+      OPTION_JARVIS_ON => [
+        'name' => totranslate('Experimental 2 player mode'),
+        'beta'=> true,
+        'tmdisplay'=> totranslate('Experimental 2 player mode'),
+        'description' => totranslate('Jarvis, the 2 player variant'),
+      ],
+    ],
+    'startcondition' => [
+      OPTION_JARVIS_ON => [
+        [
+          'type' => 'maxplayers',
+          'value' => 2,
+          'message' => totranslate('2 player variant is for 2 player only.'),
+          'gamestartonly' => true,
+        ],
+        [
+          'type' => 'otheroption',
+          'id' => 201, // ELO OFF hardcoded framework option
+          'value' => 1, // 1 if OFF
+          'message' => totranslate('The 2 player variant is still in testing, please switch to training mode.'),
+        ]
+      ],
+      OPTION_JARVIS_OFF => [
+        [
+          'type' => 'minplayers',
+          'value' => 3,
+          'message' => totranslate('Turn on 2 player variant for 2 player game.'),
+          'gamestartonly' => true,
+        ],
+      ],
+    ],
+  ],
 ];

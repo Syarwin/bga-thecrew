@@ -200,6 +200,14 @@ class thecrew extends Table
       }
     }
 
+    if( $from_version <= 2204250137){
+      try {
+        self::applyDbUpgradeToAllDB("CREATE TABLE IF NOT EXISTS `global_variables` (`name` varchar(255) NOT NULL, `value` JSON, PRIMARY KEY (`name`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+      } catch(Exception $e){
+          print_r($e);
+      }
+    }
+
 
     // Doing all the necessary previous upgrade
     if($from_version <= 2103181046){

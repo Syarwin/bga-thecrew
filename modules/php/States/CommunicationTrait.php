@@ -29,7 +29,7 @@ trait CommunicationTrait
       $newState = 'comm';
     }
 
-    $this->gamestate->changeActivePlayer($nextPlayer->getId());
+    Players::changeActive($nextPlayer->getId());
     $this->gamestate->nextState($newState);
   }
 
