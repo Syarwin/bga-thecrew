@@ -10,6 +10,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this._notifications.push(
         ['newHand', 100],
         ['giveCard', 1000],
+        ['youLostCard', 1000],
         ['receiveCard', 1000],
         ['receiveCardJarvis', 1000],
         ['jarvisRevealNewCard', 10],
@@ -227,6 +228,11 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
 
       }
+    },
+
+    notif_youLostCard(n) {
+      debug('Notif: you lost a card', n);
+      this._hand.removeFromStockById(n.args.card.id);
     },
 
     notif_receiveCard(n) {
