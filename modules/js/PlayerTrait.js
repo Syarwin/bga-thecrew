@@ -23,17 +23,17 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
      * Called to setup player board, called at setup and when someone is eliminated
      */
     setupPlayers(){
-      let players = Object.values(this.gamedatas.players);
+      let players = this.gamedatas.playersOrder.map(id => this.gamedatas.players[id]);
       let nPlayers = players.length;
       let currentPlayerNo = players.reduce((carry, player) => (player.id == this.player_id && !player.eliminated)? player.no : carry, 0);
       let topRowNo = nPlayers == 5? [1,2,3] : [1,2];
 
-      players.forEach( player => {
+      players.forEach((player, i) => {
         if (player.id === this.JARVIS_ID) {
           dojo.place(this.format_string(jstpl_jarvis, {}), 'overall_player_board_' + player.afterPlayer, 'after');
         }
 
-        player.no = (player.no + nPlayers - currentPlayerNo) % nPlayers;
+        player.no = i;
         this.positions[player.id] = player.no;
 
         let row = topRowNo.includes(player.no)? 'top' : 'bottom';
