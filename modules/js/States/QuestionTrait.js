@@ -67,6 +67,11 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     },
 
     onEnteringStatePickCrew(args){
+      // auto select when is only a single player to pick
+      if (args.players && args.players.length === 1) {
+        this.onPickCrew(args.players[0]);
+      }
+
       this.showTasks(args.tasks);
 
       if(this.gamedatas.status.mId == 50){
