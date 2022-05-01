@@ -6,6 +6,7 @@ use thecrew;
 class Notifications
 {
   protected static function notifyAll($name, $msg, $data){
+
     self::updateArgs($data);
     thecrew::get()->notifyAllPlayers($name, $msg, $data);
   }
@@ -196,7 +197,8 @@ class Notifications
   }
 
   public static function swapTiles($task1, $task2){
-    self::notifyAll('swapTiles', '', [
+    self::notifyAll('swapTiles', clienttranslate('Commander swapped the order of tasks:&nbsp;<br />${cards}'), [
+      'cards' => self::listCardsForNotification([$task1, $task2]),
       'task1' => $task1,
       'task2' => $task2,
     ]);
