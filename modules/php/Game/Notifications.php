@@ -166,15 +166,33 @@ class Notifications
   }
 
 
-  public static function swapCard($from, $to, $card){
-    self::notify($from->getId(), 'giveCard', clienttranslate('You lost ${value_symbol}${color_symbol}'), [
-      'player' => $to,
-      'card' => $card,
-    ]);
+  public static function swapCard($from, $to, $card, $column){
+    $pIds = Players::getAll()->getIds();
+    if ($from->getId() == JARVIS_ID) {
+      $pId = array_values(array_diff($pIds, [JARVIS_ID, $to->getId()]))[0];
+      self::notify($pId, 'jarvisLostCard', clienttranslate('Jarvis lost a random card'), []);
+    } elseif ($to->getId() == JARVIS_ID) {
+      self::notify($from->getId(), 'youLostCard', clienttranslate('You lost ${value_symbol}${color_symbol}'), [
+        'player' => $to,
+        'card' => $card,
+        'column' => $column,
+      ]);
+    } else {
+      self::notify($from->getId(), 'giveCard', clienttranslate('You lost ${value_symbol}${color_symbol}'), [
+        'player' => $to,
+        'card' => $card,
+        'column' => $column,
+      ]);
+    }
 
-    self::notify($to->getId(), 'receiveCard', clienttranslate('You picked ${value_symbol}${color_symbol}'), [
-      'card' => $card,
-    ]);
+    if ($to->getId() == JARVIS_ID) {
+      $pId = array_values(array_diff($pIds, [JARVIS_ID, $from->getId()]))[0];
+      self::notify($pId, 'receiveSwappedCardJarvis', clienttranslate('Jarvis picked a random card'), []);
+    } else {
+      self::notify($to->getId(), 'receiveCard', clienttranslate('You picked ${value_symbol}${color_symbol}'), [
+        'card' => $card,
+      ]);
+    }
   }
 
   public static function swapTiles($task1, $task2){

@@ -97,7 +97,7 @@ class JarvisPlayer
     ];
   }
 
-  public static function getCards($hidden = true, $column = null)
+  public static function getCards($hidden = true, $column = null, $unset = true)
   {
     $filtered = new Collection();
     $cardList = GlobalsVars::getJarvisCardList();
@@ -109,9 +109,11 @@ class JarvisPlayer
         $c['pId'] = JARVIS_ID;
         if ($card['hidden'] && $hidden) {
           $c['hidden'] = true;
-          unset($c['value']);
-          unset($c['color']);
-          $c['id'] = 100 + $col;
+          if ($unset) {
+            unset($c['value']);
+            unset($c['color']);
+            $c['id'] = 100 + $col;
+          }
         }
 
         if (is_null($column) || $col == $column) {
@@ -137,10 +139,9 @@ class JarvisPlayer
 
   public function getRandomCard()
   {
-    $cards = $this->getCards();
-    if($this->commCard != null){
-      $cards = array_filter((array) $cards, function($card) { return $card['id'] != $this->commCard; });
-    }
+    $cards = $this->getCards(true, null, false)->toArray();
+    // Should only get a card that is hidden
+    $cards = array_filter($cards, function($card) { return $card['hidden'] == true; });
     $index = array_rand($cards, 1);
     return $cards[$index];
   }

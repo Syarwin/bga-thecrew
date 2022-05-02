@@ -101,9 +101,12 @@ class thecrew extends Table
   protected function getAllDatas()
   {
     $pId = self::getCurrentPId();
+    $ids = CREW\Game\Players::getAll()->getIds();
+    $pId2 = in_array($pId, $ids) ? $pId : $ids[0];
     $status = CREW\LogBook::getStatus();
     return [
       'players' => CREW\Game\Players::getUiData($pId),
+      'playersOrder' => CREW\Game\Players::getTurnOrder($pId2, true),
       'missions' => CREW\Missions::getUiData(),
       'status' => $status,
       'commanderId' => Globals::getCommander(),
