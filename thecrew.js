@@ -245,6 +245,33 @@
         dojo.connect($('autocontinue'), 'change', () => {
           this.ajaxcall("/thecrew/thecrew/setAutocontinue.html", { autocontinue: $("autocontinue").value }, () => {});
         });
+
+        // Add restart mission button
+        const modalButtonHolder = dojo.place('<div style="text-align: center;"></div>', $('right-side-second-part'), 'before');
+        const restartMission = dojo.place('<button style="width: auto;" class="action-button bgabutton bgabutton_blue" id="bga-thecrew-restart-mission">'+_('Restart Mission')+'</button>', modalButtonHolder, 'first');
+        dojo.connect(restartMission, "onclick", () => {
+          debug('Restart Mission clicked:');
+          if (this.gamedatas.gamestate.action !== 'stPlayerTurn') {
+            this.myDlg = new ebg.popindialog();
+            this.myDlg.create( 'restartMissionDialogId' );
+            this.myDlg.setTitle( _("Wait your turn to restart mission") );
+            this.myDlg.setMaxWidth( 500 );
+            this.myDlg.show();
+            return;
+          }
+
+          dojo.destroy('btnConfirmRestartMission');
+          dojo.destroy('btnCancelRestartMission');
+          this.addPrimaryActionButton('btnConfirmRestartMission', _('Restart Mission'), () => {
+            dojo.destroy('btnConfirmRestartMission');
+            dojo.destroy('btnCancelRestartMission');
+            this.ajaxcall("/thecrew/thecrew/setRestartMission.html", {}, () => {});
+          });
+          this.addSecondaryActionButton('btnCancelRestartMission', _('Cancel Restart Mission'), () => {
+            dojo.destroy('btnConfirmRestartMission');
+            dojo.destroy('btnCancelRestartMission');
+          });
+        });
       },
    });
 });

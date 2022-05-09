@@ -317,12 +317,13 @@ $machinestates = [
     "type" => "activeplayer",
     "args" => "argPlayerTurn",
     "action" => "stPlayerTurn",
-    "possibleactions" => ["actPlayCard", "actStartComm", "actDistress", "actPreselectCard"],
+    "possibleactions" => ["actPlayCard", "actStartComm", "actDistress", "actPreselectCard", "actRestartMission"],
     "transitions" => [
       "next" => STATE_NEXT_PLAYER,
       "startComm" => STATE_BEFORE_COMM,
       "distress" => STATE_PRE_DISTRESS,
-      "zombiePass" => STATE_CHANGE_MISSION
+      "zombiePass" => STATE_CHANGE_MISSION,
+      "endMission" => STATE_PRE_END_MISSION
     ]
   ],
 

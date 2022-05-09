@@ -90,6 +90,13 @@ class action_thecrew extends APP_GameAction
     self::ajaxResponse( );
   }
 
+  public function setRestartMission()
+  {
+    self::setAjaxMode();
+    $this->game->actRestartMission();
+    self::ajaxResponse( );
+  }
+
 
   public function actContinueMissions()
   {
