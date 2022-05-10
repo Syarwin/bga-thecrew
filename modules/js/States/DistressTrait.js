@@ -102,6 +102,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
           dojo.destroy('btnConfirmDistressChoice');
           this.takeAction('actChooseCardDistress', { cardId: this._selectedDistress }, false);
         });
+        // this.startActionTimer('btnConfirmDistressChoice', 10);
       } else if (this._selectedDistress && this._selectedDistressJarvis) {
         this.addPrimaryActionButton('btnConfirmDistressChoice', _('Confirm'), () => {
           dojo.destroy('btnConfirmDistressChoice');
@@ -111,6 +112,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
             false,
           );
         });
+        // this.startActionTimer('btnConfirmDistressChoice', 10);
       }
     },
 

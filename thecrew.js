@@ -36,6 +36,7 @@
      g_gamethemeurl + "modules/js/States/QuestionTrait.js",
      g_gamethemeurl + "modules/js/States/MoveTileTrait.js",
      g_gamethemeurl + "modules/js/States/GiveTaskTrait.js",
+     g_gamethemeurl + "modules/js/States/RestartMissionTrait.js",
 
  ], function (dojo, declare) {
     return declare("bgagame.thecrew", [
@@ -51,6 +52,7 @@
       thecrew.questionTrait,
       thecrew.moveTileTrait,
       thecrew.giveTaskTrait,
+      thecrew.restartMissionTrait,
     ], {
       constructor(){
         this._notifications.push(

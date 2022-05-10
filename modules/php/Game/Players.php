@@ -225,6 +225,7 @@ class Players extends \CREW\Helpers\DB_Manager
       'player_trick_number' => 0,
       'reply_choice' => null,
       'preselect_card_id' => null,
+      'restart_mission_answer' => 0,
     ])->run();
   }
 
@@ -243,6 +244,13 @@ class Players extends \CREW\Helpers\DB_Manager
     ])->run();
   }
 
+  public function clearRestartMissionAnswers()
+  {
+    self::DB()->update([
+      'restart_mission_answer' => 0
+    ])->run();
+  }
+
   public function getNextToCommunicate()
   {
     return self::DB()->where('comm_pending', 1)->where('comm_token', '<>', 'used')->whereNull('comm_card_id')->limit(1)->get(true);
@@ -254,5 +262,13 @@ class Players extends \CREW\Helpers\DB_Manager
 
   public function getAllDistressChoicesAssoc() {
     return self::getAll()->assocMap(function($player){ return $player->getDistressChoice(); });
+  }
+
+  public function getAllRestartMissionAnswers() {
+    return array_unique(self::getAll()->map(function($player){ return (int) $player->getRestartMissionAnswer(); }));
+  }
+
+  public function getAllRestartMissionAnswersAssoc() {
+    return self::getAll()->assocMap(function($player){ return (int) $player->getRestartMissionAnswer(); });
   }
 }

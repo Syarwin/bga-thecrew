@@ -273,6 +273,28 @@ class Notifications
   }
 
 
+
+  /******************
+   **** RESTART MISSION ****
+   *****************/
+  public static function chooseRestartMission($player, $answer){
+    if ($answer == DONT_WANT_RESTART_MISSION) {
+      self::notifyAll('continue', clienttranslate('Mission will not restart, because ${player_name} wants to continue'), ['player' => $player]);
+    } else {
+      self::notifyAll('chooseRestartMission', clienttranslate('${player_name} chooses to restart mission'), [
+        'player' => $player,
+        'answer' => $answer
+      ]);
+    }
+  }
+
+  public static function restartMissionActivated($missionId){
+    self::notifyAll('restartMissionActivated', clienttranslate('All players agreed to restart mission ${mission}'), [
+      'mission' => $missionId,
+    ]);
+  }
+
+
   public static function continueMissions(){
     $player = Players::getCurrent();
     self::notifyAll('continue', clienttranslate('${player_name} wants to continue'), ['player' => $player]);

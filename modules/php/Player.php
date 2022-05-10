@@ -28,6 +28,7 @@ class Player extends Helpers\DB_Manager
     $this->distressAuto = $row['distress_auto'];
     $this->continueAuto = $row['continue_auto'];
     $this->preselectedCard = $row['preselect_card_id'];
+    $this->restartMissionAnswer = $row['restart_mission_answer'];
   }
 
   private $id;
@@ -46,6 +47,7 @@ class Player extends Helpers\DB_Manager
   private $distressAuto;
   private $continueAuto;
   private $preselectedCard;
+  private $restartMissionAnswer;
 
 
   /////////////////////////////////
@@ -68,6 +70,7 @@ class Player extends Helpers\DB_Manager
   public function isSpecial2() { return $this->id == Globals::getSpecial2(); }
   public function getDistressAuto(){ return $this->distressAuto; }
   public function getContinueAuto(){ return $this->continueAuto; }
+  public function getRestartMissionAnswer(){ return $this->restartMissionAnswer; }
 
   public function getUiData($pId)
   {
@@ -91,6 +94,7 @@ class Player extends Helpers\DB_Manager
       'distressCard' => $pId == $this->id? $this->distressCard : null,
       'distressAuto' => $this->distressAuto,
       'reply' => $this->reply,
+      'restartMissionAnswer' => $this->restartMissionAnswer,
       'continueAuto' => $this->continueAuto,
     ];
   }
@@ -195,6 +199,13 @@ class Player extends Helpers\DB_Manager
   public function reply($i)
   {
     self::DB()->update(['reply_choice' => $i], $this->id);
+  }
+
+  // Choose restart mission
+  public function answerRestartMission($answer)
+  {
+    $this->restartMissionAnswer = $answer;
+    self::DB()->update(['restart_mission_answer' => $answer], $this->id);
   }
 
 

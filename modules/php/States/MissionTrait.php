@@ -140,11 +140,11 @@ trait MissionTrait
     $currentMission = Missions::getCurrent();
     $missionId = $currentMission->getId();
     $player = Players::getCurrent();
-    Notifications::message(clienttranslate('${player_name} restarted mission ${mission}'), [
+    Notifications::message(clienttranslate('${player_name} wants to restart mission ${mission}'), [
       'player_name' => $player->getName(),
       'mission' => $missionId,
     ]);
-    $this->gamestate->nextState("endMission");
+    $this->gamestate->nextState("startRestartMission");
   }
 
 

@@ -323,7 +323,7 @@ $machinestates = [
       "startComm" => STATE_BEFORE_COMM,
       "distress" => STATE_PRE_DISTRESS,
       "zombiePass" => STATE_CHANGE_MISSION,
-      "endMission" => STATE_PRE_END_MISSION
+      "startRestartMission" => STATE_PRE_RESTART_MISSION
     ]
   ],
 
@@ -343,8 +343,6 @@ $machinestates = [
 /*************************
 ****** / END TRICK *******
 *************************/
-
-
 
 
 /***********************
@@ -388,6 +386,37 @@ $machinestates = [
       "next" => STATE_PREPARATION,
       "save" => STATE_SAVE,
       "end" => STATE_SAVE
+    ]
+  ],
+
+
+
+
+  /******************************
+  ****** RESTART_MISSION  *******
+  *******************************/
+  STATE_PRE_RESTART_MISSION => [
+    "name" => "preRestartMission",
+    "description" => "",
+    "type" => "game",
+    "action" => "stPreRestartMission",
+    "transitions" => [
+      "setup" => STATE_RESTART_MISSION_SETUP,
+      "endMission" => STATE_PRE_END_MISSION
+    ],
+  ],
+
+  STATE_RESTART_MISSION_SETUP => [
+    "name" => "restartMissionSetup",
+    "description" => clienttranslate('someone wants to restart mission'),
+    "descriptionmyturn" => clienttranslate('${you} may agree to restart mission'),
+    "type" => "multipleactiveplayer",
+    "args" => "argRestartMissionSetup",
+    "action" => "stRestartMissionSetup",
+    "possibleactions" => ["actAnswerRestartMission"],
+    "transitions" => [
+      "cancel" => STATE_PLAYER_TURN,
+      "endMission" => STATE_PRE_END_MISSION
     ]
   ],
 
