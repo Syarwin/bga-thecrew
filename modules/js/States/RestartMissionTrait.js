@@ -16,8 +16,10 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this.addSecondaryActionButton('restartMissionHelp', '?', () => this.showMessage(_('A restart mission has been requested. If everyone agrees to restart this mission, this mission will set as failed. Everyone has to agree to restart this mission!'), 'info') );
       this.addTooltip('restartMissionHelp', _('A restart mission has been requested. If everyone agrees to restart this mission, this mission will set as failed. Everyone has to agree to restart this mission!'), '');
 
-      this.connect($('restart-mission-agree-button'),  'click', () => this.onAnswerRestartMission(WANT_RESTART_MISSION) );
-      this.connect($('restart-mission-dont-want-button'),  'click', () => this.onAnswerRestartMission(DONT_WANT_RESTART_MISSION) );
+      if(!this.isSpectator){
+        this.connect($('restart-mission-agree-button'),  'click', () => this.onAnswerRestartMission(WANT_RESTART_MISSION) );
+        this.connect($('restart-mission-dont-want-button'),  'click', () => this.onAnswerRestartMission(DONT_WANT_RESTART_MISSION) );
+      }
 
       Object.keys(args.players).forEach(pId => dojo.attr('restart-mission-answer-' + pId, 'data-answer', args.players[pId]) );
     },
