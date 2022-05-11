@@ -105,6 +105,9 @@ html, body {
    * Distress panel
    */
   /*
+   * Restart Mission panel
+   */
+  /*
    * Give task panel
    */
 }
@@ -468,6 +471,90 @@ html, body {
   background-position: 10% 100%;
   filter: drop-shadow(0 0 2px #FFF);
 }
+#thecrew-table > div#table-middle #restart-mission-panel {
+  display: none;
+  flex-flow: column;
+  justify-content: space-between;
+}
+#thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-top, #thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+#thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-top .restart-mission-answer, #thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-bottom .restart-mission-answer {
+  margin: 5px;
+  width: 40px;
+  height: 40px;
+  background-image: url("img/sprites.png");
+  background-size: 1100%;
+  filter: drop-shadow(0 0 2px #000);
+  -webkit-filter: drop-shadow(0 0 2px #000);
+}
+#thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-top .restart-mission-answer[data-answer="0"], #thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-bottom .restart-mission-answer[data-answer="0"] {
+  background-position: 0% 100%;
+}
+#thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-top .restart-mission-answer[data-answer="1"], #thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-bottom .restart-mission-answer[data-answer="1"] {
+  background-position: 90% 100%;
+}
+#thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-top .restart-mission-answer[data-answer="2"], #thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-bottom .restart-mission-answer[data-answer="2"] {
+  background-position: 70% 50%;
+}
+#thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-top .restart-mission-answer[data-no="0"], #thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-bottom .restart-mission-answer[data-no="0"] {
+  order: 0;
+}
+#thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-top .restart-mission-answer[data-no="1"], #thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-bottom .restart-mission-answer[data-no="1"] {
+  order: 1;
+}
+#thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-top .restart-mission-answer[data-no="2"], #thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-bottom .restart-mission-answer[data-no="2"] {
+  order: 2;
+}
+#thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-top .restart-mission-answer[data-no="3"], #thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-bottom .restart-mission-answer[data-no="3"] {
+  order: 3;
+}
+#thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-top .restart-mission-answer[data-no="4"], #thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-bottom .restart-mission-answer[data-no="4"] {
+  order: 4;
+}
+#thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-middle {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+#thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-middle #restart-mission-icon {
+  background-image: url("img/sprites.png");
+  background-size: 1100%;
+  background-position: 10% 50%;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 20px;
+}
+#thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-middle h2 {
+  font-weight: 700;
+  margin-top: 2px;
+  height: 18px;
+  font-size: 16px;
+}
+#thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-middle #restart-mission-panel-buttons {
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-items: center;
+}
+#thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-middle #restart-mission-panel-buttons button {
+  display: block;
+  padding: 0;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-middle #restart-mission-panel-buttons button#restart-mission-agree-button {
+  font-size: 18px;
+}
+#thecrew-table > div#table-middle #restart-mission-panel #restart-mission-panel-middle #restart-mission-panel-buttons button#restart-mission-dont-want-button {
+  padding: 0px 5px;
+}
 #thecrew-table > div#table-middle #give-task-panel #give-task-panel-middle #give-task-proposal {
   display: flex;
   flex-flow: column;
@@ -498,6 +585,9 @@ html, body {
   display: flex;
 }
 #thecrew-table > div#table-middle[data-display=give-task] #give-task-panel {
+  display: flex;
+}
+#thecrew-table > div#table-middle[data-display=restart-mission] #restart-mission-panel {
   display: flex;
 }
 

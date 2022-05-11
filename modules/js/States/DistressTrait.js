@@ -15,10 +15,12 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this.addSecondaryActionButton('distressHelp', '?', () => this.showMessage(_('A distress signal can be sent out before the first trick of a mission and before any communication. If the distress signal is activated, each crew member may pass one card to his neighbor. Rockets may not be passed on! Decide together if you will pass the cards to the left or the right. Everyone has to pass in the same direction!'), 'info') );
       this.addTooltip('distressHelp', _('A distress signal can be sent out before the first trick of a mission and before any communication. If the distress signal is activated, each crew member may pass one card to his neighbor. Rockets may not be passed on! Decide together if you will pass the cards to the left or the right. Everyone has to pass in the same direction!'), '');
 
-      this.connect($('clockwise-button'), 'click', () => this.onChooseDistressDirection(CLOCKWISE) );
-      this.connect($('dont-use-button'),  'click', () => this.onChooseDistressDirection(DONT_USE) );
-      this.connect($('anticlockwise-button'),  'click', () => this.onChooseDistressDirection(ANTICLOCKWISE) );
-      this.connect($('whatever-button'),  'click', () => this.onChooseDistressDirection(AGREE) );
+      if(!this.isSpectator){
+        this.connect($('clockwise-button'), 'click', () => this.onChooseDistressDirection(CLOCKWISE) );
+        this.connect($('dont-use-button'),  'click', () => this.onChooseDistressDirection(DONT_USE) );
+        this.connect($('anticlockwise-button'),  'click', () => this.onChooseDistressDirection(ANTICLOCKWISE) );
+        this.connect($('whatever-button'),  'click', () => this.onChooseDistressDirection(AGREE) );
+      }
 
       Object.keys(args.players).forEach(pId => dojo.attr('distress-choice-' + pId, 'data-choice', args.players[pId]) );
     },
@@ -102,6 +104,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
           dojo.destroy('btnConfirmDistressChoice');
           this.takeAction('actChooseCardDistress', { cardId: this._selectedDistress }, false);
         });
+        // this.startActionTimer('btnConfirmDistressChoice', 10);
       } else if (this._selectedDistress && this._selectedDistressJarvis) {
         this.addPrimaryActionButton('btnConfirmDistressChoice', _('Confirm'), () => {
           dojo.destroy('btnConfirmDistressChoice');
@@ -111,6 +114,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
             false,
           );
         });
+        // this.startActionTimer('btnConfirmDistressChoice', 10);
       }
     },
 

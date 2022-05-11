@@ -6,6 +6,7 @@ use thecrew;
 class Notifications
 {
   protected static function notifyAll($name, $msg, $data){
+
     self::updateArgs($data);
     thecrew::get()->notifyAllPlayers($name, $msg, $data);
   }
@@ -196,7 +197,8 @@ class Notifications
   }
 
   public static function swapTiles($task1, $task2){
-    self::notifyAll('swapTiles', '', [
+    self::notifyAll('swapTiles', clienttranslate('Commander swapped the order of tasks:&nbsp;<br />${cards}'), [
+      'cards' => self::listCardsForNotification([$task1, $task2]),
       'task1' => $task1,
       'task2' => $task2,
     ]);
@@ -268,6 +270,28 @@ class Notifications
         'player' => $from,
       ]);
     }
+  }
+
+
+
+  /******************
+   **** RESTART MISSION ****
+   *****************/
+  public static function chooseRestartMission($player, $answer){
+    if ($answer == DONT_WANT_RESTART_MISSION) {
+      self::notifyAll('continue', clienttranslate('Mission will not restart, because ${player_name} wants to continue'), ['player' => $player]);
+    } else {
+      self::notifyAll('chooseRestartMission', clienttranslate('${player_name} chooses to restart mission'), [
+        'player' => $player,
+        'answer' => $answer
+      ]);
+    }
+  }
+
+  public static function restartMissionActivated($missionId){
+    self::notifyAll('restartMissionActivated', clienttranslate('All players agreed to restart mission ${mission}'), [
+      'mission' => $missionId,
+    ]);
   }
 
 

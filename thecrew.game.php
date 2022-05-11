@@ -46,6 +46,7 @@ class thecrew extends Table
   use CREW\States\QuestionTrait;
   use CREW\States\MoveTileTrait;
   use CREW\States\GiveTaskTrait;
+  use CREW\States\RestartMissionTrait;
 
 
   public static $instance = null;
@@ -232,6 +233,15 @@ class thecrew extends Table
       try {
         self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_player ADD `continue_auto` smallint(1) DEFAULT 0 COMMENT 'none, autoyes'");
         self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_player ADD `preselect_card_id` int(10) unsigned NULL COMMENT 'id of the preselected card'");
+      } catch(Exception $e){
+          print_r($e);
+      }
+    }
+
+    // restart mission answers
+    if( $from_version <= 2205100108){
+      try {
+        self::applyDbUpgradeToAllDB("ALTER TABLE `DBPREFIX_player` ADD `restart_mission_answer` smallint(1) DEFAULT 0 COMMENT 'none, dontuse, agree'");
       } catch(Exception $e){
           print_r($e);
       }

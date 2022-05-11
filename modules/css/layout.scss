@@ -231,7 +231,7 @@ html,body {
       /*
        * Distress panel
        */
-      #distress-panel {
+       #distress-panel {
         display:none;
         flex-flow: column;
         justify-content: space-between;
@@ -360,6 +360,88 @@ html,body {
         }
       }
 
+      /*
+       * Restart Mission panel
+       */
+       #restart-mission-panel {
+        display:none;
+        flex-flow: column;
+        justify-content: space-between;
+
+        // Checkmarks
+        #restart-mission-panel-top, #restart-mission-panel-bottom {
+          display:flex;
+          justify-content: space-between;
+
+          .restart-mission-answer {
+            margin: 5px;
+            width: 40px;
+            height: 40px;
+            background-image: url("img/sprites.png");
+            background-size: 1100%;
+            @include shadow;
+
+            &[data-answer="0"] {  background-position: 0% 100%; }
+            &[data-answer="1"] {  background-position: 90% 100%;}
+            &[data-answer="2"] {  background-position: 70% 50%; }
+
+            @for $i from 0 through 4 {
+              &[data-no="#{$i}"] { order:$i; }
+            }
+          }
+        }
+
+        // Central line with question
+        #restart-mission-panel-middle {
+          display: flex;
+          flex-flow:column;
+          align-items: center;
+
+          #restart-mission-icon {
+            background-image: url('img/sprites.png');
+            background-size: 1100%;
+            background-position: 10% 50%;
+            width:80px;
+            height:80px;
+            margin-bottom: 20px;
+          }
+
+          h2 {
+            font-weight: 700;
+            margin-top: 2px;
+            height: 18px;
+            font-size:16px;
+          }
+
+          #restart-mission-panel-buttons {
+            width: 100%;
+            display: flex;
+            flex-flow:row;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+            align-items: center;
+
+            button {
+              display:block;
+              padding:0;
+              width:46px;
+              height:46px;
+              display:flex;
+              align-items: center;
+              justify-content: center;
+
+              &#restart-mission-agree-button {
+                font-size: 18px;
+              }
+
+              &#restart-mission-dont-want-button {
+                padding:0px 5px;
+              }
+            }
+          }
+        }
+      }
+
 
 
       /*
@@ -396,6 +478,7 @@ html,body {
       &[data-display='end'] #end-panel { display:flex; }
       &[data-display='distress'] #distress-panel { display:flex; }
       &[data-display='give-task'] #give-task-panel { display:flex; }
+      &[data-display='restart-mission'] #restart-mission-panel { display:flex; }
     }
   }
 }

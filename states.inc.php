@@ -61,7 +61,7 @@ $machinestates = [
   STATE_QUESTION => [
     "name" => "question",
     "description" => clienttranslate('Commander ${player_name} asks ${actplayer} : ${question}'),
-    'descriptionjarvis' => clienttranslate('Captain ${player_name} asks Jarvis : ${question}'),
+    'descriptionjarvis' => clienttranslate('Commander ${player_name} asks Jarvis : ${question}'),
     "descriptionmyturn" => clienttranslate('Commander ${player_name} asks ${you} : ${question}'),
     'descriptionmyturnjarvis' => clienttranslate('Answer for Jarvis to the question : ${question}'),
     "type" => "activeplayer",
@@ -317,12 +317,13 @@ $machinestates = [
     "type" => "activeplayer",
     "args" => "argPlayerTurn",
     "action" => "stPlayerTurn",
-    "possibleactions" => ["actPlayCard", "actStartComm", "actDistress", "actPreselectCard"],
+    "possibleactions" => ["actPlayCard", "actStartComm", "actDistress", "actPreselectCard", "actRestartMission"],
     "transitions" => [
       "next" => STATE_NEXT_PLAYER,
       "startComm" => STATE_BEFORE_COMM,
       "distress" => STATE_PRE_DISTRESS,
-      "zombiePass" => STATE_CHANGE_MISSION
+      "zombiePass" => STATE_CHANGE_MISSION,
+      "startRestartMission" => STATE_PRE_RESTART_MISSION
     ]
   ],
 
@@ -342,8 +343,6 @@ $machinestates = [
 /*************************
 ****** / END TRICK *******
 *************************/
-
-
 
 
 /***********************
@@ -387,6 +386,37 @@ $machinestates = [
       "next" => STATE_PREPARATION,
       "save" => STATE_SAVE,
       "end" => STATE_SAVE
+    ]
+  ],
+
+
+
+
+  /******************************
+  ****** RESTART_MISSION  *******
+  *******************************/
+  STATE_PRE_RESTART_MISSION => [
+    "name" => "preRestartMission",
+    "description" => "",
+    "type" => "game",
+    "action" => "stPreRestartMission",
+    "transitions" => [
+      "setup" => STATE_RESTART_MISSION_SETUP,
+      "endMission" => STATE_PRE_END_MISSION
+    ],
+  ],
+
+  STATE_RESTART_MISSION_SETUP => [
+    "name" => "restartMissionSetup",
+    "description" => clienttranslate('someone wants to restart mission'),
+    "descriptionmyturn" => clienttranslate('${you} may agree to restart mission'),
+    "type" => "multipleactiveplayer",
+    "args" => "argRestartMissionSetup",
+    "action" => "stRestartMissionSetup",
+    "possibleactions" => ["actAnswerRestartMission"],
+    "transitions" => [
+      "cancel" => STATE_PLAYER_TURN,
+      "endMission" => STATE_PRE_END_MISSION
     ]
   ],
 

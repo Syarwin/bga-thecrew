@@ -28,6 +28,7 @@ class JarvisPlayer
     $this->distressAuto = '0';
     $this->continueAuto = '1';
     $this->preselectedCard = null;
+    $this->restartMissionAnswer = 1;
   }
 
   private $id;
@@ -47,6 +48,7 @@ class JarvisPlayer
   private $distressAuto;
   private $continueAuto;
   private $preselectedCard;
+  private $restartMissionAnswer;
 
   /////////////////////////////////
   /////////////////////////////////
@@ -62,6 +64,7 @@ class JarvisPlayer
   public function isZombie(){ return $this->zombie; }
   public function getDistressChoice(){ return WHATEVER; }
   public function getDistressCard(){ return Cards::get($this->distressCard); }
+  public function getRestartMissionAnswer(){ return WANT_RESTART_MISSION; }
 
   public function isCommander() { return $this->id == Globals::getCommander(); }
   public function isSpecial() { return $this->id == Globals::getSpecial(); }
@@ -92,6 +95,7 @@ class JarvisPlayer
       'distressCard' => $current ? GlobalsVars::getJarvisDistressCard() : null,
       'distressAuto' => $this->distressAuto,
       'reply' => $this->getReply(),
+      'restartMissionAnswer' => $this->restartMissionAnswer,
       'continueAuto' => $this->continueAuto,
       'afterPlayer' => GlobalsVars::getJarvisPlaysAfter(),
     ];
@@ -213,6 +217,13 @@ class JarvisPlayer
     return;
   }
 
+  // Restart Mission answer
+  public function answerRestartMission($answer)
+  {
+    // No need for Jarvis
+    return;
+  }
+
   public function setDistressCard($cardId)
   {
     return WHATEVER;
@@ -272,6 +283,7 @@ class JarvisPlayer
       'distressChoice' => $this->distressChoice,
       'distressCard' => $current ? GlobalsVars::getJarvisDistressCard() : null,
       'reply' => $this->getReply(),
+      'restartMissionAnswer' => $this->restartMissionAnswer,
       'id' => strval($this->id),
       'afterPlayer' => GlobalsVars::getJarvisPlaysAfter(),
     ]);

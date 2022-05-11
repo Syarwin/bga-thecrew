@@ -37,6 +37,7 @@ class Globals extends \APP_DbObject
     'commanderId' => 0,
     'trickColor' => 0,
     'distressDirection' => DONT_USE,
+    'restartMissionAnswer' => DONT_USE,
       'notusedglobal1' => 0, // Original code has hole in sequence
       'notusedglobal2' => 0, // Original code has hole in sequence
     'lastWinnerId' => 0,
@@ -146,6 +147,11 @@ class Globals extends \APP_DbObject
     return self::get('distressDirection');
   }
 
+  public static function getRestartMissionAnswer()
+  {
+    return self::get('restartMissionAnswer');
+  }
+
   public static function isEndOfGame()
   {
     return self::get('endOfGame') == 1;
@@ -221,6 +227,11 @@ class Globals extends \APP_DbObject
   public static function setDistressDirection($dir)
   {
     self::set('distressDirection', $dir);
+  }
+
+  public static function setRestartMissionAnswer($answer)
+  {
+    self::set('restartMissionAnswer', $answer);
   }
 
   public static function setSpecial($pId, $special = '')

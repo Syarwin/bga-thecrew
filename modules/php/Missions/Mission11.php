@@ -1,6 +1,7 @@
 <?php
 namespace CREW\Missions;
 use \CREW\Game\Globals;
+use \CREW\Game\GlobalsVars;
 use \CREW\Game\Players;
 use \CREW\Game\Notifications;
 
@@ -29,5 +30,16 @@ class Mission11 extends AbstractMission
     $player = Players::get($crewId);
     $player->usedComm();
     Notifications::communicate($player, null, 'used');
+  }
+
+  public function getTargetablePlayers($removeCommander = false)
+  {
+    $pIds = parent::getTargetablePlayers();
+
+    // Remove Jarvis, when he is available
+    if(GlobalsVars::isJarvis())
+      $pIds = array_values(array_diff($pIds, [JARVIS_ID]));
+
+    return $pIds;
   }
 }
