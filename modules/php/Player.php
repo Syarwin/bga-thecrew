@@ -94,8 +94,8 @@ class Player extends Helpers\DB_Manager
       'distressCard' => $pId == $this->id? $this->distressCard : null,
       'distressAuto' => $this->distressAuto,
       'reply' => $this->reply,
-      'restartMissionAnswer' => $this->restartMissionAnswer,
       'continueAuto' => $this->continueAuto,
+      'restartMissionAnswer' => $this->restartMissionAnswer,
     ];
   }
 

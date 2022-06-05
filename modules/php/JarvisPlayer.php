@@ -95,9 +95,9 @@ class JarvisPlayer
       'distressCard' => $current ? GlobalsVars::getJarvisDistressCard() : null,
       'distressAuto' => $this->distressAuto,
       'reply' => $this->getReply(),
-      'restartMissionAnswer' => $this->restartMissionAnswer,
       'continueAuto' => $this->continueAuto,
       'afterPlayer' => GlobalsVars::getJarvisPlaysAfter(),
+      'restartMissionAnswer' => $this->restartMissionAnswer,
     ];
   }
 
