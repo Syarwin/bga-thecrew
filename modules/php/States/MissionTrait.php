@@ -129,8 +129,23 @@ trait MissionTrait
         $result[] = [$log['mission'], $log['attempt'], $log['success'], $log['distress']];
 
       $json = json_encode($result);
-      $this->storeLegacyTeamData($json);
+
+      try {
+        $this->storeLegacyTeamData($json);
+      } catch( \feException $e ) {
+        // ignore storeLegacyData: cannot store more than 64k of legacy data for player
+        if ($e->getCode() != FEX_legacy_size_exceeded ) {
+          throw $e;
+        } else {
+          $this->removeLegacyTeamData();
+
+          // save only last item, so they can still continue, but ignoring logbook
+          $json = json_encode([end($result)]);
+          $this->storeLegacyTeamData($json);
+        }
+      }
     }
+
     $this->gamestate->nextState('next');
   }
 

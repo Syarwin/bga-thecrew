@@ -87,6 +87,11 @@ class thecrew extends Table
       CREW\LogBook::loadCampaign();
     else {
       $mission = $options[OPTION_MISSION] == NEW_CAMPAIGN? 1 : $options[OPTION_MISSION];
+      if ($options[OPTION_MISSION] == NEW_CAMPAIGN) {
+        // remove old mission here
+        thecrew::get()->removeLegacyTeamData();
+      }
+
       CREW\LogBook::startMission($mission);
     }
 
