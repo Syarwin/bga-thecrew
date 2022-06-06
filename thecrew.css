@@ -764,6 +764,13 @@ html, body {
   align-items: center;
 }
 
+#bga-thecrew-restart-mission {
+  display: none;
+}
+.gamestate_playerTurn #bga-thecrew-restart-mission {
+  display: inline-block;
+}
+
 .player-table {
   width: 400px;
   height: 145px;

@@ -63,3 +63,13 @@
     align-items: center;
   }
 }
+
+
+// Restart button only shows during player turn
+#bga-thecrew-restart-mission {
+  display: none;
+
+  .gamestate_playerTurn & {
+    display: inline-block;
+  }
+}
