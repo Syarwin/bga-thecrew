@@ -244,7 +244,7 @@ class thecrew extends Table
     }
 
     // restart mission answers
-    if( $from_version <= 2205100108){
+    if( $from_version <= 2206061529){
       try {
         self::applyDbUpgradeToAllDB("ALTER TABLE `DBPREFIX_player` ADD `restart_mission_answer` smallint(1) DEFAULT 0 COMMENT 'none, dontuse, agree'");
       } catch(Exception $e){
