@@ -83,7 +83,12 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         this._selectedDistress = card.id;
         this.updateDistressBtn();
       } else {
-        this.takeAction('actChooseCardDistress', { cardId: card.id });
+        dojo.destroy('btnConfirmDistressChoice');
+        this.highlightCard(card.id);
+        this.addPrimaryActionButton('btnConfirmDistressChoice', _('Confirm'), () => {
+          dojo.destroy('btnConfirmDistressChoice');
+          this.takeAction('actChooseCardDistress', { cardId: card.id });
+        });
       }
     },
 
