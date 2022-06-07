@@ -1345,13 +1345,13 @@ html, body {
 .task[data-color="7"] .task-inner {
   background-position: 100% 0%;
 }
-.task.selectable .task-inner {
+.task.selectable:not(.selected) .task-inner {
   animation: 0.9s borderBlink infinite;
   cursor: pointer;
   box-shadow: 0 0 20px 3px #4782ff;
   transition: transform 0.2s;
 }
-.task.selectable:hover .task-inner {
+.task.selectable:not(.selected):hover .task-inner {
   animation: none;
   transform: scale(1.2);
 }
@@ -1359,15 +1359,15 @@ html, body {
   animation: none;
   box-shadow: 0 0 20px 3px #00ff00;
 }
-.task.tile-selectable {
+.task.tile-selectable:not(.selected) {
   cursor: pointer;
 }
-.task.tile-selectable .task-tile {
+.task.tile-selectable:not(.selected) .task-tile {
   animation: 0.9s borderBlink infinite;
   box-shadow: 0 0 20px 3px #4782ff;
   transition: transform 0.2s;
 }
-.task.tile-selectable:hover .task-tile {
+.task.tile-selectable:not(.selected):hover .task-tile {
   animation: none;
   transform: scale(1.2);
 }
