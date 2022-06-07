@@ -175,6 +175,9 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
            this.notifqueue.setSynchronous(notif[0] + 'Instant', 10);
          }
        });
+
+       // Waiting
+       this.notifqueue.setSynchronous( 'wait2seconds', 2000 );
      },
 
 

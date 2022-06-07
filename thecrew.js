@@ -97,7 +97,8 @@
         this.inherited(arguments);
       },
 
-      onUpdateActionButtons(){
+      onUpdateActionButtons(stateName, args){
+        debug(`onUpdateActionButtons ${stateName}:`, args);
         this.updatePlayersStatus();
 
         // Checkmarks

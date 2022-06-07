@@ -121,6 +121,7 @@ $machinestates = [
       'descriptionmyturnjarvis' => clienttranslate('${you} must choose a task (for Jarvis)'),
       "type" => "activeplayer",
       "args" => "argPickTask",
+      "action" => "stPickTask",
       "possibleactions" => ["actChooseTask"],
       "transitions" => [
         "next" => STATE_NEXT_PLAYER_PICK_TASK,
