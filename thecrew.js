@@ -89,6 +89,7 @@
 
 
       onEnteringState(stateName, args) {
+        debug(`onEnteringState ${stateName}:`, args);
         if (args.args && args.args.jarvisActive) {
           this.changePageTitle('jarvis');
         }
