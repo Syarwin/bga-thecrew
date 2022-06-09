@@ -409,8 +409,8 @@ $machinestates = [
 
   STATE_RESTART_MISSION_SETUP => [
     "name" => "restartMissionSetup",
-    "description" => clienttranslate('someone wants to restart mission'),
-    "descriptionmyturn" => clienttranslate('${you} may agree to restart mission'),
+    "description" => clienttranslate('someone wants to fail mission'),
+    "descriptionmyturn" => clienttranslate('${you} may agree to fail mission'),
     "type" => "multipleactiveplayer",
     "args" => "argRestartMissionSetup",
     "action" => "stRestartMissionSetup",
