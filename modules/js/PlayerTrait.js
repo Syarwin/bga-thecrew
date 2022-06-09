@@ -132,7 +132,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         this.setRadioToken(player.id, player.commToken);
         // Set distress choice
         dojo.attr('distress-choice-' + player.id, 'data-choice', player.distressChoice);
-        // Set restart mission answer
+        // Set fail mission answer
         dojo.attr('fail-mission-answer-' + player.id, 'data-answer', player.restartMissionAnswer);
 
         if(this.player_id == player.id){

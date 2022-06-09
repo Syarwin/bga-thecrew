@@ -18,6 +18,7 @@
  var isDebug = window.location.host == 'studio.boardgamearena.com' || window.location.hash.indexOf('debug') > -1;
  var debug = isDebug ? console.info.bind(window.console) : function () { };
  const CANCEL_TIMEOUT = 5;
+ const WANT_FAIL_MISSION = 1;
  define([
      "dojo", "dojo/_base/declare",
      "ebg/core/gamegui",
@@ -265,6 +266,11 @@
             dojo.destroy('btnConfirmFailMission');
             dojo.destroy('btnCancelFailMission');
             this.ajaxcall("/thecrew/thecrew/setRestartMission.html", {}, () => {});
+
+            setTimeout(() => {
+              console.log('auto answer fail mission to yes');
+              this.onAnswerRestartMission(WANT_FAIL_MISSION)
+            }, 2000);
           });
 
           this.addSecondaryActionButton('btnCancelFailMission', _('Cancel Fail Mission request'), () => {
