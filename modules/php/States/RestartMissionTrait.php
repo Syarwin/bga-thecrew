@@ -37,7 +37,7 @@ trait RestartMissionTrait
 
   function isEveryOneWantingRestartMission($answers) {
     return $answers === array_filter($answers, function ($answer) use ($answers) {
-        return ($answer === WANT_RESTART_MISSION);
+        return ($answer === WANT_FAIL_MISSION);
     });
   }
 
@@ -49,7 +49,7 @@ trait RestartMissionTrait
 
     $answers = Players::getAllRestartMissionAnswers();
 
-    if ($answer == DONT_WANT_RESTART_MISSION || in_array(DONT_WANT_RESTART_MISSION, $answers)) {
+    if ($answer == DONT_WANT_FAIL_MISSION || in_array(DONT_WANT_FAIL_MISSION, $answers)) {
       // Someone doesn't want to restart mission, go back to game
       Players::clearRestartMissionAnswers();
       $this->gamestate->nextState('cancel');
@@ -62,6 +62,9 @@ trait RestartMissionTrait
       Notifications::restartMissionActivated($missionId);
       Players::clearRestartMissionAnswers();
       $this->gamestate->nextState('endMission');
+    } else {
+      // pause time for player that answered
+      $this->gamestate->setPlayerNonMultiactive($player->getId(), '');
     }
 
   }

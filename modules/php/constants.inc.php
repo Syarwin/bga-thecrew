@@ -111,8 +111,8 @@ define("CARD_HIDDEN", 7);
  * MISSION RESTART
  */
 
-define("WANT_RESTART_MISSION", 1);
-define("DONT_WANT_RESTART_MISSION", 2);
+define("WANT_FAIL_MISSION", 1);
+define("DONT_WANT_FAIL_MISSION", 2);
 
 
 /*

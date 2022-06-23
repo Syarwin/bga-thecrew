@@ -28,7 +28,7 @@ class Player extends Helpers\DB_Manager
     $this->distressAuto = $row['distress_auto'];
     $this->continueAuto = $row['continue_auto'];
     $this->preselectedCard = $row['preselect_card_id'];
-    $this->restartMissionAnswer = $row['restart_mission_answer'];
+    $this->restartMissionAnswer = isset($row['restart_mission_answer']) ? $row['restart_mission_answer'] : 0;
   }
 
   private $id;
@@ -94,8 +94,8 @@ class Player extends Helpers\DB_Manager
       'distressCard' => $pId == $this->id? $this->distressCard : null,
       'distressAuto' => $this->distressAuto,
       'reply' => $this->reply,
-      'restartMissionAnswer' => $this->restartMissionAnswer,
       'continueAuto' => $this->continueAuto,
+      'restartMissionAnswer' => $this->restartMissionAnswer,
     ];
   }
 

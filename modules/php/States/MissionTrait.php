@@ -129,8 +129,27 @@ trait MissionTrait
         $result[] = [$log['mission'], $log['attempt'], $log['success'], $log['distress']];
 
       $json = json_encode($result);
-      $this->storeLegacyTeamData($json);
+
+      try {
+        $this->storeLegacyTeamData($json);
+      } catch( \feException $e ) {
+        // ignore storeLegacyData: cannot store more than 64k of legacy data for player
+        if ($e->getCode() != FEX_legacy_size_exceeded ) {
+          throw $e;
+        } else {
+          $this->removeLegacyTeamData();
+
+          try {
+            // try to save only last mission, so they can still continue, but ignoring logbook
+            $json = json_encode([end($result)]);
+            $this->storeLegacyTeamData($json);
+          } catch( \feException $ignored ) {
+            // skip for players with full storage
+          }
+        }
+      }
     }
+
     $this->gamestate->nextState('next');
   }
 
@@ -140,7 +159,7 @@ trait MissionTrait
     $currentMission = Missions::getCurrent();
     $missionId = $currentMission->getId();
     $player = Players::getCurrent();
-    Notifications::message(clienttranslate('${player_name} wants to restart mission ${mission}'), [
+    Notifications::message(clienttranslate('${player_name} wants to fail mission ${mission}'), [
       'player_name' => $player->getName(),
       'mission' => $missionId,
     ]);

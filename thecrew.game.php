@@ -87,6 +87,11 @@ class thecrew extends Table
       CREW\LogBook::loadCampaign();
     else {
       $mission = $options[OPTION_MISSION] == NEW_CAMPAIGN? 1 : $options[OPTION_MISSION];
+      if ($options[OPTION_MISSION] == NEW_CAMPAIGN) {
+        // remove old mission here
+        thecrew::get()->removeLegacyTeamData();
+      }
+
       CREW\LogBook::startMission($mission);
     }
 
@@ -239,7 +244,7 @@ class thecrew extends Table
     }
 
     // restart mission answers
-    if( $from_version <= 2205100108){
+    if( $from_version <= 2206061529){
       try {
         self::applyDbUpgradeToAllDB("ALTER TABLE `DBPREFIX_player` ADD `restart_mission_answer` smallint(1) DEFAULT 0 COMMENT 'none, dontuse, agree'");
       } catch(Exception $e){

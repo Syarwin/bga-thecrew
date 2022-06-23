@@ -31,15 +31,16 @@ class Globals extends \APP_DbObject
 
   /*
    * Declare globas (in the constructor of game.php)
+   *
+   * DO NOT CHANGE THE ORDER OF THOSE STRINGS!!!!
    */
   private static $globals = [
     'trickCount' => 0,
     'commanderId' => 0,
     'trickColor' => 0,
     'distressDirection' => DONT_USE,
-    'restartMissionAnswer' => DONT_USE,
-      'notusedglobal1' => 0, // Original code has hole in sequence
-      'notusedglobal2' => 0, // Original code has hole in sequence
+    'notusedglobal1' => 0, // Original code has hole in sequence
+    'notusedglobal2' => 0, // Original code has hole in sequence
     'lastWinnerId' => 0,
       'notusedglobal3' => 0, // Original code has hole in sequence
     'missionFinished' => 0,
@@ -54,6 +55,11 @@ class Globals extends \APP_DbObject
     'playerWhoGiveId' => 0,
     'taskToGiveId' => 0,
     'playerToGiveId' => 0,
+
+    // Restart Mission
+    'restartMissionAnswer' => DONT_USE,
+
+    // Insert new item here, nothing between (they are int in DB)
   ];
 
   public static function declare($game)
