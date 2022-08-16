@@ -94,6 +94,12 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     onClickCardToPreselect(card){
       this.highlightCard(card.id);
 
+      // skip confirm based on confirm_pre_select == 1
+      if (this.gamedatas.players[this.player_id].confirmPreSelect == 1) {
+        this.takeAction("actPreselectCard", { cardId: card.id});
+        return;
+      }
+
       dojo.destroy('btnConfirmPreselectCard');
       dojo.destroy('btnCancelPreselectCard');
       this.addPrimaryActionButton('btnConfirmPreselectCard', _('Pre-select card'), () => {
@@ -101,6 +107,9 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         dojo.destroy('btnCancelPreselectCard');
         this.takeAction("actPreselectCard", { cardId: card.id});
       });
+      // set focus on confirm button
+      document.querySelector('#btnConfirmPreselectCard').focus();
+
       this.stopActionTimer();
       this.startActionTimer('btnConfirmPreselectCard', CONFIRM_TIMEOUT);
       setTimeout(() => {

@@ -238,6 +238,10 @@
           autocontinue:_('Auto-answer continue missions'),
           alwaysyes:_('Always yes'),
           failMission:_('Fail mission'),
+
+          confirmpreselect:_('Pre-Select'),
+          showconfirm:_('&lt;Enter&gt; to confirm'),
+          skipconfirm:_('Skip confirm'),
         }, 'player_boards', 'first');
 
         // Auto answer distress
@@ -251,6 +255,13 @@
         $('autocontinue').value = this.gamedatas.players[this.player_id].continueAuto;
         dojo.connect($('autocontinue'), 'change', () => {
           this.ajaxcall("/thecrew/thecrew/setAutocontinue.html", { autocontinue: $("autocontinue").value }, () => {});
+        });
+
+        // Auto replay with confirmation
+        $('confirmpreselect').value = this.gamedatas.players[this.player_id].confirmPreSelect;
+        dojo.connect($('confirmpreselect'), 'change', () => {
+          this.ajaxcall("/thecrew/thecrew/setConfirmPreSelect.html", { confirmpreselect: $("confirmpreselect").value }, () => {});
+          this.gamedatas.players[this.player_id].confirmPreSelect = $("confirmpreselect").value;
         });
 
         // Add fail mission button

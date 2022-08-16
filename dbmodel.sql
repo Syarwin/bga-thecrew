@@ -19,6 +19,7 @@ ALTER TABLE `player` ADD `distress_auto` smallint(1) DEFAULT 0 COMMENT 'none, au
 ALTER TABLE `player` ADD `continue_auto` smallint(1) DEFAULT 0 COMMENT 'none, autoyes';
 ALTER TABLE `player` ADD `preselect_card_id` int(10) unsigned NULL COMMENT 'id of the preselected card';
 ALTER TABLE `player` ADD `restart_mission_answer` smallint(1) DEFAULT 0 COMMENT 'none, dontwant, agree';
+ALTER TABLE `player` ADD `confirm_pre_select` smallint(1) DEFAULT 0 COMMENT 'confirm = 0, skip = 1';
 
 
 

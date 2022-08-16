@@ -176,4 +176,14 @@ trait MissionTrait
     $player->setAutoContinue($mode);
   }
 
+
+  /***********************
+  ******* CONFIRM/SKIP PRE SELECT CARD *******
+  ***********************/
+  public function actSetConfirmPreSelect($mode)
+  {
+    $player = Players::getCurrent();
+    $player->setConfirmPreSelect($mode);
+  }
+
 }
