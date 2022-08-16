@@ -81,7 +81,7 @@ class JarvisPlayer
       'name'      => $this->name,
       'color'     => $this->color,
       'score'     => $this->score,
-      'nTricks'   => $this->nTricks,
+      'nTricks'   => $this->getTricksWon(),
       'cards'     => $this->getCards()->toArray(),
       'preselected' => $current ? $this->preselectedCard : null,
       'nCards'    => count($this->getCards()),
