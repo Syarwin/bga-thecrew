@@ -25,7 +25,7 @@
   // Hidden tasks
   &[data-color="7"] .task-inner { background-position: 100% 0%; }
 
-  &.selectable {
+  &.selectable:not(.selected) {
     .task-inner {
       animation:0.9s borderBlink infinite;
       cursor:pointer;
@@ -44,7 +44,7 @@
     box-shadow: 0 0 20px 3px #00ff00;
   }
 
-  &.tile-selectable {
+  &.tile-selectable:not(.selected) {
     cursor:pointer;
 
     .task-tile {

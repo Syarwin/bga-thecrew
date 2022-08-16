@@ -139,9 +139,13 @@ trait MissionTrait
         } else {
           $this->removeLegacyTeamData();
 
-          // save only last item, so they can still continue, but ignoring logbook
-          $json = json_encode([end($result)]);
-          $this->storeLegacyTeamData($json);
+          try {
+            // try to save only last mission, so they can still continue, but ignoring logbook
+            $json = json_encode([end($result)]);
+            $this->storeLegacyTeamData($json);
+          } catch( \feException $ignored ) {
+            // skip for players with full storage
+          }
         }
       }
     }
@@ -155,7 +159,7 @@ trait MissionTrait
     $currentMission = Missions::getCurrent();
     $missionId = $currentMission->getId();
     $player = Players::getCurrent();
-    Notifications::message(clienttranslate('${player_name} wants to restart mission ${mission}'), [
+    Notifications::message(clienttranslate('${player_name} wants to fail mission ${mission}'), [
       'player_name' => $player->getName(),
       'mission' => $missionId,
     ]);

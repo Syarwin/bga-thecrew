@@ -48,7 +48,7 @@ class view_thecrew_thecrew extends game_view
       $this->tpl['NO'] = self::_("No");
       $this->tpl['WHATEVER'] = self::_("Whatever");
       $this->tpl['DISTRESS'] = self::_("Do you want to use the distress signal?");
-      $this->tpl['RESTART_MISSION'] = self::_("Do you want to restart this mission?");
+      $this->tpl['RESTART_MISSION'] = self::_("Do you want to fail this mission?");
 
       /*********** Do not change anything below this line  ************/
 	}

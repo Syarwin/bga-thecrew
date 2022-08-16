@@ -361,19 +361,19 @@ html,body {
       }
 
       /*
-       * Restart Mission panel
+       * Fail Mission panel
        */
-       #restart-mission-panel {
+       #fail-mission-panel {
         display:none;
         flex-flow: column;
         justify-content: space-between;
 
         // Checkmarks
-        #restart-mission-panel-top, #restart-mission-panel-bottom {
+        #fail-mission-panel-top, #fail-mission-panel-bottom {
           display:flex;
           justify-content: space-between;
 
-          .restart-mission-answer {
+          .fail-mission-answer {
             margin: 5px;
             width: 40px;
             height: 40px;
@@ -392,12 +392,12 @@ html,body {
         }
 
         // Central line with question
-        #restart-mission-panel-middle {
+        #fail-mission-panel-middle {
           display: flex;
           flex-flow:column;
           align-items: center;
 
-          #restart-mission-icon {
+          #fail-mission-icon {
             background-image: url('img/sprites.png');
             background-size: 1100%;
             background-position: 10% 50%;
@@ -413,7 +413,7 @@ html,body {
             font-size:16px;
           }
 
-          #restart-mission-panel-buttons {
+          #fail-mission-panel-buttons {
             width: 100%;
             display: flex;
             flex-flow:row;
@@ -430,11 +430,11 @@ html,body {
               align-items: center;
               justify-content: center;
 
-              &#restart-mission-agree-button {
+              &#fail-mission-agree-button {
                 font-size: 18px;
               }
 
-              &#restart-mission-dont-want-button {
+              &#fail-mission-dont-want-button {
                 padding:0px 5px;
               }
             }
@@ -473,12 +473,12 @@ html,body {
 
 
       // Focus on corresponding block
-      &[data-display='cards'] #cards-mat { display: flex; }
+      &[data-display='cards'] #cards-mat, &[data-display='fail-mission'] #cards-mat { display: flex; }
       &[data-display='tasks'] #tasks { display: flex; }
       &[data-display='end'] #end-panel { display:flex; }
       &[data-display='distress'] #distress-panel { display:flex; }
       &[data-display='give-task'] #give-task-panel { display:flex; }
-      &[data-display='restart-mission'] #restart-mission-panel { display:flex; }
+      &[data-display='fail-mission'] #fail-mission-panel { display:flex; }
     }
   }
 }

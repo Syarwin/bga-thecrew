@@ -64,7 +64,7 @@ class JarvisPlayer
   public function isZombie(){ return $this->zombie; }
   public function getDistressChoice(){ return WHATEVER; }
   public function getDistressCard(){ return Cards::get($this->distressCard); }
-  public function getRestartMissionAnswer(){ return WANT_RESTART_MISSION; }
+  public function getRestartMissionAnswer(){ return WANT_FAIL_MISSION; }
 
   public function isCommander() { return $this->id == Globals::getCommander(); }
   public function isSpecial() { return $this->id == Globals::getSpecial(); }

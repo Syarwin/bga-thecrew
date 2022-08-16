@@ -1,4 +1,6 @@
 define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
+  const CONFIRM_TIMEOUT = 10;
+
   return declare("thecrew.trickTrait", null, {
     constructor(){
       this._notifications.push(
@@ -90,7 +92,26 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
 
     onClickCardToPreselect(card){
-      this.takeAction("actPreselectCard", { cardId: card.id});
+      this.highlightCard(card.id);
+
+      dojo.destroy('btnConfirmPreselectCard');
+      dojo.destroy('btnCancelPreselectCard');
+      this.addPrimaryActionButton('btnConfirmPreselectCard', _('Pre-select card'), () => {
+        dojo.destroy('btnConfirmPreselectCard');
+        dojo.destroy('btnCancelPreselectCard');
+        this.takeAction("actPreselectCard", { cardId: card.id});
+      });
+      this.stopActionTimer();
+      this.startActionTimer('btnConfirmPreselectCard', CONFIRM_TIMEOUT);
+      setTimeout(() => {
+        dojo.query('#hand_item_' + card.id).removeClass('selected');
+      }, CONFIRM_TIMEOUT * 1000);
+
+      this.addSecondaryActionButton('btnCancelPreselectCard', _('Cancel'), () => {
+        dojo.destroy('btnConfirmPreselectCard');
+        dojo.destroy('btnCancelPreselectCard');
+        dojo.query('#hand_item_' + card.id).removeClass('selected');
+      });
     },
 
     notif_preselect(n){

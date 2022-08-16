@@ -42,7 +42,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         this.place('jstpl_playerCheckMark', player, 'end-panel-' + row);
         this.place('jstpl_playerCheckMarkGiveTask', player, 'give-task-panel-' + row);
         this.place('jstpl_playerDistressChoice', player, 'distress-panel-' + row);
-        this.place('jstpl_playerRestartMissionAnswer', player, 'restart-mission-panel-' + row);
+        this.place('jstpl_playerFailMissionAnswer', player, 'fail-mission-panel-' + row);
         dojo.connect($('player-table-' + player.id), 'click', () => this.onClickPlayer(player.id));
 
         // Create tasks
@@ -132,8 +132,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         this.setRadioToken(player.id, player.commToken);
         // Set distress choice
         dojo.attr('distress-choice-' + player.id, 'data-choice', player.distressChoice);
-        // Set restart mission answer
-        dojo.attr('restart-mission-answer-' + player.id, 'data-answer', player.restartMissionAnswer);
+        // Set fail mission answer
+        dojo.attr('fail-mission-answer-' + player.id, 'data-answer', player.restartMissionAnswer);
 
         if(this.player_id == player.id){
           dojo.attr('comm-card-' + player.id, 'data-pending', player.commPending? 1 : 0);

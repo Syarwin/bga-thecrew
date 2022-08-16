@@ -17,6 +17,8 @@
 
  var isDebug = window.location.host == 'studio.boardgamearena.com' || window.location.hash.indexOf('debug') > -1;
  var debug = isDebug ? console.info.bind(window.console) : function () { };
+ const CANCEL_TIMEOUT = 5;
+ const WANT_FAIL_MISSION = 1;
  define([
      "dojo", "dojo/_base/declare",
      "ebg/core/gamegui",
@@ -89,6 +91,7 @@
 
 
       onEnteringState(stateName, args) {
+        debug(`onEnteringState ${stateName}:`, args);
         if (args.args && args.args.jarvisActive) {
           this.changePageTitle('jarvis');
         }
@@ -96,7 +99,8 @@
         this.inherited(arguments);
       },
 
-      onUpdateActionButtons(){
+      onUpdateActionButtons(stateName, args){
+        debug(`onUpdateActionButtons ${stateName}:`, args);
         this.updatePlayersStatus();
 
         // Checkmarks
@@ -233,6 +237,7 @@
 
           autocontinue:_('Auto-answer continue missions'),
           alwaysyes:_('Always yes'),
+          failMission:_('Fail mission'),
         }, 'player_boards', 'first');
 
         // Auto answer distress
@@ -248,31 +253,32 @@
           this.ajaxcall("/thecrew/thecrew/setAutocontinue.html", { autocontinue: $("autocontinue").value }, () => {});
         });
 
-        // Add restart mission button
-        const modalButtonHolder = dojo.place('<div style="text-align: center;"></div>', $('right-side-second-part'), 'before');
-        const restartMission = dojo.place('<button style="width: auto;" class="action-button bgabutton bgabutton_blue" id="bga-thecrew-restart-mission">'+_('Restart Mission')+'</button>', modalButtonHolder, 'first');
-        dojo.connect(restartMission, "onclick", () => {
-          debug('Restart Mission clicked:');
+        // Add fail mission button
+        dojo.connect($('bga-thecrew-fail-mission'), "onclick", () => {
+          debug('Fail Mission clicked:');
           if (this.gamedatas.gamestate.action !== 'stPlayerTurn') {
-            this.myDlg = new ebg.popindialog();
-            this.myDlg.create( 'restartMissionDialogId' );
-            this.myDlg.setTitle( _("Wait your turn to restart mission") );
-            this.myDlg.setMaxWidth( 500 );
-            this.myDlg.show();
             return;
           }
 
-          dojo.destroy('btnConfirmRestartMission');
-          dojo.destroy('btnCancelRestartMission');
-          this.addPrimaryActionButton('btnConfirmRestartMission', _('Restart Mission'), () => {
-            dojo.destroy('btnConfirmRestartMission');
-            dojo.destroy('btnCancelRestartMission');
+          dojo.destroy('btnConfirmFailMission');
+          dojo.destroy('btnCancelFailMission');
+          this.addPrimaryActionButton('btnConfirmFailMission', _('Request to Fail Mission'), () => {
+            dojo.destroy('btnConfirmFailMission');
+            dojo.destroy('btnCancelFailMission');
             this.ajaxcall("/thecrew/thecrew/setRestartMission.html", {}, () => {});
+
+            setTimeout(() => {
+              console.log('auto answer fail mission to yes');
+              this.onAnswerRestartMission(WANT_FAIL_MISSION)
+            }, 2000);
           });
-          this.addSecondaryActionButton('btnCancelRestartMission', _('Cancel Restart Mission'), () => {
-            dojo.destroy('btnConfirmRestartMission');
-            dojo.destroy('btnCancelRestartMission');
+
+          this.addSecondaryActionButton('btnCancelFailMission', _('Cancel Fail Mission request'), () => {
+            dojo.destroy('btnConfirmFailMission');
+            dojo.destroy('btnCancelFailMission');
           });
+          this.stopActionTimer();
+          this.startActionTimer('btnCancelFailMission', CANCEL_TIMEOUT);
         });
       },
    });

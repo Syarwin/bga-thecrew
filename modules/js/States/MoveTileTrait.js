@@ -14,6 +14,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       if(this.isCurrentPlayerActive()){
         this._selectableTiles = args.tiles;
         this._selectedTile = null;
+        this._selectedTile2 = null;
         this.makeTaskTileSelectable(Object.keys(args.tiles));
         this.addPrimaryActionButton('passMoveTile', _('Pass'), () => this.takeAction('actPassMoveTile') );
       }
@@ -31,21 +32,28 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     cancelSelectedTile(){
       dojo.removeClass('task-' + this._selectedTile, 'tile-selected');
+      dojo.removeClass('task-' + this._selectedTile2, 'selected');
       this._selectedTile = null;
+      this._selectedTile2 = null;
       this.makeTaskTileSelectable(Object.keys(this._selectableTiles));
       if($('cancelSelectedTile'))
         dojo.destroy('cancelSelectedTile');
+      if($('btnConfirmMoveTile'))
+        dojo.destroy('btnConfirmMoveTile');
     },
 
     onChooseTaskTile(taskId){
       debug("Clicked on task : ", taskId);
 
+      if($('btnConfirmMoveTile'))
+        dojo.destroy('btnConfirmMoveTile');
+
       // First click, select the tile
       if(this._selectedTile == null){
         this._selectedTile = taskId;
         this.makeTaskTileSelectable(this._selectableTiles[taskId]);
-
         dojo.addClass('task-' + taskId, 'tile-selected');
+
         this.connect($('task-' + taskId), 'click', () => this.cancelSelectedTile() );
         this.addSecondaryActionButton('cancelSelectedTile', _('Cancel'), () => this.cancelSelectedTile() );
       }
@@ -55,9 +63,19 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       }
       // Click on second card => take action
       else {
-        this.takeAction('actMoveTile', {
-          taskId1 : this._selectedTile,
-          taskId2: taskId
+        if (this._selectedTile2 !== null) {
+          dojo.removeClass('task-' + this._selectedTile2, 'selected');
+        }
+
+        this._selectedTile2 = taskId;
+        dojo.addClass('task-' + taskId, 'selected');
+
+        this.addPrimaryActionButton('btnConfirmMoveTile', _('Confirm'), () => {
+          dojo.destroy('btnConfirmMoveTile');
+          this.takeAction('actMoveTile', {
+            taskId1 : this._selectedTile,
+            taskId2: this._selectedTile2
+          });
         });
       }
     },

@@ -53,7 +53,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       // Token commander
       if(mission.hiddenTasks){
         dojo.place(`<div id="mission-informations-commander"></div>`, container);
-        this.addTooltip('mission-informations-commander', _('Place the specified number of task cards face down in the middle of the table. After each player has reviewed their cards, your commander asks each crew member, whether they see themselves fit to take on all of the tasks. It may only be answered with "yes" or "no".  actually receives the assignment and reveals the task cards. The mission is fulfilled when the crew member has completed all the tasks. Your commander may not choose himself or herself.'), '');
+        this.addTooltip('mission-informations-commander', _('Place the specified number of task cards face down in the middle of the table. After each player has reviewed their cards, your commander asks each crew member, whether they see themselves fit to take on all of the tasks. It may only be answered with "yes" or "no". Afterwards, your commander decides who actually receives the assignment and reveals the task cards. The mission is fulfilled when the crew member has completed all the tasks. Your commander may not choose himself or herself.'), '');
       }
 
       // Tasks

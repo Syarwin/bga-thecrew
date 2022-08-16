@@ -96,24 +96,24 @@
       <div id="distress-panel-bottom"></div>
 	  </div>
 
-    <div id="restart-mission-panel">
-      <div id="restart-mission-panel-top"></div>
+    <div id="fail-mission-panel">
+      <div id="fail-mission-panel-top"></div>
 
-      <div id="restart-mission-panel-middle">
+      <div id="fail-mission-panel-middle">
 
         <h2>
           {RESTART_MISSION}
         </h2>
 
-        <div id="restart-mission-panel-buttons">
-          <button id="restart-mission-agree-button" class="finalbutton bgabutton bgabutton_blue">{YES}</button>
-          <button id="restart-mission-dont-want-button" class="finalbutton bgabutton bgabutton_red">{NO}</button>
+        <div id="fail-mission-panel-buttons">
+          <button id="fail-mission-agree-button" class="finalbutton bgabutton bgabutton_blue">{YES}</button>
+          <button id="fail-mission-dont-want-button" class="finalbutton bgabutton bgabutton_red">{NO}</button>
         </div>
 
-        <div id="restart-mission-panel-answer"></div>
+        <div id="fail-mission-panel-answer"></div>
       </div>
 
-      <div id="restart-mission-panel-bottom"></div>
+      <div id="fail-mission-panel-bottom"></div>
 	  </div>
 
 
@@ -161,7 +161,7 @@ var jstpl_playerMat = '<div id="mat-${id}" data-no="${no}" class="mat-card-holde
 var jstpl_playerCheckMark = '<div class="check-ok" data-no="${no}" id="continue-ok-${id}"></div>';
 var jstpl_playerCheckMarkGiveTask = '<div class="check-ok" data-no="${no}" id="give-task-ok-${id}"></div>';
 var jstpl_playerDistressChoice = '<div class="distress-choice" data-no="${no}" data-choice="${distressChoice}" id="distress-choice-${id}"></div>';
-var jstpl_playerRestartMissionAnswer = '<div class="restart-mission-answer" data-no="${no}" data-answer="${restartMissionAnswer}" id="restart-mission-answer-${id}"></div>';
+var jstpl_playerFailMissionAnswer = '<div class="fail-mission-answer" data-no="${no}" data-answer="${restartMissionAnswer}" id="fail-mission-answer-${id}"></div>';
 var jstpl_playerPanel = `
 <div class="panel-container" id="panel-container-\${id}" data-no="\${no}">
   <div class="panel-tricks" id="tricks-\${id}">
@@ -228,6 +228,11 @@ var jstpl_card = `
 var jstpl_configPlayerBoard = `
 <div class='player-board' id="player_board_config">
   <div id="player_config" class="player_board_content">
+    <div id="fail-mission-button">
+      <button style="width: auto;" class="action-button bgabutton bgabutton_small bgabutton_red" id="bga-thecrew-fail-mission">
+        \${failMission}
+      </button>
+    </div>
     <div id="autopick-selector">
         \${autopick}
         <select id="autopick">
