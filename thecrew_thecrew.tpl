@@ -250,6 +250,14 @@ var jstpl_configPlayerBoard = `
         </select>
     </div>
 
+    <div id="confirmpreselect-selector">
+        \${confirmpreselect}
+        <select id="confirmpreselect">
+          <option value='0'>\${showconfirm}</option>
+          <option value='1'>\${skipconfirm}</option>
+        </select>
+    </div>
+
   </div>
 </div>
 `;

@@ -690,6 +690,10 @@ html, body {
   opacity: 1;
 }
 
+#maintitlebar_content a {
+  outline: revert !important;
+}
+
 .panel-container, .panel-container .panel-tricks, .panel-container .panel-cards {
   display: flex;
   height: 35px;
@@ -759,7 +763,8 @@ html, body {
 
 #player_config #fail-mission-button,
 #player_config #autopick-selector,
-#player_config #autocontinue-selector {
+#player_config #autocontinue-selector,
+#player_config #confirmpreselect-selector {
   display: flex;
   flex-flow: column;
   justify-content: center;

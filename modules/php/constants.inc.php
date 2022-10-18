@@ -92,6 +92,9 @@ define('ANTICLOCKWISE', 3);
 define('WHATEVER', 4);
 
 
+define('SHOWCONFIRM', 0);
+define('SKIPCONFIRM', 1);
+
 define('DISABLED', 0);
 define('ALWAYS_NO', 2);
 define('ALWAYS_AGREE', 4);

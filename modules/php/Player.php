@@ -29,6 +29,7 @@ class Player extends Helpers\DB_Manager
     $this->continueAuto = $row['continue_auto'];
     $this->preselectedCard = $row['preselect_card_id'];
     $this->restartMissionAnswer = isset($row['restart_mission_answer']) ? $row['restart_mission_answer'] : 0;
+    $this->confirmPreSelect = $row['confirm_pre_select'];
   }
 
   private $id;
@@ -48,6 +49,7 @@ class Player extends Helpers\DB_Manager
   private $continueAuto;
   private $preselectedCard;
   private $restartMissionAnswer;
+  private $confirmPreSelect;
 
 
   /////////////////////////////////
@@ -71,6 +73,7 @@ class Player extends Helpers\DB_Manager
   public function getDistressAuto(){ return $this->distressAuto; }
   public function getContinueAuto(){ return $this->continueAuto; }
   public function getRestartMissionAnswer(){ return $this->restartMissionAnswer; }
+  public function getConfirmPreSelect(){ return $this->confirmPreSelect; }
 
   public function getUiData($pId)
   {
@@ -96,6 +99,7 @@ class Player extends Helpers\DB_Manager
       'reply' => $this->reply,
       'continueAuto' => $this->continueAuto,
       'restartMissionAnswer' => $this->restartMissionAnswer,
+      'confirmPreSelect' => $this->confirmPreSelect,
     ];
   }
 
@@ -217,6 +221,11 @@ class Player extends Helpers\DB_Manager
   public function setAutoContinue($mode)
   {
     self::DB()->update(['continue_auto' => $mode], $this->id);
+  }
+
+  public function setConfirmPreSelect($mode)
+  {
+    self::DB()->update(['confirm_pre_select' => $mode], $this->id);
   }
 
   public function preselectCard($cardId)

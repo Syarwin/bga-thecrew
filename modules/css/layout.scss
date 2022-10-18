@@ -599,3 +599,8 @@ html,body {
     }
   }
 }
+
+// reset outline to browser default
+#maintitlebar_content a {
+  outline: revert !important;
+}
