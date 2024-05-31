@@ -65,7 +65,7 @@ class Cards extends Helpers\Pieces
   //////////////////////////////////
   //////////////////////////////////
 
-  public function setupNewGame($players, $options)
+  public static function setupNewGame($players, $options)
   {
     $challenge = count($players) <= 3 && $options[OPTION_CHALLENGE] == CHALLENGE_ON;
 
