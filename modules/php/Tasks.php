@@ -1,5 +1,7 @@
 <?php
+
 namespace CREW;
+
 use CREW\Game\Globals;
 use CREW\Game\Players;
 use CREW\Game\Notifications;
@@ -7,6 +9,7 @@ use CREW\Game\Notifications;
 /*
  * Tasks: a class that handles tasks
  */
+
 class Tasks extends \CREW\Helpers\DB_Manager
 {
   protected static $table = 'task';
@@ -50,24 +53,26 @@ class Tasks extends \CREW\Helpers\DB_Manager
    */
   public static function addMany($n, $tiles = [])
   {
-    if($n == 0)
+    if ($n == 0)
       return;
 
     $lastTaskId = self::DB()->count();
 
     // Create possible tasks depending on challenge mode
     $tasks = [];
-    for($color = 1; $color <= 4; $color++){
-      if($color == CARD_GREEN && Globals::isChallenge())
+    for ($color = 1; $color <= 4; $color++) {
+      if ($color == CARD_GREEN && Globals::isChallenge())
         continue;
 
-      for($i = 1; $i <= 9; $i++){
+      for ($i = 1; $i <= 9; $i++) {
         $tasks[] = [$color, $i];
       }
     }
 
     // Remove already existing tasks
-    $dbTasks = self::DB()->get(false)->map(function($task){ return [$task['color'], $task['value'] ]; });
+    $dbTasks = self::DB()->get(false)->map(function ($task) {
+      return [$task['color'], $task['value']];
+    });
     $tasks = array_diff($tasks, $dbTasks);
 
 
@@ -76,7 +81,7 @@ class Tasks extends \CREW\Helpers\DB_Manager
     shuffle($picked);
 
     // Insert in DB
-    foreach($picked as $i => $key){
+    foreach ($picked as $i => $key) {
       $task = $tasks[$key];
       $tile = $tiles[$i] ?? '';
       self::insert($lastTaskId + $i + 1, $task[0], $task[1], $tile);
@@ -108,7 +113,7 @@ class Tasks extends \CREW\Helpers\DB_Manager
    */
   public static function assign($taskId, $player)
   {
-    self::DB()->update(['player_id' => $player->getId() ])->run($taskId);
+    self::DB()->update(['player_id' => $player->getId()])->run($taskId);
     return self::get($taskId);
   }
 
@@ -135,7 +140,7 @@ class Tasks extends \CREW\Helpers\DB_Manager
 
   public static function getRemeaning()
   {
-    return self::DB()->where('status','tbd')->get(false)->toArray();
+    return self::DB()->where('status', 'tbd')->get(false)->toArray();
   }
 
 
@@ -149,9 +154,9 @@ class Tasks extends \CREW\Helpers\DB_Manager
     $cards = Cards::getLastTrick();
 
     //update task individually
-    foreach($tasks as $task){
-      foreach($cards as $card){
-        if($task['color'] == $card['color'] && $task['value'] == $card['value']){
+    foreach ($tasks as $task) {
+      foreach ($cards as $card) {
+        if ($task['color'] == $card['color'] && $task['value'] == $card['value']) {
           $assignedPlayer = Players::get($task['pId']);
           self::updateStatus([$task], $task['pId'] == $winner->getId());
         }
@@ -160,13 +165,13 @@ class Tasks extends \CREW\Helpers\DB_Manager
 
 
     // Tile 1 -> 5
-    for($i = 1; $i <= 5; $i++){
+    for ($i = 1; $i <= 5; $i++) {
       $task = self::DB()->where('tile', $i)->where('status', 'tbd')->get(true);
-      if(is_null($task))
+      if (is_null($task))
         continue;
 
-      $nTasksBefore = self::DB()->whereNotIn('tile', range(1,$i-1))->where('status', 'ok')->count();
-      if($nTasksBefore > 0){
+      $nTasksBefore = self::DB()->whereNotIn('tile', range(1, $i - 1))->where('status', 'ok')->count();
+      if ($nTasksBefore > 0) {
         self::updateStatus([$task]);
       }
     }
@@ -174,25 +179,25 @@ class Tasks extends \CREW\Helpers\DB_Manager
 
     //Update task according to tile > >> >>> >>>>
     $tasks = self::DB()->where('tile', 'LIKE', 'i%')->where('status', 'ok')->orderBy('tile')->get(false);
-    foreach($tasks as $task) {
+    foreach ($tasks as $task) {
       $tasksMissed = self::DB()->where('tile', 'LIKE', 'i%')->where('tile', '<', $task['tile'])->where('status', 'tbd')->get(false);
       self::updateStatus($tasksMissed);
     }
 
     //Update task according to tile Omega
     $task = self::DB()->where('tile', 'o')->where('status', 'ok')->get(true);
-    if(!is_null($task)){
+    if (!is_null($task)) {
       $tasksMissed = self::DB()->where('status', 'tbd')->get(false);
       self::updateStatus($tasksMissed);
     }
   }
 
 
-  static function updateStatus($tasksMissed, $success = false)
+  public static function updateStatus($tasksMissed, $success = false)
   {
-    foreach($tasksMissed as $task){
+    foreach ($tasksMissed as $task) {
       $assignedPlayer = Players::get($task['pId']);
-      $task['status'] = $success? 'ok' : 'nok';
+      $task['status'] = $success ? 'ok' : 'nok';
 
       // Update status and notify
       self::DB()->update([
@@ -212,20 +217,20 @@ class Tasks extends \CREW\Helpers\DB_Manager
    */
   public static function getStatus()
   {
-    if(self::count() > 0 && self::DB()->where('status', '<>', 'ok')->count() == 0)
+    if (self::count() > 0 && self::DB()->where('status', '<>', 'ok')->count() == 0)
       return 1;
 
-    if(self::DB()->where('status', '=', 'nok')->count() > 0 || Globals::isLastTrick() )
+    if (self::DB()->where('status', '=', 'nok')->count() > 0 || Globals::isLastTrick())
       return -1;
 
     return 0;
   }
 
 
-  static function hide(&$tasks, $exceptFirst = false)
+  public static function hide(&$tasks, $exceptFirst = false)
   {
-    foreach($tasks as $i => &$task){
-      if($i == 0 && $exceptFirst)
+    foreach ($tasks as $i => &$task) {
+      if ($i == 0 && $exceptFirst)
         continue;
 
       $task['value'] = 0;
@@ -237,7 +242,7 @@ class Tasks extends \CREW\Helpers\DB_Manager
   /*
    * Usefull in mission 23 to switch tiles
    */
-  static function setTile($taskId, $newTile)
+  public static function setTile($taskId, $newTile)
   {
     self::DB()->update(['tile' => $newTile], $taskId);
   }

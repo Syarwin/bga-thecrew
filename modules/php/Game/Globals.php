@@ -1,11 +1,14 @@
 <?php
+
 namespace CREW\Game;
+
 use thecrew;
 use CREW\Cards;
 
 /*
  * Globals
  */
+
 class Globals extends \APP_DbObject
 {
   /* Exposing methods from Table object singleton instance */
@@ -42,7 +45,7 @@ class Globals extends \APP_DbObject
     'notusedglobal1' => 0, // Original code has hole in sequence
     'notusedglobal2' => 0, // Original code has hole in sequence
     'lastWinnerId' => 0,
-      'notusedglobal3' => 0, // Original code has hole in sequence
+    'notusedglobal3' => 0, // Original code has hole in sequence
     'missionFinished' => 0,
     'specialId' => 0,
     'checkCount' => 0, // Useful for some missions eg 26.
@@ -100,7 +103,7 @@ class Globals extends \APP_DbObject
 
   public static function isChallenge()
   {
-    return self::get('challenge') == CHALLENGE_ON;
+    return self::get('challenge') == CHALLENGE_ON && Players::count() == 3;
   }
 
   public static function isPremium()

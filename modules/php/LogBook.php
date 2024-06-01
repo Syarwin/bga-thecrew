@@ -1,5 +1,7 @@
 <?php
+
 namespace CREW;
+
 use CREW\Game\Globals;
 use CREW\Game\Players;
 use thecrew;
@@ -8,6 +10,7 @@ use thecrew;
  * Log: a class that allows to log some actions
  *   and then fetch these actions latter
  */
+
 class LogBook extends \CREW\Helpers\DB_Manager
 {
   protected static $table = 'logbook';
@@ -73,15 +76,15 @@ class LogBook extends \CREW\Helpers\DB_Manager
    */
   public static function loadCampaign()
   {
-    if(!Globals::isCampaign(true))
+    if (!Globals::isCampaign(true))
       return;
 
     $json = thecrew::get()->retrieveLegacyTeamData();
-    if(is_string($json)){
-      $json = substr($json, 1, strlen($json)-2);
-      $logs = json_decode ($json, true);
-      foreach($logs as $log_id => $log){
-        if(\array_key_exists('mission', $log))
+    if (is_string($json)) {
+      $json = substr($json, 1, strlen($json) - 2);
+      $logs = json_decode($json, true);
+      foreach ($logs as $log_id => $log) {
+        if (\array_key_exists('mission', $log))
           self::insert($log['mission'], $log['attempt'], $log['success'], $log['distress']);
         else
           self::insert($log[0], $log[1], $log[2], $log[3]);
@@ -89,16 +92,16 @@ class LogBook extends \CREW\Helpers\DB_Manager
 
       // If campaign is over, start a new one
       $mId = Missions::getCurrentId();
-      if($mId == 51){
+      if ($mId == 51) {
         self::startOver();
       }
-    }
-    else {
+    } else {
       self::startMission(1);
     }
   }
 
-  public static function startOver(){
+  public static function startOver()
+  {
     self::DB()->delete()->run();
     self::startMission(1);
   }
@@ -112,7 +115,7 @@ class LogBook extends \CREW\Helpers\DB_Manager
     $status = self::getStatus();
     $cardPlayed = count(Cards::getOnTable());
     $noCommunicationBefore = !Players::alreadyCommmunicate();
-    return !$status['distress'] && $cardPlayed == 0 && $noCommunicationBefore && Globals::getTrickCount() ==1;
+    return !$status['distress'] && $cardPlayed == 0 && $noCommunicationBefore && Globals::getTrickCount() == 1;
   }
 
 
