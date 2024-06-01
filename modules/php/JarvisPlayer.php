@@ -29,6 +29,7 @@ class JarvisPlayer
     $this->continueAuto = '1';
     $this->preselectedCard = null;
     $this->restartMissionAnswer = 1;
+    $this->confirmPreSelect = '0';
   }
 
   private $id;
@@ -49,6 +50,7 @@ class JarvisPlayer
   private $continueAuto;
   private $preselectedCard;
   private $restartMissionAnswer;
+  private $confirmPreSelect;
 
   /////////////////////////////////
   /////////////////////////////////
@@ -71,6 +73,7 @@ class JarvisPlayer
   public function isSpecial2() { return $this->id == Globals::getSpecial2(); }
   public function getDistressAuto(){ return $this->distressAuto; }
   public function getContinueAuto(){ return $this->continueAuto; }
+  public function getConfirmPreSelect(){ return $this->confirmPreSelect; }
 
   public function getUiData($pId)
   {
@@ -81,7 +84,7 @@ class JarvisPlayer
       'name'      => $this->name,
       'color'     => $this->color,
       'score'     => $this->score,
-      'nTricks'   => $this->nTricks,
+      'nTricks'   => $this->getTricksWon(),
       'cards'     => $this->getCards()->toArray(),
       'preselected' => $current ? $this->preselectedCard : null,
       'nCards'    => count($this->getCards()),
@@ -98,6 +101,7 @@ class JarvisPlayer
       'continueAuto' => $this->continueAuto,
       'afterPlayer' => GlobalsVars::getJarvisPlaysAfter(),
       'restartMissionAnswer' => $this->restartMissionAnswer,
+      'confirmPreSelect' => $this->confirmPreSelect,
     ];
   }
 
@@ -238,6 +242,11 @@ class JarvisPlayer
   public function setAutoContinue($mode)
   {
     return WHATEVER;
+  }
+
+  public function setConfirmPreSelect($mode)
+  {
+    return SKIPCONFIRM;
   }
 
   public function preselectCard($cardId)

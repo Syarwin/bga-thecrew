@@ -251,6 +251,16 @@ class thecrew extends Table
           print_r($e);
       }
     }
+
+
+    // confirm pre select
+    if($from_version <= 2208161428){
+      try {
+        self::applyDbUpgradeToAllDB("ALTER TABLE DBPREFIX_player ADD `confirm_pre_select` smallint(1) DEFAULT 0 COMMENT 'confirm = 0, skip = 1'");
+      } catch(Exception $e){
+          print_r($e);
+      }
+    }
   }
 
 
@@ -297,11 +307,11 @@ class thecrew extends Table
 
   // Exposing protected method getCurrentPlayerId
   public static function getCurrentPId(){
-    return self::getCurrentPlayerId();
+    return self::get()->getCurrentPlayerId();
   }
 
   // Exposing protected method translation
   public static function translate($text){
-    return self::_($text);
+    return self::get()->_($text);
   }
 }

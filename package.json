@@ -1,0 +1,13 @@
+{
+  "name": "thecrew",
+  "version": "1.0.0",
+  "description": "bga-thecrew",
+  "main": "thecrew.js",
+  "scripts": {
+    "build:scss": "sass --no-source-map thecrew.scss thecrew.css",
+    "watch:scss": "sass --no-source-map --watch thecrew.scss thecrew.css"
+  },
+  "dependencies": {
+    "sass": "^1.50.0"
+  }
+}

@@ -58,7 +58,8 @@
 #player_config {
   #fail-mission-button,
   #autopick-selector,
-  #autocontinue-selector {
+  #autocontinue-selector,
+  #confirmpreselect-selector {
     display:flex;
     flex-flow: column;
     justify-content: center;

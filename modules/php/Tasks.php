@@ -188,7 +188,7 @@ class Tasks extends \CREW\Helpers\DB_Manager
   }
 
 
-  function updateStatus($tasksMissed, $success = false)
+  static function updateStatus($tasksMissed, $success = false)
   {
     foreach($tasksMissed as $task){
       $assignedPlayer = Players::get($task['pId']);
@@ -222,7 +222,7 @@ class Tasks extends \CREW\Helpers\DB_Manager
   }
 
 
-  function hide(&$tasks, $exceptFirst = false)
+  static function hide(&$tasks, $exceptFirst = false)
   {
     foreach($tasks as $i => &$task){
       if($i == 0 && $exceptFirst)
@@ -237,7 +237,7 @@ class Tasks extends \CREW\Helpers\DB_Manager
   /*
    * Usefull in mission 23 to switch tiles
    */
-  function setTile($taskId, $newTile)
+  static function setTile($taskId, $newTile)
   {
     self::DB()->update(['tile' => $newTile], $taskId);
   }

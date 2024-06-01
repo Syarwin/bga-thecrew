@@ -329,17 +329,13 @@ $game_options = [
   OPTION_CHALLENGE => [
     'name' => totranslate('Challenge mode for Three'),
     'values' => [
-      CHALLENGE_OFF => ['name' => totranslate('Off')],
-      CHALLENGE_ON => ['name' => totranslate('On')],
-    ],
-    'startcondition' => [
+      CHALLENGE_OFF => [
+        'name' => totranslate('Disabled'),
+        'description' => totranslate('When playing with 3 players, 1 random player will received an extra card.'),
+      ],
       CHALLENGE_ON => [
-        [
-          'type' => 'maxplayers',
-          'value' => 3,
-          'message' => totranslate('Challenge mode for Three is only for 3 players.'),
-          'gamestartonly' => true,
-        ],
+        'name' => totranslate('Enabled'),
+        'description' => totranslate("Only available for 2-3 players.<br>In this variant, we remove the Green suit (Triangle) and the Rocket with value 1.<br><br><strong>This option will be ignored when playing with 4 players.</strong>"),
       ],
     ],
   ],
@@ -413,39 +409,15 @@ $game_options = [
   ],
 
   OPTION_JARVIS => [
-    'name' => totranslate('2 player variant'),
+    'name' => totranslate('2 player variant - Beta'),
     'values' => [
-      OPTION_JARVIS_OFF => ['name' => totranslate('Off')],
+      OPTION_JARVIS_OFF => ['name' => totranslate('Disabled')],
       OPTION_JARVIS_ON => [
         'name' => totranslate('Experimental 2 player mode'),
         'beta'=> true,
         'tmdisplay'=> totranslate('Experimental 2 player mode'),
-        'description' => totranslate('Jarvis, the 2 player variant'),
+        'description' => totranslate('Jarvis, the 2 player variant.<br><br><strong>This option will be ignored when playing with 3-4 players.</strong>'),
       ],
-    ],
-    'startcondition' => [
-      OPTION_JARVIS_ON => [
-        [
-          'type' => 'maxplayers',
-          'value' => 2,
-          'message' => totranslate('2 player variant is for 2 player only.'),
-          'gamestartonly' => true,
-        ],
-        [
-          'type' => 'otheroption',
-          'id' => 201, // ELO OFF hardcoded framework option
-          'value' => 1, // 1 if OFF
-          'message' => totranslate('The 2 player variant is still in testing, please switch to training mode.'),
-        ]
-      ],
-      OPTION_JARVIS_OFF => [
-        [
-          'type' => 'minplayers',
-          'value' => 3,
-          'message' => totranslate('Turn on 2 player variant for 2 player game.'),
-          'gamestartonly' => true,
-        ],
-      ],
-    ],
+    ]
   ],
 ];

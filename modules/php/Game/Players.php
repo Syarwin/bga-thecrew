@@ -19,7 +19,7 @@ class Players extends \CREW\Helpers\DB_Manager
   }
 
 
-  public function setupNewGame($players)
+  public static function setupNewGame($players)
   {
     // Create players
     self::DB()->delete();
@@ -55,7 +55,7 @@ class Players extends \CREW\Helpers\DB_Manager
     }
   }
 
-  public function getActiveId()
+  public static function getActiveId()
   {
     if (GlobalsVars::isJarvisActive()) {
       return JARVIS_ID;
@@ -63,12 +63,12 @@ class Players extends \CREW\Helpers\DB_Manager
     return thecrew::get()->getActivePlayerId();
   }
 
-  public function getCurrentId()
+  public static function getCurrentId()
   {
     return thecrew::get()->getCurrentPId();
   }
 
-  public function getAll(){
+  public static function getAll(){
     $players = self::DB()->get(false);
 
     if (GlobalsVars::isJarvis()) {
@@ -78,7 +78,7 @@ class Players extends \CREW\Helpers\DB_Manager
     return $players;
   }
 
-  public function getJarvis()
+  public static function getJarvis()
   {
     return new JarvisPlayer();
   }
@@ -86,7 +86,7 @@ class Players extends \CREW\Helpers\DB_Manager
   /*
    * get : returns the Player object for the given player ID
    */
-  public function get($pId = null)
+  public static function get($pId = null)
   {
     $pId = $pId ?: self::getActiveId();
     if ($pId == JARVIS_ID) {
@@ -96,22 +96,22 @@ class Players extends \CREW\Helpers\DB_Manager
     return self::DB()->where($pId)->get();
   }
 
-  public function getActive()
+  public static function getActive()
   {
     return self::get();
   }
 
-  public function getCurrent()
+  public static function getCurrent()
   {
     return self::get(self::getCurrentId());
   }
 
-  public function getCommander()
+  public static function getCommander()
   {
     return self::get(Globals::getCommander());
   }
 
-  public function getNextId($player, $forceIncludeJarvis = false)
+  public static function getNextId($player, $forceIncludeJarvis = false)
   {
     $pId = is_int($player) ? $player : $player->getId();
     if ($pId == GlobalsVars::getJarvisPlaysAfter() && (GlobalsVars::isJarvis() || $forceIncludeJarvis)) {
@@ -124,7 +124,7 @@ class Players extends \CREW\Helpers\DB_Manager
     return (int) $table[$pId];
   }
 
-  public function getPrevId($player, $forceIncludeJarvis = false)
+  public static function getPrevId($player, $forceIncludeJarvis = false)
   {
     $pId = is_int($player) ? $player : $player->getId();
     if ($pId == JARVIS_ID) {
@@ -140,7 +140,7 @@ class Players extends \CREW\Helpers\DB_Manager
     return $pId;
   }
 
-  public function alreadyCommmunicate()
+  public static function alreadyCommmunicate()
   {
     return self::DB()->where('comm_card_id', '>', 0)->count() > 0;
   }
@@ -148,7 +148,7 @@ class Players extends \CREW\Helpers\DB_Manager
   /*
    * Return the number of players
    */
-  public function count()
+  public static function count()
   {
     return self::DB()->count() + (GlobalsVars::isJarvis() ? 1 : 0);
   }
@@ -156,7 +156,7 @@ class Players extends \CREW\Helpers\DB_Manager
   /*
    * getUiData : get all ui data of all players : id, no, name, team, color, powers list, farmers
    */
-  public function getUiData($pId)
+  public static function getUiData($pId)
   {
     return self::getAll()->assocMap(function($player) use ($pId){ return $player->getUiData($pId); });
   }
@@ -164,7 +164,7 @@ class Players extends \CREW\Helpers\DB_Manager
   /*
    * Get current turn order according to first player variable
    */
-  public function getTurnOrder($firstPlayer = null, $includeJarvis = false)
+  public static function getTurnOrder($firstPlayer = null, $includeJarvis = false)
   {
     $firstPlayer = $firstPlayer ?? Globals::getCommander();
     $order = [];
@@ -179,7 +179,7 @@ class Players extends \CREW\Helpers\DB_Manager
   /**
    * This activate next player
    */
-  public function activeNext($ignoreJarvis = false)
+  public static function activeNext($ignoreJarvis = false)
   {
     $pId = self::getActiveId();
     $nextPlayer = self::getNextId((int) $pId);
@@ -199,7 +199,7 @@ class Players extends \CREW\Helpers\DB_Manager
   /**
    * This allow to change next player taking into account Jarvis
    */
-  public function changeActive($pId)
+  public static function changeActive($pId)
   {
     if (GlobalsVars::isJarvis()) {
       // We need to activate/desactivate Jarvis
@@ -214,7 +214,7 @@ class Players extends \CREW\Helpers\DB_Manager
     thecrew::get()->gamestate->changeActivePlayer($pId);
   }
 
-  public function clearMission()
+  public static function clearMission()
   {
     self::DB()->update([
       'distress_choice' => 0,
@@ -229,14 +229,14 @@ class Players extends \CREW\Helpers\DB_Manager
     ])->run();
   }
 
-  public function clearReplies()
+  public static function clearReplies()
   {
     self::DB()->update([
       'reply_choice' => null,
     ])->run();
   }
 
-  public function clearDistressCards()
+  public static function clearDistressCards()
   {
     self::DB()->update([
       'distress_choice' => 0,
@@ -244,31 +244,31 @@ class Players extends \CREW\Helpers\DB_Manager
     ])->run();
   }
 
-  public function clearRestartMissionAnswers()
+  public static function clearRestartMissionAnswers()
   {
     self::DB()->update([
       'restart_mission_answer' => 0
     ])->run();
   }
 
-  public function getNextToCommunicate()
+  public static function getNextToCommunicate()
   {
     return self::DB()->where('comm_pending', 1)->where('comm_token', '<>', 'used')->whereNull('comm_card_id')->limit(1)->get(true);
   }
 
-  public function getAllDistressChoices() {
+  public static function getAllDistressChoices() {
     return array_unique(self::getAll()->map(function($player){ return $player->getDistressChoice(); }));
   }
 
-  public function getAllDistressChoicesAssoc() {
+  public static function getAllDistressChoicesAssoc() {
     return self::getAll()->assocMap(function($player){ return $player->getDistressChoice(); });
   }
 
-  public function getAllRestartMissionAnswers() {
+  public static function getAllRestartMissionAnswers() {
     return array_unique(self::getAll()->map(function($player){ return (int) $player->getRestartMissionAnswer(); }));
   }
 
-  public function getAllRestartMissionAnswersAssoc() {
+  public static function getAllRestartMissionAnswersAssoc() {
     return self::getAll()->assocMap(function($player){ return (int) $player->getRestartMissionAnswer(); });
   }
 }

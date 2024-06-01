@@ -46,7 +46,13 @@ class action_thecrew extends APP_GameAction
     self::ajaxResponse();
   }
 
-
+  public function setConfirmPreSelect()
+  {
+    self::setAjaxMode();
+    $mode = self::getArg("confirmpreselect", AT_posint, true);
+    $this->game->actSetConfirmPreSelect($mode);
+    self::ajaxResponse();
+  }
 
   public function actMoveTile()
   {
